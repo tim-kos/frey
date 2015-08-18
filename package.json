@@ -1,21 +1,35 @@
 {
   "name": "terrible",
   "version": "0.0.1",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kvz/terrible.git"
+  "description": "Debug with added sugar",
+  "keywords": [
+    "ratelimiter"
+  ],
+  "author": "Kevin van Zonneveld <kevin@vanzonneveld.net>",
+  "engines": {
+    "node": ">= 0.10.0"
   },
   "dependencies": {
     "async": "^1.4.2",
+    "chai": "^3.2.0",
     "coffeelint": "^1.10.1",
     "coveralls": "^2.11.4",
     "depurar": "^0.1.1",
-    "istanbul": "^0.3.18"
+    "istanbul": "^0.3.18",
+    "mocha": "^2.2.5",
+    "should": "^7.0.4"
   },
-  "devDependencies": {},
-  "engines": {
-    "node": "*"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kvz/terrible.git"
   },
-  "optionalDependencies": {}
+  "directories": {
+    "lib": "./lib",
+    "bin": "./bin"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "license": "MIT",
+  "main": "./lib/Depurar"
 }
