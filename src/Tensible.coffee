@@ -1,7 +1,7 @@
 debug = require("depurar")()
 
-class Terrible
+class Tensible
   run: () ->
     debug "hi"
 
-module.exports = Terrible
+module.exports = Tensible

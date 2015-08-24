@@ -1,2 +1,2 @@
-# terrible
+# tensible
 Terraform &amp; Ansible : )
