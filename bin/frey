@@ -21,6 +21,10 @@ yargs
       nargs   : 1
       type    : "string"
       describe: "Directory that contains playbook & infra recipies"
+    bail:
+      alias   : "b"
+      boolean : true
+      describe: "Do not follow the chain of commands"
     verbose:
       alias   : "v"
       count   : true
@@ -72,4 +76,8 @@ if argv._?[0] not of Frey.commands
 frey = new Frey config
 
 # Bombs away
-frey.run()
+frey.run (err) ->
+  if err
+    console.error err
+  else
+    console.log "Done"

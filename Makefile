@@ -13,6 +13,12 @@ lint:
 	@[ ! -f coffeelint.json ] && $(COFFEELINT) --makeconfig > coffeelint.json || true
 	@$(COFFEELINT) --file ./coffeelint.json src
 
+.PHONY: build
+build:
+	@make lint || true
+	@$(COFFEE) $(CSOPTS) --map --compile --output lib src
+
+.PHONY: test-coverage
 test-coverage:
 	# https://github.com/benbria/coffee-coverage/blob/master/docs/HOWTO-codeship-and-coveralls.md
 	# npm install --save-dev coffee-coverage istanbul coveralls
@@ -22,11 +28,6 @@ test-coverage:
 	      test
 	$(ISTANBUL) report text-summary lcov
 	cat coverage/lcov.info | $(COVERALLS)
-
-.PHONY: build
-build:
-	@make lint || true
-	@$(COFFEE) $(CSOPTS) --map --compile --output lib src
 
 .PHONY: test
 test: build

@@ -2,8 +2,8 @@ debug = require("depurar")("frey")
 
 class Frey
   @chain = [
-    "init"
     "prepare"
+    "init"
     "refresh"
     "validate"
     "plan"
@@ -16,8 +16,8 @@ class Frey
   ]
 
   @commands =
-    init      : "Make current project Frey aware"
     prepare   : "Install prerequisites"
+    init      : "Make current project Frey aware"
     refresh   : "Refreshes current infra state and saves to terraform.tfstate"
     validate  : "Checks your docs"
     plan      : "Shows infra changes and saves in an executable plan"
@@ -33,14 +33,28 @@ class Frey
 
   constructor: (config) ->
     @config = config
-    debug
-      config: @config
 
-  run: () ->
-    debug "hi"
+  runChain: (cb) ->
+    cmd = @config?._?[0]
+    if !cmd
+      return cb new Error("No command")
 
-  init: () ->
-    debug
-      config: @config
+    index = Frey.chain.indexOf(cmd)
+    if !cmd
+      return cb new Error("No index")
+
+    if @config.bail
+      length = index + 1
+    else
+      length = Frey.chain.length
+
+    runChain = Frey.chain.slice index, length
+
+    cb null, runChain
+
+  run: (cb) ->
+    @runChain (err, runChain) ->
+      debug "Will run: %o", runChain
+      cb null
 
 module.exports = Frey

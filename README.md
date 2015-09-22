@@ -1,5 +1,14 @@
 # Frey
 
+<!-- badges/ -->
+[![Build Status](https://travis-ci.org/kvz/frey.svg?branch=master)](https://travis-ci.org/kvz/frey)
+[![Coverage Status](https://coveralls.io/repos/kvz/frey/badge.svg?branch=master)](https://coveralls.io/r/kvz/frey?branch=master)
+[![npm](https://img.shields.io/npm/v/frey.svg)](https://www.npmjs.com/package/frey) 
+[![Dependency Status](https://david-dm.org/kvz/frey.png?theme=shields.io)](https://david-dm.org/kvz/frey)
+[![Development Dependency Status](https://david-dm.org/kvz/frey/dev-status.png?theme=shields.io)](https://david-dm.org/kvz/frey#info=devDependencies)
+<!-- /badges -->
+
+
 Named after the Norse fertility god, Frey makes it easy to conceive web infrastructure.
 
 ## Install
@@ -121,4 +130,6 @@ source ~/.bashrc
 
 ## Todo
 
+ - [ ] Coveralls
+ - [ ] Switch to local npm install if available
  - [ ] Linux workstation support
