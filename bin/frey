@@ -1,0 +1,5 @@
+#!/usr/bin/env coffee
+debug = require("depurar")()
+Frey  = require "../src/Frey"
+frey  = new Frey
+frey.run()
