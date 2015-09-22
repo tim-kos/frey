@@ -17,6 +17,8 @@
   "dependencies": {
     "async": "^1.4.2",
     "depurar": "^0.1.1",
+    "lodash": "^3.10.1",
+    "rc": "^1.1.1",
     "yargs": "^3.25.0"
   },
   "devDependencies": {

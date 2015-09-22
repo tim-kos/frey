@@ -1,5 +1,75 @@
 #!/usr/bin/env coffee
-debug = require("depurar")()
 Frey  = require "../src/Frey"
-frey  = new Frey
+debug = require("depurar")("frey")
+yargs = require "yargs"
+path  = require "path"
+
+yargs
+  .usage "Usage: frey <command> [options]"
+  .example "frey backup -d ./envs/production", "backup platform described in ./envs/production"
+  .options
+    app:
+      alias   : "a"
+      default : ->
+        return path.basename process.cwd()
+      nargs   : 1
+      type    : "string"
+      describe: "Name of application for which we're creating infrastructure"
+    directory:
+      alias   : "d"
+      default : "./frey"
+      nargs   : 1
+      type    : "string"
+      describe: "Directory that contains playbook & infra recipies"
+    verbose:
+      alias   : "v"
+      count   : true
+      describe: "Show debug info"
+    unsafe:
+      alias   : "u"
+      describe: "Allow execution, even though your Git working directory is unclean"
+  .command "completion", "Install CLI auto completion"
+  .epilog "Copyright 2015 Transloadit"
+  .help "help"
+  .version ->
+    require("../package").version
+
+# First add chained commands, in order
+done = []
+for cmd in Frey.chain
+  if cmd not in done
+    description = Frey.commands[cmd]
+    yargs.command cmd, description + " (chained)"
+    done.push cmd
+
+# Now add any remaining commands, not added already
+for cmd, description of Frey.commands
+  if cmd not in done
+    yargs.command cmd, description
+    done.push cmd
+
+# 'Execute' yargs
+argv = yargs.argv
+
+argv._?[0] ?= "init"
+
+# We override built-in completion command
+if argv._?[0] == "completion"
+  # we want to make sure we have the global /usr/local/bin/frey instead of
+  # ../../../frey/bin/frey in the ~/.bash_profile
+  argv.showCompletionScript process.env._
+  process.exit 0
+
+# Apply any rc config
+config = require("rc")("frey", {}, argv)
+
+# Bail out with help if command does not exist
+if argv._?[0] not of Frey.commands
+  yargs.showHelp()
+  console.error "'#{argv._?[0]}' is not a supported Frey command"
+
+# Instantiate Frey with config
+frey = new Frey config
+
+# Bombs away
 frey.run()
