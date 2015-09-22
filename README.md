@@ -130,6 +130,7 @@ source ~/.bashrc
 
 ## Todo
 
- - [ ] Coveralls
+ - [x] Coveralls
+ - [ ] Chalk
  - [ ] Switch to local npm install if available
  - [ ] Linux workstation support

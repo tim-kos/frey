@@ -20,7 +20,7 @@ yargs
       default : "./frey"
       nargs   : 1
       type    : "string"
-      describe: "Directory that contains playbook & infra recipies"
+      describe: "Directory that contains state, playbook & infra recipies"
     bail:
       alias   : "b"
       boolean : true

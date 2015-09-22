@@ -1,4 +1,6 @@
-debug = require("depurar")("frey")
+debug      = require("depurar")("frey")
+inflection = require "inflection"
+async      = require "async"
 
 class Frey
   @chain = [
@@ -34,7 +36,7 @@ class Frey
   constructor: (config) ->
     @config = config
 
-  runChain: (cb) ->
+  _filterChain: (cb) ->
     cmd = @config?._?[0]
     if !cmd
       return cb new Error("No command")
@@ -48,13 +50,32 @@ class Frey
     else
       length = Frey.chain.length
 
-    runChain = Frey.chain.slice index, length
+    filteredChain = Frey.chain.slice index, length
 
-    cb null, runChain
+    cb null, filteredChain
 
   run: (cb) ->
-    @runChain (err, runChain) ->
-      debug "Will run: %o", runChain
-      cb null
+    @_filterChain (err, filteredChain) =>
+      debug "Will run: %o", filteredChain
+
+      classes = {}
+      data    = {}
+      methods = []
+
+      for command in filteredChain
+        className        = inflection.classify command
+        path             = "./commands/#{className}"
+        classes[command] = new (require path) @config
+
+        methods.push classes[command].init
+        methods.push (callback) ->
+          classes[command].run (err, result) ->
+            data[command] = result
+            callback err, result
+
+      async.series methods, (err) ->
+        debug
+          err   :err
+          data  :data
 
 module.exports = Frey
