@@ -1,8 +1,4 @@
-
-set -o pipefail
-set -o errexit
-set -o nounset
-# set -o xtrace
+false
 
 DEPLOY_ENV="development"
 TSD_HOSTNAME="mpb"
@@ -13,7 +9,7 @@ if [ -z "${DEPLOY_ENV}" ]; then
 fi
 
 # Set magic variables for current FILE & DIR
-__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+__dir="$(pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 

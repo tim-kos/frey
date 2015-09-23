@@ -31,8 +31,10 @@ npm link # Makes /usr/local/bin/frey point to ~/code/frey/bin/frey instead of th
 
 ## Run
 
-Frey is intended to be run in the root of the project that you want to set up infra for.
+Frey must be run in the root of the project that you want to set up infra for.
 All infra description is supposed to be saved in `./frey/*`, but this can be configured.
+
+There needs to be a `./.git` dir preset relative from your current directory.
 
 Keeping infra playbooks together with the app is convenient and allows both to move
 at the same pace. If you revert to 2 years ago, you can also inspect the matching infra
@@ -83,11 +85,11 @@ facts     : "Show Ansible facts"
 If you think it's better to keep the infra playbooks outside of your own app code
 for security reasons or similar, we recommend that alongside your `app` repo, you create an
 `infra-app` repo, where you'll keep Frey's playbooks in. We recommend you then keep the playbooks
-in the root, and run Frey with `--directory .`:
+in the root, and run Frey with `--recipe .`:
 
 ```bash
 cd ~/code/infra-myapp
-frey --directory .
+frey --recipe .
 ```
 
 ### Multiple setups in one repository
@@ -96,7 +98,7 @@ Also possible, via:
 
 ```bash
 cd ~/code/infra-myapp
-frey --directory ./envs/production
+frey --recipe ./envs/production
 ```
 
 ## Playbooks
@@ -127,6 +129,7 @@ source ~/.bashrc
 
 - Only OSX workstation is supported for now
 - Auto completion only works for bash
+- Only works with Git, and assumes your project already has Git set up
 
 ## Todo
 

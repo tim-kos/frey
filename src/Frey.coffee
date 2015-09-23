@@ -1,6 +1,12 @@
 debug      = require("depurar")("frey")
 inflection = require "inflection"
 async      = require "async"
+_          = require "lodash"
+fs         = require "fs"
+path       = require "path"
+mkdirp     = require "mkdirp"
+inflection = require "inflection"
+flatten    = require "flat"
 
 class Frey
   @chain = [
@@ -36,14 +42,60 @@ class Frey
   constructor: (config) ->
     @config = config
 
-  _filterChain: (cb) ->
-    cmd = @config?._?[0]
-    if !cmd
-      return cb new Error("No command")
+  _defaults: (cb) ->
+    @config      ?= {}
+    @config._    ?= []
+    @config._[0] ?= "init"
+    cb null
 
+  _normalize: (cb) ->
+    # Resolve interdependent arguments
+    for key, val of @config
+      if val == "#{val}"
+        @config[key] = val.replace "{directory}", @config.directory
+
+    # Apply simple functions
+    for key, val of @config
+      if "#{val}".match /\|basename$/
+        val          = val.replace /\|basename$/, ""
+        val          = path.basename val
+        @config[key] = val
+
+    cb null
+
+  _validate: (cb) ->
+    if !@config?.directory?
+      return cb new Error "'#{@config?.directory?}' is not a valid directory"
+
+    async.series [
+      (callback) =>
+        # Bail out with help if command does not exist
+        if @config?._?[0] not of Frey.commands
+          return callback new Error "'#{@config?._?[0]}' is not a supported Frey command"
+
+        callback null
+      (callback) =>
+        # Need a local .git dir
+        gitDir = "#{@config.directory}/.git"
+        fs.stat gitDir, (err, stats) ->
+          if err
+            return callback new Error "Error while checking for '#{gitDir}'"
+
+          if !stats.isDirectory()
+            return callback new Error "'#{gitDir}' is not a directory"
+
+          callback null
+    ], cb
+
+  _setup: (cb) ->
+    async.parallel [
+      (callback) =>
+        mkdirp @config.tools, callback
+    ], cb
+
+  _filterChain: (cb) ->
+    cmd   = @config._[0]
     index = Frey.chain.indexOf(cmd)
-    if !cmd
-      return cb new Error("No index")
 
     if @config.bail
       length = index + 1
@@ -54,28 +106,61 @@ class Frey
 
     cb null, filteredChain
 
+  _toEnvFormat: (obj, prefix) ->
+    if !obj?
+      return {}
+
+    delimiter = "__"
+
+    flat = flatten obj,
+      delimiter: delimiter
+
+    environment = {}
+    for key, val of flat
+      parts = []
+      parts.push "FREY"
+      if prefix?
+        parts.push inflection.underscore(prefix).toUpperCase()
+      parts.push inflection.underscore(key).toUpperCase()
+
+      envKey = parts.join delimiter
+      envKey = envKey.replace ".", "_"
+      environment[envKey] = val
+
+    return environment
+
   run: (cb) ->
-    @_filterChain (err, filteredChain) =>
+    async.series [
+      @_defaults.bind(this)
+      @_normalize.bind(this)
+      @_validate.bind(this)
+      @_setup.bind(this)
+      @_filterChain.bind(this)
+    ], (err, data) =>
+      if err
+        return cb err
+
+      filteredChain = data.pop()
       debug "Will run: %o", filteredChain
 
-      classes = {}
-      data    = {}
-      methods = []
+      classes     = {}
+      environment = @_toEnvFormat @config
+      methods     = []
 
       for command in filteredChain
         className        = inflection.classify command
         path             = "./commands/#{className}"
-        classes[command] = new (require path) @config
+        classes[command] = new (require path) @config, environment
 
-        methods.push classes[command].init
-        methods.push (callback) ->
-          classes[command].run (err, result) ->
-            data[command] = result
-            callback err, result
+        for action in [ "init", "run" ]
+          methods.push (callback) =>
+            classes[command][action] (err, result) =>
+              environment = _.extend environment, @_toEnvFormat(result, command)
+              callback err
 
       async.series methods, (err) ->
         debug
-          err   :err
-          data  :data
+          err         :err
+          environment :environment
 
 module.exports = Frey

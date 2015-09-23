@@ -2,7 +2,6 @@
 Frey  = require "../src/Frey"
 debug = require("depurar")("frey")
 yargs = require "yargs"
-path  = require "path"
 
 yargs
   .usage "Usage: frey <command> [options]"
@@ -10,17 +9,29 @@ yargs
   .options
     app:
       alias   : "a"
-      default : ->
-        return path.basename process.cwd()
+      default : "{directory}|basename"
       nargs   : 1
       type    : "string"
       describe: "Name of application for which we're creating infrastructure"
-    directory:
-      alias   : "d"
-      default : "./frey"
+    recipe:
+      alias   : "r"
+      default : "{directory}/frey/production"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains state, playbook & infra recipies"
+    directory:
+      alias   : "d"
+      default : ->
+        return process.cwd()
+      nargs   : 1
+      type    : "string"
+      describe: "Root project directory that contains the .git"
+    tools:
+      alias   : "t"
+      default : "{directory}/frey/tools"
+      nargs   : 1
+      type    : "string"
+      describe: "Directory that contains the tools"
     bail:
       alias   : "b"
       boolean : true
@@ -55,8 +66,6 @@ for cmd, description of Frey.commands
 # 'Execute' yargs
 argv = yargs.argv
 
-argv._?[0] ?= "init"
-
 # We override built-in completion command
 if argv._?[0] == "completion"
   # we want to make sure we have the global /usr/local/bin/frey instead of
@@ -67,17 +76,13 @@ if argv._?[0] == "completion"
 # Apply any rc config
 config = require("rc")("frey", {}, argv)
 
-# Bail out with help if command does not exist
-if argv._?[0] not of Frey.commands
-  yargs.showHelp()
-  console.error "'#{argv._?[0]}' is not a supported Frey command"
-
 # Instantiate Frey with config
 frey = new Frey config
 
 # Bombs away
 frey.run (err) ->
   if err
+    yargs.showHelp()
     console.error err
   else
     console.log "Done"
