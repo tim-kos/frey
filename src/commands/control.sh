@@ -1,80 +1,18 @@
-#!/usr/bin/env bash
-# infra-hackathon. Copyright (c) 2015, Transloadit Ltd.
-#
-# This file:
-#
-#  - Runs on a workstation
-#  - Looks at environment for cloud provider credentials, keys and their locations
-#  - Takes a 1st argument, the step:
-#    - prepare: Install prerequisites
-#    - init   : Refreshes current infra state and saves to terraform.tfstate
-#    - plan   : Shows infra changes and saves in an executable plan
-#    - backup : Backs up server state
-#    - launch : Launches virtual machines at a provider (if needed) using Terraform's ./infra.tf
-#    - install: Runs Ansible to install software packages & configuration templates
-#    - upload : Upload the application
-#    - setup  : Runs the ./playbook/setup.sh remotely, installing app dependencies and starting it
-#    - show   : Displays active platform
-#  - Takes an optional 2nd argument: "done". If it's set, only 1 step will execute
-#  - Will cycle through all subsequential steps. So if you choose 'upload', 'setup' will
-#    automatically be executed
-#  - Looks at IHT_DRY_RUN environment var. Set it to 1 to just show what will happen
-#
-# Run as:
-#
-#  ./control.sh upload
-#
-# Authors:
-#
-#  - Kevin van Zonneveld <kevin@transloadit.com>
-#
-# Changelog:
-#
-#  - 2015-08-19 refactored casing
-#  - 2015-08-19 auto-install of terraform-inventory
-#  - 2015-08-19 auto-install of Ansible
-#  - 2015-08-19 quoting of all path vars (so they work with spaces)
-
-set -o pipefail
-set -o errexit
-set -o nounset
-# set -o xtrace
-
-if [ -z "${DEPLOY_ENV}" ]; then
-  echo "Environment ${DEPLOY_ENV} not recognized. "
-  echo "Please first source envs/development/config.sh or source envs/production/config.sh"
-  exit 1
-fi
-
-# Set magic variables for current FILE & DIR
-__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-__file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
-__base="$(basename ${__file} .sh)"
-
-__os="linux"
-if [[ "${OSTYPE}" == "darwin"* ]]; then
-  __os="darwin"
-fi
-__arch="amd64"
-
 __ansibleVersion="1.9.2"
 __terraformVersion="0.6.3"
 __terraformInventoryVersion="0.5"
 
-__rootDir="${__dir}"
-__binDir="${__rootDir}/bin"
-__terraformDir="${__binDir}/terraform"
-__envDir="${__rootDir}/envs/${DEPLOY_ENV}"
-__playbookDir="${__rootDir}/playbook"
+__rootDir="${FREY__DIRECTORY}"
+__terraformDir="${FREY__TOOLS}/terraform"
 __terraformExe="${__terraformDir}/terraform"
-__terraformInventoryExe="${__binDir}/terraform-inventory-${__terraformInventoryVersion}-${__os}-${__arch}"
+__terraformInventoryExe="${FREY__TOOLS}/terraform-inventory-${__terraformInventoryVersion}-${FREY__PREPARE__OS_PLATFORM}-${FREY__PREPARE__OS_ARCH}"
 __ansibleExe="ansible"
 __ansiblePlaybookExe="ansible-playbook"
 __ansibleCfg="${__rootDir}/ansible.cfg"
 
-__planFile="${__envDir}/terraform.plan"
-__stateFile="${__envDir}/terraform.tfstate"
-__playbookFile="${__playbookDir}/main.yml"
+__planFile="${FREY__RECIPE}/terraform.plan"
+__stateFile="${FREY__RECIPE}/terraform.tfstate"
+__playbookFile="${FREY__RECIPE}/main.yml"
 
 
 
@@ -204,7 +142,7 @@ enabled=0
 ### Runtime
 ####################################################################################
 
-pushd "${__envDir}" > /dev/null
+pushd "${FREY__RECIPE}" > /dev/null
 
 if [ "${step}" = "remote" ]; then
   remote ${@:2}
@@ -223,7 +161,7 @@ if [ "${step}" = "facts" ]; then
   exit ${?}
 fi
 if [ "${step}" = "backup" ]; then
-  # syncDown "/var/lib/mysql" "${__dir}/data/"
+  # syncDown "/var/lib/mysql" "${__rootDir}/data/"
   exit ${?}
 fi
 if [ "${step}" = "restore" ]; then
@@ -248,7 +186,7 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
 
   if [ "${action}" = "prepare" ]; then
     # Install brew/wget on OSX
-    if [ "${__os}" = "darwin" ]; then
+    if [ "${FREY__PREPARE__OS_PLATFORM}" = "darwin" ]; then
       [ -z "$(which brew 2>/dev/null)" ] && ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
       [ -z "$(which wget 2>/dev/null)" ] && brew install wget
     fi
@@ -260,7 +198,7 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
       sudo easy_install pip
       sudo pip install --upgrade pip
       set +x
-      if [ "${__os}" = "darwin" ]; then
+      if [ "${FREY__PREPARE__OS_PLATFORM}" = "darwin" ]; then
         set -x
         sudo env CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments pip install --upgrade ansible==1.9.2
         set +x
@@ -276,7 +214,7 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
     pushd "${__terraformDir}" > /dev/null
       if [ "$(echo $("${__terraformExe}" version))" != "Terraform v${__terraformVersion}" ]; then
       echo "--> ${IHT_HOSTNAME} - installing Terraform v{__terraformVersion}"
-        zipFile="terraform_${__terraformVersion}_${__os}_${__arch}.zip"
+        zipFile="terraform_${__terraformVersion}_${FREY__PREPARE__OS_PLATFORM}_${FREY__PREPARE__OS_ARCH}.zip"
         url="https://dl.bintray.com/mitchellh/terraform/${zipFile}"
         rm -f "${zipFile}" || true
         wget "${url}"
