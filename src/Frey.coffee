@@ -119,12 +119,14 @@ class Frey
     for key, val of flat
       parts = []
       parts.push "FREY"
+
       if prefix?
         parts.push inflection.underscore(prefix).toUpperCase()
+
       parts.push inflection.underscore(key).toUpperCase()
 
-      envKey = parts.join delimiter
-      envKey = envKey.replace ".", "_"
+      envKey              = parts.join delimiter
+      envKey              = envKey.replace ".", "_"
       environment[envKey] = val
 
     return environment
@@ -149,18 +151,16 @@ class Frey
 
       for command in filteredChain
         className        = inflection.classify command
-        path             = "./commands/#{className}"
+        path             = "./commands/#{command}"
         classes[command] = new (require path) @config, environment
 
         for action in [ "init", "run" ]
-          methods.push (callback) =>
-            classes[command][action] (err, result) =>
-              environment = _.extend environment, @_toEnvFormat(result, command)
-              callback err
+          do (action) =>
+            methods.push (callback) =>
+              classes[command][action] (err, result) =>
+                environment = _.extend environment, @_toEnvFormat(result, command)
+                callback err
 
-      async.series methods, (err) ->
-        debug
-          err         :err
-          environment :environment
+      async.series methods, cb
 
 module.exports = Frey
