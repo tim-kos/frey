@@ -15,7 +15,7 @@ class Command
     cb null
 
   run: (cb) ->
-    @_exeScript "#{@config.root}/bin/control.sh", [@name, "done"], cb
+    @_exeScript "#{@config.root}/bin/control.sh", [ @name ], cb
 
   _exeScript: (shellPath, shellArgs, cb) ->
     childEnv = {}
@@ -45,25 +45,34 @@ class Command
     process.stdout.write chalk.green "\n"
 
     bash       = spawn "bash", cmdArgs, opts
-    lastStderr = ""
-    lastStdout = ""
+    lastStderr = []
+    lastStdout = []
 
     bash.stdout.on "data", (data) ->
       if data?
-        lastStdout = "#{data}"
+        lastStdout.push "#{data}"
+        lastStdout = _.takeRight lastStdout, 3
+
       process.stdout.write chalk.gray(data)
 
     bash.stderr.on "data", (data) ->
       if data?
-        lastStderr = "#{data}"
+        lastStderr.push "#{data}"
+        lastStderr = _.takeRight lastStderr, 3
+
       process.stdout.write chalk.red(data)
 
     bash.on "close", (code) ->
       if code != 0
-        msg         = "Script '#{shellPath}' '#{shellArgs.join(", ")}' exited with code: '#{code}'"
-        err         = new Error msg
-        last3lines  = _.takeRight (lastStderr || lastStdout).split("\n"), 3
-        err.details = last3lines.join "\n"
+        msg = "Script '#{shellPath} #{shellArgs.join(" ")}' exited with code: '#{code}'"
+        err = new Error msg
+
+        if lastStderr.length
+          lastInfo = lastStderr
+        else
+          lastInfo = lastStdout
+
+        err.details = lastInfo.join()
         return cb err
 
       cb null

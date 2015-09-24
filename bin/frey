@@ -53,10 +53,12 @@ yargs
       describe: "Show debug info"
     unsafe:
       alias   : "u"
+      boolean : true
       describe: "Allow execution, even though your Git working directory is unclean"
   .command "completion", "Install CLI auto completion"
   .epilog "Copyright 2015 Transloadit"
   .help "help"
+  .wrap yargs.terminalWidth()
   .version ->
     require("../package").version
 
