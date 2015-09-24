@@ -1,4 +1,3 @@
-set -x
 __ansibleVersion="1.9.2"
 __terraformVersion="0.6.3"
 __terraformInventoryVersion="0.5"
@@ -132,9 +131,6 @@ function inParallel () {
 ### Vars
 ####################################################################################
 
-echo $0
-echo $1
-
 cmd="${1}"
 enabled=0
 
@@ -143,8 +139,6 @@ enabled=0
 ####################################################################################
 
 pushd "${FREY__CONFIG__RECIPE}" > /dev/null
-
-echo "--> ${FREY__RUNTIME__OS__HOSTNAME} - ${cmd}"
 
 if [ "${cmd}" = "remote" ]; then
   remote ${@:2}
@@ -205,7 +199,7 @@ if [ "${cmd}" = "prepare" ]; then
   # Install Terraform
   mkdir -p "${__terraformDir}"
   pushd "${__terraformDir}" > /dev/null
-    if [ "$(echo $("${__terraformExe}" version))" != "Terraform v${__terraformVersion}" ]; then
+    if [ "$(echo $("${__terraformExe}" version) 2>/dev/null)" != "Terraform v${__terraformVersion}" ]; then
     echo "--> ${FREY__RUNTIME__OS__HOSTNAME} - installing Terraform v${__terraformVersion}"
       zipFile="terraform_${__terraformVersion}_${FREY__RUNTIME__OS__PLATFORM}_${FREY__RUNTIME__OS__ARCH}.zip"
       url="https://dl.bintray.com/mitchellh/terraform/${zipFile}"
@@ -235,19 +229,11 @@ if [ "${cmd}" = "prepare" ]; then
 fi
 
 terraformArgs=""
-
-for var in $(env |awk -F= '{print $1}' |egrep '^[A-Z0-9_]+$'); do
-  echo "--> setting ${var}"
+# We can't just pass all ENV vars to Terraform. It will crash on e.g. RESET.
+for var in $(env |awk -F= '{print $1}' |egrep '^(FREY|AWS|TSD)[A-Z0-9_]+$'); do
+  # echo "--> setting ${var}"
   terraformArgs="${terraformArgs} -var ${var}=${!var}"
 done
-
-# terraformArgs="${terraformArgs} -var AWS_ACCESS_KEY=${AWS_ACCESS_KEY}"
-# terraformArgs="${terraformArgs} -var AWS_ACCOUNT_ID=${AWS_ACCOUNT_ID}"
-# terraformArgs="${terraformArgs} -var AWS_ZONE_ID=${AWS_ZONE_ID}"
-# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__KEYPUB_BODY=\"${FREY__RUNTIME__SSH__KEYPUB_BODY}\""
-# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__USER=${FREY__RUNTIME__SSH__USER}"
-# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__KEYPRV_FILE=${FREY__RUNTIME__SSH__KEYPRV_FILE}"
-# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__KEYPAIR_NAME=${FREY__RUNTIME__SSH__KEYPAIR_NAME}"
 
 if [ "${cmd}" = "init" ]; then
   true
@@ -270,12 +256,13 @@ fi
 
 if [ "${cmd}" = "backup" ]; then
   # Save state before possibly destroying machine
+  true
 fi
 
 if [ "${cmd}" = "launch" ]; then
   if [ -f "${__planFile}" ]; then
-    echo "--> Press CTRL+C now if you are unsure! Executing plan in ${FREY_CONFIG_SLEEP}s..."
-    sleep ${FREY_CONFIG_SLEEP}
+    echo "--> Press CTRL+C now if you are unsure! Executing plan in ${FREY__CONFIG__SLEEP}s..."
+    sleep ${FREY__CONFIG__SLEEP}
     # exit 1
     "${__terraformExe}" apply "${__planFile}"
     git add "${__stateFile}" || true
@@ -288,8 +275,8 @@ fi
 
 if [ "${cmd}" = "install" ]; then
   tags=""
-  if [ -n "${FREY_CONFIG_TAGS}" ]; then
-    tags="--tags="${FREY_CONFIG_TAGS}""
+  if [ -n "${FREY__CONFIG__TAGS}" ]; then
+    tags="--tags="${FREY__CONFIG__TAGS}""
   fi
   ANSIBLE_CONFIG="${__ansibleCfg}" \
   ANSIBLE_HOST_KEY_CHECKING=False \
@@ -307,15 +294,17 @@ fi
 
 if [ "${cmd}" = "upload" ]; then
   # Upload/Download app here
+  true
 fi
 
 if [ "${cmd}" = "setup" ]; then
   # Restart services
+  true
 fi
 
 if [ "${cmd}" = "show" ]; then
-  echo "http://${IHT_MACHINE_FQDN}"
-  "${__terraformExe}" output
+  true
+  # "${__terraformExe}" output
   # for host in $("${__terraformExe}" output public_addresses); do
   #   echo " - http://${host}"
   # done

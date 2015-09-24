@@ -4,6 +4,7 @@ chalk           = require "chalk"
 _               = require "lodash"
 flatten         = require "flat"
 inflection      = require "inflection"
+fs              = require "fs"
 
 class Command
   constructor: (name, config, runtime) ->
@@ -16,7 +17,14 @@ class Command
     cb null
 
   run: (cb) ->
-    @_exeScript "#{@config.root}/bin/control.sh", [ @name ], cb
+    runScript = "#{@config.recipe}/#{@name}.sh"
+    fs.stat runScript, (err, stat) =>
+      if err
+        process.stdout.write chalk.dim "Running default as I found no '#{runScript}'"
+        process.stdout.write chalk.dim "\n"
+        runScript = "#{@config.root}/bin/control.sh"
+
+      @_exeScript runScript, [ @name ], cb
 
   _exeScript: (shellPath, shellArgs, cb) ->
     childEnv = {}
@@ -26,7 +34,6 @@ class Command
       @_toEnvFormat(@runtime, "runtime"),
       @_toEnvFormat(@config, "config")
 
-    debug "cd #{@dir}"
     opts =
       cwd  : @dir
       env  : childEnv
@@ -41,8 +48,8 @@ class Command
 
     cmdArgs = cmdArgs.concat shellArgs
 
-
     process.stdout.write chalk.gray "--> "
+    process.stdout.write chalk.gray "#{@runtime.os.hostname} - "
     process.stdout.write chalk.green "#{@name}"
     process.stdout.write chalk.green "\n"
 

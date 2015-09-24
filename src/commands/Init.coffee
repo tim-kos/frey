@@ -1,8 +1,11 @@
-Command         = require "../Command"
-debug           = require("depurar")("frey")
+Command = require "../Command"
+debug   = require("depurar")("frey")
+mkdirp  = require "mkdirp"
+async   = require "async"
 
 # - [ ] Create Recipe dir
 # - [ ] Create Recipe templates
+# - [ ] Create Keys
 
 class Init extends Command
   constructor: (name, config, runtime) ->
@@ -10,10 +13,10 @@ class Init extends Command
     @dir = @config.directory
 
   run: (cb) ->
-    mkdirp @config.recipe, (err) ->
+    mkdirp @config.recipe, (err) =>
       if err
         return cb err
 
-      super
+      super cb
 
 module.exports = Init

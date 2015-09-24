@@ -9,16 +9,14 @@ debug   = require("depurar")("frey")
 
 class Prepare extends Command
   constructor: (name, config, runtime) ->
-    super
+    super name, config, runtime
     @dir = @config.directory
-    debug @dir
 
   run: (cb) ->
-    mkdirp @config.tools, (err) ->
+    mkdirp @config.tools, (err) =>
       if err
         return cb err
 
-      super()
-      cb()
+      super cb
 
 module.exports = Prepare

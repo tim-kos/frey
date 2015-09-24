@@ -68,6 +68,9 @@ class Frey
 
     @config.root      = path.resolve "#{__dirname}/.."
 
+    if !@config.tags?
+      @config.tags = ""
+
     cb null
 
   _validate: (cb) ->
@@ -158,7 +161,6 @@ class Frey
           for action in [ "boot", "run" ]
             do (action) =>
               methods.push (callback) =>
-                debug "Pushing #{command}.#{action}"
                 classes[command][action] (err, result) =>
                   append          = {}
                   append[command] = result
