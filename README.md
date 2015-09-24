@@ -127,9 +127,12 @@ source ~/.bashrc
 
 ## Limitations
 
-- Only OSX workstation is supported for now
-- Auto completion only works for bash
-- Only works with Git, and assumes your project already has Git set up
+For now, we only support
+
+- Only OSX as workstation
+- BASH, if you want to use autocompletion
+- Ubuntu as remote server OS
+- Git for version control - and Frey assumes your project has Git already set up
 
 ## Todo
 

@@ -2,18 +2,26 @@ __ansibleVersion="1.9.2"
 __terraformVersion="0.6.3"
 __terraformInventoryVersion="0.5"
 
-__rootDir="${FREY__DIRECTORY}"
-__terraformDir="${FREY__TOOLS}/terraform"
+__terraformDir="${FREY__CONFIG__TOOLS}/terraform"
 __terraformExe="${__terraformDir}/terraform"
-__terraformInventoryExe="${FREY__TOOLS}/terraform-inventory-${__terraformInventoryVersion}-${FREY__PREPARE__OS_PLATFORM}-${FREY__PREPARE__OS_ARCH}"
+__terraformInventoryDir="${FREY__CONFIG__ROOT}/bin"
+__terraformInventoryExe="${__terraformInventoryDir}/terraform-inventory-${__terraformInventoryVersion}-${FREY__RUNTIME__PREPARE__OS__PLATFORM}-${FREY__RUNTIME__PREPARE__OS__ARCH}"
 __ansibleExe="ansible"
 __ansiblePlaybookExe="ansible-playbook"
-__ansibleCfg="${__rootDir}/ansible.cfg"
+__ansibleCfg="${FREY__CONFIG__DIRECTORY}/ansible.cfg"
 
-__planFile="${FREY__RECIPE}/terraform.plan"
-__stateFile="${FREY__RECIPE}/terraform.tfstate"
-__playbookFile="${FREY__RECIPE}/main.yml"
+__planFile="${FREY__CONFIG__RECIPE}/terraform.plan"
+__stateFile="${FREY__CONFIG__RECIPE}/terraform.tfstate"
+__playbookFile="${FREY__CONFIG__RECIPE}/main.yml"
 
+
+__ssh_key_name="${FREY__CONFIG__APP}"
+__ssh_user="ubuntu"
+__ssh_email="hello@${FREY__CONFIG__APP}"
+__ssh_key_file="${FREY__CONFIG__RECIPE}/${FREY__CONFIG__APP}.pem"
+__ssh_keypub_file="${FREY__CONFIG__RECIPE}/${FREY__CONFIG__APP}.pub"
+__ssh_keypub=$(echo "$(cat "${__ssh_keypub_file}" 2>/dev/null)") || true
+__ssh_keypub_fingerprint="$(ssh-keygen -lf ${__ssh_keypub_file} | awk '{print $2}')"
 
 
 
@@ -22,8 +30,8 @@ __playbookFile="${FREY__RECIPE}/main.yml"
 
 function syncUp() {
   [ -z "${host:-}" ] && host="$(${__terraformExe} output public_address)"
-  chmod 600 "${IHT_SSH_KEYPUB_FILE}"
-  chmod 600 "${IHT_SSH_KEY_FILE}"
+  chmod 600 "${__ssh_keypub_file}"
+  chmod 600 "${__ssh_key_file}"
   rsync \
    --archive \
    --delete \
@@ -38,8 +46,8 @@ function syncUp() {
    --no-motd \
    --no-owner \
    --rsh="ssh \
-    -i \"${IHT_SSH_KEY_FILE}\" \
-    -l ${IHT_SSH_USER} \
+    -i \"${__ssh_key_file}\" \
+    -l ${__ssh_user} \
     -o CheckHostIP=no \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=no" \
@@ -49,8 +57,8 @@ function syncUp() {
 
 function syncDown() {
   [ -z "${host:-}" ] && host="$(${__terraformExe} output public_address)"
-  chmod 600 "${IHT_SSH_KEYPUB_FILE}"
-  chmod 600 "${IHT_SSH_KEY_FILE}"
+  chmod 600 "${__ssh_keypub_file}"
+  chmod 600 "${__ssh_key_file}"
   rsync \
    --archive \
    --delete \
@@ -84,8 +92,8 @@ function syncDown() {
    --no-owner \
    --no-perms \
    --rsh="ssh \
-    -i \"${IHT_SSH_KEY_FILE}\" \
-    -l ${IHT_SSH_USER} \
+    -i \"${__ssh_key_file}\" \
+    -l ${__ssh_user} \
     -o CheckHostIP=no \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=no" \
@@ -95,11 +103,11 @@ function syncDown() {
 
 function remote() {
   [ -z "${host:-}" ] && host="$(${__terraformExe} output public_address)"
-  chmod 600 "${IHT_SSH_KEYPUB_FILE}"
-  chmod 600 "${IHT_SSH_KEY_FILE}"
+  chmod 600 "${__ssh_keypub_file}"
+  chmod 600 "${__ssh_key_file}"
   ssh ${host} \
-    -i "${IHT_SSH_KEY_FILE}" \
-    -l ${IHT_SSH_USER} \
+    -i "${__ssh_key_file}" \
+    -l ${__ssh_user} \
     -o UserKnownHostsFile=/dev/null \
     -o CheckHostIP=no \
     -o StrictHostKeyChecking=no "${@:-}"
@@ -142,7 +150,7 @@ enabled=0
 ### Runtime
 ####################################################################################
 
-pushd "${FREY__RECIPE}" > /dev/null
+pushd "${FREY__CONFIG__RECIPE}" > /dev/null
 
 if [ "${step}" = "remote" ]; then
   remote ${@:2}
@@ -152,8 +160,8 @@ if [ "${step}" = "facts" ]; then
   ANSIBLE_HOST_KEY_CHECKING=False \
   TF_STATE="${__stateFile}" \
     "${__ansibleExe}" all \
-      --user="${IHT_SSH_USER}" \
-      --private-key="${IHT_SSH_KEY_FILE}" \
+      --user="${__ssh_user}" \
+      --private-key="${__ssh_key_file}" \
       --inventory-file="${__terraformInventoryExe}" \
       --module-name=setup \
       --args='filter=ansible_*'
@@ -161,7 +169,7 @@ if [ "${step}" = "facts" ]; then
   exit ${?}
 fi
 if [ "${step}" = "backup" ]; then
-  # syncDown "/var/lib/mysql" "${__rootDir}/data/"
+  # syncDown "/var/lib/mysql" "${FREY__CONFIG__RECIPE}/data/"
   exit ${?}
 fi
 if [ "${step}" = "restore" ]; then
@@ -182,23 +190,23 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
     break
   fi
 
-  echo "--> ${IHT_HOSTNAME} - ${action}"
+  echo "--> ${FREY__RUNTIME__PREPARE__OS__HOSTNAME} - ${action}"
 
   if [ "${action}" = "prepare" ]; then
-    # Install brew/wget on OSX
-    if [ "${FREY__PREPARE__OS_PLATFORM}" = "darwin" ]; then
+    # Install brew/curl on OSX
+    if [ "${FREY__RUNTIME__PREPARE__OS__PLATFORM}" = "darwin" ]; then
       [ -z "$(which brew 2>/dev/null)" ] && ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-      [ -z "$(which wget 2>/dev/null)" ] && brew install wget
+      [ -z "$(which curl 2>/dev/null)" ] && brew install curl
     fi
 
     # Install Ansible
     if [ "$(echo $("${__ansibleExe}" --version |head -n1))" != "ansible 1.9.2" ]; then
-      echo "--> ${IIM_HOSTNAME} - installing Ansible v${__ansibleVersion}"
+      echo "--> ${FREY__RUNTIME__PREPARE__OS__HOSTNAME} - installing Ansible v${__ansibleVersion}"
       set -x
       sudo easy_install pip
       sudo pip install --upgrade pip
       set +x
-      if [ "${FREY__PREPARE__OS_PLATFORM}" = "darwin" ]; then
+      if [ "${FREY__RUNTIME__PREPARE__OS__PLATFORM}" = "darwin" ]; then
         set -x
         sudo env CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments pip install --upgrade ansible==1.9.2
         set +x
@@ -213,11 +221,12 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
     mkdir -p "${__terraformDir}"
     pushd "${__terraformDir}" > /dev/null
       if [ "$(echo $("${__terraformExe}" version))" != "Terraform v${__terraformVersion}" ]; then
-      echo "--> ${IHT_HOSTNAME} - installing Terraform v{__terraformVersion}"
-        zipFile="terraform_${__terraformVersion}_${FREY__PREPARE__OS_PLATFORM}_${FREY__PREPARE__OS_ARCH}.zip"
+      echo "--> ${FREY__RUNTIME__PREPARE__OS__HOSTNAME} - installing Terraform v${__terraformVersion}"
+        zipFile="terraform_${__terraformVersion}_${FREY__RUNTIME__PREPARE__OS__PLATFORM}_${FREY__RUNTIME__PREPARE__OS__ARCH}.zip"
         url="https://dl.bintray.com/mitchellh/terraform/${zipFile}"
         rm -f "${zipFile}" || true
-        wget "${url}"
+        echo "Downloading ${url} -> ${zipFile}"
+        curl -sSL "${url}" > "${zipFile}"
         unzip -o "${zipFile}"
         rm -f "${zipFile}"
       fi
@@ -225,33 +234,36 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
     popd > /dev/null
 
     # Install SSH Keys
-    if [ ! -f "${IHT_SSH_KEY_FILE}" ]; then
-      echo -e "\n\n" | ssh-keygen -t rsa -C "${IHT_SSH_EMAIL}" -f "${IHT_SSH_KEY_FILE}"
-      echo "You may need to add ${IHT_SSH_KEYPUB_FILE} to the Digital Ocean"
-      export IHT_SSH_KEYPUB=$(echo "$(cat "${IHT_SSH_KEYPUB_FILE}")") || true
+    if [ ! -f "${__ssh_key_file}" ]; then
+      echo -e "\n\n" | ssh-keygen -t rsa -b 2048 -C "${__ssh_email}" -f "${__ssh_key_file}"
+      echo "You may need to add ${__ssh_keypub_file} to the Digital Ocean"
+      export __ssh_keypub=$(echo "$(cat "${__ssh_keypub_file}")") || true
       # Digital ocean requires this:
-      export IHT_SSH_KEYPUB_FINGERPRINT="$(ssh-keygen -lf ${IHT_SSH_KEYPUB_FILE} | awk '{print $2}')"
+      export __ssh_keypub_fingerprint="$(ssh-keygen -lf ${__ssh_keypub_file} | awk '{print $2}')"
     fi
-    if [ ! -f "${IHT_SSH_KEYPUB_FILE}" ]; then
-      chmod 600 "${IHT_SSH_KEY_FILE}" || true
-      ssh-keygen -yf "${IHT_SSH_KEY_FILE}" > "${IHT_SSH_KEYPUB_FILE}"
-      chmod 600 "${IHT_SSH_KEYPUB_FILE}" || true
+    if [ ! -f "${__ssh_keypub_file}" ]; then
+      chmod 600 "${__ssh_key_file}" || true
+      ssh-keygen -yf "${__ssh_key_file}" > "${__ssh_keypub_file}"
+      chmod 600 "${__ssh_keypub_file}" || true
     fi
 
     processed="${processed} ${action}" && continue
   fi
 
   terraformArgs=""
-  terraformArgs="${terraformArgs} -var IHT_AWS_SECRET_KEY=${IHT_AWS_SECRET_KEY}"
-  terraformArgs="${terraformArgs} -var IHT_AWS_ACCESS_KEY=${IHT_AWS_ACCESS_KEY}"
-  terraformArgs="${terraformArgs} -var IHT_AWS_ACCOUNT_ID=${IHT_AWS_ACCOUNT_ID}"
-  terraformArgs="${terraformArgs} -var IHT_AWS_ZONE_ID=${IHT_AWS_ZONE_ID}"
-  terraformArgs="${terraformArgs} -var IHT_APP_FQDN=${IHT_APP_FQDN}"
-  terraformArgs="${terraformArgs} -var IHT_MACHINE_FQDN=${IHT_MACHINE_FQDN}"
-  terraformArgs="${terraformArgs} -var IHT_SSH_KEYPUB=\"${IHT_SSH_KEYPUB}\""
-  terraformArgs="${terraformArgs} -var IHT_SSH_USER=${IHT_SSH_USER}"
-  terraformArgs="${terraformArgs} -var IHT_SSH_KEY_FILE=${IHT_SSH_KEY_FILE}"
-  terraformArgs="${terraformArgs} -var IHT_SSH_KEY_NAME=${IHT_SSH_KEY_NAME}"
+
+  for var in $(env |awk -F= '{print $1}' |egrep '^[A-Z0-9_]+$'); do
+    echo "--> setting ${var}"
+    terraformArgs="${terraformArgs} -var ${var}=${!var}"
+  done
+
+  terraformArgs="${terraformArgs} -var AWS_ACCESS_KEY=${AWS_ACCESS_KEY}"
+  terraformArgs="${terraformArgs} -var AWS_ACCOUNT_ID=${AWS_ACCOUNT_ID}"
+  terraformArgs="${terraformArgs} -var AWS_ZONE_ID=${AWS_ZONE_ID}"
+  terraformArgs="${terraformArgs} -var __ssh_keypub=\"${__ssh_keypub}\""
+  terraformArgs="${terraformArgs} -var __ssh_user=${__ssh_user}"
+  terraformArgs="${terraformArgs} -var __ssh_key_file=${__ssh_key_file}"
+  terraformArgs="${terraformArgs} -var __ssh_key_name=${__ssh_key_name}"
 
   if [ "${action}" = "init" ]; then
     # if [ ! -f "${__stateFile}" ]; then
@@ -274,9 +286,9 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
 
   if [ "${action}" = "launch" ]; then
     if [ -f "${__planFile}" ]; then
-      echo "--> Press CTRL+C now if you are unsure! Executing plan in ${IHT_VERIFY_TIMEOUT}s..."
+      echo "--> Press CTRL+C now if you are unsure! Executing plan in ${FREY_CONFIG_SLEEP}s..."
       [ "${dryRun}" -eq 1 ] && echo "--> Dry run break" && exit 1
-      sleep ${IHT_VERIFY_TIMEOUT}
+      sleep ${FREY_CONFIG_SLEEP}
       # exit 1
       "${__terraformExe}" apply "${__planFile}"
       git add "${__stateFile}" || true
@@ -290,16 +302,16 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
 
   if [ "${action}" = "install" ]; then
     tags=""
-    if [ -n "${IIM_ANSIBLE_TAGS}" ]; then
-      tags="--tags="${IIM_ANSIBLE_TAGS}""
+    if [ -n "${FREY_CONFIG_TAGS}" ]; then
+      tags="--tags="${FREY_CONFIG_TAGS}""
     fi
     ANSIBLE_CONFIG="${__ansibleCfg}" \
     ANSIBLE_HOST_KEY_CHECKING=False \
     TF_STATE="${__stateFile}" \
       "${__ansiblePlaybookExe}" \
         ${tags} \
-        --user="${IIM_SSH_USER}" \
-        --private-key="${IIM_SSH_KEY_FILE}" \
+        --user="${__ssh_user}" \
+        --private-key="${__ssh_key_file}" \
         --inventory-file="${__terraformInventoryExe}" \
         --sudo \
       "${__playbookFile}"
@@ -319,13 +331,14 @@ for action in "prepare" "init" "plan" "backup" "launch" "install" "upload" "setu
   fi
 
   if [ "${action}" = "show" ]; then
-    echo "http://${IIM_MACHINE_FQDN}:${IIM_APP_PORT}"
+    echo "http://${IHT_MACHINE_FQDN}"
+    "${__terraformExe}" output
     # for host in $("${__terraformExe}" output public_addresses); do
-    #   echo " - http://${host}:${IIM_APP_PORT}"
+    #   echo " - http://${host}"
     # done
     processed="${processed} ${action}" && continue
   fi
 done
 popd > /dev/null
 
-echo "--> ${IHT_HOSTNAME} - completed:${processed} : )"
+echo "--> ${FREY__RUNTIME__PREPARE__OS__HOSTNAME} - completed:${processed} : )"

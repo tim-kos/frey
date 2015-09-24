@@ -32,6 +32,17 @@ yargs
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the tools"
+    tags:
+      alias   : "g"
+      nargs   : 1
+      type    : "string"
+      describe: "A list of tags to execute in isolation"
+    sleep:
+      alias   : "s"
+      default : 5
+      nargs   : 1
+      type    : "number"
+      describe: "Wait x seconds between showing infra plan, and executing it"
     bail:
       alias   : "b"
       boolean : true

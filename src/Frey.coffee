@@ -6,7 +6,6 @@ fs         = require "fs"
 path       = require "path"
 mkdirp     = require "mkdirp"
 inflection = require "inflection"
-flatten    = require "flat"
 
 class Frey
   @chain = [
@@ -40,7 +39,8 @@ class Frey
     facts     : "Show Ansible facts"
 
   constructor: (config) ->
-    @config = config
+    @config  = config
+    @runtime = {}
 
   _defaults: (cb) ->
     @config      ?= {}
@@ -60,6 +60,13 @@ class Frey
         val          = val.replace /\|basename$/, ""
         val          = path.basename val
         @config[key] = val
+
+
+    @config.directory = path.resolve @config.directory
+    @config.recipe    = path.resolve @config.recipe
+    @config.tools     = path.resolve @config.tools
+
+    @config.root      = path.resolve "#{__dirname}/.."
 
     cb null
 
@@ -106,31 +113,6 @@ class Frey
 
     cb null, filteredChain
 
-  _toEnvFormat: (obj, prefix) ->
-    if !obj?
-      return {}
-
-    delimiter = "__"
-
-    flat = flatten obj,
-      delimiter: delimiter
-
-    environment = {}
-    for key, val of flat
-      parts = []
-      parts.push "FREY"
-
-      if prefix?
-        parts.push inflection.underscore(prefix).toUpperCase()
-
-      parts.push inflection.underscore(key).toUpperCase()
-
-      envKey              = parts.join delimiter
-      envKey              = envKey.replace ".", "_"
-      environment[envKey] = val
-
-    return environment
-
   run: (cb) ->
     async.series [
       @_defaults.bind(this)
@@ -145,20 +127,25 @@ class Frey
       filteredChain = data.pop()
       debug "Will run: %o", filteredChain
 
-      classes     = {}
-      environment = @_toEnvFormat @config
-      methods     = []
+      classes = {}
+      methods = []
 
       for command in filteredChain
-        className        = inflection.classify command
-        path             = "./commands/#{command}"
-        classes[command] = new (require path) @config, environment
+        className = inflection.classify command
+        try
+          path             = "./commands/#{command}"
+          classes[command] = new (require path) command, @config, @runtime
+        catch error
+          path             = "./Command"
+          classes[command] = new (require path) command, @config, @runtime
 
         for action in [ "init", "run" ]
           do (action) =>
             methods.push (callback) =>
               classes[command][action] (err, result) =>
-                environment = _.extend environment, @_toEnvFormat(result, command)
+                append          = {}
+                append[command] = result
+                @runtime        = _.extend @runtime, append
                 callback err
 
       async.series methods, cb
