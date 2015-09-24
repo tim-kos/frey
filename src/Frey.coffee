@@ -5,7 +5,7 @@ _          = require "lodash"
 fs         = require "fs"
 path       = require "path"
 mkdirp     = require "mkdirp"
-inflection = require "inflection"
+os         = require "os"
 
 class Frey
   @chain = [
@@ -113,12 +113,21 @@ class Frey
 
     cb null, filteredChain
 
+  _runtimeVars: (cb) ->
+    @runtime.os =
+      platform: os.platform()
+      hostname: os.hostname()
+      arch    : "#{os.arch()}".replace "x64", "amd64"
+
+    cb()
+
   run: (cb) ->
     async.series [
       @_defaults.bind(this)
       @_normalize.bind(this)
       @_validate.bind(this)
       @_setup.bind(this)
+      @_runtimeVars.bind(this)
       @_filterChain.bind(this)
     ], (err, data) =>
       if err
@@ -131,22 +140,24 @@ class Frey
       methods = []
 
       for command in filteredChain
-        className = inflection.classify command
-        try
-          path             = "./commands/#{command}"
-          classes[command] = new (require path) command, @config, @runtime
-        catch error
-          path             = "./Command"
-          classes[command] = new (require path) command, @config, @runtime
+        do (command) =>
+          className = inflection.classify command
+          try
+            path             = "./commands/#{command}"
+            classes[command] = new (require path) command, @config, @runtime
+          catch error
+            path             = "./Command"
+            classes[command] = new (require path) command, @config, @runtime
 
-        for action in [ "init", "run" ]
-          do (action) =>
-            methods.push (callback) =>
-              classes[command][action] (err, result) =>
-                append          = {}
-                append[command] = result
-                @runtime        = _.extend @runtime, append
-                callback err
+          for action in [ "boot", "run" ]
+            do (action) =>
+              methods.push (callback) =>
+                debug "Pushing #{command}.#{action}"
+                classes[command][action] (err, result) =>
+                  append          = {}
+                  append[command] = result
+                  @runtime        = _.extend @runtime, append
+                  callback err
 
       async.series methods, cb
 

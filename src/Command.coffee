@@ -11,7 +11,7 @@ class Command
     @config  = config
     @runtime = runtime
 
-  init: (cb) ->
+  boot: (cb) ->
     cb null
 
   run: (cb) ->
