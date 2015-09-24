@@ -34,9 +34,9 @@ class Frey
     deploy    : "Upload your own application(s)"
     restart   : "Restart your own application(s) and its dependencies"
     show      : "Displays active platform"
+
     restore   : "Restore latest state backup"
     remote    : "Execute a remote command - or opens console"
-    facts     : "Show Ansible facts"
 
   constructor: (config) ->
     @config  = config
@@ -63,8 +63,8 @@ class Frey
 
 
     @config.directory = path.resolve @config.directory
-    @config.recipe    = path.resolve @config.recipe
-    @config.tools     = path.resolve @config.tools
+    @config.recipe    = path.resolve @config.directory, @config.recipe
+    @config.tools     = path.resolve @config.directory, @config.tools
 
     @config.root      = path.resolve "#{__dirname}/.."
 
@@ -115,9 +115,19 @@ class Frey
 
   _runtimeVars: (cb) ->
     @runtime.os =
-      platform: os.platform()
-      hostname: os.hostname()
-      arch    : "#{os.arch()}".replace "x64", "amd64"
+      platform    : os.platform()
+      hostname    : os.hostname()
+      arch        : "#{os.arch()}".replace "x64", "amd64"
+
+    @runtime.ssh =
+      keypair_name: "#{@config.app}"
+      user        : "ubuntu"
+      email       : "hello@#{@config.app}"
+      keyprv_file : "#{@config.recipe}/#{@config.app}.pem"
+      keypub_file : "#{@config.recipe}/#{@config.app}.pub"
+
+      # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
+      # keypub_fingerprint: "$(ssh-keygen -lf ${FREY__RUNTIME__SSH_KEYPUB_FILE} | awk '{print $2}')"
 
     cb()
 
@@ -141,13 +151,9 @@ class Frey
 
       for command in filteredChain
         do (command) =>
-          className = inflection.classify command
-          try
-            path             = "./commands/#{command}"
-            classes[command] = new (require path) command, @config, @runtime
-          catch error
-            path             = "./Command"
-            classes[command] = new (require path) command, @config, @runtime
+          className        = inflection.classify command
+          path             = "./commands/#{command}"
+          classes[command] = new (require path) command, @config, @runtime
 
           for action in [ "boot", "run" ]
             do (action) =>

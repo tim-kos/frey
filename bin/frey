@@ -95,7 +95,7 @@ frey = new Frey config
 # Bombs away
 frey.run (err) ->
   if err
-    yargs.showHelp()
+    # yargs.showHelp()
     console.error err
   else
     console.log "Done"

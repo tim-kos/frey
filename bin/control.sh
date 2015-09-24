@@ -16,23 +16,13 @@ __stateFile="${FREY__CONFIG__RECIPE}/terraform.tfstate"
 __playbookFile="${FREY__CONFIG__RECIPE}/main.yml"
 
 
-__ssh_key_name="${FREY__CONFIG__APP}"
-__ssh_user="ubuntu"
-__ssh_email="hello@${FREY__CONFIG__APP}"
-__ssh_key_file="${FREY__CONFIG__RECIPE}/${FREY__CONFIG__APP}.pem"
-__ssh_keypub_file="${FREY__CONFIG__RECIPE}/${FREY__CONFIG__APP}.pub"
-__ssh_keypub=$(echo "$(cat "${__ssh_keypub_file}" 2>/dev/null)") || true
-__ssh_keypub_fingerprint="$(ssh-keygen -lf ${__ssh_keypub_file} | awk '{print $2}')"
-
-
-
 ### Functions
 ####################################################################################
 
 function syncUp() {
   [ -z "${host:-}" ] && host="$(${__terraformExe} output public_address)"
-  chmod 600 "${__ssh_keypub_file}"
-  chmod 600 "${__ssh_key_file}"
+  chmod 600 "${FREY__RUNTIME__SSH__KEYPUB_FILE}"
+  chmod 600 "${FREY__RUNTIME__SSH__KEYPRV_FILE}"
   rsync \
    --archive \
    --delete \
@@ -47,8 +37,8 @@ function syncUp() {
    --no-motd \
    --no-owner \
    --rsh="ssh \
-    -i \"${__ssh_key_file}\" \
-    -l ${__ssh_user} \
+    -i \"${FREY__RUNTIME__SSH__KEYPRV_FILE}\" \
+    -l ${FREY__RUNTIME__SSH__USER} \
     -o CheckHostIP=no \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=no" \
@@ -58,8 +48,8 @@ function syncUp() {
 
 function syncDown() {
   [ -z "${host:-}" ] && host="$(${__terraformExe} output public_address)"
-  chmod 600 "${__ssh_keypub_file}"
-  chmod 600 "${__ssh_key_file}"
+  chmod 600 "${FREY__RUNTIME__SSH__KEYPUB_FILE}"
+  chmod 600 "${FREY__RUNTIME__SSH__KEYPRV_FILE}"
   rsync \
    --archive \
    --delete \
@@ -93,8 +83,8 @@ function syncDown() {
    --no-owner \
    --no-perms \
    --rsh="ssh \
-    -i \"${__ssh_key_file}\" \
-    -l ${__ssh_user} \
+    -i \"${FREY__RUNTIME__SSH__KEYPRV_FILE}\" \
+    -l ${FREY__RUNTIME__SSH__USER} \
     -o CheckHostIP=no \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=no" \
@@ -104,11 +94,11 @@ function syncDown() {
 
 function remote() {
   [ -z "${host:-}" ] && host="$(${__terraformExe} output public_address)"
-  chmod 600 "${__ssh_keypub_file}"
-  chmod 600 "${__ssh_key_file}"
+  chmod 600 "${FREY__RUNTIME__SSH__KEYPUB_FILE}"
+  chmod 600 "${FREY__RUNTIME__SSH__KEYPRV_FILE}"
   ssh ${host} \
-    -i "${__ssh_key_file}" \
-    -l ${__ssh_user} \
+    -i "${FREY__RUNTIME__SSH__KEYPRV_FILE}" \
+    -l ${FREY__RUNTIME__SSH__USER} \
     -o UserKnownHostsFile=/dev/null \
     -o CheckHostIP=no \
     -o StrictHostKeyChecking=no "${@:-}"
@@ -142,6 +132,9 @@ function inParallel () {
 ### Vars
 ####################################################################################
 
+echo $0
+echo $1
+
 cmd="${1}"
 enabled=0
 
@@ -161,8 +154,8 @@ if [ "${cmd}" = "facts" ]; then
   ANSIBLE_HOST_KEY_CHECKING=False \
   TF_STATE="${__stateFile}" \
     "${__ansibleExe}" all \
-      --user="${__ssh_user}" \
-      --private-key="${__ssh_key_file}" \
+      --user="${FREY__RUNTIME__SSH__USER}" \
+      --private-key="${FREY__RUNTIME__SSH__KEYPRV_FILE}" \
       --inventory-file="${__terraformInventoryExe}" \
       --module-name=setup \
       --args='filter=ansible_*'
@@ -226,17 +219,17 @@ if [ "${cmd}" = "prepare" ]; then
   popd > /dev/null
 
   # Install SSH Keys
-  if [ ! -f "${__ssh_key_file}" ]; then
-    echo -e "\n\n" | ssh-keygen -t rsa -b 2048 -C "${__ssh_email}" -f "${__ssh_key_file}"
-    echo "You may need to add ${__ssh_keypub_file} to the Digital Ocean"
-    export __ssh_keypub=$(echo "$(cat "${__ssh_keypub_file}")") || true
+  if [ ! -f "${FREY__RUNTIME__SSH__KEYPRV_FILE}" ]; then
+    echo -e "\n\n" | ssh-keygen -t rsa -b 2048 -C "${FREY__RUNTIME__SSH__EMAIL}" -f "${FREY__RUNTIME__SSH__KEYPRV_FILE}"
+    echo "You may need to add ${FREY__RUNTIME__SSH__KEYPUB_FILE} to the Digital Ocean"
+    export FREY__RUNTIME__SSH__KEYPUB_BODY=$(echo "$(cat "${FREY__RUNTIME__SSH__KEYPUB_FILE}")") || true
     # Digital ocean requires this:
-    export __ssh_keypub_fingerprint="$(ssh-keygen -lf ${__ssh_keypub_file} | awk '{print $2}')"
+    export FREY__RUNTIME__SSH__KEYPUB_FINGERPRINT="$(ssh-keygen -lf ${FREY__RUNTIME__SSH__KEYPUB_FILE} | awk '{print $2}')"
   fi
-  if [ ! -f "${__ssh_keypub_file}" ]; then
-    chmod 600 "${__ssh_key_file}" || true
-    ssh-keygen -yf "${__ssh_key_file}" > "${__ssh_keypub_file}"
-    chmod 600 "${__ssh_keypub_file}" || true
+  if [ ! -f "${FREY__RUNTIME__SSH__KEYPUB_FILE}" ]; then
+    chmod 600 "${FREY__RUNTIME__SSH__KEYPRV_FILE}" || true
+    ssh-keygen -yf "${FREY__RUNTIME__SSH__KEYPRV_FILE}" > "${FREY__RUNTIME__SSH__KEYPUB_FILE}"
+    chmod 600 "${FREY__RUNTIME__SSH__KEYPUB_FILE}" || true
   fi
 
 fi
@@ -251,12 +244,18 @@ done
 # terraformArgs="${terraformArgs} -var AWS_ACCESS_KEY=${AWS_ACCESS_KEY}"
 # terraformArgs="${terraformArgs} -var AWS_ACCOUNT_ID=${AWS_ACCOUNT_ID}"
 # terraformArgs="${terraformArgs} -var AWS_ZONE_ID=${AWS_ZONE_ID}"
-# terraformArgs="${terraformArgs} -var __ssh_keypub=\"${__ssh_keypub}\""
-# terraformArgs="${terraformArgs} -var __ssh_user=${__ssh_user}"
-# terraformArgs="${terraformArgs} -var __ssh_key_file=${__ssh_key_file}"
-# terraformArgs="${terraformArgs} -var __ssh_key_name=${__ssh_key_name}"
+# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__KEYPUB_BODY=\"${FREY__RUNTIME__SSH__KEYPUB_BODY}\""
+# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__USER=${FREY__RUNTIME__SSH__USER}"
+# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__KEYPRV_FILE=${FREY__RUNTIME__SSH__KEYPRV_FILE}"
+# terraformArgs="${terraformArgs} -var FREY__RUNTIME__SSH__KEYPAIR_NAME=${FREY__RUNTIME__SSH__KEYPAIR_NAME}"
 
 if [ "${cmd}" = "init" ]; then
+  true
+fi
+
+pushd "${FREY__CONFIG__RECIPE}" > /dev/null
+
+if [ "${cmd}" = "refresh" ]; then
   # if [ ! -f "${__stateFile}" ]; then
   #   echo "Nothing to refresh yet."
   # else
@@ -297,8 +296,8 @@ if [ "${cmd}" = "install" ]; then
   TF_STATE="${__stateFile}" \
     "${__ansiblePlaybookExe}" \
       ${tags} \
-      --user="${__ssh_user}" \
-      --private-key="${__ssh_key_file}" \
+      --user="${FREY__RUNTIME__SSH__USER}" \
+      --private-key="${FREY__RUNTIME__SSH__KEYPRV_FILE}" \
       --inventory-file="${__terraformInventoryExe}" \
       --sudo \
     "${__playbookFile}"

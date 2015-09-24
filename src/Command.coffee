@@ -10,6 +10,7 @@ class Command
     @name    = name
     @config  = config
     @runtime = runtime
+    @dir     = @config.recipe
 
   boot: (cb) ->
     cb null
@@ -25,8 +26,9 @@ class Command
       @_toEnvFormat(@runtime, "runtime"),
       @_toEnvFormat(@config, "config")
 
+    debug "cd #{@dir}"
     opts =
-      cwd  : @config.directory
+      cwd  : @dir
       env  : childEnv
       stdio: [ "ignore", "pipe", "pipe" ]
 
@@ -37,7 +39,7 @@ class Command
       shellPath
     ]
 
-    cmdArgs.concat shellArgs
+    cmdArgs = cmdArgs.concat shellArgs
 
 
     process.stdout.write chalk.gray "--> "
