@@ -125,7 +125,8 @@ For now, we only support
 
  - [x] Coveralls
  - [x] Chalk
- - [ ] Glob & extend all \*.toml. Infra = terraform ? = Ansible.
+ - [ ] Meaningful output without DEBUG
+ - [ ] Glob & extend all \*.toml. Infra = terraform Config = Ansible.
  - [ ] @boot can be a list of functions in an array that's passed to async.series
  - [ ] Switch to local npm install if available via LiftOff
  - [ ] Linux workstation support
