@@ -21,7 +21,7 @@ yargs
       default : "{directory}/frey/production"
       nargs   : 1
       type    : "string"
-      describe: "Directory that contains state, playbook & infra recipies"
+      describe: "Directory that contains state and recipies"
     directory:
       alias   : "d"
       default : ->

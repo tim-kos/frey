@@ -2,7 +2,7 @@
 
 <!-- badges/ -->
 [![Build Status](https://travis-ci.org/kvz/frey.svg?branch=master)](https://travis-ci.org/kvz/frey)
-[![Coverage Status](https://coveralls.io/repos/kvz/frey/badge.svg?branch=master)](https://coveralls.io/r/kvz/frey?branch=master)
+[![Coverage Status](https://coveralls.io/repos/kvz/frey/badge.svg?branch=master&service=github)](https://coveralls.io/github/kvz/frey?branch=master)
 [![npm](https://img.shields.io/npm/v/frey.svg)](https://www.npmjs.com/package/frey) 
 [![Dependency Status](https://david-dm.org/kvz/frey.png?theme=shields.io)](https://david-dm.org/kvz/frey)
 [![Development Dependency Status](https://david-dm.org/kvz/frey/dev-status.png?theme=shields.io)](https://david-dm.org/kvz/frey#info=devDependencies)
@@ -13,20 +13,8 @@ Named after the Norse fertility god, Frey makes it easy to conceive web infrastr
 
 ## Install
 
-### Production
-
 ```bash
 npm install --global frey
-```
-
-### Development
-
-```bash
-cd ~/code
-git clone git@github.com:kvz/frey.git
-cd frey
-npm install
-npm link # Makes /usr/local/bin/frey point to ~/code/frey/bin/frey instead of the global install
 ```
 
 ## Run
@@ -36,7 +24,7 @@ All infra description is supposed to be saved in `./frey/*`, but this can be con
 
 There needs to be a `./.git` dir preset relative from your current directory.
 
-Keeping infra playbooks together with the app is convenient and allows both to move
+Keeping infra recipes together with the app is convenient and allows both to move
 at the same pace. If you revert to 2 years ago, you can also inspect the matching infra
 from that time.
 
@@ -68,11 +56,12 @@ show      : "Displays active platform"
 For so you'd type `frey deploy`, Frey would deploy your app, restart it, and show
 you the status.
 
-#### One off commands
+#### One-off commands
 
 All commands can be ran with `--bail` if you do not want to run the chain of commands.
 
-There are also a few commands that do not belong to the chain, these are:
+There are also a few commands that do not belong to the chain, and are hence auto-bailing 
+these are:
 
 ```
 restore   : "Restore latest state backup"
@@ -82,9 +71,9 @@ facts     : "Show Ansible facts"
 
 ### Dedicated infra repository
 
-If you think it's better to keep the infra playbooks outside of your own app code
+If you think it's better to keep the infra recipes outside of your own app code
 for security reasons or similar, we recommend that alongside your `app` repo, you create an
-`infra-app` repo, where you'll keep Frey's playbooks in. We recommend you then keep the playbooks
+`infra-app` repo, where you'll keep Frey's recipes in. We recommend you then keep the recipes
 in the root, and run Frey with `--recipe .`:
 
 ```bash
@@ -101,11 +90,9 @@ cd ~/code/infra-myapp
 frey --recipe ./envs/production
 ```
 
-## Playbooks
+## Recipes
 
 Frey uses Terraform and Ansible to do the heavy lifting.
-
-
 
 ## Autocompletion of CLI arguments
 
@@ -137,6 +124,8 @@ For now, we only support
 ## Todo
 
  - [x] Coveralls
- - [ ] Chalk
- - [ ] Switch to local npm install if available
+ - [x] Chalk
+ - [ ] Glob & extend all \*.toml. Infra = terraform ? = Ansible.
+ - [ ] @boot can be a list of functions in an array that's passed to async.series
+ - [ ] Switch to local npm install if available via LiftOff
  - [ ] Linux workstation support

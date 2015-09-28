@@ -26,7 +26,7 @@ class Frey
     prepare   : "Install prerequisites"
     init      : "Make current project Frey aware"
     refresh   : "Refreshes current infra state and saves to terraform.tfstate"
-    validate  : "Checks your docs"
+    validate  : "Checks your recipes"
     plan      : "Shows infra changes and saves in an executable plan"
     backup    : "Backs up server state"
     launch    : "Launches virtual machines at a provider"
