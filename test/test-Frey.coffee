@@ -46,6 +46,17 @@ describe "Frey", ->
         done()
 
   describe "_filterChain", ->
+    it "should return auto bail on docbuild which is not part of a chain", (done) ->
+      frey = new Frey
+        _: ["docbuild"]
+
+      frey._filterChain (err, filteredChain) ->
+        expect(err).to.equal null
+        expect(filteredChain).to.deep.equal [
+          "docbuild"
+        ]
+        done()
+
     it "should return all links for prepare", (done) ->
       frey = new Frey
         _: ["prepare"]

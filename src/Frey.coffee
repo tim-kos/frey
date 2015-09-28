@@ -35,6 +35,7 @@ class Frey
     restart   : "Restart your own application(s) and its dependencies"
     show      : "Displays active platform"
 
+    docbuild  : "Build docs"
     restore   : "Restore latest state backup"
     remote    : "Execute a remote command - or opens console"
 
@@ -107,7 +108,9 @@ class Frey
     cmd   = @config._[0]
     index = Frey.chain.indexOf(cmd)
 
-    if @config.bail
+    if index < 0
+      return cb null, [ cmd ]
+    else if @config.bail
       length = index + 1
     else
       length = Frey.chain.length
