@@ -8,12 +8,12 @@ async   = require "async"
 # - [ ] Create Keys
 
 class Init extends Command
-  constructor: (name, config, runtime) ->
+  constructor: (name, options, runtime) ->
     super
-    @dir = @config.directory
+    @dir = @options.directory
 
   run: (cb) ->
-    mkdirp @config.recipe, (err) =>
+    mkdirp @options.recipe, (err) =>
       if err
         return cb err
 

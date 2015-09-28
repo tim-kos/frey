@@ -39,55 +39,55 @@ class Frey
     restore   : "Restore latest state backup"
     remote    : "Execute a remote command - or opens console"
 
-  constructor: (config) ->
-    @config  = config
+  constructor: (options) ->
+    @options  = options
     @runtime = {}
 
   _defaults: (cb) ->
-    @config      ?= {}
-    @config._    ?= []
-    @config._[0] ?= "init"
+    @options      ?= {}
+    @options._    ?= []
+    @options._[0] ?= "init"
     cb null
 
   _normalize: (cb) ->
     # Resolve interdependent arguments
-    for key, val of @config
+    for key, val of @options
       if val == "#{val}"
-        @config[key] = val.replace "{directory}", @config.directory
+        @options[key] = val.replace "{directory}", @options.directory
 
     # Apply simple functions
-    for key, val of @config
+    for key, val of @options
       if "#{val}".match /\|basename$/
         val          = val.replace /\|basename$/, ""
         val          = path.basename val
-        @config[key] = val
+        @options[key] = val
 
 
-    @config.directory = path.resolve @config.directory
-    @config.recipe    = path.resolve @config.directory, @config.recipe
-    @config.tools     = path.resolve @config.directory, @config.tools
+    @options.directory = path.resolve @options.directory
+    @options.recipe    = path.resolve @options.directory, @options.recipe
+    @options.tools     = path.resolve @options.directory, @options.tools
 
-    @config.root      = path.resolve "#{__dirname}/.."
+    @options.root      = path.resolve "#{__dirname}/.."
 
-    if !@config.tags?
-      @config.tags = ""
+    if !@options.tags?
+      @options.tags = ""
 
     cb null
 
   _validate: (cb) ->
-    if !@config?.directory?
-      return cb new Error "'#{@config?.directory?}' is not a valid directory"
+    if !@options?.directory?
+      return cb new Error "'#{@options?.directory?}' is not a valid directory"
 
     async.series [
       (callback) =>
         # Bail out with help if command does not exist
-        if @config?._?[0] not of Frey.commands
-          return callback new Error "'#{@config?._?[0]}' is not a supported Frey command"
+        if @options?._?[0] not of Frey.commands
+          return callback new Error "'#{@options?._?[0]}' is not a supported Frey command"
 
         callback null
       (callback) =>
         # Need a local .git dir
-        gitDir = "#{@config.directory}/.git"
+        gitDir = "#{@options.directory}/.git"
         fs.stat gitDir, (err, stats) ->
           if err
             return callback new Error "Error while checking for '#{gitDir}'"
@@ -101,16 +101,16 @@ class Frey
   _setup: (cb) ->
     async.parallel [
       (callback) =>
-        mkdirp @config.tools, callback
+        mkdirp @options.tools, callback
     ], cb
 
   _filterChain: (cb) ->
-    cmd   = @config._[0]
+    cmd   = @options._[0]
     index = Frey.chain.indexOf(cmd)
 
     if index < 0
       return cb null, [ cmd ]
-    else if @config.bail
+    else if @options.bail
       length = index + 1
     else
       length = Frey.chain.length
@@ -126,11 +126,11 @@ class Frey
       arch        : "#{os.arch()}".replace "x64", "amd64"
 
     @runtime.ssh =
-      keypair_name: "#{@config.app}"
+      keypair_name: "#{@options.app}"
       user        : "ubuntu"
-      email       : "hello@#{@config.app}"
-      keyprv_file : "#{@config.recipe}/#{@config.app}.pem"
-      keypub_file : "#{@config.recipe}/#{@config.app}.pub"
+      email       : "hello@#{@options.app}"
+      keyprv_file : "#{@options.recipe}/#{@options.app}.pem"
+      keypub_file : "#{@options.recipe}/#{@options.app}.pub"
 
       # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       # keypub_fingerprint: "$(ssh-keygen -lf ${FREY__RUNTIME__SSH_KEYPUB_FILE} | awk '{print $2}')"
@@ -159,7 +159,7 @@ class Frey
         do (command) =>
           className        = inflection.classify command
           path             = "./commands/#{command}"
-          classes[command] = new (require path) command, @config, @runtime
+          classes[command] = new (require path) command, @options, @runtime
 
           for action in [ "boot", "run" ]
             do (action) =>

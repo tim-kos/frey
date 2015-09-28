@@ -12,7 +12,7 @@ describe "Frey", ->
 
       frey._normalize (err) ->
         expect(err).to.equal null
-        expect(frey.config.recipe).to.match /\/frey\/production$/
+        expect(frey.options.recipe).to.match /\/frey\/production$/
         done()
 
     it "should transform the basename function", (done) ->
@@ -24,7 +24,7 @@ describe "Frey", ->
 
       frey._normalize (err) ->
         expect(err).to.equal null
-        expect(frey.config.app).to.equal "tusd"
+        expect(frey.options.app).to.equal "tusd"
         done()
 
   describe "_defaults", ->
@@ -33,7 +33,7 @@ describe "Frey", ->
 
       frey._defaults (err) ->
         expect(err).to.equal null
-        expect(frey.config._).to.deep.equal [ "init" ]
+        expect(frey.options._).to.deep.equal [ "init" ]
         done()
 
   describe "_validate", ->

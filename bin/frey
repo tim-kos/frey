@@ -89,11 +89,11 @@ if argv._?[0] == "completion"
   argv.showCompletionScript process.env._
   process.exit 0
 
-# Apply any rc config
-config = require("rc")("frey", {}, argv)
+# Apply any rc options
+options = require("rc")("frey", {}, argv)
 
-# Instantiate Frey with config
-frey = new Frey config
+# Instantiate Frey with options
+frey = new Frey options
 
 # Bombs away
 frey.run (err) ->

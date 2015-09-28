@@ -2,17 +2,17 @@ __ansibleVersion="1.9.2"
 __terraformVersion="0.6.3"
 __terraformInventoryVersion="0.5"
 
-__terraformDir="${FREY__CONFIG__TOOLS}/terraform"
+__terraformDir="${FREY__OPTIONS__TOOLS}/terraform"
 __terraformExe="${__terraformDir}/terraform"
-__terraformInventoryDir="${FREY__CONFIG__ROOT}/bin"
+__terraformInventoryDir="${FREY__OPTIONS__ROOT}/bin"
 __terraformInventoryExe="${__terraformInventoryDir}/terraform-inventory-${__terraformInventoryVersion}-${FREY__RUNTIME__OS__PLATFORM}-${FREY__RUNTIME__OS__ARCH}"
 __ansibleExe="ansible"
 __ansiblePlaybookExe="ansible-playbook"
-__ansibleCfg="${FREY__CONFIG__DIRECTORY}/ansible.cfg"
+__ansibleCfg="${FREY__OPTIONS__DIRECTORY}/ansible.cfg"
 
-__planFile="${FREY__CONFIG__RECIPE}/terraform.plan"
-__stateFile="${FREY__CONFIG__RECIPE}/terraform.tfstate"
-__playbookFile="${FREY__CONFIG__RECIPE}/main.yml"
+__planFile="${FREY__OPTIONS__RECIPE}/terraform.plan"
+__stateFile="${FREY__OPTIONS__RECIPE}/terraform.tfstate"
+__playbookFile="${FREY__OPTIONS__RECIPE}/main.yml"
 
 
 ### Functions
@@ -138,7 +138,7 @@ enabled=0
 ### Runtime
 ####################################################################################
 
-pushd "${FREY__CONFIG__RECIPE}" > /dev/null
+pushd "${FREY__OPTIONS__RECIPE}" > /dev/null
 
 if [ "${cmd}" = "remote" ]; then
   remote ${@:2}
@@ -157,7 +157,7 @@ if [ "${cmd}" = "facts" ]; then
   exit ${?}
 fi
 if [ "${cmd}" = "backup" ]; then
-  # syncDown "/var/lib/mysql" "${FREY__CONFIG__RECIPE}/data/"
+  # syncDown "/var/lib/mysql" "${FREY__OPTIONS__RECIPE}/data/"
   exit ${?}
 fi
 if [ "${cmd}" = "restore" ]; then
@@ -239,7 +239,7 @@ if [ "${cmd}" = "init" ]; then
   true
 fi
 
-pushd "${FREY__CONFIG__RECIPE}" > /dev/null
+pushd "${FREY__OPTIONS__RECIPE}" > /dev/null
 
 if [ "${cmd}" = "refresh" ]; then
   # if [ ! -f "${__stateFile}" ]; then
@@ -261,8 +261,8 @@ fi
 
 if [ "${cmd}" = "launch" ]; then
   if [ -f "${__planFile}" ]; then
-    echo "--> Press CTRL+C now if you are unsure! Executing plan in ${FREY__CONFIG__SLEEP}s..."
-    sleep ${FREY__CONFIG__SLEEP}
+    echo "--> Press CTRL+C now if you are unsure! Executing plan in ${FREY__OPTIONS__SLEEP}s..."
+    sleep ${FREY__OPTIONS__SLEEP}
     # exit 1
     "${__terraformExe}" apply "${__planFile}"
     git add "${__stateFile}" || true
@@ -275,10 +275,10 @@ fi
 
 if [ "${cmd}" = "install" ]; then
   tags=""
-  if [ -n "${FREY__CONFIG__TAGS}" ]; then
-    tags="--tags="${FREY__CONFIG__TAGS}""
+  if [ -n "${FREY__OPTIONS__TAGS}" ]; then
+    tags="--tags="${FREY__OPTIONS__TAGS}""
   fi
-  ANSIBLE_CONFIG="${__ansibleCfg}" \
+  ANSIBLE_OPTIONS="${__ansibleCfg}" \
   ANSIBLE_HOST_KEY_CHECKING=False \
   TF_STATE="${__stateFile}" \
     "${__ansiblePlaybookExe}" \

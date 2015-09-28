@@ -8,12 +8,12 @@ debug   = require("depurar")("frey")
 # - [ ] Install Terraforminventory
 
 class Prepare extends Command
-  constructor: (name, config, runtime) ->
-    super name, config, runtime
-    @dir = @config.directory
+  constructor: (name, options, runtime) ->
+    super name, options, runtime
+    @dir = @options.directory
 
   run: (cb) ->
-    mkdirp @config.tools, (err) =>
+    mkdirp @options.tools, (err) =>
       if err
         return cb err
 

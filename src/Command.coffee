@@ -7,22 +7,22 @@ inflection      = require "inflection"
 fs              = require "fs"
 
 class Command
-  constructor: (name, config, runtime) ->
+  constructor: (name, options, runtime) ->
     @name    = name
-    @config  = config
+    @options  = options
     @runtime = runtime
-    @dir     = @config.recipe
+    @dir     = @options.recipe
 
   boot: (cb) ->
     cb null
 
   run: (cb) ->
-    runScript = "#{@config.recipe}/#{@name}.sh"
+    runScript = "#{@options.recipe}/#{@name}.sh"
     fs.stat runScript, (err, stat) =>
       if err
         process.stdout.write chalk.dim "Running default as I found no '#{runScript}'"
         process.stdout.write chalk.dim "\n"
-        runScript = "#{@config.root}/bin/control.sh"
+        runScript = "#{@options.root}/bin/control.sh"
 
       @_exeScript runScript, [ @name ], cb
 
@@ -32,7 +32,7 @@ class Command
     childEnv = _.extend childEnv,
       process.env,
       @_toEnvFormat(@runtime, "runtime"),
-      @_toEnvFormat(@config, "config")
+      @_toEnvFormat(@options, "options")
 
     opts =
       cwd  : @dir
