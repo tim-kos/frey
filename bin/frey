@@ -1,7 +1,10 @@
 #!/usr/bin/env coffee
-Frey  = require "../src/Frey"
-debug = require("depurar")("frey")
-yargs = require "yargs"
+Frey           = require "../src/Frey"
+debug          = require("depurar")("frey")
+yargs          = require "yargs"
+updateNotifier = require "update-notifier"
+pkg            = require "../package.json"
+updateNotifier(pkg: pkg).notify(defer: false)
 
 yargs
   .usage "Usage: frey <command> [options]"
@@ -60,7 +63,7 @@ yargs
   .help "help"
   .wrap yargs.terminalWidth()
   .version ->
-    require("../package").version
+    pkg.version
 
 # First add chained commands, in order
 done = []
