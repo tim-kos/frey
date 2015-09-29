@@ -9,12 +9,11 @@ fs              = require "fs"
 class Command
   constructor: (name, options, runtime) ->
     @name    = name
-    @options  = options
+    @options = options
     @runtime = runtime
     @dir     = @options.recipe
 
-  boot: (cb) ->
-    cb null
+  boot: []
 
   run: (cb) ->
     runScript = "#{@options.recipe}/#{@name}.sh"

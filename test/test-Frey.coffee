@@ -6,64 +6,75 @@ describe "Frey", ->
   describe "_normalize", ->
     it "should transform the directory variable", (done) ->
       frey = new Frey
+
+      options =
         recipe    : "{directory}/frey/production"
         directory : "."
         tools     : "{directory}/frey/tools"
 
-      frey._normalize (err) ->
+      frey._normalize options, (err, options) ->
         expect(err).to.equal null
-        expect(frey.options.recipe).to.match /\/frey\/production$/
+        expect(options.recipe).to.match /\/frey\/production$/
         done()
 
     it "should transform the basename function", (done) ->
       frey = new Frey
+
+      options =
         app       : "./tusd|basename"
         recipe    : "{directory}/frey/production"
         directory : "."
         tools     : "{directory}/frey/tools"
 
-      frey._normalize (err) ->
+      frey._normalize options, (err, options) ->
         expect(err).to.equal null
-        expect(frey.options.app).to.equal "tusd"
+        expect(options.app).to.equal "tusd"
         done()
 
   describe "_defaults", ->
     it "should instantiate Frey with defaults", (done) ->
       frey = new Frey
 
-      frey._defaults (err) ->
+      options = {}
+      frey._defaults options, (err, options) ->
         expect(err).to.equal null
-        expect(frey.options._).to.deep.equal [ "init" ]
+        expect(options._).to.deep.equal [ "init" ]
         done()
 
   describe "_validate", ->
     it "should error out if there's no command", (done) ->
       frey = new Frey
+
+      options =
         directory: "."
 
-      frey._validate (err) ->
+      frey._validate options, (err, options) ->
         expect(err).to.have.property("message").to.match /'undefined' is not a supported Frey/
         done()
 
   describe "_filterChain", ->
     it "should return auto bail on docbuild which is not part of a chain", (done) ->
       frey = new Frey
+
+      options =
         _: ["docbuild"]
 
-      frey._filterChain (err, filteredChain) ->
+      frey._filterChain options, (err, options) ->
         expect(err).to.equal null
-        expect(filteredChain).to.deep.equal [
+        expect(options.filteredChain).to.deep.equal [
           "docbuild"
         ]
         done()
 
     it "should return all links for prepare", (done) ->
       frey = new Frey
+
+      options =
         _: ["prepare"]
 
-      frey._filterChain (err, filteredChain) ->
+      frey._filterChain options, (err, options) ->
         expect(err).to.equal null
-        expect(filteredChain).to.deep.equal [
+        expect(options.filteredChain).to.deep.equal [
           "prepare", "init", "refresh", "validate", "plan", "backup", "launch",
           "install", "deploy", "restart", "show",
         ]
@@ -71,12 +82,14 @@ describe "Frey", ->
 
     it "should return one link for bail", (done) ->
       frey = new Frey
+
+      options =
         _   : ["deploy"]
         bail: true,
 
-      frey._filterChain (err, filteredChain) ->
+      frey._filterChain options, (err, options) ->
         expect(err).to.equal null
-        expect(filteredChain).to.deep.equal [
+        expect(options.filteredChain).to.deep.equal [
           "deploy"
         ]
         done()

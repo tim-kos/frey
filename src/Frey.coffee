@@ -43,51 +43,51 @@ class Frey
     @options  = options
     @runtime = {}
 
-  _defaults: (cb) ->
-    @options      ?= {}
-    @options._    ?= []
-    @options._[0] ?= "init"
-    cb null
+  _defaults: (options, nextCb) ->
+    options      ?= {}
+    options._    ?= []
+    options._[0] ?= "init"
+    nextCb null, options
 
-  _normalize: (cb) ->
+  _normalize: (options, nextCb) ->
     # Resolve interdependent arguments
-    for key, val of @options
+    for key, val of options
       if val == "#{val}"
-        @options[key] = val.replace "{directory}", @options.directory
+        options[key] = val.replace "{directory}", options.directory
 
     # Apply simple functions
-    for key, val of @options
+    for key, val of options
       if "#{val}".match /\|basename$/
         val          = val.replace /\|basename$/, ""
         val          = path.basename val
-        @options[key] = val
+        options[key] = val
 
 
-    @options.directory = path.resolve @options.directory
-    @options.recipe    = path.resolve @options.directory, @options.recipe
-    @options.tools     = path.resolve @options.directory, @options.tools
+    options.directory = path.resolve options.directory
+    options.recipe    = path.resolve options.directory, options.recipe
+    options.tools     = path.resolve options.directory, options.tools
 
-    @options.root      = path.resolve "#{__dirname}/.."
+    options.root      = path.resolve "#{__dirname}/.."
 
-    if !@options.tags?
-      @options.tags = ""
+    if !options.tags?
+      options.tags = ""
 
-    cb null
+    nextCb null, options
 
-  _validate: (cb) ->
-    if !@options?.directory?
-      return cb new Error "'#{@options?.directory?}' is not a valid directory"
+  _validate: (options, nextCb) ->
+    if !options?.directory?
+      return nextCb new Error "'#{options?.directory?}' is not a valid directory"
 
     async.series [
-      (callback) =>
+      (callback) ->
         # Bail out with help if command does not exist
-        if @options?._?[0] not of Frey.commands
-          return callback new Error "'#{@options?._?[0]}' is not a supported Frey command"
+        if options?._?[0] not of Frey.commands
+          return callback new Error "'#{options?._?[0]}' is not a supported Frey command"
 
         callback null
-      (callback) =>
+      (callback) ->
         # Need a local .git dir
-        gitDir = "#{@options.directory}/.git"
+        gitDir = "#{options.directory}/.git"
         fs.stat gitDir, (err, stats) ->
           if err
             return callback new Error "Error while checking for '#{gitDir}'"
@@ -96,80 +96,98 @@ class Frey
             return callback new Error "'#{gitDir}' is not a directory"
 
           callback null
-    ], cb
+    ], (err) ->
+      nextCb err, options
 
-  _setup: (cb) ->
+  _setup: (options, nextCb) ->
     async.parallel [
-      (callback) =>
-        mkdirp @options.tools, callback
-    ], cb
+      (callback) ->
+        mkdirp options.tools, callback
+    ], (err) ->
+      nextCb err, options
 
-  _filterChain: (cb) ->
-    cmd   = @options._[0]
+  _filterChain: (options, nextCb) ->
+    cmd   = options._[0]
     index = Frey.chain.indexOf(cmd)
 
+
     if index < 0
-      return cb null, [ cmd ]
-    else if @options.bail
-      length = index + 1
+      options.filteredChain = [ cmd ]
     else
-      length = Frey.chain.length
+      if options.bail
+        length = index + 1
+      else
+        length = Frey.chain.length
 
-    filteredChain = Frey.chain.slice index, length
+      options.filteredChain = Frey.chain.slice index, length
 
-    cb null, filteredChain
+    nextCb null, options
 
-  _runtimeVars: (cb) ->
+  _runtimeVars: (options, nextCb) ->
     @runtime.os =
       platform    : os.platform()
       hostname    : os.hostname()
       arch        : "#{os.arch()}".replace "x64", "amd64"
 
     @runtime.ssh =
-      keypair_name: "#{@options.app}"
+      keypair_name: "#{options.app}"
       user        : "ubuntu"
-      email       : "hello@#{@options.app}"
-      keyprv_file : "#{@options.recipe}/#{@options.app}.pem"
-      keypub_file : "#{@options.recipe}/#{@options.app}.pub"
+      email       : "hello@#{options.app}"
+      keyprv_file : "#{options.recipe}/#{options.app}.pem"
+      keypub_file : "#{options.recipe}/#{options.app}.pub"
 
       # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       # keypub_fingerprint: "$(ssh-keygen -lf ${FREY__RUNTIME__SSH_KEYPUB_FILE} | awk '{print $2}')"
 
-    cb()
+    nextCb null, options
+
+  _runChain: (options, nextCb) ->
+    debug "Will run: %o", options.filteredChain
+
+    classes = {}
+    methods = []
+
+    for command in options.filteredChain
+      do (command) =>
+        className        = inflection.classify command
+        path             = "./commands/#{command}"
+        obj              = new (require path) command, options, @runtime
+        classes[command] = obj
+        actions          = classes[command].boot.concat "run"
+
+        debug
+          actions: actions
+
+        for action in actions
+          # do (action, command) =>
+          methods.push (callback) =>
+            classes[command][action].bind classes[command], (err, result) =>
+              debug
+                err   :err
+                result:result
+
+              append          = {}
+              append[command] = result
+              @runtime        = _.extend @runtime, append
+              callback err
+
+    console.log methods[0]
+    debug
+      method: methods[0]
+      methods: methods
+
+    async.series methods, nextCb
 
   run: (cb) ->
-    async.series [
+    async.waterfall [
+      async.constant(@options)
       @_defaults.bind(this)
       @_normalize.bind(this)
       @_validate.bind(this)
       @_setup.bind(this)
       @_runtimeVars.bind(this)
       @_filterChain.bind(this)
-    ], (err, data) =>
-      if err
-        return cb err
-
-      filteredChain = data.pop()
-      debug "Will run: %o", filteredChain
-
-      classes = {}
-      methods = []
-
-      for command in filteredChain
-        do (command) =>
-          className        = inflection.classify command
-          path             = "./commands/#{command}"
-          classes[command] = new (require path) command, @options, @runtime
-
-          for action in [ "boot", "run" ]
-            do (action) =>
-              methods.push (callback) =>
-                classes[command][action] (err, result) =>
-                  append          = {}
-                  append[command] = result
-                  @runtime        = _.extend @runtime, append
-                  callback err
-
-      async.series methods, cb
+      @_runChain.bind(this)
+    ], cb
 
 module.exports = Frey

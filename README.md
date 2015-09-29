@@ -1,5 +1,17 @@
 # Frey
 
+- project
+- app
+- infra ifr
+- config cfg
+- compile
+- status
+
+- build
+- deploy
+- dev
+
+
 <!-- badges/ -->
 [![Build Status](https://travis-ci.org/kvz/frey.svg?branch=master)](https://travis-ci.org/kvz/frey)
 [![Coverage Status](https://coveralls.io/repos/kvz/frey/badge.svg?branch=master&service=github)](https://coveralls.io/github/kvz/frey?branch=master)
@@ -8,8 +20,40 @@
 [![Development Dependency Status](https://david-dm.org/kvz/frey/dev-status.png?theme=shields.io)](https://david-dm.org/kvz/frey#info=devDependencies)
 <!-- /badges -->
 
+Frey let's you launch web infrastructure with a single command. It uses
+Ansible & Hashicorp's Terraform to to the heavy lifting.
 
-Named after the Norse fertility god, Frey makes it easy to conceive web infrastructure.
+
+## Comparison
+
+### With Otto
+
+When compared to Hashicorp's recently launched Otto, which also 
+uses Terraform under the hood, Frey fills a void for people that:
+
+ - Feel Otto is too opinionated about configuration for their needs
+ - Feel the Customizations Otto offers are too high level for their needs and would like to have more fine grained control
+ - Would like to deploy to other cloud vendors besides AWS
+ - Don't want to rely purely on disk images / containers to provision their
+servers
+ - Want a tighter grip on dependencies via version pinning
+ - Had hoped on more than bash scripts / Dockerfiles to do actual provisioning, such as the declarative style of Ansible Playbooks
+ - Want to reuse existing Terraform or Ansible scripts, but would like some glue between those
+ 
+It's possible that over time, enough of these differences will dissolve so that we can 
+dissolve Frey as well.
+
+Frey has some opinionated and magical parts, but less so than Otto.
+
+You can define all of this in a single `.toml` recipe, or choose to bundle your existing
+Terraform `.tf` and Ansible `.yml` inside a recipe directory, that Frey will use to create
+web infrastructure.
+
+What Frey is not good at:
+
+ - Scaling Microservices
+ - Dependencies between projects
+
 
 ## Install
 
@@ -125,6 +169,8 @@ For now, we only support
 
  - [x] Coveralls
  - [x] Chalk
+ - [ ] `frey` -> `.frey`?
+ - [ ] Vagrant support
  - [ ] Meaningful output without DEBUG
  - [ ] Glob & extend all \*.toml. Infra = terraform Config = Ansible.
  - [ ] @boot can be a list of functions in an array that's passed to async.series
