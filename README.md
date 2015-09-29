@@ -1,18 +1,5 @@
 # Frey
 
-- project
-- app
-- infra ifr
-- config cfg
-- compile
-- status
-- module
-
-- build
-- deploy
-- dev
-
-
 <!-- badges/ -->
 [![Build Status](https://travis-ci.org/kvz/frey.svg?branch=master)](https://travis-ci.org/kvz/frey)
 [![Coverage Status](https://coveralls.io/repos/kvz/frey/badge.svg?branch=master&service=github)](https://coveralls.io/github/kvz/frey?branch=master)

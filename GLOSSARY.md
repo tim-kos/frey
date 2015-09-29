@@ -1,0 +1,11 @@
+- project
+- app
+- infra ifr
+- config cfg
+- compile
+- status
+- module
+
+- build
+- deploy
+- dev
