@@ -20,8 +20,8 @@ class Command extends Base
     runScript = "#{@options.recipe}/#{@name}.sh"
     fs.stat runScript, (err, stat) =>
       if err
-        process.stdout.write chalk.dim "Running default as I found no '#{runScript}'"
-        process.stdout.write chalk.dim "\n"
+        @_out chalk.dim "Running default as I found no '#{runScript}'"
+        @_out chalk.dim "\n"
         runScript = "#{@options.root}/bin/control.sh"
 
       @_exeScript runScript, [ @name ], cb
@@ -43,27 +43,27 @@ class Command extends Base
       "-o", "pipefail"
       "-o", "errexit"
       "-o", "nounset"
-      shellPath
     ]
 
+    cmdArgs    = cmdArgs.concat shellPath
     cmdArgs    = cmdArgs.concat shellArgs
     bash       = spawn "bash", cmdArgs, opts
     lastStderr = []
     lastStdout = []
 
-    bash.stdout.on "data", (data) ->
+    bash.stdout.on "data", (data) =>
       if data?
         lastStdout.push "#{data}"
         lastStdout = _.takeRight lastStdout, 3
 
-      process.stdout.write chalk.gray(data)
+      @_out chalk.gray(data)
 
-    bash.stderr.on "data", (data) ->
+    bash.stderr.on "data", (data) =>
       if data?
         lastStderr.push "#{data}"
         lastStderr = _.takeRight lastStderr, 3
 
-      process.stdout.write chalk.red(data)
+      @_out chalk.red(data)
 
     bash.on "close", (code) ->
       if code != 0

@@ -14,6 +14,7 @@ class Plan extends Command
     "readTomlFiles"
     "mergeToml"
     "splitToml"
+    "gatherTerraformArgs"
   ]
 
   findTomlFiles: (cb) ->
@@ -64,22 +65,45 @@ class Plan extends Command
         fs.writeFile filePath, encoded, callback
     ], cb
 
+  gatherTerraformArgs: (cb) ->
+
+
+    cb null
+
+
   run: (cb) ->
     debug
       tomlContents : @tomlContents
       tomlFiles    : @tomlFiles
       filesWritten : @filesWritten
+      options      : @options
+      runtime      : @runtime
 
+    # __planFile="${FREY__OPTIONS__RECIPE}/terraform.plan"
+    #
+    # terraformArgs="${terraformArgs} -var ${var}=${!var}"
+    #   rm -f "${__planFile}"
+    #
+    #   bash -c ""${__terraformExe}" plan -refresh=false ${terraformArgs} -out "${__planFile}""
 
-    # if @tomlExists
-    #   buf    = fs.readFileSync @tomlExists, "utf-8"
-    #
-    #   recipe = TOML.parse buf
-    #   fs.writeFileSync "#{@options.recipe}/ansible.yml", YAML.safeDump recipe.ansible
-    #   fs.writeFileSync "#{@options.recipe}/terraform.json",
-    #     JSON.stringify recipe.terraform, null, "  "
-    #
-    #   debug @options
-    return cb null
+    terraformArgs = []
+    terraformArgs.push "-var x=y"
+
+    __terraformExe = "#{@options.tools}/terraform/terraform"
+    __planFile     = "#{@options.recipe}/terraform.plan"
+    cmd = [
+      __terraformExe
+      "plan"
+      "-refresh=false"
+      "-out=#{__planFile}"
+    ]
+    cmd = cmd.concat terraformArgs
+    cmd = cmd.join " "
+
+    @_exeScript ["-c"], [ cmd ], (err) ->
+      if err
+        return cb err
+
+      cb null
 
 module.exports = Plan
