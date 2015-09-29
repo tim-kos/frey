@@ -45,13 +45,7 @@ class Command
       shellPath
     ]
 
-    cmdArgs = cmdArgs.concat shellArgs
-
-    process.stdout.write chalk.gray "--> "
-    process.stdout.write chalk.gray "#{@runtime.os.hostname} - "
-    process.stdout.write chalk.green "#{@name}"
-    process.stdout.write chalk.green "\n"
-
+    cmdArgs    = cmdArgs.concat shellArgs
     bash       = spawn "bash", cmdArgs, opts
     lastStderr = []
     lastStdout = []

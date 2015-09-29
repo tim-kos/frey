@@ -6,6 +6,7 @@ fs         = require "fs"
 path       = require "path"
 mkdirp     = require "mkdirp"
 os         = require "os"
+chalk      = require "chalk"
 
 class Frey
   @chain = [
@@ -142,41 +143,44 @@ class Frey
     nextCb null, options
 
   _runChain: (options, nextCb) ->
-    debug "Will run: %o", options.filteredChain
-
-    classes = {}
-    methods = []
+    @commands = {}
+    methods   = []
 
     for command in options.filteredChain
-      do (command) =>
-        className        = inflection.classify command
-        path             = "./commands/#{command}"
-        obj              = new (require path) command, options, @runtime
-        classes[command] = obj
-        actions          = classes[command].boot.concat "run"
+      className          = inflection.classify command
+      path               = "./commands/#{command}"
+      obj                = new (require path) command, options, @runtime
+      @commands[command] = obj
+      actions            = @commands[command].boot.concat "run"
 
-        debug
-          actions: actions
+      for action in actions
+        methods.push "#{command}.#{action}"
 
-        for action in actions
-          # do (action, command) =>
-          methods.push (callback) =>
-            classes[command][action].bind classes[command], (err, result) =>
-              debug
-                err   :err
-                result:result
+    debug "Will run: %o", methods
 
-              append          = {}
-              append[command] = result
-              @runtime        = _.extend @runtime, append
-              callback err
+    async.eachSeries methods, @_runOne.bind(this), nextCb
 
-    console.log methods[0]
-    debug
-      method: methods[0]
-      methods: methods
+  _runOne: (method, cb) ->
+    [ command, action ] = method.split "."
+    obj                 = @commands[command]
+    func                = obj[action].bind(obj)
 
-    async.series methods, nextCb
+    process.stdout.write chalk.gray "--> "
+    process.stdout.write chalk.gray "#{@runtime.os.hostname} - "
+    if action == "run"
+      process.stdout.write chalk.green "#{command}"
+    else
+      process.stdout.write chalk.green "#{method}"
+
+    process.stdout.write chalk.green "\n"
+
+    func (err, result) =>
+      if action == "run"
+        append          = {}
+        append[command] = result
+        @runtime = _.extend @runtime, append
+
+      cb err
 
   run: (cb) ->
     async.waterfall [
@@ -188,6 +192,7 @@ class Frey
       @_runtimeVars.bind(this)
       @_filterChain.bind(this)
       @_runChain.bind(this)
-    ], cb
+    ], (err, results) ->
+      cb err
 
 module.exports = Frey

@@ -40,23 +40,25 @@ go run cmd/hcl2json/main.go "${tfFile}" > "${jsonFile}"
 
 cd "${GOPATH}/src/github.com/dbohdan/remarshal"
 echo "Writing '${tomlFile}'"
-go run remarshal.go -if json -of toml -wrap terraform -i "${jsonFile}" > "${tomlFile}"
+go run remarshal.go -if json -of toml -wrap infra -i "${jsonFile}" > "${tomlFile}"
 
-cd "${GOPATH}/src/github.com/dbohdan/remarshal"
-echo "Writing '${yamlFile}'"
-go run remarshal.go -if json -of yaml -wrap terraform -i "${jsonFile}" > "${yamlFile}"
+# cd "${GOPATH}/src/github.com/dbohdan/remarshal"
+# echo "Writing '${yamlFile}'"
+# go run remarshal.go -if json -of yaml -wrap infra -i "${jsonFile}" > "${yamlFile}"
 
 echo "Appending '${tomlFile}'"
-go run remarshal.go -if yaml -of toml -wrap ansible -i "${ansFile}" >> "${tomlFile}"
+go run remarshal.go -if yaml -of toml -wrap config -i "${ansFile}" >> "${tomlFile}"
 
-echo "Appending '${yamlFile}'"
-go run remarshal.go -if yaml -of yaml -wrap ansible -i "${ansFile}" >> "${yamlFile}"
 
-echo "Writing '${jsonFile}'"
-go run remarshal.go -if yaml -of json -i "${yamlFile}" > "${jsonFile}"
+gsed -i -e 's@\[\[config\]\]@\[config\]@' "${tomlFile}"
+# echo "Appending '${yamlFile}'"
+# go run remarshal.go -if yaml -of yaml -wrap config -i "${ansFile}" >> "${yamlFile}"
 
-echo "Writing '${csonFile}'"
-json2cson "${jsonFile}" > "${csonFile}"
+# echo "Writing '${jsonFile}'"
+# go run remarshal.go -if yaml -of json -i "${yamlFile}" > "${jsonFile}"
 
-# echo "Removing '${jsonFile}'"
-# rm -f "${jsonFile}"
+# echo "Writing '${csonFile}'"
+# json2cson "${jsonFile}" > "${csonFile}"
+
+echo "Removing '${jsonFile}'"
+rm -f "${jsonFile}"
