@@ -157,12 +157,12 @@ For now, we only support
 
  - [x] Coveralls
  - [x] Chalk
+ - [x] Glob & extend all \*.toml. Infra = terraform Config = Ansible.
+ - [x] @boot can be a list of functions in an array that's passed to async.series
+ - [ ] `./Freyfile.toml` ?
  - [ ] Runtime can be a command module
- - [ ] `frey` -> `.frey`?
  - [ ] Vagrant support
  - [ ] Tools can be linked to global Frey version vs inside each project
  - [ ] Meaningful output without DEBUG
- - [ ] Glob & extend all \*.toml. Infra = terraform Config = Ansible.
- - [ ] @boot can be a list of functions in an array that's passed to async.series
  - [ ] Switch to local npm install if available via LiftOff
  - [ ] Linux workstation support

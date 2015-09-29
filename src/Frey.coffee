@@ -1,14 +1,18 @@
-debug      = require("depurar")("frey")
+Depurar    = require("depurar")
+debug      = Depurar("frey")
+info       = Depurar("frey")
 inflection = require "inflection"
 async      = require "async"
+util       = require "util"
 _          = require "lodash"
 fs         = require "fs"
 path       = require "path"
 mkdirp     = require "mkdirp"
 os         = require "os"
 chalk      = require "chalk"
+Base       = require "./Base"
 
-class Frey
+class Frey extends Base
   @chain = [
     "prepare"
     "init"
@@ -41,8 +45,9 @@ class Frey
     remote    : "Execute a remote command - or opens console"
 
   constructor: (options) ->
-    @options  = options
-    @runtime = {}
+    @options         = options
+    @runtime         = {}
+    @methodDelimiter = "->"
 
   _defaults: (options, nextCb) ->
     options      ?= {}
@@ -154,31 +159,27 @@ class Frey
       actions            = @commands[command].boot.concat "run"
 
       for action in actions
-        methods.push "#{command}.#{action}"
+        methods.push "#{command}#{@methodDelimiter}#{action}"
 
-    debug "Will run: %o", methods
+    @_out "--> Will run: %o\n", methods
 
     async.eachSeries methods, @_runOne.bind(this), nextCb
 
   _runOne: (method, cb) ->
-    [ command, action ] = method.split "."
+    [ command, action ] = method.split "#{@methodDelimiter}"
     obj                 = @commands[command]
     func                = obj[action].bind(obj)
 
-    process.stdout.write chalk.gray "--> "
-    process.stdout.write chalk.gray "#{@runtime.os.hostname} - "
-    if action == "run"
-      process.stdout.write chalk.green "#{command}"
-    else
-      process.stdout.write chalk.green "#{method}"
-
-    process.stdout.write chalk.green "\n"
+    @_out chalk.gray "--> "
+    @_out chalk.gray "#{@runtime.os.hostname} - "
+    @_out chalk.green "#{method}"
+    @_out chalk.green "\n"
 
     func (err, result) =>
       if action == "run"
         append          = {}
         append[command] = result
-        @runtime = _.extend @runtime, append
+        @runtime        = _.extend @runtime, append
 
       cb err
 

@@ -5,8 +5,9 @@ _               = require "lodash"
 flatten         = require "flat"
 inflection      = require "inflection"
 fs              = require "fs"
+Base            = require "./Base"
 
-class Command
+class Command extends Base
   constructor: (name, options, runtime) ->
     @name    = name
     @options = options
