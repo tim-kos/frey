@@ -5,60 +5,55 @@ set -o errexit
 set -o nounset
 # set -o xtrace
 
-project="${1}"
-tfFile="${2}"
-ansFile="${3}"
+project="${1:-tusd}"
+tfFile="${2:-/Users/kvz/code/infra-tusd/envs/production/infra.tf}"
+ansFile="${3:-/Users/kvz/code/infra-tusd/envs/production/main.yml}"
 tfDir="$(dirname "${tfFile}")"
 tfBase="$(basename "${tfFile}" .tf)"
-jsonFile="${tfDir}/${tfBase}.json"
+jsonFile="${tfDir}/${tfBase}.tf.json"
 csonFile="${tfDir}/${tfBase}.cson"
-tomlFile="${tfDir}/${tfBase}.toml"
+tomlFile="${tfDir}/frey.toml"
+tomlFileConfig="${tfDir}/frey-config.toml"
+tomlFileInfra="${tfDir}/frey-infra.toml"
 yamlFile="${tfDir}/${tfBase}.yaml"
 
-if egrep 'variable "[A-Z_]+" {}' "${tfFile}"; then
-  echo "Please first add descriptions or defaults to your variables"
-  echo "\${EDITOR} \"${tfFile}\""
-  exit 1
-fi
+which hcltool || pip install pyhcl
 
 cd "${GOPATH}"
-if [ ! -d "${GOPATH}/src/github.com/hashicorp/terraform" ]; then
-  go get github.com/hashicorp/terraform
-fi
 if [ ! -d "${GOPATH}/src/github.com/dbohdan/remarshal" ]; then
   go get github.com/dbohdan/remarshal
 fi
-if [ ! -d "${GOPATH}/src/github.com/hashicorp/hcl" ]; then
-  mkdir -p "${GOPATH}/src/github.com/hashicorp"
-  git clone https://github.com/hashicorp/hcl.git
-  cd "${GOPATH}/src/github.com/hashicorp" && git checkout pr/24
-fi
 
-cd "${GOPATH}/src/github.com/hashicorp/hcl"
 echo "Writing '${jsonFile}'"
-go run cmd/hcl2json/main.go "${tfFile}" > "${jsonFile}"
+hcltool "${tfFile}" "${jsonFile}"
 
 cd "${GOPATH}/src/github.com/dbohdan/remarshal"
+echo "Writing '${tomlFileInfra}'"
+go run remarshal.go -if json -of toml -wrap infra -i "${jsonFile}" > "${tomlFileInfra}"
+
+echo "Writing '${tomlFileConfig}'"
+go run remarshal.go -if yaml -of toml -wrap config -i "${ansFile}" > "${tomlFileConfig}"
+
 echo "Writing '${tomlFile}'"
-go run remarshal.go -if json -of toml -wrap infra -i "${jsonFile}" > "${tomlFile}"
-
-# cd "${GOPATH}/src/github.com/dbohdan/remarshal"
-# echo "Writing '${yamlFile}'"
-# go run remarshal.go -if json -of yaml -wrap infra -i "${jsonFile}" > "${yamlFile}"
-
-echo "Appending '${tomlFile}'"
-go run remarshal.go -if yaml -of toml -wrap config -i "${ansFile}" >> "${tomlFile}"
+cat "${tomlFileInfra}" "${tomlFileConfig}"  > "${tomlFile}"
 
 
-gsed -i -e 's@\[\[config\]\]@\[config\]@' "${tomlFile}"
-# echo "Appending '${yamlFile}'"
-# go run remarshal.go -if yaml -of yaml -wrap config -i "${ansFile}" >> "${yamlFile}"
 
-# echo "Writing '${jsonFile}'"
-# go run remarshal.go -if yaml -of json -i "${yamlFile}" > "${jsonFile}"
+# gsed -i -e 's@\[\[@\[@' "${tomlFile}"
+# gsed -i -e 's@\]\]@\]@' "${tomlFile}"
+#
+# cat "${tomlFile}" | perl -pn -e 'BEGIN{undef $/;} s/\s+\[[a-z\.\_]+\]\n\n/\n\n/g' |tee "${tomlFile}" > /dev/null
+#
+# replace '[infra.resource.aws_security_group.fw-infra-tusd-main.ingress]' '[[infra.resource.aws_security_group.fw-infra-tusd-main.ingress]]' -- "${tomlFile}" "${tomlFile}"
 
-# echo "Writing '${csonFile}'"
-# json2cson "${jsonFile}" > "${csonFile}"
+cat "${tomlFile}"
 
-echo "Removing '${jsonFile}'"
-rm -f "${jsonFile}"
+echo "Moving '${tfFile}'"
+mv "${tfFile}" "${tfFile}.bak-$(date)" 
+
+cd ~/code/infra-tusd/envs/production
+/Users/kvz/code/infra-tusd/bin/terraform/terraform plan \
+  -refresh=false \
+  -out=/Users/kvz/code/infra-tusd/envs/production/terraform.plan \
+  -var x=y
+exit 0

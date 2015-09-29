@@ -159,6 +159,8 @@ For now, we only support
  - [x] Chalk
  - [x] Glob & extend all \*.toml. Infra = terraform Config = Ansible.
  - [x] @boot can be a list of functions in an array that's passed to async.series
+ - [x] Get a tf -> tf.json to launch, before splitting out over yml/toml etc
+ - [ ] Patch up toml -> json
  - [ ] `./Freyfile.toml` ?
  - [ ] Runtime can be a command module
  - [ ] Vagrant support
