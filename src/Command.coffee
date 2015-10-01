@@ -26,7 +26,7 @@ class Command extends Base
 
       @_exeScript runScript, [ @name ], cb
 
-  _exeScript: (shellPath, shellArgs, cb) ->
+  _buildChildEnv: ->
     childEnv = {}
 
     childEnv = _.extend childEnv,
@@ -34,9 +34,12 @@ class Command extends Base
       @_toEnvFormat(@runtime, "runtime"),
       @_toEnvFormat(@options, "options")
 
+    return childEnv
+
+  _exeScript: (shellPath, shellArgs, cb) ->
     opts =
       cwd  : @dir
-      env  : childEnv
+      env  : @_buildChildEnv()
       stdio: [ "ignore", "pipe", "pipe" ]
 
     cmdArgs = [

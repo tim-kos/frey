@@ -131,16 +131,20 @@ class Frey extends Base
 
   _runtimeVars: (options, nextCb) ->
     @runtime.os =
-      platform    : os.platform()
-      hostname    : os.hostname()
-      arch        : "#{os.arch()}".replace "x64", "amd64"
+      platform     : os.platform()
+      hostname     : os.hostname()
+      arch         : "#{os.arch()}".replace "x64", "amd64"
+
+    @runtime.paths =
+      terraformExe : "#{@options.tools}/terraform/terraform"
+      planFile     : "#{@options.recipe}/terraform.plan"
 
     @runtime.ssh =
-      keypair_name: "#{options.app}"
-      user        : "ubuntu"
-      email       : "hello@#{options.app}"
-      keyprv_file : "#{options.recipe}/#{options.app}.pem"
-      keypub_file : "#{options.recipe}/#{options.app}.pub"
+      keypair_name : "#{options.app}"
+      user         : "ubuntu"
+      email        : "hello@#{options.app}"
+      keyprv_file  : "#{options.recipe}/#{options.app}.pem"
+      keypub_file  : "#{options.recipe}/#{options.app}.pub"
 
       # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       # keypub_fingerprint: "$(ssh-keygen -lf ${FREY__RUNTIME__SSH_KEYPUB_FILE} | awk '{print $2}')"

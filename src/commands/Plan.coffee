@@ -66,43 +66,30 @@ class Plan extends Command
     ], cb
 
   gatherTerraformArgs: (cb) ->
+    @terraformArgs = []
 
+    for key, val of @_buildChildEnv()
+      if "#{key}".match /^FREY_[A-Z_0-9]+$/
+        val = "#{val}"
+        @terraformArgs.push "-var '#{key}=#{val.replace("'", "\\'")}'"
 
     cb null
 
-
   run: (cb) ->
-    debug
-      tomlContents : @tomlContents
-      tomlFiles    : @tomlFiles
-      filesWritten : @filesWritten
-      options      : @options
-      runtime      : @runtime
-
-    # __planFile="${FREY__OPTIONS__RECIPE}/terraform.plan"
-    #
-    # terraformArgs="${terraformArgs} -var ${var}=${!var}"
-    #   rm -f "${__planFile}"
-    #
-    #   bash -c ""${__terraformExe}" plan -refresh=false ${terraformArgs} -out "${__planFile}""
-
-    terraformArgs = []
-    terraformArgs.push "-var x=y"
-
-    __terraformExe = "#{@options.tools}/terraform/terraform"
-    __planFile     = "#{@options.recipe}/terraform.plan"
     cmd = [
-      __terraformExe
+      @runtime.paths.terraformExe
       "plan"
       "-refresh=false"
-      "-out=#{__planFile}"
+      "-out=#{@runtime.paths.planFile}"
     ]
-    cmd = cmd.concat terraformArgs
+    cmd = cmd.concat @terraformArgs
     cmd = cmd.join " "
 
-    @_exeScript ["-c"], [ cmd ], (err) ->
+    @_exeScript ["-c"], [ cmd ], (err) =>
       if err
         return cb err
+
+      @_out "--> Saved plan as '#{@runtime.paths.planFile}'\n"
 
       cb null
 

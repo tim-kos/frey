@@ -160,11 +160,12 @@ For now, we only support
  - [x] Glob & extend all \*.toml. Infra = terraform Config = Ansible.
  - [x] @boot can be a list of functions in an array that's passed to async.series
  - [x] Get a tf -> tf.json to launch, before splitting out over yml/toml etc
- - [ ] Patch up toml -> json
+ - [x] Patch up toml -> json
+ - [x] Pave way to meaningful output without DEBUG
+ - [ ] @boot can/should be waterfall
  - [ ] `./Freyfile.toml` ?
  - [ ] Runtime can be a command module
  - [ ] Vagrant support
- - [ ] Tools can be linked to global Frey version vs inside each project
- - [ ] Meaningful output without DEBUG
+ - [ ] Tools can be bundled with global Frey version vs inside each project
  - [ ] Switch to local npm install if available via LiftOff
  - [ ] Linux workstation support

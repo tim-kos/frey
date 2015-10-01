@@ -19,9 +19,9 @@
     {
       "aws": [
         {
-          "access_key": "${var.TSD_AWS_ACCESS_KEY}",
+          "access_key": "${var.FREY_AWS_ACCESS_KEY}",
           "region": "us-east-1",
-          "secret_key": "${var.TSD_AWS_SECRET_KEY}"
+          "secret_key": "${var.FREY_AWS_SECRET_KEY}"
         }
       ]
     }
@@ -35,18 +35,18 @@
               "ami": "${lookup(var.ami, var.region)}",
               "connection": [
                 {
-                  "key_file": "${var.TSD_SSH_KEY_FILE}",
+                  "key_file": "${var.FREY_SSH_KEY_FILE}",
                   "user": "ubuntu"
                 }
               ],
               "instance_type": "c3.large",
-              "key_name": "${var.TSD_SSH_KEY_NAME}",
+              "key_name": "${var.FREY_SSH_KEY_NAME}",
               "security_groups": [
                 "fw-infra-tusd-main"
               ],
               "tags": [
                 {
-                  "Name": "${var.TSD_DOMAIN}"
+                  "Name": "${var.FREY_DOMAIN}"
                 }
               ]
             }
@@ -59,13 +59,13 @@
         {
           "www": [
             {
-              "name": "${var.TSD_DOMAIN}",
+              "name": "${var.FREY_DOMAIN}",
               "records": [
                 "${aws_instance.infra-tusd-server.public_dns}"
               ],
               "ttl": "300",
               "type": "CNAME",
-              "zone_id": "${var.TSD_AWS_ZONE_ID}"
+              "zone_id": "${var.FREY_AWS_ZONE_ID}"
             }
           ]
         }
@@ -106,37 +106,37 @@
   ],
   "variable": [
     {
-      "TSD_AWS_ACCESS_KEY": [
+      "FREY_AWS_ACCESS_KEY": [
         {}
       ]
     },
     {
-      "TSD_AWS_SECRET_KEY": [
+      "FREY_AWS_SECRET_KEY": [
         {}
       ]
     },
     {
-      "TSD_AWS_ZONE_ID": [
+      "FREY_AWS_ZONE_ID": [
         {}
       ]
     },
     {
-      "TSD_DOMAIN": [
+      "FREY_DOMAIN": [
         {}
       ]
     },
     {
-      "TSD_SSH_USER": [
+      "FREY_SSH_USER": [
         {}
       ]
     },
     {
-      "TSD_SSH_KEY_FILE": [
+      "FREY_SSH_KEY_FILE": [
         {}
       ]
     },
     {
-      "TSD_SSH_KEY_NAME": [
+      "FREY_SSH_KEY_NAME": [
         {}
       ]
     },
