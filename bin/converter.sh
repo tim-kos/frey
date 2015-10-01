@@ -49,7 +49,7 @@ cat "${tomlFileInfra}" "${tomlFileConfig}"  > "${tomlFile}"
 cat "${tomlFile}"
 
 echo "Moving '${tfFile}'"
-mv "${tfFile}" "${tfFile}.bak-$(date)" 
+mv "${tfFile}" "${tfFile}.bak-$(date +%s)" 
 
 cd ~/code/infra-tusd/envs/production
 /Users/kvz/code/infra-tusd/bin/terraform/terraform plan \
