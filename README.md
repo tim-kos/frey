@@ -162,6 +162,9 @@ For now, we only support
  - [x] Get a tf -> tf.json to launch, before splitting out over yml/toml etc
  - [x] Patch up toml -> json
  - [x] Pave way to meaningful output without DEBUG
+ - [ ] Port all of control.sh
+ - [ ] Indent stdout/err
+ - [ ] More tests!
  - [ ] @boot can/should be waterfall
  - [ ] `./Freyfile.toml` ?
  - [ ] Runtime can be a command module

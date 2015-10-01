@@ -131,23 +131,34 @@ class Frey extends Base
 
   _runtimeVars: (options, nextCb) ->
     @runtime.os =
-      platform     : os.platform()
-      hostname     : os.hostname()
-      arch         : "#{os.arch()}".replace "x64", "amd64"
+      platform             : os.platform()
+      hostname             : os.hostname()
+      arch                 : "#{os.arch()}".replace "x64", "amd64"
+
+    @runtime.versions =
+      ansible              : "1.9.2"
+      terraform            : "0.6.3"
+      terraformInventory   : "0.5"
 
     @runtime.paths =
-      terraformExe : "#{@options.tools}/terraform/terraform"
-      planFile     : "#{@options.recipe}/terraform.plan"
+      terraformExe         : "#{@options.tools}/terraform/terraform"
+      terraformInventoryExe: "#{@options.tools}/bin/terraform-inventory-#{@runtime.versions.terraformInventory}-#{@runtime.os.platform}-#{@runtime.os.arch}"
+      ansibleExe           : "ansible"
+      ansiblePlaybookExe   : "ansible-playbook"
+      ansibleCfg           : "#{@options.directory}/ansible.cfg"
+      planFile             : "#{@options.recipe}/terraform.plan"
+      stateFile            : "#{@options.recipe}/terraform.tfstate"
+      playbookFile         : "#{@options.recipe}/main.yml"
 
     @runtime.ssh =
-      keypair_name : "#{options.app}"
-      user         : "ubuntu"
-      email        : "hello@#{options.app}"
-      keyprv_file  : "#{options.recipe}/#{options.app}.pem"
-      keypub_file  : "#{options.recipe}/#{options.app}.pub"
+      keypair_name         : "#{options.app}"
+      user                 : "ubuntu"
+      email                : "hello@#{options.app}"
+      keyprv_file          : "#{options.recipe}/#{options.app}.pem"
+      keypub_file          : "#{options.recipe}/#{options.app}.pub"
 
       # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
-      # keypub_fingerprint: "$(ssh-keygen -lf ${FREY__RUNTIME__SSH_KEYPUB_FILE} | awk '{print $2}')"
+      # keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
 
     nextCb null, options
 

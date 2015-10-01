@@ -20,7 +20,7 @@ class Command extends Base
     runScript = "#{@options.recipe}/#{@name}.sh"
     fs.stat runScript, (err, stat) =>
       if err
-        @_out chalk.dim "Running default as I found no '#{runScript}'"
+        @_out chalk.dim "Running default control.sh action as I found no '#{runScript}'"
         @_out chalk.dim "\n"
         runScript = "#{@options.root}/bin/control.sh"
 
