@@ -142,13 +142,19 @@ class Frey extends Base
 
     @runtime.paths =
       terraformExe         : "#{@options.tools}/terraform/terraform"
-      terraformInventoryExe: "#{@options.tools}/bin/terraform-inventory-#{@runtime.versions.terraformInventory}-#{@runtime.os.platform}-#{@runtime.os.arch}"
       ansibleExe           : "ansible"
       ansiblePlaybookExe   : "ansible-playbook"
       ansibleCfg           : "#{@options.directory}/ansible.cfg"
       planFile             : "#{@options.recipe}/terraform.plan"
       stateFile            : "#{@options.recipe}/terraform.tfstate"
-      playbookFile         : "#{@options.recipe}/main.yml"
+      infraFile            : "#{@options.recipe}/infra.tf.json"
+      playbookFile         : "#{@options.recipe}/config.yml"
+      terraformInventoryExe: [
+        "#{@options.tools}/bin/terraform-inventory"
+        @runtime.versions.terraformInventory
+        @runtime.os.platform
+        @runtime.os.arch
+      ].join "-"
 
     @runtime.ssh =
       keypair_name         : "#{options.app}"

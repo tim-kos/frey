@@ -52,17 +52,15 @@ class Plan extends Command
         if !encoded
           return callback new Error "Unable to convert recipe to infra json"
 
-        filePath = "#{@options.recipe}/infra.tf.json"
-        @filesWritten.push filePath
-        fs.writeFile filePath, encoded, callback
+        @filesWritten.push @runtime.paths.infraFile
+        fs.writeFile @runtime.paths.infraFile, encoded, callback
       (callback) =>
         encoded = YAML.safeDump @tomlMerged.config
         if !encoded
           return callback new Error "Unable to convert recipe to config yml"
 
-        filePath = "#{@options.recipe}/config.yml"
-        @filesWritten.push filePath
-        fs.writeFile filePath, encoded, callback
+        @filesWritten.push @runtime.paths.playbookFile
+        fs.writeFile @runtime.paths.playbookFile, encoded, callback
     ], cb
 
   gatherTerraformArgs: (cb) ->
