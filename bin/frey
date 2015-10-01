@@ -99,6 +99,10 @@ frey = new Frey options
 frey.run (err) ->
   if err
     # yargs.showHelp()
-    console.error err
+    console.error ""
+    console.error "--> Exiting with error: #{err.message}"
+    console.error "--> Details:"
+    console.error ""
+    console.error err.details
   else
     console.log "Done"
