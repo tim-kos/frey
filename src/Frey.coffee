@@ -165,7 +165,10 @@ class Frey extends Base
       for action in actions
         methods.push "#{command}#{@methodDelimiter}#{action}"
 
-    @_out "--> Will run: %o\n", methods
+    if @options.verbose > 0
+      @_out "--> Will run: %o\n", methods
+    else
+      @_out "--> Will run: %o\n", options.filteredChain
 
     async.eachSeries methods, @_runOne.bind(this), nextCb
 
@@ -174,10 +177,11 @@ class Frey extends Base
     obj                 = @commands[command]
     func                = obj[action].bind(obj)
 
-    @_out chalk.gray "--> "
-    @_out chalk.gray "#{@runtime.os.hostname} - "
-    @_out chalk.green "#{method}"
-    @_out chalk.green "\n"
+    if @options.verbose > 0 || action == "run"
+      @_out chalk.gray "--> "
+      @_out chalk.gray "#{@runtime.os.hostname} - "
+      @_out chalk.green "#{method}"
+      @_out chalk.green "\n"
 
     func (err, result) =>
       if action == "run"
