@@ -1,3 +1,8 @@
+--> Will run: [ 'plan->findTomlFiles', 'plan->readTomlFiles', 'plan->mergeToml', 'plan->splitToml', 'plan->gatherTerraformArgs', 'plan->run' ]
+--> mbp - plan->findTomlFiles
+--> mbp - plan->readTomlFiles
+--> mbp - plan->mergeToml
+--> mbp - plan->splitToml
 
 {root}/node_modules/js-yaml/lib/js-yaml/dumper.js:769
       throw new YAMLException('unacceptable kind of an object to dump ' + type

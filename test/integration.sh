@@ -33,7 +33,7 @@ for scenario in $(echo $scenarios); do
 
     # Run scenario
     (bash ./run.sh \
-      > "${tmpDir}/${scenario}.stdio" 2>&1 \
+      > "${tmpDir}/${scenario}.stdio" 2>&1; \
       echo "${?}" > "${tmpDir}/${scenario}.exitcode" \
     ) || true
 
