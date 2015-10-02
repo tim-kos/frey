@@ -54,9 +54,11 @@ for scenario in $(echo $scenarios); do
 
     # Compare
     for typ in $(echo stdout stderr exitcode); do
+      echo -n "    comparing ${typ}.. "
       diff \
         "${__dir}/fixture/${scenario}.${typ}" \
         "${tmpDir}/${scenario}.${typ}"
+      echo "✓"
     done
 
   popd "${__dir}/scenario/${scenario}" > /dev/null
