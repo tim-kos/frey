@@ -11,6 +11,8 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
+git init --quiet
+
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" plan \
   --verbose \
   --recipe "." \

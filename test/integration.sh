@@ -33,13 +33,12 @@ for scenario in $(echo $scenarios); do
 
     # Run scenario
     (bash ./run.sh \
-      1> "${tmpDir}/${scenario}.stdout" \
-      2> "${tmpDir}/${scenario}.stderr"; \
+      > "${tmpDir}/${scenario}.stdio" 2>&1 \
       echo "${?}" > "${tmpDir}/${scenario}.exitcode" \
     ) || true
 
     # Clear out environmental specifics
-    for typ in $(echo stderr stdout exitcode); do
+    for typ in $(echo stdio exitcode); do
       "${cmdSed}" -i "s@${__root}@{root}@g" "${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${tmpDir}/${scenario}.${typ}"
@@ -47,7 +46,7 @@ for scenario in $(echo $scenarios); do
 
     # Save these as new fixtures?
     if [ "${SAVE_FIXTURES:-}" = "true" ]; then
-      for typ in $(echo stderr stdout exitcode); do
+      for typ in $(echo stdio exitcode); do
         cp -f \
           "${tmpDir}/${scenario}.${typ}" \
           "${__dir}/fixture/${scenario}.${typ}"
@@ -55,7 +54,7 @@ for scenario in $(echo $scenarios); do
     fi
 
     # Compare
-    for typ in $(echo stderr stdout exitcode); do
+    for typ in $(echo stdio exitcode); do
       echo -n "    comparing ${typ}.. "
       diff \
         "${__dir}/fixture/${scenario}.${typ}" \
