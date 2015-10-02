@@ -43,3 +43,12 @@ make test-integration scenario=dynamodb
 # Save new fixtures
 make save-integration-fixtures
 ```
+
+## Developing scenarios
+
+The `DEBUG` environment variable can be very helpful here"
+
+```bash
+cd test/scenario/dynamodb
+DEBUG=*:* bash ./run.sh
+```
