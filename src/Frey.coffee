@@ -174,7 +174,7 @@ class Frey extends Base
 
     for command in options.filteredChain
       className          = inflection.classify command
-      path               = "./commands/#{command}"
+      path               = "./commands/#{className}"
       obj                = new (require path) command, options, @runtime
       @commands[command] = obj
       actions            = @commands[command].boot.concat "run"
