@@ -46,7 +46,7 @@ class Prepare extends Command
           "terraform-inventory_#{@runtime.versions.terraformInventory}"
           "_#{@runtime.os.platform}_#{@runtime.os.arch}.zip"
         ].join("")
-        "unzip -o terraform-inventory_#{@runtime.versions.terraformInventory}_darwin_amd64.zip"
+        "unzip -o terraform-inventory_#{@runtime.versions.terraformInventory}_#{@runtime.os.platform}_#{@runtime.os.arch}.zip"
       ]
     ,
       type      : "app"
