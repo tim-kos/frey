@@ -1,7 +1,7 @@
 --> Will run: [ 'prepare->run' ]
 --> {hostname} - prepare->run
-Found 'terraform' with version 'v0.6.3'
-Found 'terraformInventory' with version '0.5.0'
-Found 'pip' with version '7.1.0'
-Found 'ansible' with version '1.9.2'
+Found 'terraform' with satisfying version
+Found 'terraformInventory' with satisfying version
+Found 'pip' with satisfying version
+Found 'ansible' with satisfying version
 Done
