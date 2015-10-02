@@ -1,12 +1,11 @@
-SHELL := /usr/bin/env bash
-
-SHELL     := /bin/bash
-COFFEE     = node_modules/.bin/coffee
-COFFEELINT = node_modules/.bin/coffeelint
-MOCHA      = node_modules/.bin/mocha --compilers coffee:coffee-script --require "coffee-script/register"
-REPORTER   = spec
-ISTANBUL   = node_modules/.bin/istanbul
-COVERALLS  = node_modules/coveralls/bin/coveralls.js
+SHELL      := /usr/bin/env bash
+COFFEE     := node_modules/.bin/coffee
+COFFEELINT := node_modules/.bin/coffeelint
+MOCHA      := node_modules/.bin/mocha --compilers coffee:coffee-script --require "coffee-script/register"
+REPORTER   := spec
+ISTANBUL   := node_modules/.bin/istanbul
+COVERALLS  := node_modules/.bin/coveralls
+scenario   :=
 
 .PHONY: lint
 lint:
@@ -35,7 +34,7 @@ test: build
 
 .PHONY: test-integration
 test-integration:
-	@./test/integration.sh
+	@./test/integration.sh $(scenario)
 
 .PHONY: save-integration-fixtures
 save-integration-fixtures:

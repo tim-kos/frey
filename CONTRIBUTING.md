@@ -16,3 +16,30 @@ bin/converter.sh \
   ~/code/infra-tusd/envs/production/infra.tf \
   ~/code/infra-tusd/envs/production/main.yml
 ``` 
+
+
+## Testing scenarios
+
+We use an Amazon Free Tier account to run integration tests.
+
+It credentials are available to Travis via encrypted environment variables.
+
+If you want to run integration tests yourself locally, you can supply (the) 
+credentials as such:
+
+```bash
+echo 'export FREY_AWS_ACCESS_KEY=XXXXX
+export FREY_AWS_SECRET_KEY=YYYYYYYYY
+' > env.sh # This file is kept out of Git
+```
+
+Now you can:
+
+```bash
+# Run all integration tests:
+make test-integration
+# Isolate just the dynamodb test:
+make test-integration scenario=dynamodb
+# Save new fixtures
+make save-integration-fixtures
+```
