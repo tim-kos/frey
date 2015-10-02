@@ -58,6 +58,7 @@ for scenario in $(echo $scenarios); do
     for typ in $(echo stdio exitcode); do
       echo -n "    comparing ${typ}.. "
       diff \
+        --strip-trailing-cr \
         "${__dir}/fixture/${scenario}.${typ}" \
         "${tmpDir}/${scenario}.${typ}" || ( \
         echo -e "\n\n==> EXPECTED: ";

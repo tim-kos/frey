@@ -31,3 +31,4 @@ YAMLException: unacceptable kind of an object to dump [object Undefined]
   at {root}/node_modules/async/lib/async.js:187:20
   at iterate ({root}/node_modules/async/lib/async.js:265:13)
   at process._tickCallback (node.js:355:11)
+
