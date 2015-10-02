@@ -93,7 +93,7 @@ class Prepare extends Command
 
           foundVersion = "#{stdout}".trim()
           # debug "#{exePath}"
-          @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
+          @_out "Found '#{props.name}' with satisfying version\n"
 
           if !semver.satisfies foundVersion, props.range
             @_out "\n"
