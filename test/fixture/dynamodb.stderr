@@ -1,5 +1,22 @@
 
---> Exiting with error: Error while checking for '{root}/test/scenario/dynamodb/.git'
---> Details:
+{root}/node_modules/js-yaml/lib/js-yaml/dumper.js:769
+      throw new YAMLException('unacceptable kind of an object to dump ' + type
+            ^
+YAMLException: unacceptable kind of an object to dump [object Undefined]
+  at writeNode ({root}/node_modules/js-yaml/lib/js-yaml/dumper.js:769:13)
+  at dump ({root}/node_modules/js-yaml/lib/js-yaml/dumper.js:830:7)
+  at Object.safeDump ({root}/node_modules/js-yaml/lib/js-yaml/dumper.js:837:10)
+  at {root}/src/commands/plan.coffee:58:24
+  at {root}/node_modules/async/lib/async.js:689:13
+  at {root}/node_modules/async/lib/async.js:239:13
+  at _arrayEach ({root}/node_modules/async/lib/async.js:91:13)
+  at _each ({root}/node_modules/async/lib/async.js:82:13)
+  at async.forEachOf.async.eachOf ({root}/node_modules/async/lib/async.js:238:9)
+  at _parallel ({root}/node_modules/async/lib/async.js:688:9)
+  at Object.async.parallel ({root}/node_modules/async/lib/async.js:702:9)
+  at Plan.splitToml ({root}/src/commands/plan.coffee:49:11)
+  at Frey._runOne ({root}/src/Frey.coffee:203:5)
+  at {root}/node_modules/async/lib/async.js:187:20
+  at iterate ({root}/node_modules/async/lib/async.js:265:13)
+  at process._tickCallback (node.js:355:11)
 
-undefined

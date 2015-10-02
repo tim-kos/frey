@@ -12,5 +12,6 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" plan \
+  --verbose \
   --recipe "." \
   --bail

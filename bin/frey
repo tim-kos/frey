@@ -104,5 +104,6 @@ frey.run (err) ->
     console.error "--> Details:"
     console.error ""
     console.error err.details
+    process.exit 1
   else
     console.log "Done"

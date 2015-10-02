@@ -32,7 +32,7 @@ for scenario in $(echo $scenarios); do
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
     # Run scenario
-    (./run.sh \
+    (bash ./run.sh \
       1> "${tmpDir}/${scenario}.stdout" \
       2> "${tmpDir}/${scenario}.stderr"; \
       echo "${?}" > "${tmpDir}/${scenario}.exitcode" \
@@ -41,6 +41,8 @@ for scenario in $(echo $scenarios); do
     # Clear out environmental specifics
     for typ in $(echo stdout stderr exitcode); do
       "${cmdSed}" -i "s@${__root}@{root}@g" "${tmpDir}/${scenario}.${typ}"
+      "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${tmpDir}/${scenario}.${typ}"
+      "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${tmpDir}/${scenario}.${typ}"
     done
 
     # Save these as new fixtures?
