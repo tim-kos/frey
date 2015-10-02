@@ -16,16 +16,34 @@ scenarios="${1:-$(ls ${__dir}/scenario/)}"
 tmpDir="${TMPDIR:-/tmp}/frey"
 mkdir -p "${tmpDir}"
 
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  cmdSed=gsed
+else
+  cmdSed=sed
+fi
+
+if ! which "${cmdSed}" > /dev/null; then
+  echo "Please install ${cmdSed}"
+  exit 1
+fi
+
 for scenario in $(echo $scenarios); do
   echo "==> Scenario: ${scenario}"
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
+    # Run scenario
     (./run.sh \
       1> "${tmpDir}/${scenario}.stdout" \
       2> "${tmpDir}/${scenario}.stderr"; \
       echo "${?}" > "${tmpDir}/${scenario}.exitcode" \
     ) || true
 
+    # Clear out environmental specifics
+    for typ in $(echo stdout stderr exitcode); do
+      "${cmdSed}" -i "s@${__root}@{root}@g" "${tmpDir}/${scenario}.${typ}"
+    done
+
+    # Save these as new fixtures?
     if [ "${SAVE_FIXTURES:-}" = "true" ]; then
       for typ in $(echo stdout stderr exitcode); do
         cp -f \
@@ -34,10 +52,11 @@ for scenario in $(echo $scenarios); do
       done
     fi
 
+    # Compare
     for typ in $(echo stdout stderr exitcode); do
       diff \
-        "${tmpDir}/${scenario}.${typ}" \
-        "${__dir}/fixture/${scenario}.${typ}"
+        "${__dir}/fixture/${scenario}.${typ}" \
+        "${tmpDir}/${scenario}.${typ}"
     done
 
   popd "${__dir}/scenario/${scenario}" > /dev/null

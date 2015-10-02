@@ -35,11 +35,11 @@ test: build
 
 .PHONY: test-integration
 test-integration:
-	@./test/scenario.sh
+	@./test/integration.sh
 
 .PHONY: test-save-fixtures
 test-save-fixtures:
-	@SAVE_FIXTURES=true ./test/scenario.sh
+	@SAVE_FIXTURES=true ./test/integration.sh
 
 .PHONY: test-full
 test-full: test-coverage test-integration

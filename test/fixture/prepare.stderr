@@ -1,5 +1,5 @@
 
---> Exiting with error: Error while checking for '/Users/kvz/code/frey/test/scenario/prepare/.git'
+--> Exiting with error: Error while checking for '{root}/test/scenario/prepare/.git'
 --> Details:
 
 undefined
