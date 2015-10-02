@@ -59,7 +59,14 @@ for scenario in $(echo $scenarios); do
       echo -n "    comparing ${typ}.. "
       diff \
         "${__dir}/fixture/${scenario}.${typ}" \
-        "${tmpDir}/${scenario}.${typ}"
+        "${tmpDir}/${scenario}.${typ}" || ( \
+        echo -e "\n\n==> EXPECTED: ";
+        cat "${__dir}/fixture/${scenario}.${typ}";
+        echo -e "\n\n==> ACTUAL: ";
+        cat "${tmpDir}/${scenario}.${typ}";
+        exit 1; \
+      )
+
       echo "✓"
     done
 
