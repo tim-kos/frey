@@ -35,6 +35,11 @@ yargs
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the tools"
+    forceYes:
+      alias   : "f"
+      default : false
+      boolean : true
+      describe: "Answer yes to all questions (dangerous!)"
     tags:
       alias   : "g"
       nargs   : 1

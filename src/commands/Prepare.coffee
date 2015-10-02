@@ -19,21 +19,42 @@ class Prepare extends Command
     deps = [
       type      : "dir"
       name      : "tools"
-      dir       : "@options.tools"
+      dir       : "#{@options.tools}"
+    ,
+      type      : "app"
+      name      : "pip"
+      range     : ">= 7.1.0"
+      cmdVersion: "{exe} --version |head -n1 |awk '{print $2}'"
+      cmdInstall: "sudo easy_install pip"
     ,
       type      : "app"
       name      : "ansible"
-      range     : "> = 1.9.3 <2.0.0"
+      range     : ">= 1.9.2 <2.0.0"
       cmdVersion: "{exe} --version |head -n1 |awk '{print $NF}'"
-      cmdInstall: "sudo easy_install pip && sudo pip install ansible --upgrade"
+      cmdInstall: "
+        pip install
+        --install-option='--prefix=pip'
+        --ignore-installed
+        --force-reinstall
+        --root '#{@options.tools}'
+        --upgrade
+        --disable-pip-version-check
+        ansible
+      "
     ]
 
-    async.eachSeries @deps, (props, nextCb) =>
+    async.eachSeries deps, (props, nextCb) =>
       if props.type == "dir"
-        return mkdirp @options.tools, nextCb
+        mkdirp props.dir, (err) ->
+          if err
+            return nextCb err
+          else
+            debug "Directory for '#{props.name}' present at '#{props.dir}'"
+            return nextCb null
       else if props.type == "app"
+        exePath    = @runtime.paths[props.name + "Exe"]
         cmdVersion = props.cmdVersion
-        cmdVersion = cmdVersion.replace "{exe}", @runtime.paths[app + "Exe"]
+        cmdVersion = cmdVersion.replace "{exe}", exePath
 
         exec cmdVersion, (err, stdout, stderr) =>
           if err
@@ -42,16 +63,15 @@ class Prepare extends Command
             debug "Continuing after failed command #{cmdVersion}. #{stderr}"
 
           foundVersion = "#{stdout}".trim()
-          debug "Found ansible version '#{foundVersion}'"
-          if semver.satisfies foundVersion, props.range
-            cmd = props.cmdInstall
-            # @todo Prompt "Dare I install"? With --force-yes override
-            debug "Dare I installd"
-            exec cmd, (err, stdout) =>
-              if err
-                return cb err
-              @_out "--> #{stdout}\n"
-              nextCb null
+          debug "#{exePath}"
+          @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
+
+          if !semver.satisfies foundVersion, props.range
+            @_out "\n"
+            @_out "#{props.name} needs to be installed or upgraded. \n"
+            return @_cmdYesNo props.cmdInstall, nextCb
+
+          return nextCb null
       else
         return nextCb new Error "Unsupported type: '#{props.type}'"
     , cb

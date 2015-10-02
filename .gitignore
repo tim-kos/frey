@@ -3,3 +3,5 @@ lib/
 npm-debug.log
 coverage/
 env.sh
+test/scenario/*/infra.tf.json
+test/scenario/*/frey/*

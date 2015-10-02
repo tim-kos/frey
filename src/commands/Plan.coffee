@@ -48,6 +48,10 @@ class Plan extends Command
 
     async.parallel [
       (callback) =>
+        if !@tomlMerged.infra?
+          debug "No infra instructions found in merged toml"
+          return callback null # That's not fatal
+
         encoded = JSON.stringify @tomlMerged.infra, null, "  "
         if !encoded
           return callback new Error "Unable to convert recipe to infra json"
@@ -55,6 +59,10 @@ class Plan extends Command
         @filesWritten.push @runtime.paths.infraFile
         fs.writeFile @runtime.paths.infraFile, encoded, callback
       (callback) =>
+        if !@tomlMerged.config?
+          debug "No config instructions found in merged toml"
+          return callback null # That's not fatal
+
         encoded = YAML.safeDump @tomlMerged.config
         if !encoded
           return callback new Error "Unable to convert recipe to config yml"

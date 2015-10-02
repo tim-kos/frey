@@ -1,3 +1,5 @@
 --> Will run: [ 'prepare->run' ]
 --> {hostname} - prepare->run
+Found 'pip' with version '7.1.0'
+Found 'ansible' with version '1.9.2'
 Done

@@ -165,19 +165,19 @@ For now, we only support
  - [x] Get a tf -> tf.json to launch, before splitting out over yml/toml etc
  - [x] Patch up toml -> json
  - [x] Pave way to meaningful output without DEBUG
+ - [x] Prompt "Dare I install"? With --force-yes override
  - [ ] Test & document --no-colors
  - [ ] Port all of control.sh
- - [ ] Prompt "Dare I install"? With --force-yes override
- - [ ] F. Amazon free tier dynamodb Travis tests 
- - [ ] F. /command/module/ 
- - [ ] F. iculture theme 
- - [ ] F. Vagrant because it gave us a consistent and repeatable setup. And predictability 
+ - [ ] Amazon free tier dynamodb Travis tests 
+ - [ ] /command/module/ 
+ - [ ] iculture theme for static site
+ - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] Indent stdout/err
  - [ ] More tests!
- - [ ] @boot can/should be waterfall
+ - [ ] Class.run becomes Class.main. The new run is Base.run. Which does a waterfall of @boot[], then @main
  - [ ] `./Freyfile.toml` ?
  - [ ] Runtime can be a command module, which can be prefixed to the runChain
  - [ ] Vagrant support
- - [ ] Tools can be bundled with global Frey version vs inside each project
+ - [ ] tooldir should be coupled with global Frey install and not per-project
  - [ ] Switch to local npm install if available via LiftOff
  - [ ] Linux workstation support

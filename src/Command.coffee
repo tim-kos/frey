@@ -5,6 +5,7 @@ _               = require "lodash"
 flatten         = require "flat"
 inflection      = require "inflection"
 fs              = require "fs"
+yesno           = require "yesno"
 Base            = require "./Base"
 
 class Command extends Base
@@ -15,6 +16,30 @@ class Command extends Base
     @dir     = @options.recipe
 
   boot: []
+
+  _cmdYesNo: (cmd, cb) ->
+    @promptYesNo "May I run '#{cmd}' for you? [yes|No]", (ok) =>
+      if !ok
+        return cb new Error "Question declined. Aborting. "
+
+      cmd = [
+        cmd
+      ]
+
+      @_exeScript ["-c"], [ cmd ], (err) ->
+        if err
+          return cb new Error "Error while executing '#{cmd}'. #{err}"
+
+        return cb null
+
+  promptYesNo: (question, cb) ->
+    question = "--> #{question}"
+    if @options.forceYes
+      @_out "#{question}\n"
+      @_out "<-- the option '--force-yes' applies\n"
+      return cb true
+
+    yesno.ask question, false, cb
 
   run: (cb) ->
     runScript = "#{@options.recipe}/#{@name}.sh"

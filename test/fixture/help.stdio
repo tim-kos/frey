@@ -22,6 +22,7 @@ Options:
   --recipe, -r     Directory that contains state and recipies  [string] [default: "{directory}/frey/production"]
   --directory, -d  Root project directory that contains the .git  [string] [default: (generated-value)]
   --tools, -t      Directory that contains the tools  [string] [default: "{directory}/frey/tools"]
+  --forceYes, -f   Answer yes to all questions (dangerous!)  [boolean] [default: false]
   --tags, -g       A list of tags to execute in isolation  [string]
   --sleep, -s      Wait x seconds between showing infra plan, and executing it  [default: 5]
   --bail, -b       Do not follow the chain of commands  [boolean]

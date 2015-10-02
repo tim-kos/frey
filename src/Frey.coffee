@@ -142,8 +142,9 @@ class Frey extends Base
 
     @runtime.paths =
       terraformExe         : "#{@options.tools}/terraform/terraform"
-      ansibleExe           : "ansible"
-      ansiblePlaybookExe   : "ansible-playbook"
+      pipExe               : "pip"
+      ansibleExe           : "#{@options.tools}/pip/bin/ansible"
+      ansiblePlaybookExe   : "#{@options.tools}/pip/bin/ansible-playbook"
       ansibleCfg           : "#{@options.directory}/ansible.cfg"
       planFile             : "#{@options.recipe}/terraform.plan"
       stateFile            : "#{@options.recipe}/terraform.tfstate"
