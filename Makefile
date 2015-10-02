@@ -37,8 +37,8 @@ test: build
 test-integration:
 	@./test/integration.sh
 
-.PHONY: test-save-fixtures
-test-save-fixtures:
+.PHONY: save-integration-fixtures
+save-integration-fixtures:
 	@SAVE_FIXTURES=true ./test/integration.sh
 
 .PHONY: test-full
