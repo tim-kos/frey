@@ -23,7 +23,7 @@ class Prepare extends Command
     ,
       type      : "app"
       name      : "pip"
-      range     : ">= 7.1.0"
+      range     : ">= 6.0.8"
       cmdVersion: "{exe} --version |head -n1 |awk '{print $2}'"
       cmdInstall: "sudo easy_install pip"
     ,
