@@ -11,6 +11,9 @@
 Frey let's you launch web infrastructure with a single command. It uses
 Ansible & Hashicorp's Terraform to to the heavy lifting.
 
+## Design goals
+
+ - Frey should be ridiculously convenient, and hence offer auto-installation of requirements for instance
 
 ## Comparison
 
@@ -163,11 +166,13 @@ For now, we only support
  - [x] Patch up toml -> json
  - [x] Pave way to meaningful output without DEBUG
  - [ ] Port all of control.sh
+ - [ ] Prompt "Dare I install"? With --force-yes override
+
  - [ ] Indent stdout/err
  - [ ] More tests!
  - [ ] @boot can/should be waterfall
  - [ ] `./Freyfile.toml` ?
- - [ ] Runtime can be a command module
+ - [ ] Runtime can be a command module, which can be prefixed to the runChain
  - [ ] Vagrant support
  - [ ] Tools can be bundled with global Frey version vs inside each project
  - [ ] Switch to local npm install if available via LiftOff
