@@ -165,9 +165,13 @@ For now, we only support
  - [x] Get a tf -> tf.json to launch, before splitting out over yml/toml etc
  - [x] Patch up toml -> json
  - [x] Pave way to meaningful output without DEBUG
+ - [ ] Test & document --no-colors
  - [ ] Port all of control.sh
  - [ ] Prompt "Dare I install"? With --force-yes override
-
+ - [ ] F. Amazon free tier dynamodb Travis tests 
+ - [ ] F. /command/module/ 
+ - [ ] F. iculture theme 
+ - [ ] F. Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] Indent stdout/err
  - [ ] More tests!
  - [ ] @boot can/should be waterfall

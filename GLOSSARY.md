@@ -1,11 +1,12 @@
-- project
 - app
-- infra ifr
-- config cfg
-- compile
-- status
-- module
-
 - build
+- compile
+- config cfg
 - deploy
 - dev
+- fleet
+- infra ifr
+- module
+- project
+- provision
+- status

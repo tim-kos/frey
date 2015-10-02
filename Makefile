@@ -33,6 +33,18 @@ test-coverage:
 test: build
 	@DEBUG=*:*,-mocha:* $(MOCHA) --reporter $(REPORTER) test/ --grep "$(GREP)"
 
+.PHONY: test-integration
+test-integration:
+	@./test/scenario.sh
+
+.PHONY: test-save-fixtures
+test-save-fixtures:
+	@SAVE_FIXTURES=true ./test/scenario.sh
+
+.PHONY: test-full
+test-full: test-coverage test-integration
+	@echo "Okay : )"
+
 .PHONY: release-major
 release-major: test
 	@npm version major -m "Release %s"

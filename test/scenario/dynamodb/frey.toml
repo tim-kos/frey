@@ -18,4 +18,3 @@
           range_key = "TopScore"
           read_capacity = 10
           write_capacity = 10
-
