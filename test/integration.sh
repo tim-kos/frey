@@ -42,6 +42,7 @@ for scenario in $(echo $scenarios); do
       "${cmdSed}" -i "s@${__root}@{root}@g" "${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${tmpDir}/${scenario}.${typ}"
+      "${cmdSed}" -i "s@${HOSTNAME}@{hostname}@g" "${tmpDir}/${scenario}.${typ}"
     done
 
     # Save these as new fixtures?

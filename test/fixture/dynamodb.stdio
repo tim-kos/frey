@@ -1,8 +1,8 @@
 --> Will run: [ 'plan->findTomlFiles', 'plan->readTomlFiles', 'plan->mergeToml', 'plan->splitToml', 'plan->gatherTerraformArgs', 'plan->run' ]
---> mbp - plan->findTomlFiles
---> mbp - plan->readTomlFiles
---> mbp - plan->mergeToml
---> mbp - plan->splitToml
+--> {hostname} - plan->findTomlFiles
+--> {hostname} - plan->readTomlFiles
+--> {hostname} - plan->mergeToml
+--> {hostname} - plan->splitToml
 
 {root}/node_modules/js-yaml/lib/js-yaml/dumper.js:769
       throw new YAMLException('unacceptable kind of an object to dump ' + type
@@ -11,7 +11,7 @@ YAMLException: unacceptable kind of an object to dump [object Undefined]
   at writeNode ({root}/node_modules/js-yaml/lib/js-yaml/dumper.js:769:13)
   at dump ({root}/node_modules/js-yaml/lib/js-yaml/dumper.js:830:7)
   at Object.safeDump ({root}/node_modules/js-yaml/lib/js-yaml/dumper.js:837:10)
-  at {root}/src/commands/plan.coffee:58:24
+  at {root}/src/commands/Plan.coffee:58:24
   at {root}/node_modules/async/lib/async.js:689:13
   at {root}/node_modules/async/lib/async.js:239:13
   at _arrayEach ({root}/node_modules/async/lib/async.js:91:13)
@@ -19,7 +19,7 @@ YAMLException: unacceptable kind of an object to dump [object Undefined]
   at async.forEachOf.async.eachOf ({root}/node_modules/async/lib/async.js:238:9)
   at _parallel ({root}/node_modules/async/lib/async.js:688:9)
   at Object.async.parallel ({root}/node_modules/async/lib/async.js:702:9)
-  at Plan.splitToml ({root}/src/commands/plan.coffee:49:11)
+  at Plan.splitToml ({root}/src/commands/Plan.coffee:49:11)
   at Frey._runOne ({root}/src/Frey.coffee:203:5)
   at {root}/node_modules/async/lib/async.js:187:20
   at iterate ({root}/node_modules/async/lib/async.js:265:13)
