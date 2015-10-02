@@ -1,4 +1,11 @@
---> Will run: [ 'plan->findTomlFiles', 'plan->readTomlFiles', 'plan->mergeToml', 'plan->splitToml', 'plan->gatherTerraformArgs', 'plan->run' ]
+--> Will run: [ 'init->run', 'refresh->run', 'validate->run', 'plan->findTomlFiles', 'plan->readTomlFiles', 'plan->mergeToml', 'plan->splitToml', 'plan->gatherTerraformArgs', 'plan->run', 'backup->run', 'launch->run', 'install->run', 'deploy->run', 'restart->run', 'show->run' ]
+--> {hostname} - init->run
+Running default control.sh action as I found no '{root}/test/scenario/dynamodb/init.sh'
+--> {hostname} - refresh->run
+Running default control.sh action as I found no '{root}/test/scenario/dynamodb/refresh.sh'
+bash: {root}/test/scenario/dynamodb/frey/tools/terraform/terraform: No such file or directory
+--> {hostname} - validate->run
+Running default control.sh action as I found no '{root}/test/scenario/dynamodb/validate.sh'
 --> {hostname} - plan->findTomlFiles
 --> {hostname} - plan->readTomlFiles
 --> {hostname} - plan->mergeToml
@@ -24,4 +31,3 @@ YAMLException: unacceptable kind of an object to dump [object Undefined]
   at {root}/node_modules/async/lib/async.js:187:20
   at iterate ({root}/node_modules/async/lib/async.js:265:13)
   at process._tickCallback (node.js:355:11)
-
