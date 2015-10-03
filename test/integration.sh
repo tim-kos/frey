@@ -76,6 +76,7 @@ for scenario in $(echo $scenarios); do
         if [ "$(cat "${curFile}" |grep 'FREY:ONLY_COMPARE_EXIT_CODE' |wc -l)" -gt 0 ]; then
           echo "skip"
 
+          # Show actual to debug in case exitcode does not match
           echo -e "\n\n==> ACTUAL: ";
           cat "${curFile}";
 
