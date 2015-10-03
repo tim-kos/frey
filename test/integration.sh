@@ -83,7 +83,7 @@ for scenario in $(echo $scenarios); do
         --strip-trailing-cr \
         "${__dir}/fixture/${scenario}.${typ}" \
         "${curFile}" || ( \
-        echo -e "\n\n==> ${typ} mismatch ";
+        echo -e "\n\n==> MISMATCH OF: ${typ}";
         echo -e "\n\n==> EXPECTED STDIO: ";
         cat "${__dir}/fixture/${scenario}.stdio";
         echo -e "\n\n==> ACTUAL STDIO: ";

@@ -25,3 +25,8 @@ echo "FREY:SKIP_COMPARE_STDIO"
   --verbose \
   --recipe "." \
   --bail
+
+echo "Running help on all required tools"
+(./frey/tools/pip/bin/ansible --help 2>&1 |grep version)
+(./frey/tools/terraform --help 2>&1 |grep version)
+(./frey/tools/terraform-inventory --help 2>&1 |grep version)
