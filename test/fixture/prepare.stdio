@@ -1,3 +1,4 @@
+FREY:SKIP_COMPARE_STDIO
 --> Will run: [ 'prepare->run' ]
 --> {hostname} - prepare->run
 Found 'terraform' with satisfying version

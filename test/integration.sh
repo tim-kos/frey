@@ -47,34 +47,46 @@ for scenario in $(echo $scenarios); do
 
     # Clear out environmental specifics
     for typ in $(echo stdio exitcode); do
-      "${cmdSed}" -i "s@${__root}@{root}@g" "${tmpDir}/${scenario}.${typ}"
-      "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${tmpDir}/${scenario}.${typ}"
-      "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${tmpDir}/${scenario}.${typ}"
-      "${cmdSed}" -i "s@${HOSTNAME}@{hostname}@g" "${tmpDir}/${scenario}.${typ}"
-      "${cmdSed}" -i "s@${os}@{os}@g" "${tmpDir}/${scenario}.${typ}"
-      "${cmdSed}" -i "s@${arch}@{arch}@g" "${tmpDir}/${scenario}.${typ}"
+      curFile="${tmpDir}/${scenario}.${typ}"
+      "${cmdSed}" -i "s@${__root}@{root}@g" "${curFile}"
+      "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${curFile}"
+      "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${curFile}"
+      "${cmdSed}" -i "s@${HOSTNAME}@{hostname}@g" "${curFile}"
+      "${cmdSed}" -i "s@${os}@{os}@g" "${curFile}"
+      "${cmdSed}" -i "s@${arch}@{arch}@g" "${curFile}"
     done
 
     # Save these as new fixtures?
     if [ "${SAVE_FIXTURES:-}" = "true" ]; then
       for typ in $(echo stdio exitcode); do
+        curFile="${tmpDir}/${scenario}.${typ}"
         cp -f \
-          "${tmpDir}/${scenario}.${typ}" \
+          "${curFile}" \
           "${__dir}/fixture/${scenario}.${typ}"
       done
     fi
 
     # Compare
     for typ in $(echo stdio exitcode); do
+      curFile="${tmpDir}/${scenario}.${typ}"
+
       echo -n "    comparing ${typ}.. "
+
+      if [ "${typ}" = "FREY:SKIP_COMPARE_STDIO" ]; then
+        if [ "$(cat "${curFile}" |grep 'FREY:ONLY_COMPARE_EXIT_CODE' |wc -l)" -gt 0 ]; then
+          echo "skip"
+          continue
+        fi
+      fi
+
       diff \
         --strip-trailing-cr \
         "${__dir}/fixture/${scenario}.${typ}" \
-        "${tmpDir}/${scenario}.${typ}" || ( \
+        "${curFile}" || ( \
         echo -e "\n\n==> EXPECTED: ";
         cat "${__dir}/fixture/${scenario}.${typ}";
         echo -e "\n\n==> ACTUAL: ";
-        cat "${tmpDir}/${scenario}.${typ}";
+        cat "${curFile}";
         exit 1; \
       )
 

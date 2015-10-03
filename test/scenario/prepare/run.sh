@@ -15,6 +15,13 @@ git init --quiet
 
 rm -rf "${__dir}/frey/tools"
 
+# We don't want to enforce PIP versions since that's affects the
+# user's global state.
+# Yet, that's the only way to have equal install output.
+# That's why we only care about the exit code in this test, and
+# specify:
+echo "FREY:SKIP_COMPARE_STDIO"
+
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
   --verbose \
