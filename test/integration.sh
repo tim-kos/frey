@@ -72,14 +72,9 @@ for scenario in $(echo $scenarios); do
 
       echo -n "    comparing ${typ}.. "
 
-      if [ "${typ}" = "FREY:SKIP_COMPARE_STDIO" ]; then
-        if [ "$(cat "${curFile}" |grep 'FREY:ONLY_COMPARE_EXIT_CODE' |wc -l)" -gt 0 ]; then
+      if [ "${typ}" = "stdio" ]; then
+        if [ "$(cat "${curFile}" |grep 'FREY:SKIP_COMPARE_STDIO' |wc -l)" -gt 0 ]; then
           echo "skip"
-
-          # Show actual to debug in case exitcode does not match
-          echo -e "\n\n==> ACTUAL: ";
-          cat "${curFile}";
-
           continue
         fi
       fi
@@ -88,10 +83,11 @@ for scenario in $(echo $scenarios); do
         --strip-trailing-cr \
         "${__dir}/fixture/${scenario}.${typ}" \
         "${curFile}" || ( \
-        echo -e "\n\n==> EXPECTED: ";
-        cat "${__dir}/fixture/${scenario}.${typ}";
-        echo -e "\n\n==> ACTUAL: ";
-        cat "${curFile}";
+        echo -e "\n\n==> ${typ} mismatch ";
+        echo -e "\n\n==> EXPECTED STDIO: ";
+        cat "${__dir}/fixture/${scenario}.stdio";
+        echo -e "\n\n==> ACTUAL STDIO: ";
+        cat "${tmpDir}/${scenario}.stdio";
         exit 1; \
       )
 

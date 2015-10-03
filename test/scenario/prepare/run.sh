@@ -13,8 +13,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 git init --quiet
 
-rm -rf "${__dir}/frey/tools"
-
 # We don't want to enforce PIP versions since that's affects the
 # user's global state.
 # Yet, that's the only way to have equal install output.

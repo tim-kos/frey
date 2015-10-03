@@ -27,8 +27,8 @@ class Prepare extends Command
           "https://dl.bintray.com/mitchellh/terraform/"
           "#{@runtime.paths.terraformZip}'"
           "> '#{@runtime.paths.terraformZip}'"
-          "unzip -o '#{@runtime.paths.terraformZip}'"
         ].join("")
+        "unzip -o '#{@runtime.paths.terraformZip}'"
       ]
     ,
       type      : "app"
@@ -43,8 +43,8 @@ class Prepare extends Command
           "v#{@runtime.versions.terraformInventory}/"
           "#{@runtime.paths.terraformInventoryZip}'"
           "> '#{@runtime.paths.terraformInventoryZip}'"
-          "unzip -o '#{@runtime.paths.terraformInventoryZip}'"
         ].join("")
+        "unzip -o '#{@runtime.paths.terraformInventoryZip}'"
       ]
     ,
       type      : "app"
@@ -91,7 +91,7 @@ class Prepare extends Command
 
           foundVersion = "#{stdout}".trim()
           # debug "#{exePath}"
-          @_out "Found '#{props.name}' with satisfying version\n"
+          @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
 
           if !semver.satisfies foundVersion, props.range
             @_out "\n"
