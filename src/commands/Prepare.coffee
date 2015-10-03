@@ -5,11 +5,6 @@ async           = require "async"
 debug           = require("depurar")("frey")
 { spawn, exec } = require "child_process"
 
-# - [ ] Create tooldir
-# - [ ] Install Terraform
-# - [ ] Install Ansible
-# - [ ] Install Terraforminventory
-
 class Prepare extends Command
   constructor: (name, options, runtime) ->
     super name, options, runtime
@@ -28,10 +23,12 @@ class Prepare extends Command
       cmdInstall: [
         "cd #{@options.tools}"
         [
-          "wget https://dl.bintray.com/mitchellh/terraform/"
-          "terraform_#{@runtime.versions.terraform}_#{@runtime.os.platform}_#{@runtime.os.arch}.zip"
+          "curl -sSL '"
+          "https://dl.bintray.com/mitchellh/terraform/"
+          "#{@runtime.paths.terraformZip}'"
+          "> '#{@runtime.paths.terraformZip}'"
+          "unzip -o '#{@runtime.paths.terraformZip}'"
         ].join("")
-        "unzip -o terraform_#{@runtime.versions.terraform}_#{@runtime.os.platform}_#{@runtime.os.arch}.zip"
       ]
     ,
       type      : "app"
@@ -41,12 +38,13 @@ class Prepare extends Command
       cmdInstall: [
         "cd #{@options.tools}"
         [
-          "wget https://github.com/adammck/terraform-inventory/releases/download/"
+          "curl -sSL '"
+          "https://github.com/adammck/terraform-inventory/releases/download/"
           "v#{@runtime.versions.terraformInventory}/"
-          "terraform-inventory_#{@runtime.versions.terraformInventory}"
-          "_#{@runtime.os.platform}_#{@runtime.os.arch}.zip"
+          "#{@runtime.paths.terraformInventoryZip}'"
+          "> '#{@runtime.paths.terraformInventoryZip}'"
+          "unzip -o '#{@runtime.paths.terraformInventoryZip}'"
         ].join("")
-        "unzip -o terraform-inventory_#{@runtime.versions.terraformInventory}_#{@runtime.os.platform}_#{@runtime.os.arch}.zip"
       ]
     ,
       type      : "app"

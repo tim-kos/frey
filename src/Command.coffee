@@ -36,7 +36,7 @@ class Command extends Base
     question = "--> #{question}"
     if @options.forceYes
       @_out "#{question}\n"
-      @_out "<-- the option '--force-yes' applies\n"
+      @_out "<-- Answering Yes as '--force-yes' applies\n"
       return cb true
 
     yesno.ask question, false, cb

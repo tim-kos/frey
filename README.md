@@ -156,6 +156,7 @@ For now, we only support
 - Ubuntu as remote server OS
 - Git for version control - and Frey assumes your project has Git already set up
 
+
 ## Todo
 
  - [x] Coveralls

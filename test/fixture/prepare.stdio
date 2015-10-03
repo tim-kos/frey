@@ -1,7 +1,47 @@
 --> Will run: [ 'prepare->run' ]
 --> {hostname} - prepare->run
 Found 'terraform' with satisfying version
+
+terraform needs to be installed or upgraded. 
+--> May I run 'cd {root}/test/scenario/prepare/frey/tools && curl -sSL 'https://dl.bintray.com/mitchellh/terraform/terraform_0.6.3_{os}_{arch}.zip'> 'terraform_0.6.3_{os}_{arch}.zip'unzip -o 'terraform_0.6.3_{os}_{arch}.zip'' for you? [yes|No]
+<-- Answering Yes as '--force-yes' applies
 Found 'terraformInventory' with satisfying version
+
+terraformInventory needs to be installed or upgraded. 
+--> May I run 'cd {root}/test/scenario/prepare/frey/tools && curl -sSL 'https://github.com/adammck/terraform-inventory/releases/download/v0.5/terraform-inventory_0.5_{os}_{arch}.zip'> 'terraform-inventory_0.5_{os}_{arch}.zip'unzip -o 'terraform-inventory_0.5_{os}_{arch}.zip'' for you? [yes|No]
+<-- Answering Yes as '--force-yes' applies
 Found 'pip' with satisfying version
 Found 'ansible' with satisfying version
+
+ansible needs to be installed or upgraded. 
+--> May I run 'pip install --install-option='--prefix=pip' --ignore-installed --force-reinstall --root '{root}/test/scenario/prepare/frey/tools' --upgrade --disable-pip-version-check ansible' for you? [yes|No]
+<-- Answering Yes as '--force-yes' applies
+/usr/local/lib/python2.7/site-packages/pip/commands/install.py:198: UserWarning: Disabling all use of wheels due to the use of --build-options / --global-options / --install-options.
+  cmdoptions.check_install_build_global(options)
+Collecting ansible
+  Using cached ansible-1.9.3.tar.gz
+Collecting paramiko (from ansible)
+  Using cached paramiko-1.15.3.tar.gz
+Collecting jinja2 (from ansible)
+  Using cached Jinja2-2.8.tar.gz
+Collecting PyYAML (from ansible)
+  Using cached PyYAML-3.11.tar.gz
+Collecting setuptools (from ansible)
+  Using cached setuptools-18.3.2.tar.gz
+Collecting pycrypto>=2.6 (from ansible)
+  Using cached pycrypto-2.6.1.tar.gz
+Collecting ecdsa>=0.11 (from paramiko->ansible)
+  Using cached ecdsa-0.13.tar.gz
+Collecting MarkupSafe (from jinja2->ansible)
+  Using cached MarkupSafe-0.23.tar.gz
+Installing collected packages: pycrypto, ecdsa, paramiko, MarkupSafe, jinja2, PyYAML, setuptools, ansible
+  Running setup.py install for pycrypto
+  Running setup.py install for ecdsa
+  Running setup.py install for paramiko
+  Running setup.py install for MarkupSafe
+  Running setup.py install for jinja2
+  Running setup.py install for PyYAML
+  Running setup.py install for setuptools
+  Running setup.py install for ansible
+Successfully installed MarkupSafe-0.23 PyYAML-3.11 ansible-1.9.2 ecdsa-0.13 jinja2-2.8 paramiko-1.15.2 pycrypto-2.6.1 setuptools-18.2
 Done

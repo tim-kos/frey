@@ -22,6 +22,14 @@ else
   cmdSed=sed
 fi
 
+
+os="linux"
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  os="darwin"
+fi
+arch="amd64"
+
+
 if ! which "${cmdSed}" > /dev/null; then
   echo "Please install ${cmdSed}"
   exit 1
@@ -43,6 +51,8 @@ for scenario in $(echo $scenarios); do
       "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${HOSTNAME}@{hostname}@g" "${tmpDir}/${scenario}.${typ}"
+      "${cmdSed}" -i "s@${os}@{os}@g" "${tmpDir}/${scenario}.${typ}"
+      "${cmdSed}" -i "s@${arch}@{arch}@g" "${tmpDir}/${scenario}.${typ}"
     done
 
     # Save these as new fixtures?

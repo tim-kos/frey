@@ -13,6 +13,8 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 git init --quiet
 
+rm -rf "${__dir}/frey/tools"
+
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
   --verbose \
