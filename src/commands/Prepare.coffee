@@ -29,7 +29,7 @@ class Prepare extends Command
           "> '#{@runtime.paths.terraformZip}'"
         ].join("")
         "unzip -o '#{@runtime.paths.terraformZip}'"
-      ]
+      ].join " && "
     ,
       type      : "app"
       name      : "terraformInventory"
@@ -43,9 +43,9 @@ class Prepare extends Command
           "v#{@runtime.versions.terraformInventory}/"
           "#{@runtime.paths.terraformInventoryZip}'"
           "> '#{@runtime.paths.terraformInventoryZip}'"
-        ].join("")
+        ].join ""
         "unzip -o '#{@runtime.paths.terraformInventoryZip}'"
-      ]
+      ].join " && "
     ,
       type      : "app"
       name      : "pip"
@@ -74,27 +74,24 @@ class Prepare extends Command
         mkdirp props.dir, (err) ->
           if err
             return nextCb err
-          else
-            debug "Directory for '#{props.name}' present at '#{props.dir}'"
-            return nextCb null
+
+          debug "Directory for '#{props.name}' present at '#{props.dir}'"
+          return nextCb null
       else if props.type == "app"
         @satisfy props, (satisfied) =>
           if satisfied
             return nextCb null
 
-          cmd = props.cmdInstall
-          if cmd != "#{cmd}"
-            cmd = cmd.join(" && ")
-
-          return @_cmdYesNo cmd, (err) =>
+          @_cmdYesNo props.cmdInstall, (err) =>
             if err
-              return nextCb new Error "Failed to install. #{err}"
+              return nextCb new Error "Failed to install '#{props.name}'. #{err}"
 
             @satisfy props, (satisfied) ->
               if !satisfied
-                return nextCb new Error "Version still not satisfied after install"
+                msg = "Version of '#{props.name}' still not satisfied after install"
+                return nextCb new Error msg
 
-              return nextCb null
+              nextCb null
       else
         return nextCb new Error "Unsupported type: '#{props.type}'"
     , cb
@@ -121,7 +118,6 @@ class Prepare extends Command
       @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
 
       if !semver.satisfies foundVersion, props.range
-        @_out "\n"
         @_out "#{props.name} needs to be installed or upgraded. \n"
         return cb false
 
