@@ -110,7 +110,14 @@ class Prepare extends Command
         debug "Continuing after failed command #{cmdVersion}. #{stderr}"
 
       foundVersion = "#{stdout}".trim()
-      # debug "#{exePath}"
+
+      debug
+        exePath     :exePath
+        foundVersion:foundVersion
+        err         :err
+        stdout      :stdout
+        stderr      :stderr
+
       @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
 
       if !semver.satisfies foundVersion, props.range
