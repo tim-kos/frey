@@ -169,18 +169,27 @@ For now, we only support
  - [x] Prompt "Dare I install"? With --force-yes override
  - [x] Move ansibleExe to deps
  - [x] Move versions to deps
- - [ ] Test & document --no-colors
- - [ ] Port all of control.sh
- - [ ] Amazon free tier dynamodb Travis tests 
+ - [x] Port Prepare Instals
+ - [x] Linux workstation support (Travis ;))
+ - [ ] Class.run becomes Class.main. The new run is Base.run. Which does a waterfall of @boot[], then @main
+ - [ ] tooldir should be coupled with global Frey install and not per-project
  - [ ] /command/module/ 
+ - [ ] Runtime can be a command module, which can be prefixed to the runChain
+ - [ ] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
+ - [ ] Port Prepare SSH Keys
+ - [ ] Port refresh
+ - [ ] Port plan
+ - [ ] Port backup
+ - [ ] Port launch
+ - [ ] Port install
+ - [ ] Port upload
+ - [ ] Port setup
+ - [ ] Port show 
+ - [ ] Test & document --no-colors
+ - [ ] Amazon free tier dynamodb Travis tests 
  - [ ] iculture theme for static site
  - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] Indent stdout/err
  - [ ] More tests!
- - [ ] Class.run becomes Class.main. The new run is Base.run. Which does a waterfall of @boot[], then @main
- - [ ] `./Freyfile.toml` ?
- - [ ] Runtime can be a command module, which can be prefixed to the runChain
  - [ ] Vagrant support
- - [ ] tooldir should be coupled with global Frey install and not per-project
  - [ ] Switch to local npm install if available via LiftOff
- - [ ] Linux workstation support
