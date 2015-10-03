@@ -75,6 +75,10 @@ for scenario in $(echo $scenarios); do
       if [ "${typ}" = "FREY:SKIP_COMPARE_STDIO" ]; then
         if [ "$(cat "${curFile}" |grep 'FREY:ONLY_COMPARE_EXIT_CODE' |wc -l)" -gt 0 ]; then
           echo "skip"
+
+          echo -e "\n\n==> ACTUAL: ";
+          cat "${curFile}";
+
           continue
         fi
       fi
