@@ -28,9 +28,9 @@ DEBUG=*:* "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
 
 echo "Running help on all required tools"
 
-(PYTHONPATH=./frey/tools/pip/lib/python2.7/site-packages ./frey/tools/pip/bin/ansible --help 2>&1 |grep version)
-(./frey/tools/terraform --help 2>&1 |grep version)
-(./frey/tools/terraform-inventory --help 2>&1 |grep version)
+(PYTHONPATH="${HOME}/.frey/tools/pip/lib/python2.7/site-packages" "${HOME}/.frey/tools/pip/bin/ansible" --help 2>&1 |grep version)
+("${HOME}/.frey/tools/terraform" --help 2>&1 |grep version)
+("${HOME}/.frey/tools/terraform-inventory" --help 2>&1 |grep version)
 
 echo "All tools were able to execute"
 

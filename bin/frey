@@ -31,7 +31,7 @@ yargs
       describe: "Root project directory that contains the .git"
     tools:
       alias   : "t"
-      default : "{directory}/frey/tools"
+      default : "{home}/.frey/tools"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the tools"

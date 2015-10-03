@@ -8,7 +8,7 @@ describe "Command", ->
       command = new Command "prepare",
         recipe    : "{directory}/frey/production"
         directory : "."
-        tools     : "{directory}/frey/tools"
+        tools     : "{home}/.frey/tools"
 
 
       env = command._toEnvFormat {"os.arch": "amd64"}, "prepare"

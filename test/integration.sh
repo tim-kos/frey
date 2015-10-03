@@ -49,8 +49,8 @@ for scenario in $(echo $scenarios); do
     for typ in $(echo stdio exitcode); do
       curFile="${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${__root}@{root}@g" "${curFile}"
-      "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${curFile}"
       "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${curFile}"
+      "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${curFile}"
       "${cmdSed}" -i "s@${HOSTNAME}@{hostname}@g" "${curFile}"
       "${cmdSed}" -i "s@${os}@{os}@g" "${curFile}"
       "${cmdSed}" -i "s@${arch}@{arch}@g" "${curFile}"

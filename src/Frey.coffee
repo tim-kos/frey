@@ -11,6 +11,7 @@ mkdirp     = require "mkdirp"
 os         = require "os"
 chalk      = require "chalk"
 Base       = require "./Base"
+osHomedir  = require "os-homedir"
 
 class Frey extends Base
   @chain = [
@@ -60,6 +61,7 @@ class Frey extends Base
     for key, val of options
       if val == "#{val}"
         options[key] = val.replace "{directory}", options.directory
+        options[key] = val.replace "{home}", osHomedir()
 
     # Apply simple functions
     for key, val of options

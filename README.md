@@ -171,8 +171,8 @@ For now, we only support
  - [x] Move versions to deps
  - [x] Port Prepare Instals
  - [x] Linux workstation support (Travis ;))
+ - [x] tooldir should be coupled with global Frey install and not per-project
  - [ ] Class.run becomes Class.main. The new run is Base.run. Which does a waterfall of @boot[], then @main
- - [ ] tooldir should be coupled with global Frey install and not per-project
  - [ ] /command/module/ 
  - [ ] Runtime can be a command module, which can be prefixed to the runChain
  - [ ] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'

@@ -10,7 +10,7 @@ describe "Frey", ->
       options =
         recipe    : "{directory}/frey/production"
         directory : "."
-        tools     : "{directory}/frey/tools"
+        tools     : "{home}/.frey/tools"
 
       frey._normalize options, (err, options) ->
         expect(err).to.equal null
@@ -24,7 +24,7 @@ describe "Frey", ->
         app       : "./tusd|basename"
         recipe    : "{directory}/frey/production"
         directory : "."
-        tools     : "{directory}/frey/tools"
+        tools     : "{home}/.frey/tools"
 
       frey._normalize options, (err, options) ->
         expect(err).to.equal null
