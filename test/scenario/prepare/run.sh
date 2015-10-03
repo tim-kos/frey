@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o pipefail
+# set -o pipefail
 set -o errexit
 set -o nounset
 # set -o xtrace
@@ -27,6 +27,9 @@ echo "FREY:SKIP_COMPARE_STDIO"
   --bail
 
 echo "Running help on all required tools"
+set -x
+find ./frey/tools
+
 (./frey/tools/pip/bin/ansible --help 2>&1 |grep version)
 (./frey/tools/terraform --help 2>&1 |grep version)
 (./frey/tools/terraform-inventory --help 2>&1 |grep version)
