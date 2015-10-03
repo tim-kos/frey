@@ -20,15 +20,13 @@ git init --quiet
 # specify:
 echo "FREY:SKIP_COMPARE_STDIO"
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
+DEBUG=*:* "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
   --verbose \
   --recipe "." \
   --bail
 
 echo "Running help on all required tools"
-set -x
-find ./frey/tools
 
 (./frey/tools/pip/bin/ansible --help 2>&1 |grep version)
 (./frey/tools/terraform --help 2>&1 |grep version)
