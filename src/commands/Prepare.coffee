@@ -1,9 +1,8 @@
-Command         = require "../Command"
-mkdirp          = require "mkdirp"
-semver          = require "semver"
-async           = require "async"
-debug           = require("depurar")("frey")
-{ spawn, exec } = require "child_process"
+Command = require "../Command"
+mkdirp  = require "mkdirp"
+semver  = require "semver"
+async   = require "async"
+debug   = require("depurar")("frey")
 
 class Prepare extends Command
   constructor: (name, options, runtime) ->
@@ -65,7 +64,7 @@ class Prepare extends Command
         --root '#{@options.tools}'
         --upgrade
         --disable-pip-version-check
-        ansible
+        ansible==#{@runtime.versions.ansible}
       "
     ]
 
@@ -97,24 +96,22 @@ class Prepare extends Command
     , cb
 
   satisfy: (props, cb) ->
-    exePath    = @runtime.paths[props.name + "Exe"]
-    cmdVersion = props.cmdVersion
-    cmdVersion = cmdVersion.replace "{exe}", exePath
-    exec cmdVersion, (err, stdout, stderr) =>
+    exePath = @runtime.paths[props.name + "Exe"]
+    cmd     = props.cmdVersion
+    cmd     = cmd.replace "{exe}", exePath
+
+    @_exeScript ["-c", cmd], {verbose: false}, (err, stdout) =>
       if err
         # We don't want to bail out if version command does not exist yet
         # Or maybe --version returns non-zero exit code, which is common
-        debug "Continuing after failed command #{cmdVersion}. #{stderr}"
+        debug
+          msg         : "Continuing after failed command #{cmdVersion}. #{err}"
+          exePath     :exePath
+          foundVersion:foundVersion
+          err         :err
+          stdout      :stdout
 
       foundVersion = "#{stdout}".trim()
-
-      debug
-        exePath     :exePath
-        foundVersion:foundVersion
-        err         :err
-        stdout      :stdout
-        stderr      :stderr
-
       @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
 
       if !semver.satisfies foundVersion, props.range

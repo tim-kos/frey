@@ -91,7 +91,7 @@ class Plan extends Command
     cmd = cmd.concat @terraformArgs
     cmd = cmd.join " "
 
-    @_exeScript ["-c"], [ cmd ], (err) =>
+    @_exeScript ["-c"], [ cmd ], (err, stdout) =>
       if err
         return cb err
 

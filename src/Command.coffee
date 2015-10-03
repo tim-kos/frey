@@ -26,7 +26,7 @@ class Command extends Base
         cmd
       ]
 
-      @_exeScript ["-c"], [ cmd ], (err) ->
+      @_exeScript ["-c", cmd], {}, (err, stdout) ->
         if err
           return cb new Error "Error while executing '#{cmd}'. #{err}"
 
@@ -49,7 +49,7 @@ class Command extends Base
         @_out chalk.dim "\n"
         runScript = "#{@options.root}/bin/control.sh"
 
-      @_exeScript runScript, [ @name ], cb
+      @_exeScript [runScript, @name], {}, cb
 
   _buildChildEnv: ->
     childEnv = {}
@@ -59,9 +59,14 @@ class Command extends Base
       @_toEnvFormat(@runtime, "runtime"),
       @_toEnvFormat(@options, "options")
 
+    childEnv.PYTHONPATH = @runtime.paths.pythonLib
+
     return childEnv
 
-  _exeScript: (shellPath, shellArgs, cb) ->
+  _exeScript: (shellArgs, argOpts, cb) ->
+    argOpts ?= {}
+    argOpts.verbose ?= true
+
     opts =
       cwd  : @dir
       env  : @_buildChildEnv()
@@ -73,7 +78,6 @@ class Command extends Base
       "-o", "nounset"
     ]
 
-    cmdArgs    = cmdArgs.concat shellPath
     cmdArgs    = cmdArgs.concat shellArgs
     bash       = spawn "bash", cmdArgs, opts
     lastStderr = []
@@ -84,14 +88,16 @@ class Command extends Base
         lastStdout.push "#{data}"
         lastStdout = _.takeRight lastStdout, 3
 
-      @_out chalk.gray(data)
+      if argOpts.verbose
+        @_out chalk.gray(data)
 
     bash.stderr.on "data", (data) =>
       if data?
         lastStderr.push "#{data}"
         lastStderr = _.takeRight lastStderr, 3
 
-      @_out chalk.red(data)
+      if argOpts.verbose
+        @_out chalk.red(data)
 
     bash.on "close", (code) ->
       if code != 0
@@ -103,10 +109,10 @@ class Command extends Base
         else
           lastInfo = lastStdout
 
-        err.details = lastInfo.join()
+        err.details = lastInfo.join ""
         return cb err
 
-      cb null
+      cb null, lastStdout.join ""
 
   _toEnvFormat: (obj, prefix) ->
     if !obj?

@@ -1,18 +1,83 @@
 FREY:SKIP_COMPARE_STDIO
 --> Will run: [ 'prepare->run' ]
 --> {hostname} - prepare->run
-Sat, 03 Oct 2015 10:02:57 GMT frey:Prepare Directory for 'tools' present at '{root}/test/scenario/prepare/frey/tools'
-Sat, 03 Oct 2015 10:02:57 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/terraform', foundVersion: 'v0.6.3', err: null, stdout: 'v0.6.3\n', stderr: '' }
+Sat, 03 Oct 2015 10:17:23 GMT frey:Prepare Directory for 'tools' present at '{root}/test/scenario/prepare/frey/tools'
+Sat, 03 Oct 2015 10:17:23 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/terraform', foundVersion: '', err: null, stdout: '', stderr: '/bin/sh: {root}/test/scenario/prepare/frey/tools/terraform: No such file or directory\n' }
+Found 'terraform' with version ''
+terraform needs to be installed or upgraded.
+--> May I run 'cd {root}/test/scenario/prepare/frey/tools && curl -sSL 'https://dl.bintray.com/mitchellh/terraform/terraform_0.6.3_{os}_{arch}.zip'> 'terraform_0.6.3_{os}_{arch}.zip' && unzip -o 'terraform_0.6.3_{os}_{arch}.zip'' for you? [yes|No]
+<-- Answering Yes as '--force-yes' applies
+Archive:  terraform_0.6.3_{os}_{arch}.zip
+  inflating: terraform
+  inflating: terraform-provider-atlas
+  inflating: terraform-provider-aws
+  inflating: terraform-provider-azure
+  inflating: terraform-provider-cloudflare
+  inflating: terraform-provider-cloudstack
+  inflating: terraform-provider-consul
+  inflating: terraform-provider-digitalocean
+  inflating: terraform-provider-dme
+  inflating: terraform-provider-dnsimple
+  inflating: terraform-provider-docker
+  inflating: terraform-provider-google
+  inflating: terraform-provider-heroku
+  inflating: terraform-provider-mailgun
+  inflating: terraform-provider-null
+  inflating: terraform-provider-openstack
+  inflating: terraform-provider-template
+  inflating: terraform-provider-terraform
+  inflating: terraform-provisioner-chef
+  inflating: terraform-provisioner-file
+  inflating: terraform-provisioner-local-exec
+  inflating: terraform-provisioner-remote-exec
+Sat, 03 Oct 2015 10:17:32 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/terraform', foundVersion: 'v0.6.3', err: null, stdout: 'v0.6.3\n', stderr: '' }
 Found 'terraform' with version 'v0.6.3'
-Sat, 03 Oct 2015 10:02:57 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/terraform-inventory', foundVersion: '0.5.0', err: null, stdout: '0.5.0\n', stderr: '' }
+Sat, 03 Oct 2015 10:17:32 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/terraform-inventory', foundVersion: '', err: null, stdout: '', stderr: '/bin/sh: {root}/test/scenario/prepare/frey/tools/terraform-inventory: No such file or directory\n' }
+Found 'terraformInventory' with version ''
+terraformInventory needs to be installed or upgraded.
+--> May I run 'cd {root}/test/scenario/prepare/frey/tools && curl -sSL 'https://github.com/adammck/terraform-inventory/releases/download/v0.5/terraform-inventory_0.5_{os}_{arch}.zip'> 'terraform-inventory_0.5_{os}_{arch}.zip' && unzip -o 'terraform-inventory_0.5_{os}_{arch}.zip'' for you? [yes|No]
+<-- Answering Yes as '--force-yes' applies
+Archive:  terraform-inventory_0.5_{os}_{arch}.zip
+  inflating: terraform-inventory
+Sat, 03 Oct 2015 10:17:38 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/terraform-inventory', foundVersion: '0.5.0', err: null, stdout: '0.5.0\n', stderr: '' }
 Found 'terraformInventory' with version '0.5.0'
-Sat, 03 Oct 2015 10:02:58 GMT frey:Prepare { exePath: 'pip', foundVersion: '7.1.2', err: null, stdout: '7.1.2\n', stderr: '' }
+Sat, 03 Oct 2015 10:17:38 GMT frey:Prepare { exePath: 'pip', foundVersion: '7.1.2', err: null, stdout: '7.1.2\n', stderr: '' }
 Found 'pip' with version '7.1.2'
-Sat, 03 Oct 2015 10:02:58 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/pip/bin/ansible', foundVersion: '1.9.2', err: null, stdout: '1.9.2\n', stderr: '' }
-Found 'ansible' with version '1.9.2'
-Done
-Running help on all required tools
-  --version             show program's version number and exit
-usage: terraform [--version] [--help] <command> [<args>]
-    version    Prints the Terraform version
-  -version=false: print version information and exit
+Sat, 03 Oct 2015 10:17:38 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/pip/bin/ansible', foundVersion: '', err: null, stdout: '', stderr: '/bin/sh: {root}/test/scenario/prepare/frey/tools/pip/bin/ansible: No such file or directory\n' }
+Found 'ansible' with version ''
+ansible needs to be installed or upgraded.
+--> May I run 'pip install --install-option='--prefix=pip' --ignore-installed --force-reinstall --root '{root}/test/scenario/prepare/frey/tools' --upgrade --disable-pip-version-check ansible' for you? [yes|No]
+<-- Answering Yes as '--force-yes' applies
+/Library/Python/2.7/site-packages/pip-7.1.2-py2.7.egg/pip/commands/install.py:199: UserWarning: Disabling all use of wheels due to the use of --build-options / --global-options / --install-options.
+  cmdoptions.check_install_build_global(options)
+Collecting ansible
+  Using cached ansible-1.9.3.tar.gz
+Collecting paramiko (from ansible)
+  Using cached paramiko-1.15.3.tar.gz
+Collecting jinja2 (from ansible)
+  Using cached Jinja2-2.8.tar.gz
+Collecting PyYAML (from ansible)
+  Using cached PyYAML-3.11.tar.gz
+Collecting setuptools (from ansible)
+  Using cached setuptools-18.3.2.tar.gz
+Collecting pycrypto>=2.6 (from ansible)
+  Using cached pycrypto-2.6.1.tar.gz
+Collecting ecdsa>=0.11 (from paramiko->ansible)
+  Using cached ecdsa-0.13.tar.gz
+Collecting MarkupSafe (from jinja2->ansible)
+  Using cached MarkupSafe-0.23.tar.gz
+Installing collected packages: pycrypto, ecdsa, paramiko, MarkupSafe, jinja2, PyYAML, setuptools, ansible
+  Running setup.py install for pycrypto
+  Running setup.py install for ecdsa
+  Running setup.py install for paramiko
+  Running setup.py install for MarkupSafe
+  Running setup.py install for jinja2
+  Running setup.py install for PyYAML
+  Running setup.py install for setuptools
+  Running setup.py install for ansible
+Successfully installed MarkupSafe PyYAML ansible ecdsa jinja2 paramiko pycrypto-2.6.1 setuptools-0.8
+Sat, 03 Oct 2015 10:18:00 GMT frey:Prepare { exePath: '{root}/test/scenario/prepare/frey/tools/pip/bin/ansible', foundVersion: '', err: null, stdout: '', stderr: 'Traceback (most recent call last):\n  File "{root}/test/scenario/prepare/frey/tools/pip/bin/ansible", line 36, in <module>\n    from ansible.runner import Runner\nImportError: No module named ansible.runner\n' }
+Found 'ansible' with version ''
+ansible needs to be installed or upgraded.
+
+--> Exiting with error: Version of 'ansible' still not satisfied after install

@@ -150,6 +150,7 @@ class Frey extends Base
       pipExe               : "pip"
       ansibleExe           : "#{@options.tools}/pip/bin/ansible"
       ansiblePlaybookExe   : "#{@options.tools}/pip/bin/ansible-playbook"
+      pythonLib            : "#{@options.tools}/pip/lib/python2.7/site-packages"
       terraformExe         : "#{@options.tools}/terraform"
       terraformInventoryExe: "#{@options.tools}/terraform-inventory"
       terraformZip: [
