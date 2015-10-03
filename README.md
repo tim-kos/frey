@@ -167,8 +167,8 @@ For now, we only support
  - [x] Patch up toml -> json
  - [x] Pave way to meaningful output without DEBUG
  - [x] Prompt "Dare I install"? With --force-yes override
- - [ ] Move ansibleExe to deps
- - [ ] Move versions to deps
+ - [x] Move ansibleExe to deps
+ - [x] Move versions to deps
  - [ ] Test & document --no-colors
  - [ ] Port all of control.sh
  - [ ] Amazon free tier dynamodb Travis tests 

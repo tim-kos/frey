@@ -9,66 +9,13 @@ class Prepare extends Command
     super name, options, runtime
     @dir = @options.directory
 
-  run: (cb) ->
-    deps = [
-      type      : "dir"
-      name      : "tools"
-      dir       : "#{@options.tools}"
-    ,
-      type      : "app"
-      name      : "terraform"
-      range     : "#{@runtime.versions.terraform}"
-      cmdVersion: "{exe} --version |head -n1 |awk '{print $NF}'"
-      cmdInstall: [
-        "cd #{@options.tools}"
-        [
-          "curl -sSL '"
-          "https://dl.bintray.com/mitchellh/terraform/"
-          "#{@runtime.paths.terraformZip}'"
-          "> '#{@runtime.paths.terraformZip}'"
-        ].join("")
-        "unzip -o '#{@runtime.paths.terraformZip}'"
-      ].join " && "
-    ,
-      type      : "app"
-      name      : "terraformInventory"
-      range     : "#{@runtime.versions.terraformInventory}"
-      cmdVersion: "{exe} --version |head -n1 |awk '{print $NF \".0\"}'"
-      cmdInstall: [
-        "cd #{@options.tools}"
-        [
-          "curl -sSL '"
-          "https://github.com/adammck/terraform-inventory/releases/download/"
-          "v#{@runtime.versions.terraformInventory}/"
-          "#{@runtime.paths.terraformInventoryZip}'"
-          "> '#{@runtime.paths.terraformInventoryZip}'"
-        ].join ""
-        "unzip -o '#{@runtime.paths.terraformInventoryZip}'"
-      ].join " && "
-    ,
-      type      : "app"
-      name      : "pip"
-      range     : ">= #{@runtime.versions.pip}"
-      cmdVersion: "{exe} --version |head -n1 |awk '{print $2}'"
-      cmdInstall: "sudo easy_install --upgrade pip"
-    ,
-      type      : "app"
-      name      : "ansible"
-      range     : "#{@runtime.versions.ansible}"
-      cmdVersion: "{exe} --version |head -n1 |awk '{print $NF}'"
-      cmdInstall: "
-        pip install
-        --install-option='--prefix=pip'
-        --ignore-installed
-        --force-reinstall
-        --root '#{@options.tools}'
-        --upgrade
-        --disable-pip-version-check
-        ansible==#{@runtime.versions.ansible}
-      "
-    ]
+  transform: (cmd, props) ->
+    cmd = cmd.replace /{exe}/g, props.exe
+    cmd = cmd.replace /{zip}/g, props.zip
+    return cmd
 
-    async.eachSeries deps, (props, nextCb) =>
+  run: (cb) ->
+    async.eachSeries @runtime.deps, (props, nextCb) =>
       if props.type == "dir"
         mkdirp props.dir, (err) ->
           if err
@@ -81,7 +28,8 @@ class Prepare extends Command
           if satisfied
             return nextCb null
 
-          @_cmdYesNo props.cmdInstall, (err) =>
+          cmd = @transform props.cmdInstall, props
+          @_cmdYesNo cmd, (err) =>
             if err
               return nextCb new Error "Failed to install '#{props.name}'. #{err}"
 
@@ -96,25 +44,23 @@ class Prepare extends Command
     , cb
 
   satisfy: (props, cb) ->
-    exePath = @runtime.paths[props.name + "Exe"]
-    cmd     = props.cmdVersion
-    cmd     = cmd.replace "{exe}", exePath
+    cmd = @transform props.cmdVersion, props
 
     @_exeScript ["-c", cmd], {verbose: false}, (err, stdout) =>
       if err
         # We don't want to bail out if version command does not exist yet
         # Or maybe --version returns non-zero exit code, which is common
         debug
-          msg         : "Continuing after failed command #{cmdVersion}. #{err}"
-          exePath     :exePath
+          msg         : "Continuing after failed command #{cmd}. #{err}"
+          exe         :props.exe
           foundVersion:foundVersion
           err         :err
           stdout      :stdout
 
-      foundVersion = "#{stdout}".trim()
+      foundVersion = "#{stdout}".trim().replace "v", ""
       @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
 
-      if !semver.satisfies foundVersion, props.range
+      if !stdout || !semver.satisfies foundVersion, props.range
         @_out "#{props.name} needs to be installed or upgraded. \n"
         return cb false
 

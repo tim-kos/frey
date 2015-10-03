@@ -83,7 +83,7 @@ class Plan extends Command
 
   run: (cb) ->
     cmd = [
-      @runtime.paths.terraformExe
+      @runtime.deps.terraform.exe
       "plan"
       "-refresh=false"
       "-out=#{@runtime.paths.planFile}"

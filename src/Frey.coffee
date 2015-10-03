@@ -147,24 +147,8 @@ class Frey extends Base
       stateFile            : "#{@options.recipe}/terraform.tfstate"
       infraFile            : "#{@options.recipe}/infra.tf.json"
       playbookFile         : "#{@options.recipe}/config.yml"
-      pipExe               : "pip"
-      ansibleExe           : "#{@options.tools}/pip/bin/ansible"
-      ansiblePlaybookExe   : "#{@options.tools}/pip/bin/ansible-playbook"
       pythonLib            : "#{@options.tools}/pip/lib/python2.7/site-packages"
-      terraformExe         : "#{@options.tools}/terraform"
-      terraformInventoryExe: "#{@options.tools}/terraform-inventory"
-      terraformZip: [
-        "terraform"
-        @runtime.versions.terraform
-        @runtime.os.platform
-        "#{@runtime.os.arch}.zip"
-      ].join "_"
-      terraformInventoryZip: [
-        "terraform-inventory"
-        @runtime.versions.terraformInventory
-        @runtime.os.platform
-        "#{@runtime.os.arch}.zip"
-      ].join "_"
+      ansibleExe           : "#{@options.tools}/pip/bin/ansible"
 
     @runtime.ssh =
       keypair_name         : "#{options.app}"
@@ -172,9 +156,89 @@ class Frey extends Base
       email                : "hello@#{options.app}"
       keyprv_file          : "#{options.recipe}/#{options.app}.pem"
       keypub_file          : "#{options.recipe}/#{options.app}.pub"
-
       # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       # keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
+
+
+    @runtime.deps = []
+
+    @runtime.deps.push
+      type        : "dir"
+      name        : "tools"
+      dir         : "#{@options.tools}"
+
+    @runtime.deps.push
+      type        : "app"
+      name        : "terraform"
+      range       : "#{@runtime.versions.terraform}"
+      exe         : "#{@options.tools}/terraform"
+      zip         : [
+        "terraform"
+        @runtime.versions.terraform
+        @runtime.os.platform
+        "#{@runtime.os.arch}.zip"
+      ].join "_"
+      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
+      cmdInstall  : [
+        "cd #{@options.tools}"
+        [
+          "curl -sSL '"
+          "https://dl.bintray.com/mitchellh/terraform/"
+          "{zip}'"
+          "> '{zip}'"
+        ].join("")
+        "unzip -o '{zip}'"
+      ].join " && "
+
+    @runtime.deps.push
+      type        : "app"
+      name        : "terraformInventory"
+      range       : "#{@runtime.versions.terraformInventory}"
+      exe         : "#{@options.tools}/terraform-inventory"
+      zip         : [
+        "terraform-inventory"
+        @runtime.versions.terraformInventory
+        @runtime.os.platform
+        "#{@runtime.os.arch}.zip"
+      ].join "_"
+      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF \".0\"}'"
+      cmdInstall  : [
+        "cd #{@options.tools}"
+        [
+          "curl -sSL '"
+          "https://github.com/adammck/terraform-inventory/releases/download/"
+          "v#{@runtime.versions.terraformInventory}/"
+          "{zip}'"
+          "> '{zip}'"
+        ].join ""
+        "unzip -o '{zip}'"
+      ].join " && "
+
+    @runtime.deps.push
+      type        : "app"
+      name        : "pip"
+      exe         : "pip"
+      range       : ">= #{@runtime.versions.pip}"
+      cmdVersion  : "{exe} --version |head -n1 |awk '{print $2}'"
+      cmdInstall  : "sudo easy_install --upgrade pip"
+
+    @runtime.deps.push
+      type        : "app"
+      name        : "ansible"
+      range       : "#{@runtime.versions.ansible}"
+      exe         : "#{@options.tools}/pip/bin/ansible-playbook"
+      exePlaybook : "#{@options.tools}/pip/bin/ansible-playbook"
+      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
+      cmdInstall  : "
+        pip install
+        --install-option='--prefix=pip'
+        --ignore-installed
+        --force-reinstall
+        --root '#{@options.tools}'
+        --upgrade
+        --disable-pip-version-check
+        ansible==#{@runtime.versions.ansible}
+      "
 
     nextCb null, options
 

@@ -101,7 +101,7 @@ class Command extends Base
 
     bash.on "close", (code) ->
       if code != 0
-        msg = "Script '#{shellPath} #{shellArgs.join(" ")}' exited with code: '#{code}'"
+        msg = "Script '#{shellArgs.join(" ")}' exited with code: '#{code}'"
         err = new Error msg
 
         if lastStderr.length
