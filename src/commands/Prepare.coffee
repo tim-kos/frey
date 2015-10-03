@@ -78,7 +78,7 @@ class Prepare extends Command
             debug "Directory for '#{props.name}' present at '#{props.dir}'"
             return nextCb null
       else if props.type == "app"
-        @satisfy props, (satisfied) ->
+        @satisfy props, (satisfied) =>
           if satisfied
             return nextCb null
 
