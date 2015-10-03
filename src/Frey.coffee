@@ -139,7 +139,7 @@ class Frey extends Base
       ansible              : "1.9.2"
       terraform            : "0.6.3"
       terraformInventory   : "0.5"
-      pip                  : "6.0.8"
+      pip                  : "7.1.2"
 
     @runtime.paths =
       ansibleCfg           : "#{@options.directory}/ansible.cfg"

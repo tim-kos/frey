@@ -51,7 +51,7 @@ class Prepare extends Command
       name      : "pip"
       range     : ">= #{@runtime.versions.pip}"
       cmdVersion: "{exe} --version |head -n1 |awk '{print $2}'"
-      cmdInstall: "sudo easy_install pip"
+      cmdInstall: "sudo easy_install --upgrade pip"
     ,
       type      : "app"
       name      : "ansible"
@@ -78,33 +78,46 @@ class Prepare extends Command
             debug "Directory for '#{props.name}' present at '#{props.dir}'"
             return nextCb null
       else if props.type == "app"
-        exePath    = @runtime.paths[props.name + "Exe"]
-        cmdVersion = props.cmdVersion
-        cmdVersion = cmdVersion.replace "{exe}", exePath
+        @satisfy props, (satisfied) ->
+          if satisfied
+            return nextCb null
 
-        # debug cmdVersion
-        exec cmdVersion, (err, stdout, stderr) =>
-          if err
-            # We don't want to bail out if version command does not exist yet
-            # Or maybe --version returns non-zero exit code, which is common
-            debug "Continuing after failed command #{cmdVersion}. #{stderr}"
+          cmd = props.cmdInstall
+          if cmd != "#{cmd}"
+            cmd = cmd.join(" && ")
 
-          foundVersion = "#{stdout}".trim()
-          # debug "#{exePath}"
-          @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
+          return @_cmdYesNo cmd, (err) =>
+            if err
+              return nextCb new Error "Failed to install. #{err}"
 
-          if !semver.satisfies foundVersion, props.range
-            @_out "\n"
-            @_out "#{props.name} needs to be installed or upgraded. \n"
-            cmd = props.cmdInstall
-            if cmd != "#{cmd}"
-              cmd = cmd.join(" && ")
+            @satisfy props, (satisfied) ->
+              if !satisfied
+                return nextCb new Error "Version still not satisfied after install"
 
-            return @_cmdYesNo cmd, nextCb
-
-          return nextCb null
+              return nextCb null
       else
         return nextCb new Error "Unsupported type: '#{props.type}'"
     , cb
+
+  satisfy: (props, cb) ->
+    exePath    = @runtime.paths[props.name + "Exe"]
+    cmdVersion = props.cmdVersion
+    cmdVersion = cmdVersion.replace "{exe}", exePath
+    exec cmdVersion, (err, stdout, stderr) =>
+      if err
+        # We don't want to bail out if version command does not exist yet
+        # Or maybe --version returns non-zero exit code, which is common
+        debug "Continuing after failed command #{cmdVersion}. #{stderr}"
+
+      foundVersion = "#{stdout}".trim()
+      # debug "#{exePath}"
+      @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
+
+      if !semver.satisfies foundVersion, props.range
+        @_out "\n"
+        @_out "#{props.name} needs to be installed or upgraded. \n"
+        return cb false
+
+      cb true
 
 module.exports = Prepare
