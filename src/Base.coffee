@@ -1,8 +1,28 @@
 chalk = require "chalk"
 util  = require "util"
+async = require "async"
 _     = require "lodash"
+debug = require("depurar")("frey")
 
 class Base
+  boot: []
+
+  main: (bootOptions, cb) ->
+    debug "You should override this with main class logic. "
+
+  run: (cb)->
+    methods = []
+    for method in @boot
+      methods.push this[method].bind(this)
+
+    methods.unshift async.constant(@options)
+
+    async.waterfall methods, (err, bootOptions) =>
+      if err
+        return cb err
+
+      @main bootOptions, cb
+
   _out: (args...) ->
     index = 0
     str   = args[0]

@@ -81,7 +81,7 @@ class Plan extends Command
 
     cb null
 
-  run: (cb) ->
+  main: (bootOptions, cb) ->
     cmd = [
       @runtime.deps.terraform.exe
       "plan"

@@ -15,8 +15,6 @@ class Command extends Base
     @runtime = runtime
     @dir     = @options.recipe
 
-  boot: []
-
   _cmdYesNo: (cmd, cb) ->
     @promptYesNo "May I run '#{cmd}' for you? [yes|No]", (ok) =>
       if !ok
@@ -41,7 +39,7 @@ class Command extends Base
 
     yesno.ask question, false, cb
 
-  run: (cb) ->
+  main: (bootOptions, cb) ->
     runScript = "#{@options.recipe}/#{@name}.sh"
     fs.stat runScript, (err, stat) =>
       if err

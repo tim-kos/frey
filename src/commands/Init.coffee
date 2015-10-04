@@ -12,7 +12,7 @@ class Init extends Command
     super
     @dir = @options.directory
 
-  run: (cb) ->
+  main: (bootOptions, cb) ->
     mkdirp @options.recipe, (err) =>
       if err
         return cb err

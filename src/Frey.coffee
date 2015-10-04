@@ -45,6 +45,15 @@ class Frey extends Base
     restore   : "Restore latest state backup"
     remote    : "Execute a remote command - or opens console"
 
+  boot: [
+    "_defaults"
+    "_normalize"
+    "_validate"
+    "_setup"
+    "_runtimeVars"
+    "_filterChain"
+  ]
+
   constructor: (options) ->
     @options         = options
     @runtime         = {}
@@ -244,14 +253,15 @@ class Frey extends Base
 
     nextCb null, options
 
-  _runChain: (options, nextCb) ->
+  main: (bootOptions, cb) ->
     @commands = {}
+    @options  = bootOptions
     methods   = []
 
-    for command in options.filteredChain
+    for command in @options.filteredChain
       className          = inflection.classify command
       path               = "./commands/#{className}"
-      obj                = new (require path) command, options, @runtime
+      obj                = new (require path) command, @options, @runtime
       @commands[command] = obj
       actions            = @commands[command].boot.concat "run"
 
@@ -261,9 +271,9 @@ class Frey extends Base
     if @options.verbose > 0
       @_out "--> Will run: %o\n", methods
     else
-      @_out "--> Will run: %o\n", options.filteredChain
+      @_out "--> Will run: %o\n", @options.filteredChain
 
-    async.eachSeries methods, @_runOne.bind(this), nextCb
+    async.eachSeries methods, @_runOne.bind(this), cb
 
   _runOne: (method, cb) ->
     [ command, action ] = method.split "#{@methodDelimiter}"
@@ -282,19 +292,6 @@ class Frey extends Base
         append[command] = result
         @runtime        = _.extend @runtime, append
 
-      cb err
-
-  run: (cb) ->
-    async.waterfall [
-      async.constant(@options)
-      @_defaults.bind(this)
-      @_normalize.bind(this)
-      @_validate.bind(this)
-      @_setup.bind(this)
-      @_runtimeVars.bind(this)
-      @_filterChain.bind(this)
-      @_runChain.bind(this)
-    ], (err, results) ->
       cb err
 
 module.exports = Frey

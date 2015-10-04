@@ -14,7 +14,7 @@ class Prepare extends Command
     cmd = cmd.replace /{zip}/g, props.zip
     return cmd
 
-  run: (cb) ->
+  main: (bootOptions, cb) ->
     async.eachSeries @runtime.deps, (props, nextCb) =>
       if props.type == "dir"
         mkdirp props.dir, (err) ->
