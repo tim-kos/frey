@@ -14,9 +14,8 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 git init --quiet
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
-  plan \
   --no-color \
   --verbose \
-  --bail \
+  --bail-after plan \
   --recipe "." \
 && true

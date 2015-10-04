@@ -1,4 +1,11 @@
---> Will run: [ 'plan' ]
+--> Will run: [ 'init', 'refresh', 'validate', 'plan' ]
+--> {hostname} - init
+Running default control.sh action as I found no '{root}/test/scenario/dynamodb/init.sh'
+--> {hostname} - refresh
+Running default control.sh action as I found no '{root}/test/scenario/dynamodb/refresh.sh'
+bash: {home}/.frey/tools/terraform/terraform: Not a directory
+--> {hostname} - validate
+Running default control.sh action as I found no '{root}/test/scenario/dynamodb/validate.sh'
 --> {hostname} - plan
 The Terraform execution plan has been generated and is shown below.
 Resources are shown in alphabetical order for quick scanning. Green resources

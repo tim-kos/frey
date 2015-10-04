@@ -93,3 +93,19 @@ describe "Frey", ->
           "deploy"
         ]
         done()
+
+    it "should return some links for bailAfter", (done) ->
+      frey = new Frey
+
+      options =
+        _        : ["refresh"]
+        bailAfter: "plan",
+
+      frey._filterChain options, (err, options) ->
+        expect(err).to.equal null
+        expect(options.filteredChain).to.deep.equal [
+          "refresh"
+          "validate"
+          "plan"
+        ]
+        done()

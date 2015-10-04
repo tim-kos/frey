@@ -175,6 +175,7 @@ For now, we only support
  - [-] /command/module/ 
  - [-] Class.run becomes Class.main. The new run is Base.run. Which does a waterfall of @boot[], then @main
  - [x] Test & document --no-colors
+ - [x] Implement a bailAfter, use it for DynamoDB scenario
  - [ ] Runtime can be a command module, which can be prefixed to the runChain
  - [ ] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
  - [ ] Port Prepare SSH Keys

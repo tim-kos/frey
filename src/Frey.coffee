@@ -123,19 +123,21 @@ class Frey extends Base
       nextCb err, options
 
   _filterChain: (options, nextCb) ->
-    cmd   = options._[0]
-    index = Frey.chain.indexOf(cmd)
+    cmd        = options._[0]
+    indexStart = Frey.chain.indexOf(cmd)
 
-
-    if index < 0
+    if indexStart < 0
+      # This command is not part of the chain
       options.filteredChain = [ cmd ]
     else
       if options.bail
-        length = index + 1
+        length = indexStart + 1
+      else if options.bailAfter && Frey.chain.indexOf(options.bailAfter) > -1
+        length = Frey.chain.indexOf(options.bailAfter) + 1
       else
         length = Frey.chain.length
 
-      options.filteredChain = Frey.chain.slice index, length
+      options.filteredChain = Frey.chain.slice indexStart, length
 
     nextCb null, options
 

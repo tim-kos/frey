@@ -54,10 +54,14 @@ yargs
     bail:
       alias   : "b"
       boolean : true
-      describe: "Do not follow the chain of commands"
+      describe: "Do not follow the chain of commands, run a one-off command"
+    "bail-after":
+      nargs   : 1
+      type    : "string"
+      describe: "After running this command, abort the chain"
     "no-color":
       boolean : true
-      describe: "Color support is detected. This forces colors off. "
+      describe: "Color support is detected, this forces colors off"
     verbose:
       alias   : "v"
       count   : true
