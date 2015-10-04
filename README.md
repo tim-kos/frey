@@ -176,7 +176,9 @@ For now, we only support
  - [-] Class.run becomes Class.main. The new run is Base.run. Which does a waterfall of @boot[], then @main
  - [x] Test & document --no-colors
  - [x] Implement a bailAfter, use it for DynamoDB scenario
- - [ ] Runtime can be a command module, which can be prefixed to the runChain
+ - [x] Amazon free tier dynamodb Travis tests 
+ - [ ] Dynamodb scenario can evolve to be a full run
+ - [ ] Runtime can be a command module, which can be prefixed to the runChain. Prepare can also be prepended to all.
  - [ ] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
  - [ ] Port Prepare SSH Keys
  - [ ] Port refresh
@@ -187,10 +189,10 @@ For now, we only support
  - [ ] Port upload
  - [ ] Port setup
  - [ ] Port show 
- - [ ] Amazon free tier dynamodb Travis tests 
  - [ ] iculture theme for static site
  - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] Indent stdout/err
  - [ ] More tests!
  - [ ] Vagrant support
+ - [ ] How to implement different roles? Db/www/etc?
  - [ ] Switch to local npm install if available via LiftOff
