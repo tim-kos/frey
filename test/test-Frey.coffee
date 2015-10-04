@@ -38,7 +38,7 @@ describe "Frey", ->
       options = {}
       frey._defaults options, (err, options) ->
         expect(err).to.equal null
-        expect(options._).to.deep.equal [ "init" ]
+        expect(options._).to.deep.equal [ "prepare" ]
         done()
 
   describe "_validate", ->
