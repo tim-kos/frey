@@ -16,7 +16,7 @@ git init --quiet
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
   plan \
   --no-color \
-  --bail \
   --verbose \
+  --bail \
   --recipe "." \
 && true

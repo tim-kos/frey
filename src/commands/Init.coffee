@@ -9,7 +9,7 @@ async   = require "async"
 
 class Init extends Command
   constructor: (name, options, runtime) ->
-    super
+    super name, options, runtime
     @dir = @options.directory
 
   main: (bootOptions, cb) ->
@@ -17,6 +17,6 @@ class Init extends Command
       if err
         return cb err
 
-      super cb
+      super bootOptions, cb
 
 module.exports = Init
