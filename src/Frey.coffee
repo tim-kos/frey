@@ -61,7 +61,7 @@ class Frey extends Base
   _defaults: (options, nextCb) ->
     options      ?= {}
     options._    ?= []
-    options._[0] ?= "init"
+    options._[0] ?= "prepare"
     nextCb null, options
 
   _normalize: (options, nextCb) ->

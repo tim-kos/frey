@@ -1,11 +1,16 @@
---> Will run: [ 'init', 'refresh', 'validate', 'plan' ]
+--> Will run: [ 'prepare', 'init', 'refresh', 'validate', 'plan' ]
+--> {hostname} - prepare
+Found 'terraform' with version '0.6.3'
+Found 'terraformInventory' with version '0.5.0'
+Found 'pip' with version '7.1.2'
+Found 'ansible' with version '1.9.2'
 --> {hostname} - init
-Running default control.sh action as I found no '{root}/test/scenario/dynamodb/init.sh'
+Running default control.sh action as I found no '{root}/test/scenario/20-dynamodb/init.sh'
 --> {hostname} - refresh
-Running default control.sh action as I found no '{root}/test/scenario/dynamodb/refresh.sh'
+Running default control.sh action as I found no '{root}/test/scenario/20-dynamodb/refresh.sh'
 bash: {home}/.frey/tools/terraform/terraform: Not a directory
 --> {hostname} - validate
-Running default control.sh action as I found no '{root}/test/scenario/dynamodb/validate.sh'
+Running default control.sh action as I found no '{root}/test/scenario/20-dynamodb/validate.sh'
 --> {hostname} - plan
 The Terraform execution plan has been generated and is shown below.
 Resources are shown in alphabetical order for quick scanning. Green resources
@@ -17,7 +22,7 @@ Your plan was also saved to the path below. Call the "apply" subcommand
 with this plan file and Terraform will exactly execute this execution
 plan.
 
-Path: {root}/test/scenario/dynamodb/terraform.plan
+Path: {root}/test/scenario/20-dynamodb/terraform.plan
 
 + aws_dynamodb_table.basic-dynamodb-table
     arn:                                                   "" => "<computed>"
@@ -39,5 +44,5 @@ Path: {root}/test/scenario/dynamodb/terraform.plan
     read_capacity:                                         "" => "20"
     write_capacity:                                        "" => "20"
 Plan: 1 to add, 0 to change, 0 to destroy.
---> Saved plan as '{root}/test/scenario/dynamodb/terraform.plan'
+--> Saved plan as '{root}/test/scenario/20-dynamodb/terraform.plan'
 Done
