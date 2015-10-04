@@ -174,6 +174,7 @@ For now, we only support
  - [x] tooldir should be coupled with global Frey install and not per-project
  - [-] /command/module/ 
  - [-] Class.run becomes Class.main. The new run is Base.run. Which does a waterfall of @boot[], then @main
+ - [x] Test & document --no-colors
  - [ ] Runtime can be a command module, which can be prefixed to the runChain
  - [ ] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
  - [ ] Port Prepare SSH Keys
@@ -185,7 +186,6 @@ For now, we only support
  - [ ] Port upload
  - [ ] Port setup
  - [ ] Port show 
- - [ ] Test & document --no-colors
  - [ ] Amazon free tier dynamodb Travis tests 
  - [ ] iculture theme for static site
  - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 

@@ -13,10 +13,10 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 git init --quiet
 
-echo "WIP"
-exit 1
-
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
+  plan \
+  --no-color \
+  --bail \
   --verbose \
   --recipe "." \
 && true

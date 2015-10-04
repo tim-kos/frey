@@ -1,1 +1,36 @@
-WIP
+--> Will run: [ 'plan' ]
+--> {hostname} - plan
+The Terraform execution plan has been generated and is shown below.
+Resources are shown in alphabetical order for quick scanning. Green resources
+will be created (or destroyed and then created if an existing resource
+exists), yellow resources are being changed in-place, and red resources
+will be destroyed.
+
+Your plan was also saved to the path below. Call the "apply" subcommand
+with this plan file and Terraform will exactly execute this execution
+plan.
+
+Path: {root}/test/scenario/dynamodb/terraform.plan
+
++ aws_dynamodb_table.basic-dynamodb-table
+    arn:                                                   "" => "<computed>"
+    attribute.#:                                           "" => "1"
+    attribute.301566416.name:                              "" => "TopScore"
+    attribute.301566416.type:                              "" => "N"
+    global_secondary_index.#:                              "" => "1"
+    global_secondary_index.505842399.hash_key:             "" => "GameTitle"
+    global_secondary_index.505842399.name:                 "" => "GameTitleIndex"
+    global_secondary_index.505842399.non_key_attributes.#: "" => "1"
+    global_secondary_index.505842399.non_key_attributes.0: "" => "UserId"
+    global_secondary_index.505842399.projection_type:      "" => "INCLUDE"
+    global_secondary_index.505842399.range_key:            "" => "TopScore"
+    global_secondary_index.505842399.read_capacity:        "" => "10"
+    global_secondary_index.505842399.write_capacity:       "" => "10"
+    hash_key:                                              "" => "UserId"
+    name:                                                  "" => "GameScores"
+    range_key:                                             "" => "GameTitle"
+    read_capacity:                                         "" => "20"
+    write_capacity:                                        "" => "20"
+Plan: 1 to add, 0 to change, 0 to destroy.
+--> Saved plan as '{root}/test/scenario/dynamodb/terraform.plan'
+Done

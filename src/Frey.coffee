@@ -57,7 +57,6 @@ class Frey extends Base
   constructor: (options) ->
     @options         = options
     @runtime         = {}
-    @methodDelimiter = "->"
 
   _defaults: (options, nextCb) ->
     options      ?= {}
@@ -254,44 +253,30 @@ class Frey extends Base
     nextCb null, options
 
   main: (bootOptions, cb) ->
-    @commands = {}
-    @options  = bootOptions
-    methods   = []
-
-    for command in @options.filteredChain
-      className          = inflection.classify command
-      path               = "./commands/#{className}"
-      obj                = new (require path) command, @options, @runtime
-      @commands[command] = obj
-      actions            = @commands[command].boot.concat "run"
-
-      for action in actions
-        methods.push "#{command}#{@methodDelimiter}#{action}"
+    @options = bootOptions
 
     if @options.verbose > 0
-      @_out "--> Will run: %o\n", methods
+      @_out "--> Will run: %o\n", @options.filteredChain
     else
       @_out "--> Will run: %o\n", @options.filteredChain
 
-    async.eachSeries methods, @_runOne.bind(this), cb
+    async.eachSeries @options.filteredChain, @_runOne.bind(this), cb
 
-  _runOne: (method, cb) ->
-    [ command, action ] = method.split "#{@methodDelimiter}"
-    obj                 = @commands[command]
-    func                = obj[action].bind(obj)
+  _runOne: (command, cb) ->
+    className = inflection.classify command
+    path      = "./commands/#{className}"
+    obj       = new (require path) command, @options, @runtime
+    func      = obj.run.bind(obj)
 
-    if @options.verbose > 0 || action == "run"
-      @_out chalk.gray "--> "
-      @_out chalk.gray "#{@runtime.os.hostname} - "
-      @_out chalk.green "#{method}"
-      @_out chalk.green "\n"
+    @_out chalk.gray "--> "
+    @_out chalk.gray "#{@runtime.os.hostname} - "
+    @_out chalk.green "#{command}"
+    @_out chalk.green "\n"
 
     func (err, result) =>
-      if action == "run"
-        append          = {}
-        append[command] = result
-        @runtime        = _.extend @runtime, append
-
+      append          = {}
+      append[command] = result
+      @runtime        = _.extend @runtime, append
       cb err
 
 module.exports = Frey

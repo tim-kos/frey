@@ -38,7 +38,7 @@ test-integration:
 
 .PHONY: save-integration-fixtures
 save-integration-fixtures:
-	@SAVE_FIXTURES=true ./test/integration.sh
+	@source env.sh && env SAVE_FIXTURES=true ./test/integration.sh
 
 .PHONY: test-full
 test-full: test-coverage test-integration

@@ -57,6 +57,9 @@ class Command extends Base
       @_toEnvFormat(@runtime, "runtime"),
       @_toEnvFormat(@options, "options")
 
+    for key, val of childEnv
+      childEnv["TF_VAR_#{key}"] = val
+
     childEnv.PYTHONPATH = @runtime.paths.pythonLib
 
     return childEnv

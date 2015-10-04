@@ -1,97 +1,101 @@
 Command = require "../Command"
 debug   = require("depurar")("frey")
 
-TOML    = require "toml"
-fs      = require "fs"
-_       = require "lodash"
-async   = require "async"
-glob    = require "glob"
-YAML    = require "js-yaml"
+TOML  = require "toml"
+fs    = require "fs"
+chalk = require "chalk"
+_     = require "lodash"
+async = require "async"
+glob  = require "glob"
+YAML  = require "js-yaml"
 
 class Plan extends Command
   boot: [
-    "findTomlFiles"
-    "readTomlFiles"
-    "mergeToml"
-    "splitToml"
-    "gatherTerraformArgs"
+    "_findTomlFiles"
+    "_readTomlFiles"
+    "_mergeToml"
+    "_splitToml"
+    "_gatherTerraformArgs"
   ]
 
-  findTomlFiles: (cb) ->
-    @tomlFiles = []
-    pattern    = "#{@options.recipe}/*.toml"
-    glob pattern, (err, files) =>
+  _findTomlFiles: (options, cb) ->
+    tomlFiles = []
+    pattern   = "#{@options.recipe}/*.toml"
+    glob pattern, (err, files) ->
       if err
         return cb err
 
-      @tomlFiles = files
-      cb null
+      tomlFiles = files
+      cb null, tomlFiles
 
-  readTomlFiles: (cb) ->
-    @tomlContents = []
-    async.map @tomlFiles, fs.readFile, (err, buf) =>
+  _readTomlFiles: (tomlFiles, cb) ->
+    tomlContents = []
+    async.map tomlFiles, fs.readFile, (err, buf) ->
       if err
         return cb err
 
-      @tomlContents.push TOML.parse "#{buf}"
-      cb null
+      tomlContents.push TOML.parse "#{buf}"
+      cb null, tomlContents
 
-  mergeToml: (cb) ->
-    @tomlMerged = {}
-    for tom in @tomlContents
-      @tomlMerged = _.extend @tomlMerged, tom
+  _mergeToml: (tomlContents, cb) ->
+    tomlMerged = {}
+    for tom in tomlContents
+      tomlMerged = _.extend tomlMerged, tom
 
-    cb null
+    cb null, tomlMerged
 
-  splitToml: (cb) ->
-    @filesWritten = []
+  _splitToml: (tomlMerged, cb) ->
+    filesWritten = []
 
     async.parallel [
       (callback) =>
-        if !@tomlMerged.infra?
+        if !tomlMerged.infra?
           debug "No infra instructions found in merged toml"
           return callback null # That's not fatal
 
-        encoded = JSON.stringify @tomlMerged.infra, null, "  "
+        encoded = JSON.stringify tomlMerged.infra, null, "  "
         if !encoded
           return callback new Error "Unable to convert recipe to infra json"
 
-        @filesWritten.push @runtime.paths.infraFile
+        filesWritten.push @runtime.paths.infraFile
         fs.writeFile @runtime.paths.infraFile, encoded, callback
       (callback) =>
-        if !@tomlMerged.config?
+        if !tomlMerged.config?
           debug "No config instructions found in merged toml"
           return callback null # That's not fatal
 
-        encoded = YAML.safeDump @tomlMerged.config
+        encoded = YAML.safeDump tomlMerged.config
         if !encoded
           return callback new Error "Unable to convert recipe to config yml"
 
-        @filesWritten.push @runtime.paths.playbookFile
+        filesWritten.push @runtime.paths.playbookFile
         fs.writeFile @runtime.paths.playbookFile, encoded, callback
-    ], cb
+    ], (err) ->
+      if err
+        return cb err
 
-  gatherTerraformArgs: (cb) ->
-    @terraformArgs = []
+      cb null, filesWritten
 
-    for key, val of @_buildChildEnv()
-      if "#{key}".match /^FREY_[A-Z_0-9]+$/
-        val = "#{val}"
-        @terraformArgs.push "-var '#{key}=#{val.replace("'", "\\'")}'"
+  _gatherTerraformArgs: (filesWritten, cb) ->
+    terraformArgs = []
+    if !chalk.enabled
+      terraformArgs.push "-no-color"
 
-    cb null
+    # terraformArgs.push "-var #{key}=#{val}"
+    cb null, terraformArgs
 
-  main: (bootOptions, cb) ->
+  main: (terraformArgs, cb) ->
+    tf  = (dep for dep in @runtime.deps when dep.name == "terraform")[0]
     cmd = [
-      @runtime.deps.terraform.exe
+      tf.exe
       "plan"
       "-refresh=false"
       "-out=#{@runtime.paths.planFile}"
     ]
-    cmd = cmd.concat @terraformArgs
+    cmd = cmd.concat terraformArgs
     cmd = cmd.join " "
 
-    @_exeScript ["-c"], [ cmd ], (err, stdout) =>
+    @_exeScript ["-c", cmd], {}, (err, stdout) =>
       if err
         return cb err
 

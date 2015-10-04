@@ -20,7 +20,7 @@ git init --quiet
 # specify:
 echo "FREY:SKIP_COMPARE_STDIO"
 
-DEBUG=*:* "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
+"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
   --verbose \
   --recipe "." \

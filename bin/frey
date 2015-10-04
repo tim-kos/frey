@@ -35,7 +35,7 @@ yargs
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the tools"
-    forceYes:
+    "force-yes":
       alias   : "f"
       default : false
       boolean : true
@@ -55,6 +55,9 @@ yargs
       alias   : "b"
       boolean : true
       describe: "Do not follow the chain of commands"
+    "no-color":
+      boolean : true
+      describe: "Color support is detected. This forces colors off. "
     verbose:
       alias   : "v"
       count   : true
