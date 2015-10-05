@@ -18,19 +18,19 @@ Commands:
   remote      Execute a remote command - or opens console
 
 Options:
-  --app, -a        Name of application for which we're creating infrastructure  [string] [default: "{cwd}|basename"]
-  --recipe, -r     Directory that contains state and recipies  [string] [default: "{cwd}/frey/production"]
-  --tools, -t      Directory that contains the tools  [string] [default: "{home}/.frey/tools"]
-  --force-yes, -f  Answer yes to all questions (dangerous!)  [boolean] [default: false]
-  --tags, -g       A list of tags to execute in isolation  [string]
-  --sleep, -s      Wait x seconds between showing infra plan, and executing it  [default: 5]
-  --bail, -b       Do not follow the chain of commands, run a one-off command  [boolean]
-  --bail-after     After running this command, abort the chain  [string]
-  --no-color       Color support is detected, this forces colors off  [boolean]
-  --verbose, -v    Show debug info  [count]
-  --unsafe, -u     Allow execution, even though your Git working directory is unclean  [boolean]
-  --help           Show help  [boolean]
-  --version        Show version number  [boolean]
+  --app          Name of application for which we're creating infrastructure  [string] [default: "{cwd}|basename"]
+  --recipe       Directory that contains state and recipies  [string] [default: "{cwd}/frey/production"]
+  --tools        Directory that contains the tools  [string] [default: "{home}/.frey/tools"]
+  --force-yes    Answer yes to all questions (dangerous!)  [boolean] [default: false]
+  --tags         A list of tags to execute in isolation  [string]
+  --sleep        Wait x seconds between showing infra plan, and executing it  [default: 5]
+  --bail         Do not follow the chain of commands, run a one-off command  [boolean]
+  --bail-after   After running this command, abort the chain  [string]
+  --no-color     Color support is detected, this forces colors off  [boolean]
+  --verbose, -v  Show debug info  [count]
+  --unsafe       Allow execution, even though your Git working directory is unclean  [boolean]
+  --help         Show help  [boolean]
+  --version      Show version number  [boolean]
 
 Examples:
   frey backup -d ./envs/production  backup platform described in ./envs/production
