@@ -41,7 +41,7 @@ class Prepare extends Command
   _satisfy: (props, cb) ->
     cmd = @_transform props.cmdVersion, props
 
-    @_exeScript ["-c", cmd], {verbose: false}, (err, stdout) =>
+    @_exeScript ["-c", cmd], verbose: false, maxSamples: false, (err, stdout) =>
       if err
         # We don't want to bail out if version command does not exist yet
         # Or maybe --version returns non-zero exit code, which is common
