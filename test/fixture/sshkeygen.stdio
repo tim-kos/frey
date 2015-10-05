@@ -8,8 +8,8 @@ Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'
 Found 'ansible' with version '1.9.2'
 Done
-1675	{tmpdir}/frey-sshkeygen.pem
-410	{tmpdir}/frey-sshkeygen.pub
+{tmpdir}/frey-sshkeygen.pem
+{tmpdir}/frey-sshkeygen.pub
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
@@ -19,5 +19,5 @@ Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'
 Found 'ansible' with version '1.9.2'
 Done
-1675	{tmpdir}/frey-sshkeygen.pem
-410	{tmpdir}/frey-sshkeygen.pub
+{tmpdir}/frey-sshkeygen.pem
+{tmpdir}/frey-sshkeygen.pub

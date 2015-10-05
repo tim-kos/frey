@@ -14,6 +14,7 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 git init --quiet
 
 rm -f terraform.plan
+rm -f "${TMPDIR:-/tmp}/frey-dynamodb"* || true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
   --sshkeys "${TMPDIR:-/tmp}" \

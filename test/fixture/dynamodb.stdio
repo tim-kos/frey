@@ -1,6 +1,8 @@
 --> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
+Creating private key '{tmpdir}/frey-dynamodb.pem'
+Creating public key '{tmpdir}/frey-dynamodb.pub'
 Found 'terraform' with version '0.6.3'
 Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'

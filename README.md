@@ -180,10 +180,10 @@ For now, we only support
  - [x] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
  - [x] Move validation to Validate class
  - [x] Port Prepare SSH Keys
- - [ ] Port refresh
- - [ ] Port plan
- - [ ] Port backup
+ - [x] Port refresh
+ - [x] Port plan
  - [ ] Port launch
+ - [ ] Port backup
  - [ ] Port install
  - [ ] Port upload
  - [ ] Port setup

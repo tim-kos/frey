@@ -16,6 +16,7 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 git init --quiet
+rm -f
 
 # We don't want to enforce PIP versions since that's affects the
 # user's global state.
@@ -23,6 +24,8 @@ git init --quiet
 # That's why we only care about the exit code in this test, and
 # specify:
 echo "FREY:SKIP_COMPARE_STDIO"
+
+rm -f "${TMPDIR:-/tmp}/frey-prepare"* || true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
