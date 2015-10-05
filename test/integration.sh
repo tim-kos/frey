@@ -11,18 +11,15 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname "${__dir}")" && pwd)"
 
-scenarios="${1:-$(ls ${__dir}/scenario/)}"
+scenarios="${1:-$(ls ${__dir}/scenario/|egrep -v ^prepare$)}"
 
 tmpDir="${TMPDIR:-/tmp}/frey"
 mkdir -p "${tmpDir}"
-LC_COLLATE=C
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
   cmdSed=gsed
-  cmdSort=gsort
 else
   cmdSed=sed
-  cmdSort=sort
 fi
 
 
@@ -38,7 +35,10 @@ if ! which "${cmdSed}" > /dev/null; then
   exit 1
 fi
 
-for scenario in $(echo ${scenarios} |"${cmdSort}"); do
+# Running prepare before other scenarios is important on Travis,
+# so that stdio can diverge - and we can enforce stricter
+# stdio comparison on all other tests.
+for scenario in $(echo prepare ${scenarios}); do
   echo "==> Scenario: ${scenario}"
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
