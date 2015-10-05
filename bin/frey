@@ -11,41 +11,34 @@ yargs
   .example "frey backup -d ./envs/production", "backup platform described in ./envs/production"
   .options
     app:
-      alias   : "a"
       default : "{cwd}|basename"
       nargs   : 1
       type    : "string"
       describe: "Name of application for which we're creating infrastructure"
     recipe:
-      alias   : "r"
       default : "{cwd}/frey/production"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains state and recipies"
     tools:
-      alias   : "t"
       default : "{home}/.frey/tools"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the tools"
     "force-yes":
-      alias   : "f"
       default : false
       boolean : true
       describe: "Answer yes to all questions (dangerous!)"
     tags:
-      alias   : "g"
       nargs   : 1
       type    : "string"
       describe: "A list of tags to execute in isolation"
     sleep:
-      alias   : "s"
       default : 5
       nargs   : 1
       type    : "number"
       describe: "Wait x seconds between showing infra plan, and executing it"
     bail:
-      alias   : "b"
       boolean : true
       describe: "Do not follow the chain of commands, run a one-off command"
     "bail-after":
@@ -60,7 +53,6 @@ yargs
       count   : true
       describe: "Show debug info"
     unsafe:
-      alias   : "u"
       boolean : true
       describe: "Allow execution, even though your Git working directory is unclean"
   .command "completion", "Install CLI auto completion"
