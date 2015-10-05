@@ -101,8 +101,6 @@ class Refresh extends Command
         else
           return cb err
 
-      @_out "--> Refreshed state to '#{@runtime.paths.stateFile}'\n"
-
       cb null
 
 module.exports = Refresh

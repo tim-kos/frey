@@ -8,7 +8,6 @@ Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'
 Found 'ansible' with version '1.9.2'
 --> {hostname} - refresh
---> Refreshed state to '{root}/test/scenario/dynamodb/.frey/state/terraform.tfstate'
 --> {hostname} - validate
 --> {hostname} - plan
 The Terraform execution plan has been generated and is shown below.

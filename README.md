@@ -184,15 +184,15 @@ For now, we only support
  - [x] Port plan
  - [x] Port launch
  - [x] Port backup
+ - [ ] Vagrant support
  - [ ] Port install
  - [ ] Port upload
  - [ ] Port setup
  - [ ] Port show 
  - [ ] Dynamodb scenario can evolve to be a full run
  - [ ] iculture theme for static site
- - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] Indent stdout/err
  - [ ] More tests!
- - [ ] Vagrant support
+ - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] How to implement different roles? Db/www/etc?
  - [ ] Switch to local npm install if available via LiftOff
