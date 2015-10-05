@@ -1,0 +1,15 @@
+FREY:SKIP_COMPARE_STDIO
+--> Will run: [ 'runtime', 'prepare' ]
+--> {hostname} - runtime
+--> {hostname} - prepare
+Found 'terraform' with version '0.6.3'
+Found 'terraformInventory' with version '0.5.0'
+Found 'pip' with version '7.1.2'
+Found 'ansible' with version '1.9.2'
+Done
+Running help on all required tools
+  --version             show program's version number and exit
+usage: terraform [--version] [--help] <command> [<args>]
+    version    Prints the Terraform version
+  -version=false: print version information and exit
+All tools were able to execute
