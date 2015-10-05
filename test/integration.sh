@@ -37,7 +37,7 @@ if ! which "${cmdSed}" > /dev/null; then
   exit 1
 fi
 
-for scenario in $(echo ${scenarios} |sort); do
+for scenario in $(echo ${scenarios} |"${cmdSort}"); do
   echo "==> Scenario: ${scenario}"
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
