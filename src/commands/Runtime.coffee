@@ -19,7 +19,7 @@ class Runtime extends Command
       pip                  : "7.1.2"
 
     @runtime.paths =
-      ansibleCfg           : "#{@options.directory}/ansible.cfg"
+      ansibleCfg           : "#{@options.recipe}/ansible.cfg"
       planFile             : "#{@options.recipe}/terraform.plan"
       stateFile            : "#{@options.recipe}/terraform.tfstate"
       infraFile            : "#{@options.recipe}/infra.tf.json"

@@ -61,14 +61,18 @@ class Frey extends Base
     options      ?= {}
     options._    ?= []
     options._[0] ?= "init"
+    options.cwd  ?= process.cwd()
+    options.home ?= osHomedir()
+
     nextCb null, options
 
   _normalize: (options, nextCb) ->
+
     # Resolve interdependent arguments
     for key, val of options
       if val == "#{val}"
-        options[key] = val.replace "{directory}", options.directory
-        options[key] = val.replace "{home}", osHomedir()
+        options[key] = val.replace "{cwd}", options.cwd
+        options[key] = val.replace "{home}", options.home
 
     # Apply simple functions
     for key, val of options
@@ -77,12 +81,10 @@ class Frey extends Base
         val          = path.basename val
         options[key] = val
 
-
-    options.directory = path.resolve options.directory
-    options.recipe    = path.resolve options.directory, options.recipe
-    options.tools     = path.resolve options.directory, options.tools
-
-    options.root      = path.resolve "#{__dirname}/.."
+    options.cwd    = path.resolve options.cwd
+    options.recipe = path.resolve options.cwd, options.recipe
+    options.tools  = path.resolve options.cwd, options.tools
+    options.root   = path.resolve "#{__dirname}/.."
 
     if !options.tags?
       options.tags = ""
@@ -90,8 +92,8 @@ class Frey extends Base
     nextCb null, options
 
   _validate: (options, nextCb) ->
-    if !options?.directory?
-      return nextCb new Error "'#{options?.directory?}' is not a valid directory"
+    if !options?.cwd?
+      return nextCb new Error "'#{options?.cwd?}' is not a valid cwd"
 
     async.series [
       (callback) ->
@@ -102,13 +104,13 @@ class Frey extends Base
         callback null
       (callback) ->
         # Need a local .git dir
-        gitDir = "#{options.directory}/.git"
+        gitDir = "#{options.cwd}/.git"
         fs.stat gitDir, (err, stats) ->
           if err
             return callback new Error "Error while checking for '#{gitDir}'"
 
           if !stats.isDirectory()
-            return callback new Error "'#{gitDir}' is not a directory"
+            return callback new Error "'#{gitDir}' is not a cwd"
 
           callback null
     ], (err) ->

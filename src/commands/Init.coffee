@@ -10,7 +10,7 @@ async   = require "async"
 class Init extends Command
   constructor: (name, options, runtime) ->
     super name, options, runtime
-    @dir = @options.directory
+    @dir = @options.cwd
 
   main: (bootOptions, cb) ->
     mkdirp @options.recipe, (err) =>

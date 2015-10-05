@@ -8,7 +8,7 @@ __terraformInventoryDir="${FREY__OPTIONS__ROOT}/bin"
 __terraformInventoryExe="${__terraformInventoryDir}/terraform-inventory-${__terraformInventoryVersion}-${FREY__RUNTIME__OS__PLATFORM}-${FREY__RUNTIME__OS__ARCH}"
 __ansibleExe="ansible"
 __ansiblePlaybookExe="ansible-playbook"
-__ansibleCfg="${FREY__OPTIONS__DIRECTORY}/ansible.cfg"
+__ansibleCfg="${FREY__OPTIONS__CWD}/ansible.cfg"
 
 __planFile="${FREY__OPTIONS__RECIPE}/terraform.plan"
 __stateFile="${FREY__OPTIONS__RECIPE}/terraform.tfstate"

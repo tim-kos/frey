@@ -12,23 +12,16 @@ yargs
   .options
     app:
       alias   : "a"
-      default : "{directory}|basename"
+      default : "{cwd}|basename"
       nargs   : 1
       type    : "string"
       describe: "Name of application for which we're creating infrastructure"
     recipe:
       alias   : "r"
-      default : "{directory}/frey/production"
+      default : "{cwd}/frey/production"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains state and recipies"
-    directory:
-      alias   : "d"
-      default : ->
-        return process.cwd()
-      nargs   : 1
-      type    : "string"
-      describe: "Root project directory that contains the .git"
     tools:
       alias   : "t"
       default : "{home}/.frey/tools"

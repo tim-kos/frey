@@ -4,12 +4,12 @@ expect = require("chai").expect
 describe "Frey", ->
   @timeout 10000
   describe "_normalize", ->
-    it "should transform the directory variable", (done) ->
+    it "should transform the cwd variable", (done) ->
       frey = new Frey
 
       options =
-        recipe    : "{directory}/frey/production"
-        directory : "."
+        recipe    : "{cwd}/frey/production"
+        cwd : "."
         tools     : "{home}/.frey/tools"
 
       frey._normalize options, (err, options) ->
@@ -22,8 +22,8 @@ describe "Frey", ->
 
       options =
         app       : "./tusd|basename"
-        recipe    : "{directory}/frey/production"
-        directory : "."
+        recipe    : "{cwd}/frey/production"
+        cwd : "."
         tools     : "{home}/.frey/tools"
 
       frey._normalize options, (err, options) ->
@@ -46,7 +46,7 @@ describe "Frey", ->
       frey = new Frey
 
       options =
-        directory: "."
+        cwd: "."
 
       frey._validate options, (err, options) ->
         expect(err).to.have.property("message").to.match /'undefined' is not a supported Frey/

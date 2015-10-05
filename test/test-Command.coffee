@@ -6,8 +6,8 @@ describe "Command", ->
   describe "_toEnvFormat", ->
     it "should transform periods", (done) ->
       command = new Command "prepare",
-        recipe    : "{directory}/frey/production"
-        directory : "."
+        recipe    : "{cwd}/frey/production"
+        cwd : "."
         tools     : "{home}/.frey/tools"
 
 

@@ -18,9 +18,8 @@ Commands:
   remote      Execute a remote command - or opens console
 
 Options:
-  --app, -a        Name of application for which we're creating infrastructure  [string] [default: "{directory}|basename"]
-  --recipe, -r     Directory that contains state and recipies  [string] [default: "{directory}/frey/production"]
-  --directory, -d  Root project directory that contains the .git  [string] [default: (generated-value)]
+  --app, -a        Name of application for which we're creating infrastructure  [string] [default: "{cwd}|basename"]
+  --recipe, -r     Directory that contains state and recipies  [string] [default: "{cwd}/frey/production"]
   --tools, -t      Directory that contains the tools  [string] [default: "{home}/.frey/tools"]
   --force-yes, -f  Answer yes to all questions (dangerous!)  [boolean] [default: false]
   --tags, -g       A list of tags to execute in isolation  [string]

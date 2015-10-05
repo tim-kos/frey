@@ -7,7 +7,7 @@ debug   = require("depurar")("frey")
 class Prepare extends Command
   constructor: (name, options, runtime) ->
     super name, options, runtime
-    @dir = @options.directory
+    @dir = @options.cwd
 
   transform: (cmd, props) ->
     cmd = cmd.replace /{exe}/g, props.exe
