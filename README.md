@@ -178,7 +178,6 @@ For now, we only support
  - [x] Implement a bailAfter, use it for DynamoDB scenario
  - [x] Amazon free tier dynamodb Travis tests 
  - [x] Runtime can be a command module, which can be prefixed to the runChain. Prepare can also be prepended to all. Afterwards, scenarios won't need to be ordered
- - [ ] Dynamodb scenario can evolve to be a full run
  - [ ] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
  - [ ] Port Prepare SSH Keys
  - [ ] Port refresh
@@ -189,6 +188,7 @@ For now, we only support
  - [ ] Port upload
  - [ ] Port setup
  - [ ] Port show 
+ - [ ] Dynamodb scenario can evolve to be a full run
  - [ ] iculture theme for static site
  - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] Indent stdout/err
