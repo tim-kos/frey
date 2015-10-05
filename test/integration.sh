@@ -18,8 +18,10 @@ mkdir -p "${tmpDir}"
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
   cmdSed=gsed
+  cmdSort=gsort
 else
   cmdSed=sed
+  cmdSort=sort
 fi
 
 
@@ -35,7 +37,7 @@ if ! which "${cmdSed}" > /dev/null; then
   exit 1
 fi
 
-for scenario in $(echo $scenarios); do
+for scenario in $(echo ${scenarios} |sort); do
   echo "==> Scenario: ${scenario}"
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
