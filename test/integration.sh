@@ -22,7 +22,7 @@ else
   cmdSed=sed
 fi
 
-__coffee=$(which coffee)
+__coffee="$(which coffee)"
 
 __os="linux"
 if [[ "${OSTYPE}" == "darwin"* ]]; then
@@ -52,16 +52,19 @@ for scenario in $(echo prepare ${scenarios}); do
     # Clear out environmental specifics
     for typ in $(echo stdio exitcode); do
       curFile="${tmpDir}/${scenario}.${typ}"
-      "${cmdSed}" -i "s@${__coffee}@{coffee}@gi" "${curFile}"
-      "${cmdSed}" -i "s@${__os}@{os}@gi" "${curFile}"
-      "${cmdSed}" -i "s@${__arch}@{arch}@gi" "${curFile}"
-      "${cmdSed}" -i "s@${__root}@{root}@g" "${curFile}"
-      "${cmdSed}" -i "s@{root}/node_modules/.bin/coffee@{coffee}@gi" "${curFile}"
-      "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${curFile}"
-      "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${curFile}"
-      "${cmdSed}" -i "s@${HOSTNAME}@{hostname}@g" "${curFile}"
-      "${cmdSed}" -i "s@OSX@{os}@gi" "${curFile}"
-      "${cmdSed}" -i "s@Linux@{os}@gi" "${curFile}"
+      "${cmdSed}" -i \
+        -e "s@${__coffee}@{coffee}@g" "${curFile}" \
+        -e "s@${__os}@{os}@g" "${curFile}" \
+        -e "s@${__arch}@{arch}@g" "${curFile}" \
+        -e "s@${__root}@{root}@g" "${curFile}" \
+        -e "s@{root}/node_modules/\.bin/coffee@{coffee}@g" "${curFile}" \
+        -e "s@{home}/build/kvz/fre{coffee}@{coffee}@g" "${curFile}" \
+        -e "s@${HOME:-/home/travis}@{home}@g" "${curFile}" \
+        -e "s@${USER:-travis}@{user}@g" "${curFile}" \
+        -e "s@${HOSTNAME}@{hostname}@g" "${curFile}" \
+        -e "s@OSX@{os}@g" "${curFile}" \
+        -e "s@Linux@{os}@g" "${curFile}" \
+      && true
     done
 
     # Save these as new fixtures?
