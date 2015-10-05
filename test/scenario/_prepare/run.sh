@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Running prepare before other scenarios is important on Travis,
+# so that stdio can diverge - and we can enforce stricter
+# stdio comparison on all other tests.
+
 # set -o pipefail
 set -o errexit
 set -o nounset

@@ -13,9 +13,12 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 git init --quiet
 
-DEBUG=*:* "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
+rm -f terraform.plan
+
+"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
   --no-color \
   --verbose \
+  --force-yes \
   --bail-after plan \
   --recipe "." \
 && true

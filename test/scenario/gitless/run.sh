@@ -13,5 +13,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --verbose \
+  --force-yes \  
   --recipe "." \
   --bail
