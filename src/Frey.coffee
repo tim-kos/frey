@@ -71,8 +71,9 @@ class Frey extends Base
     # Resolve interdependent arguments
     for key, val of options
       if val == "#{val}"
-        options[key] = val.replace "{cwd}", options.cwd
-        options[key] = val.replace "{home}", options.home
+        val = val.replace "{cwd}", options.cwd
+        val = val.replace "{home}", options.home
+        options[key] = val
 
     # Apply simple functions
     for key, val of options

@@ -19,11 +19,11 @@ class Runtime extends Command
       pip                  : "7.1.2"
 
     @runtime.paths =
-      ansibleCfg           : "#{@options.recipe}/ansible.cfg"
-      planFile             : "#{@options.recipe}/terraform.plan"
-      stateFile            : "#{@options.recipe}/terraform.tfstate"
-      infraFile            : "#{@options.recipe}/infra.tf.json"
-      playbookFile         : "#{@options.recipe}/config.yml"
+      ansibleCfg           : "#{@options.residu}/ansible.cfg"
+      planFile             : "#{@options.residu}/terraform.plan"
+      infraFile            : "#{@options.residu}/infra.tf.json"
+      playbookFile         : "#{@options.residu}/config.yml"
+      stateFile            : "#{@options.state}/terraform.tfstate"
       pythonLib            : "#{@options.tools}/pip/lib/python2.7/site-packages"
       ansibleExe           : "#{@options.tools}/pip/bin/ansible"
 
@@ -43,6 +43,16 @@ class Runtime extends Command
       type        : "dir"
       name        : "tools"
       dir         : "#{@options.tools}"
+
+    @runtime.deps.push
+      type        : "dir"
+      name        : "state"
+      dir         : "#{@options.state}"
+
+    @runtime.deps.push
+      type        : "dir"
+      name        : "residu"
+      dir         : "#{@options.residu}"
 
     @runtime.deps.push
       type        : "app"

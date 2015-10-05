@@ -12,7 +12,7 @@ tfDir="$(dirname "${tfFile}")"
 tfBase="$(basename "${tfFile}" .tf)"
 jsonFile="${tfDir}/${tfBase}.tf.json"
 csonFile="${tfDir}/${tfBase}.cson"
-tomlFile="${tfDir}/frey.toml"
+tomlFile="${tfDir}/Freyfile.toml"
 
 which hcltool || pip install pyhcl
 

@@ -16,10 +16,20 @@ yargs
       type    : "string"
       describe: "Name of application for which we're creating infrastructure"
     recipe:
-      default : "{cwd}/frey/production"
+      default : "{cwd}"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains state and recipies"
+    state:
+      default : "{cwd}/.frey/state"
+      nargs   : 1
+      type    : "string"
+      describe: "Directory that contains the state. This needs to be comitted "
+    residu:
+      default : "{cwd}/.frey/residu"
+      nargs   : 1
+      type    : "string"
+      describe: "Directory that contains residue. This needs to be ignored "
     tools:
       default : "{home}/.frey/tools"
       nargs   : 1
