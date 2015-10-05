@@ -15,9 +15,6 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
-git init --quiet
-rm -f
-
 # We don't want to enforce PIP versions since that's affects the
 # user's global state.
 # Yet, that's the only way to have equal install output.
