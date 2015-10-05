@@ -15,6 +15,7 @@ scenarios="${1:-$(ls ${__dir}/scenario/)}"
 
 tmpDir="${TMPDIR:-/tmp}/frey"
 mkdir -p "${tmpDir}"
+LC_COLLATE=C
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
   cmdSed=gsed
