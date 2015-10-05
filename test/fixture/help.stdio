@@ -2,6 +2,7 @@ Usage: frey <command> [options]
 
 Commands:
   completion  Install CLI auto completion
+  prepare     Install dependencies like Terraform (chained)
   init        Make current project Frey aware (chained)
   refresh     Refreshes current infra state and saves to terraform.tfstate (chained)
   validate    Checks your recipes (chained)

@@ -106,16 +106,16 @@ class Runtime extends Command
       exe         : "#{@options.tools}/pip/bin/ansible-playbook"
       exePlaybook : "#{@options.tools}/pip/bin/ansible-playbook"
       cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
-      cmdInstall  : "
-        pip install
-        --install-option='--prefix=pip'
-        --ignore-installed
-        --force-reinstall
-        --root '#{@options.tools}'
-        --upgrade
-        --disable-pip-version-check
-        ansible==#{@runtime.versions.ansible}
-      "
+      cmdInstall  : [
+        "pip install"
+        "--install-option='--prefix=pip'"
+        "--ignore-installed"
+        "--force-reinstall"
+        "--root '#{@options.tools}'"
+        "--upgrade"
+        "--disable-pip-version-check"
+        "ansible==#{@runtime.versions.ansible}"
+      ].join " "
 
     cb null
 

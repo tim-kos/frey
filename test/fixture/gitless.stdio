@@ -1,3 +1,3 @@
 
---> Exiting with error: 'prepare' is not a supported Frey command
+--> Exiting with error: Error while checking for '{root}/test/scenario/gitless/.git'
 
