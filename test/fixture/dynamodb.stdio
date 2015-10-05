@@ -87,9 +87,9 @@ State path: {root}/test/scenario/dynamodb/.frey/state/terraform.tfstate
 --> Saved state to '{root}/test/scenario/dynamodb/.frey/state/terraform.tfstate'
 Done
 Destroying..
-[0m[1maws_dynamodb_table.basic-dynamodb-table: Refreshing state... (ID: GameScores)[0m
-[0m[1maws_dynamodb_table.basic-dynamodb-table: Destroying...[21m[0m
-[0m[1maws_dynamodb_table.basic-dynamodb-table: Destruction complete[21m[0m
-[0m[1m[32m
-Apply complete! Resources: 0 added, 0 changed, 1 destroyed.[0m
+aws_dynamodb_table.basic-dynamodb-table: Refreshing state... (ID: GameScores)
+aws_dynamodb_table.basic-dynamodb-table: Destroying...
+aws_dynamodb_table.basic-dynamodb-table: Destruction complete
+
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 Finished
