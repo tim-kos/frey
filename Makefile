@@ -21,12 +21,12 @@ build:
 test-coverage:
 	# https://github.com/benbria/coffee-coverage/blob/master/docs/HOWTO-codeship-and-coveralls.md
 	# npm install --save-dev coffee-coverage istanbul coveralls
-	export DEBUG=*:*,-mocha:* && mocha --recursive \
+	@export DEBUG=*:*,-mocha:* && mocha --recursive \
 	      --compilers coffee:coffee-script/register \
 				--require ./coffee-coverage-loader.js \
 	      test
-	$(ISTANBUL) report text-summary lcov
-	cat coverage/lcov.info | $(COVERALLS)
+	@$(ISTANBUL) report text-summary lcov
+	@cat coverage/lcov.info | $(COVERALLS) || true
 
 .PHONY: test
 test: build
