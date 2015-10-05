@@ -18,12 +18,10 @@ class Runtime extends Command
       options["stateGit"] = filepath
       cb null, options
 
-
   _findClosestRecipeGit: (options, cb) ->
     @_findClosestGit @options.recipe, (filepath) ->
       options["recipeGit"] = filepath
       cb null, options
-
 
   _findClosestResiduGit: (options, cb) ->
     @_findClosestGit @options.residu, (filepath) ->

@@ -9,11 +9,6 @@ class Prepare extends Command
     super name, options, runtime
     @dir = @options.cwd
 
-  _transform: (cmd, props) ->
-    cmd = cmd.replace /{exe}/g, props.exe
-    cmd = cmd.replace /{zip}/g, props.zip
-    return cmd
-
   main: (bootOptions, cb) ->
     async.eachSeries @runtime.deps, (props, nextCb) =>
       if props.type == "dir"
@@ -61,9 +56,14 @@ class Prepare extends Command
       @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
 
       if !stdout || !semver.satisfies foundVersion, props.range
-        @_out "#{props.name} needs to be installed or upgraded. \n"
+        @_out "'#{props.name}' needs to be installed or upgraded. \n"
         return cb false
 
       cb true
+
+  _transform: (cmd, props) ->
+    cmd = cmd.replace /{exe}/g, props.exe
+    cmd = cmd.replace /{zip}/g, props.zip
+    return cmd
 
 module.exports = Prepare

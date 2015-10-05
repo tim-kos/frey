@@ -20,5 +20,4 @@ rm -f terraform.plan
   --verbose \
   --force-yes \
   --bail-after plan \
-  --recipe "." \
 && true

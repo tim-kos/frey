@@ -1,13 +1,12 @@
 Command = require "../Command"
 debug   = require("depurar")("frey")
-
-TOML  = require "toml"
-fs    = require "fs"
-chalk = require "chalk"
-_     = require "lodash"
-async = require "async"
-glob  = require "glob"
-YAML  = require "js-yaml"
+TOML    = require "toml"
+fs      = require "fs"
+chalk   = require "chalk"
+_       = require "lodash"
+async   = require "async"
+glob    = require "glob"
+YAML    = require "js-yaml"
 
 class Plan extends Command
   boot: [
@@ -88,9 +87,9 @@ class Plan extends Command
     cb null, terraformArgs
 
   main: (terraformArgs, cb) ->
-    tf  = (dep for dep in @runtime.deps when dep.name == "terraform")[0]
-    cmd = [
-      tf.exe
+    tfExe = (dep.exe for dep in @runtime.deps when dep.name == "terraform")[0]
+    cmd   = [
+      tfExe
       "plan"
     ]
     cmd = cmd.concat terraformArgs
