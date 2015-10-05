@@ -3,7 +3,6 @@ Usage: frey <command> [options]
 Commands:
   completion  Install CLI auto completion
   prepare     Install dependencies like Terraform (chained)
-  init        Make current project Frey aware (chained)
   refresh     Refreshes current infra state and saves to terraform.tfstate (chained)
   validate    Checks your recipes (chained)
   plan        Shows infra changes and saves in an executable plan (chained)
@@ -19,7 +18,7 @@ Commands:
 
 Options:
   --app          Name of application for which we're creating infrastructure  [string] [default: "{cwd}|basename"]
-  --recipe       Directory that contains state and recipies  [string] [default: "{cwd}"]
+  --recipe       Directory that contains the Freyfile  [string] [default: "{cwd}"]
   --state        Directory that contains the state. This needs to be comitted  [string] [default: "{cwd}/.frey/state"]
   --residu       Directory that contains residue. This needs to be ignored  [string] [default: "{cwd}/.frey/residu"]
   --tools        Directory that contains the tools  [string] [default: "{home}/.frey/tools"]

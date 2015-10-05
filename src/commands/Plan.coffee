@@ -81,7 +81,10 @@ class Plan extends Command
     if !chalk.enabled
       terraformArgs.push "-no-color"
 
-    # terraformArgs.push "-var #{key}=#{val}"
+    terraformArgs.push "-refresh=false"
+    terraformArgs.push "-out=#{@runtime.paths.planFile}"
+    terraformArgs.push "-state=#{@runtime.paths.stateFile}"
+
     cb null, terraformArgs
 
   main: (terraformArgs, cb) ->
@@ -89,8 +92,6 @@ class Plan extends Command
     cmd = [
       tf.exe
       "plan"
-      "-refresh=false"
-      "-out=#{@runtime.paths.planFile}"
     ]
     cmd = cmd.concat terraformArgs
     cmd = cmd.join " "

@@ -75,7 +75,6 @@ and Frey by default will complete the following steps. The commands are as follo
 
 
 ```
-init      : "Make current project Frey aware"
 prepare   : "Install prerequisites"
 refresh   : "Refreshes current infra state and saves to terraform.tfstate"
 validate  : "Checks your docs"

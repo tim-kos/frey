@@ -13,7 +13,7 @@ class Command extends Base
     @name    = name
     @options = options
     @runtime = runtime
-    @dir     = @options.recipe
+    @dir     = @options.residu
 
   _cmdYesNo: (cmd, cb) ->
     @promptYesNo "May I run '#{cmd}' for you? [yes|No]", (ok) =>
@@ -40,14 +40,15 @@ class Command extends Base
     yesno.ask question, false, cb
 
   main: (bootOptions, cb) ->
-    runScript = "#{@options.recipe}/#{@name}.sh"
-    fs.stat runScript, (err, stat) =>
-      if err
-        @_out chalk.dim "Running default control.sh action as I found no '#{runScript}'"
-        @_out chalk.dim "\n"
-        runScript = "#{@options.root}/bin/control.sh"
-
-      @_exeScript [runScript, @name], {}, cb
+    cb null
+    # runScript = "#{@options.recipe}/#{@name}.sh"
+    # fs.stat runScript, (err, stat) =>
+    #   if err
+    #     @_out chalk.dim "Running default control.sh action as I found no '#{runScript}'"
+    #     @_out chalk.dim "\n"
+    #     runScript = "#{@options.root}/bin/control.sh"
+    #
+    #   @_exeScript [runScript, @name], {}, cb
 
   _buildChildEnv: ->
     childEnv = {}

@@ -19,7 +19,7 @@ yargs
       default : "{cwd}"
       nargs   : 1
       type    : "string"
-      describe: "Directory that contains state and recipies"
+      describe: "Directory that contains the Freyfile"
     state:
       default : "{cwd}/.frey/state"
       nargs   : 1

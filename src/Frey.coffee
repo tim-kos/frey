@@ -16,7 +16,6 @@ osHomedir  = require "os-homedir"
 class Frey extends Base
   @chain = [
     "prepare"
-    "init"
     "refresh"
     "validate"
     "plan"
@@ -30,7 +29,6 @@ class Frey extends Base
 
   @commands =
     prepare   : "Install dependencies like Terraform"
-    init      : "Make current project Frey aware"
     refresh   : "Refreshes current infra state and saves to terraform.tfstate"
     validate  : "Checks your recipes"
     plan      : "Shows infra changes and saves in an executable plan"
@@ -60,7 +58,7 @@ class Frey extends Base
   _defaults: (options, nextCb) ->
     options      ?= {}
     options._    ?= []
-    options._[0] ?= "init"
+    options._[0] ?= "prepare"
     options.cwd  ?= process.cwd()
     options.home ?= osHomedir()
 
