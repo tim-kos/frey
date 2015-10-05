@@ -46,7 +46,6 @@ class Frey extends Base
   boot: [
     "_defaults"
     "_normalize"
-    "_validate"
     "_setup"
     "_composeChain"
   ]
@@ -89,31 +88,6 @@ class Frey extends Base
       options.tags = ""
 
     nextCb null, options
-
-  _validate: (options, nextCb) ->
-    if !options?.cwd?
-      return nextCb new Error "'#{options?.cwd?}' is not a valid cwd"
-
-    async.series [
-      (callback) ->
-        # Bail out with help if command does not exist
-        if options?._?[0] not of Frey.commands
-          return callback new Error "'#{options?._?[0]}' is not a supported Frey command"
-
-        callback null
-      (callback) ->
-        # Need a local .git dir
-        gitDir = "#{options.cwd}/.git"
-        fs.stat gitDir, (err, stats) ->
-          if err
-            return callback new Error "Error while checking for '#{gitDir}'"
-
-          if !stats.isDirectory()
-            return callback new Error "'#{gitDir}' is not a cwd"
-
-          callback null
-    ], (err) ->
-      nextCb err, options
 
   _setup: (options, nextCb) ->
     async.parallel [

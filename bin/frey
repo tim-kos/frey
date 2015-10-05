@@ -96,6 +96,12 @@ if argv._?[0] == "completion"
   yargs.showCompletionScript process.env._
   process.exit 0
 
+if argv._?[0]? && argv._?[0] not of Frey.commands
+  yargs.showHelp()
+  console.error ""
+  console.error "--> Command '#{argv._?[0]}' is not recognized"
+  process.exit 1
+
 # Apply any rc options
 options = require("rc")("frey", {}, argv)
 

@@ -1,3 +1,11 @@
+--> Will run: [ 'runtime', 'prepare', 'validate' ]
+--> {hostname} - runtime
+--> {hostname} - prepare
+Found 'terraform' with version '0.6.3'
+Found 'terraformInventory' with version '0.5.0'
+Found 'pip' with version '7.1.2'
+Found 'ansible' with version '1.9.2'
+--> {hostname} - validate
 
---> Exiting with error: Error while checking for '{root}/test/scenario/gitless/.git'
+--> Exiting with error: Frey requires state to be under Git.
 

@@ -177,7 +177,8 @@ For now, we only support
  - [x] Implement a bailAfter, use it for DynamoDB scenario
  - [x] Amazon free tier dynamodb Travis tests 
  - [x] Runtime can be a command module, which can be prefixed to the runChain. Prepare can also be prepended to all. Afterwards, scenarios won't need to be ordered
- - [ ] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
+ - [x] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
+ - [x] Move validation to Validate class
  - [ ] Port Prepare SSH Keys
  - [ ] Port refresh
  - [ ] Port plan

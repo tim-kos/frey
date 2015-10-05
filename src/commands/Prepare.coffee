@@ -9,7 +9,7 @@ class Prepare extends Command
     super name, options, runtime
     @dir = @options.cwd
 
-  transform: (cmd, props) ->
+  _transform: (cmd, props) ->
     cmd = cmd.replace /{exe}/g, props.exe
     cmd = cmd.replace /{zip}/g, props.zip
     return cmd
@@ -24,16 +24,16 @@ class Prepare extends Command
           debug "Directory for '#{props.name}' present at '#{props.dir}'"
           return nextCb null
       else if props.type == "app"
-        @satisfy props, (satisfied) =>
+        @_satisfy props, (satisfied) =>
           if satisfied
             return nextCb null
 
-          cmd = @transform props.cmdInstall, props
+          cmd = @_transform props.cmdInstall, props
           @_cmdYesNo cmd, (err) =>
             if err
               return nextCb new Error "Failed to install '#{props.name}'. #{err}"
 
-            @satisfy props, (satisfied) ->
+            @_satisfy props, (satisfied) ->
               if !satisfied
                 msg = "Version of '#{props.name}' still not satisfied after install"
                 return nextCb new Error msg
@@ -43,8 +43,8 @@ class Prepare extends Command
         return nextCb new Error "Unsupported type: '#{props.type}'"
     , cb
 
-  satisfy: (props, cb) ->
-    cmd = @transform props.cmdVersion, props
+  _satisfy: (props, cb) ->
+    cmd = @_transform props.cmdVersion, props
 
     @_exeScript ["-c", cmd], {verbose: false}, (err, stdout) =>
       if err

@@ -11,8 +11,4 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" validate \
-  --verbose \
-  --force-yes \
-  --state "${TMPDIR}" \
-  --bail
+"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" nonexistent

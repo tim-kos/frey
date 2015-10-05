@@ -1,0 +1,42 @@
+Usage: frey <command> [options]
+
+Commands:
+  completion  Install CLI auto completion
+  prepare     Install dependencies like Terraform (chained)
+  refresh     Refreshes current infra state and saves to terraform.tfstate (chained)
+  validate    Checks your recipes (chained)
+  plan        Shows infra changes and saves in an executable plan (chained)
+  backup      Backs up server state (chained)
+  launch      Launches virtual machines at a provider (chained)
+  install     Runs Ansible to install software packages & configuration templates (chained)
+  deploy      Upload your own application(s) (chained)
+  restart     Restart your own application(s) and its dependencies (chained)
+  show        Displays active platform (chained)
+  docbuild    Build docs
+  restore     Restore latest state backup
+  remote      Execute a remote command - or opens console
+
+Options:
+  --app          Name of application for which we're creating infrastructure  [string] [default: "{cwd}|basename"]
+  --recipe       Directory that contains the Freyfile  [string] [default: "{cwd}"]
+  --state        Directory that contains the state. This needs to be comitted  [string] [default: "{cwd}/.frey/state"]
+  --residu       Directory that contains residue. This needs to be ignored  [string] [default: "{cwd}/.frey/residu"]
+  --tools        Directory that contains the tools  [string] [default: "{home}/.frey/tools"]
+  --force-yes    Answer yes to all questions (dangerous!)  [boolean] [default: false]
+  --tags         A list of tags to execute in isolation  [string]
+  --sleep        Wait x seconds between showing infra plan, and executing it  [default: 5]
+  --bail         Do not follow the chain of commands, run a one-off command  [boolean]
+  --bail-after   After running this command, abort the chain  [string]
+  --no-color     Color support is detected, this forces colors off  [boolean]
+  --verbose, -v  Show debug info  [count]
+  --unsafe       Allow execution, even though your Git working directory is unclean  [boolean]
+  --help         Show help  [boolean]
+  --version      Show version number  [boolean]
+
+Examples:
+  frey backup -d ./envs/production  backup platform described in ./envs/production
+
+Copyright 2015 Transloadit
+
+
+--> Command 'nonexistent' is not recognized

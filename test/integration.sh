@@ -59,6 +59,7 @@ for scenario in $(echo prepare ${scenarios}); do
         -e "s@{home}/build/kvz/fre{coffee}@{coffee}@g" "${curFile}" \
         -e "s@${HOME:-/home/travis}@{home}@g" "${curFile}" \
         -e "s@${USER:-travis}@{user}@g" "${curFile}" \
+        -e "s@${TMPDIR:-/tmp}@{tmpdir}@g" "${curFile}" \
         -e "s@${HOSTNAME}@{hostname}@g" "${curFile}" \
         -e "s@${__os}@{os}@g" "${curFile}" \
         -e "s@${__arch}@{arch}@g" "${curFile}" \
