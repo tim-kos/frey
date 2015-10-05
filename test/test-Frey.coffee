@@ -8,9 +8,9 @@ describe "Frey", ->
       frey = new Frey
 
       options =
-        recipe    : "{cwd}/frey/production"
-        cwd : "."
-        tools     : "{home}/.frey/tools"
+        recipe : "{cwd}/frey/production"
+        cwd    : "."
+        tools  : "{home}/.frey/tools"
 
       frey._normalize options, (err, options) ->
         expect(err).to.equal null
@@ -21,10 +21,10 @@ describe "Frey", ->
       frey = new Frey
 
       options =
-        app       : "./tusd|basename"
-        recipe    : "{cwd}/frey/production"
-        cwd : "."
-        tools     : "{home}/.frey/tools"
+        app    : "./tusd|basename"
+        recipe : "{cwd}/frey/production"
+        cwd    : "."
+        tools  : "{home}/.frey/tools"
 
       frey._normalize options, (err, options) ->
         expect(err).to.equal null
@@ -39,17 +39,6 @@ describe "Frey", ->
       frey._defaults options, (err, options) ->
         expect(err).to.equal null
         expect(options._).to.deep.equal [ "prepare" ]
-        done()
-
-  describe "_validate", ->
-    it "should error out if there's no command", (done) ->
-      frey = new Frey
-
-      options =
-        cwd: "."
-
-      frey._validate options, (err, options) ->
-        expect(err).to.have.property("message").to.match /'undefined' is not a supported Frey/
         done()
 
   describe "_composeChain", ->
