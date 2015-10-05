@@ -52,10 +52,10 @@ for scenario in $(echo prepare ${scenarios}); do
     # Clear out environmental specifics
     for typ in $(echo stdio exitcode); do
       curFile="${tmpDir}/${scenario}.${typ}"
-      "${cmdSed}" -i "s@${__root}@{root}@g" "${curFile}"
+      "${cmdSed}" -i "s@${__coffee}@{coffee}@gi" "${curFile}"
       "${cmdSed}" -i "s@${__os}@{os}@gi" "${curFile}"
       "${cmdSed}" -i "s@${__arch}@{arch}@gi" "${curFile}"
-      "${cmdSed}" -i "s@${__coffee}@{coffee}@gi" "${curFile}"
+      "${cmdSed}" -i "s@${__root}@{root}@g" "${curFile}"
       "${cmdSed}" -i "s@{root}/node_modules/.bin/coffee@{coffee}@gi" "${curFile}"
       "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${curFile}"
       "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${curFile}"
