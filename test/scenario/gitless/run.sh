@@ -14,5 +14,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" validate \
   --verbose \
   --force-yes \
+  --sshkeys "${TMPDIR:-/tmp}" \
   --state "${TMPDIR:-/tmp}" \
   --bail

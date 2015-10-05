@@ -24,17 +24,22 @@ yargs
       default : "{cwd}/.frey/state"
       nargs   : 1
       type    : "string"
-      describe: "Directory that contains the state. This needs to be comitted "
+      describe: "Directory that contains the state. This needs to be comitted to Git"
     residu:
       default : "{cwd}/.frey/residu"
       nargs   : 1
       type    : "string"
-      describe: "Directory that contains residue. This needs to be ignored "
+      describe: "Directory that contains residue. This needs to be ignored by Git"
+    sshkeys:
+      default : "{home}/.ssh"
+      nargs   : 1
+      type    : "string"
+      describe: "Directory that contains SSH keys. This needs to be ignored by Git"
     tools:
       default : "{home}/.frey/tools"
       nargs   : 1
       type    : "string"
-      describe: "Directory that contains the tools"
+      describe: "Directory that contains the tools. This needs to be ignored by Git"
     "force-yes":
       default : false
       boolean : true

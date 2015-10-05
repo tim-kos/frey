@@ -11,14 +11,24 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
-git init --quiet
 
-rm -f terraform.plan
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  cmdDu=gdu
+else
+  cmdDu=du
+fi
 
+
+rm -f ${TMPDIR:-/tmp}/frey-sshkeygen.* || true
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
   --sshkeys "${TMPDIR:-/tmp}" \
-  --no-color \
-  --verbose \
-  --force-yes \
-  --bail-after plan \
-&& true
+  --bail-after prepare
+
+"${cmdDu}" -b ${TMPDIR:-/tmp}/frey-sshkeygen.* || true
+
+rm -f ${TMPDIR:-/tmp}/frey-sshkeygen.pub || true
+"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
+  --sshkeys "${TMPDIR:-/tmp}" \
+  --bail-after prepare
+
+"${cmdDu}" -b ${TMPDIR:-/tmp}/frey-sshkeygen.* || true

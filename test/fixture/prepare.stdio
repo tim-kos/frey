@@ -2,6 +2,8 @@ FREY:SKIP_COMPARE_STDIO
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
+Creating private key '{tmpdir}/frey-prepare.pem'
+Creating public key '{tmpdir}/frey-prepare.pub'
 Found 'terraform' with version '0.6.3'
 Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'

@@ -25,7 +25,7 @@ class Refresh extends Command
     cmd = cmd.concat terraformArgs
     cmd = cmd.join " "
 
-    @_exeScript ["-c", cmd], verbose: false, maxSamples: false, (err, stdout) =>
+    @_exeScript ["-c", cmd], verbose: false, limitSamples: false, (err, stdout) =>
       if err
         if "#{err.details}".match /when there is existing state/
           debug "Ignoring refresh error about missing statefile"

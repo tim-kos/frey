@@ -68,7 +68,7 @@ class Command extends Base
   _exeScript: (shellArgs, argOpts, cb) ->
     argOpts ?= {}
     argOpts.verbose ?= true
-    argOpts.maxSamples ?= 3
+    argOpts.limitSamples ?= 3
 
 
     opts =
@@ -90,8 +90,8 @@ class Command extends Base
     bash.stdout.on "data", (data) =>
       if data?
         lastStdout.push "#{data}"
-        if argOpts.maxSamples
-          lastStdout = _.takeRight lastStdout, argOpts.maxSamples
+        if argOpts.limitSamples
+          lastStdout = _.takeRight lastStdout, argOpts.limitSamples
 
       if argOpts.verbose
         @_out chalk.gray(data)
@@ -99,8 +99,8 @@ class Command extends Base
     bash.stderr.on "data", (data) =>
       if data?
         lastStderr.push "#{data}"
-        if argOpts.maxSamples
-          lastStderr = _.takeRight lastStderr, argOpts.maxSamples
+        if argOpts.limitSamples
+          lastStderr = _.takeRight lastStderr, argOpts.limitSamples
 
       if argOpts.verbose
         @_out chalk.red(data)

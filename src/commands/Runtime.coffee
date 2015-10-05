@@ -74,38 +74,49 @@ class Runtime extends Command
       ansibleExe         : "#{@options.tools}/pip/bin/ansible"
 
     @runtime.ssh =
+      email              : "#{@options.user}@#{@options.app}.freyproject.io"
       keypair_name       : "#{@options.app}"
+      keyprv_file        : "#{@options.sshkeys}/frey-#{@options.app}.pem"
+      keypub_file        : "#{@options.sshkeys}/frey-#{@options.app}.pub"
       user               : "ubuntu"
-      email              : "hello@#{@options.app}"
-      keyprv_file        : "#{@options.recipe}/#{@options.app}.pem"
-      keypub_file        : "#{@options.recipe}/#{@options.app}.pub"
       # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       # keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
-
-    debug
-      stateGit: @runtime.paths.stateGit
-      residuGit: @runtime.paths.residuGit
-      recipeGit: @runtime.paths.recipeGit
 
     @runtime.deps = []
 
     @runtime.deps.push
-      type        : "dir"
+      type        : "Dir"
       name        : "tools"
       dir         : "#{@options.tools}"
 
     @runtime.deps.push
-      type        : "dir"
+      type        : "Dir"
       name        : "state"
       dir         : "#{@options.state}"
 
     @runtime.deps.push
-      type        : "dir"
+      type        : "Dir"
       name        : "residu"
       dir         : "#{@options.residu}"
 
     @runtime.deps.push
-      type        : "app"
+      type        : "Privkey"
+      privkey     : "#{@runtime.ssh.keyprv_file}"
+      pubkey      : "#{@runtime.ssh.keypub_file}"
+      email       : "#{@runtime.ssh.email}"
+
+    @runtime.deps.push
+      type        : "Pubkey"
+      privkey     : "#{@runtime.ssh.keyprv_file}"
+      pubkey      : "#{@runtime.ssh.keypub_file}"
+      email       : "#{@runtime.ssh.email}"
+
+    @runtime.deps.push
+      type        : "PubkeyFingerprint"
+      pubkey      : "#{@runtime.ssh.keypub_file}"
+
+    @runtime.deps.push
+      type        : "App"
       name        : "terraform"
       range       : "#{@runtime.versions.terraform}"
       exe         : "#{@options.tools}/terraform"
@@ -128,7 +139,7 @@ class Runtime extends Command
       ].join " && "
 
     @runtime.deps.push
-      type        : "app"
+      type        : "App"
       name        : "terraformInventory"
       range       : "#{@runtime.versions.terraformInventory}"
       exe         : "#{@options.tools}/terraform-inventory"
@@ -152,7 +163,7 @@ class Runtime extends Command
       ].join " && "
 
     @runtime.deps.push
-      type        : "app"
+      type        : "App"
       name        : "pip"
       exe         : "pip"
       range       : ">= #{@runtime.versions.pip}"
@@ -160,7 +171,7 @@ class Runtime extends Command
       cmdInstall  : "sudo easy_install --upgrade pip"
 
     @runtime.deps.push
-      type        : "app"
+      type        : "App"
       name        : "ansible"
       range       : "#{@runtime.versions.ansible}"
       exe         : "#{@options.tools}/pip/bin/ansible-playbook"

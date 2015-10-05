@@ -60,6 +60,7 @@ class Frey extends Base
     options._[0] ?= "prepare"
     options.cwd  ?= process.cwd()
     options.home ?= osHomedir()
+    options.user ?= process.env.USER
 
     nextCb null, options
 
@@ -68,8 +69,9 @@ class Frey extends Base
     # Resolve interdependent arguments
     for key, val of options
       if val == "#{val}"
-        val = val.replace "{cwd}", options.cwd
-        val = val.replace "{home}", options.home
+        val          = val.replace "{cwd}", options.cwd
+        val          = val.replace "{home}", options.home
+        val          = val.replace "{user}", options.user
         options[key] = val
 
     # Apply simple functions

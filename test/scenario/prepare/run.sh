@@ -26,6 +26,7 @@ echo "FREY:SKIP_COMPARE_STDIO"
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
+  --sshkeys "${TMPDIR:-/tmp}" \
   --verbose \
   --recipe "." \
   --bail

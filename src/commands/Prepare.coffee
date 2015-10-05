@@ -1,6 +1,7 @@
 Command = require "../Command"
 mkdirp  = require "mkdirp"
 semver  = require "semver"
+fs      = require "fs"
 async   = require "async"
 debug   = require("depurar")("frey")
 
@@ -10,38 +11,79 @@ class Prepare extends Command
     @dir = @options.cwd
 
   main: (bootOptions, cb) ->
-    async.eachSeries @runtime.deps, (props, nextCb) =>
-      if props.type == "dir"
-        mkdirp props.dir, (err) ->
-          if err
-            return nextCb err
+    async.eachSeries @runtime.deps, @_make.bind(this), cb
 
-          debug "Directory for '#{props.name}' present at '#{props.dir}'"
-          return nextCb null
-      else if props.type == "app"
-        @_satisfy props, (satisfied) =>
-          if satisfied
-            return nextCb null
+  _make: (props, cb) ->
+    func = this["_make#{props.type}"]
+    if !func
+      return cb new Error "Unsupported dependency type: '#{props.type}'"
 
-          cmd = @_transform props.cmdInstall, props
-          @_cmdYesNo cmd, (err) =>
-            if err
-              return nextCb new Error "Failed to install '#{props.name}'. #{err}"
+    func = func.bind(this)
+    func props, cb
 
-            @_satisfy props, (satisfied) ->
-              if !satisfied
-                msg = "Version of '#{props.name}' still not satisfied after install"
-                return nextCb new Error msg
+  _makePrivkey: (props, cb) ->
+    fs.stat props.privkey, (err) =>
+      if !err
+        # Already exists
+        debug "Key '#{props.privkey}' aready exists"
+        return cb null
 
-              nextCb null
-      else
-        return nextCb new Error "Unsupported type: '#{props.type}'"
-    , cb
+      @_out "Creating private key '#{props.privkey}'\n"
+      cmd = [
+        "ssh-keygen -b 2048 -t rsa -C '#{props.email}' -f '#{props.privkey}' -q -N ''"
+        "rm -f '#{props.privkey}.pub'"
+      ].join " && "
+      @_exeScript ["-c", cmd], verbose: true, limitSamples: false, cb
+
+  _makePubkey: (props, cb) ->
+    fs.stat props.pubkey, (err) =>
+      if !err
+        # Already exists
+        debug "Key '#{props.pubkey}' aready exists"
+        return cb null
+
+      @_out "Creating public key '#{props.pubkey}'\n"
+      cmd = [
+        "echo -n $(ssh-keygen -yf '#{props.privkey}') > '#{props.pubkey}'"
+        "echo ' #{props.email}' >> '#{props.pubkey}'"
+      ].join " && "
+      @_exeScript ["-c", cmd], verbose: true, limitSamples: false, cb
+
+  _makePubkeyFingerprint: (props, cb) ->
+    cmd = "ssh-keygen -lf '#{props.pubkey}' | awk '{print $2}'"
+    @_exeScript ["-c", cmd], verbose: false, limitSamples: false, (err, stdout) =>
+      @runtime.ssh.keypub_fingerprint = "#{stdout}".trim()
+      cb err
+
+  _makeDir: (props, cb) ->
+    mkdirp props.dir, (err) ->
+      if err
+        return cb err
+
+      debug "Directory for '#{props.name}' present at '#{props.dir}'"
+      return cb null
+
+  _makeApp: (props, cb) ->
+    @_satisfy props, (satisfied) =>
+      if satisfied
+        return cb null
+
+      cmd = @_transform props.cmdInstall, props
+      @_cmdYesNo cmd, (err) =>
+        if err
+          return cb new Error "Failed to install '#{props.name}'. #{err}"
+
+        @_satisfy props, (satisfied) ->
+          if !satisfied
+            msg = "Version of '#{props.name}' still not satisfied after install"
+            return cb new Error msg
+
+          cb null
 
   _satisfy: (props, cb) ->
     cmd = @_transform props.cmdVersion, props
 
-    @_exeScript ["-c", cmd], verbose: false, maxSamples: false, (err, stdout) =>
+    @_exeScript ["-c", cmd], verbose: false, limitSamples: false, (err, stdout) =>
       if err
         # We don't want to bail out if version command does not exist yet
         # Or maybe --version returns non-zero exit code, which is common
