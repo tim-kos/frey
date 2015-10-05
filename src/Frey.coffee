@@ -6,9 +6,9 @@ async      = require "async"
 util       = require "util"
 _          = require "lodash"
 fs         = require "fs"
+os         = require "os"
 path       = require "path"
 mkdirp     = require "mkdirp"
-os         = require "os"
 chalk      = require "chalk"
 Base       = require "./Base"
 osHomedir  = require "os-homedir"
@@ -29,7 +29,7 @@ class Frey extends Base
   ]
 
   @commands =
-    prepare   : "Install prerequisites"
+    prepare   : "Install dependencies like Terraform"
     init      : "Make current project Frey aware"
     refresh   : "Refreshes current infra state and saves to terraform.tfstate"
     validate  : "Checks your recipes"
@@ -50,8 +50,7 @@ class Frey extends Base
     "_normalize"
     "_validate"
     "_setup"
-    "_runtimeVars"
-    "_filterChain"
+    "_composeChain"
   ]
 
   constructor: (options) ->
@@ -61,7 +60,7 @@ class Frey extends Base
   _defaults: (options, nextCb) ->
     options      ?= {}
     options._    ?= []
-    options._[0] ?= "prepare"
+    options._[0] ?= "init"
     nextCb null, options
 
   _normalize: (options, nextCb) ->
@@ -122,7 +121,7 @@ class Frey extends Base
     ], (err) ->
       nextCb err, options
 
-  _filterChain: (options, nextCb) ->
+  _composeChain: (options, nextCb) ->
     cmd        = options._[0]
     indexStart = Frey.chain.indexOf(cmd)
 
@@ -139,118 +138,10 @@ class Frey extends Base
 
       options.filteredChain = Frey.chain.slice indexStart, length
 
-    nextCb null, options
+    if options.filteredChain.indexOf("prepare") < 0
+      options.filteredChain.unshift "prepare"
 
-  _runtimeVars: (options, nextCb) ->
-    @runtime.os =
-      platform             : os.platform()
-      hostname             : os.hostname()
-      arch                 : "#{os.arch()}".replace "x64", "amd64"
-
-    @runtime.versions =
-      ansible              : "1.9.2"
-      terraform            : "0.6.3"
-      terraformInventory   : "0.5"
-      pip                  : "7.1.2"
-
-    @runtime.paths =
-      ansibleCfg           : "#{@options.directory}/ansible.cfg"
-      planFile             : "#{@options.recipe}/terraform.plan"
-      stateFile            : "#{@options.recipe}/terraform.tfstate"
-      infraFile            : "#{@options.recipe}/infra.tf.json"
-      playbookFile         : "#{@options.recipe}/config.yml"
-      pythonLib            : "#{@options.tools}/pip/lib/python2.7/site-packages"
-      ansibleExe           : "#{@options.tools}/pip/bin/ansible"
-
-    @runtime.ssh =
-      keypair_name         : "#{options.app}"
-      user                 : "ubuntu"
-      email                : "hello@#{options.app}"
-      keyprv_file          : "#{options.recipe}/#{options.app}.pem"
-      keypub_file          : "#{options.recipe}/#{options.app}.pub"
-      # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
-      # keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
-
-
-    @runtime.deps = []
-
-    @runtime.deps.push
-      type        : "dir"
-      name        : "tools"
-      dir         : "#{@options.tools}"
-
-    @runtime.deps.push
-      type        : "app"
-      name        : "terraform"
-      range       : "#{@runtime.versions.terraform}"
-      exe         : "#{@options.tools}/terraform"
-      zip         : [
-        "terraform"
-        @runtime.versions.terraform
-        @runtime.os.platform
-        "#{@runtime.os.arch}.zip"
-      ].join "_"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
-      cmdInstall  : [
-        "cd #{@options.tools}"
-        [
-          "curl -sSL '"
-          "https://dl.bintray.com/mitchellh/terraform/"
-          "{zip}'"
-          "> '{zip}'"
-        ].join("")
-        "unzip -o '{zip}'"
-      ].join " && "
-
-    @runtime.deps.push
-      type        : "app"
-      name        : "terraformInventory"
-      range       : "#{@runtime.versions.terraformInventory}"
-      exe         : "#{@options.tools}/terraform-inventory"
-      zip         : [
-        "terraform-inventory"
-        @runtime.versions.terraformInventory
-        @runtime.os.platform
-        "#{@runtime.os.arch}.zip"
-      ].join "_"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF \".0\"}'"
-      cmdInstall  : [
-        "cd #{@options.tools}"
-        [
-          "curl -sSL '"
-          "https://github.com/adammck/terraform-inventory/releases/download/"
-          "v#{@runtime.versions.terraformInventory}/"
-          "{zip}'"
-          "> '{zip}'"
-        ].join ""
-        "unzip -o '{zip}'"
-      ].join " && "
-
-    @runtime.deps.push
-      type        : "app"
-      name        : "pip"
-      exe         : "pip"
-      range       : ">= #{@runtime.versions.pip}"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $2}'"
-      cmdInstall  : "sudo easy_install --upgrade pip"
-
-    @runtime.deps.push
-      type        : "app"
-      name        : "ansible"
-      range       : "#{@runtime.versions.ansible}"
-      exe         : "#{@options.tools}/pip/bin/ansible-playbook"
-      exePlaybook : "#{@options.tools}/pip/bin/ansible-playbook"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
-      cmdInstall  : "
-        pip install
-        --install-option='--prefix=pip'
-        --ignore-installed
-        --force-reinstall
-        --root '#{@options.tools}'
-        --upgrade
-        --disable-pip-version-check
-        ansible==#{@runtime.versions.ansible}
-      "
+    options.filteredChain.unshift "runtime"
 
     nextCb null, options
 
@@ -271,7 +162,7 @@ class Frey extends Base
     func      = obj.run.bind(obj)
 
     @_out chalk.gray "--> "
-    @_out chalk.gray "#{@runtime.os.hostname} - "
+    @_out chalk.gray "#{os.hostname()} - "
     @_out chalk.green "#{command}"
     @_out chalk.green "\n"
 

@@ -38,7 +38,7 @@ describe "Frey", ->
       options = {}
       frey._defaults options, (err, options) ->
         expect(err).to.equal null
-        expect(options._).to.deep.equal [ "prepare" ]
+        expect(options._).to.deep.equal [ "init" ]
         done()
 
   describe "_validate", ->
@@ -52,16 +52,33 @@ describe "Frey", ->
         expect(err).to.have.property("message").to.match /'undefined' is not a supported Frey/
         done()
 
-  describe "_filterChain", ->
+  describe "_composeChain", ->
+    it "should not add prepare if the command was prepare", (done) ->
+      frey = new Frey
+
+      options =
+        _        : ["prepare"]
+        bailAfter: "prepare"
+
+      frey._composeChain options, (err, options) ->
+        expect(err).to.equal null
+        expect(options.filteredChain).to.deep.equal [
+          "runtime"
+          "prepare"
+        ]
+        done()
+
     it "should return auto bail on docbuild which is not part of a chain", (done) ->
       frey = new Frey
 
       options =
         _: ["docbuild"]
 
-      frey._filterChain options, (err, options) ->
+      frey._composeChain options, (err, options) ->
         expect(err).to.equal null
         expect(options.filteredChain).to.deep.equal [
+          "runtime"
+          "prepare"
           "docbuild"
         ]
         done()
@@ -70,12 +87,12 @@ describe "Frey", ->
       frey = new Frey
 
       options =
-        _: ["prepare"]
+        _: ["init"]
 
-      frey._filterChain options, (err, options) ->
+      frey._composeChain options, (err, options) ->
         expect(err).to.equal null
         expect(options.filteredChain).to.deep.equal [
-          "prepare", "init", "refresh", "validate", "plan", "backup", "launch",
+          "runtime", "prepare", "init", "refresh", "validate", "plan", "backup", "launch",
           "install", "deploy", "restart", "show",
         ]
         done()
@@ -87,9 +104,11 @@ describe "Frey", ->
         _   : ["deploy"]
         bail: true,
 
-      frey._filterChain options, (err, options) ->
+      frey._composeChain options, (err, options) ->
         expect(err).to.equal null
         expect(options.filteredChain).to.deep.equal [
+          "runtime"
+          "prepare"
           "deploy"
         ]
         done()
@@ -101,9 +120,11 @@ describe "Frey", ->
         _        : ["refresh"]
         bailAfter: "plan",
 
-      frey._filterChain options, (err, options) ->
+      frey._composeChain options, (err, options) ->
         expect(err).to.equal null
         expect(options.filteredChain).to.deep.equal [
+          "runtime"
+          "prepare"
           "refresh"
           "validate"
           "plan"

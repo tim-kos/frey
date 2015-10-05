@@ -1,0 +1,4 @@
+FREY:SKIP_COMPARE_STDIO
+
+--> Exiting with error: 'prepare' is not a supported Frey command
+
