@@ -83,7 +83,7 @@ argv = yargs.argv
 if argv._?[0] == "completion"
   # we want to make sure we have the global /usr/local/bin/frey instead of
   # ../../../frey/bin/frey in the ~/.bash_profile
-  argv.showCompletionScript process.env._
+  yargs.showCompletionScript process.env._
   process.exit 0
 
 # Apply any rc options

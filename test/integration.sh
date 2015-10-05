@@ -22,12 +22,13 @@ else
   cmdSed=sed
 fi
 
+__coffee=$(which coffee)
 
-os="linux"
+__os="linux"
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-  os="darwin"
+  __os="darwin"
 fi
-arch="amd64"
+__arch="amd64"
 
 
 if ! which "${cmdSed}" > /dev/null; then
@@ -52,11 +53,15 @@ for scenario in $(echo prepare ${scenarios}); do
     for typ in $(echo stdio exitcode); do
       curFile="${tmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i "s@${__root}@{root}@g" "${curFile}"
+      "${cmdSed}" -i "s@${__os}@{os}@gi" "${curFile}"
+      "${cmdSed}" -i "s@${__arch}@{arch}@gi" "${curFile}"
+      "${cmdSed}" -i "s@${__coffee}@{coffee}@gi" "${curFile}"
+      "${cmdSed}" -i "s@{root}/node_modules/.bin/coffee@{coffee}@gi" "${curFile}"
       "${cmdSed}" -i "s@${HOME:-/home/travis}@{home}@g" "${curFile}"
       "${cmdSed}" -i "s@${USER:-travis}@{user}@g" "${curFile}"
       "${cmdSed}" -i "s@${HOSTNAME}@{hostname}@g" "${curFile}"
-      "${cmdSed}" -i "s@${os}@{os}@g" "${curFile}"
-      "${cmdSed}" -i "s@${arch}@{arch}@g" "${curFile}"
+      "${cmdSed}" -i "s@OSX@{os}@gi" "${curFile}"
+      "${cmdSed}" -i "s@Linux@{os}@gi" "${curFile}"
     done
 
     # Save these as new fixtures?
