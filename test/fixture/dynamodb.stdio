@@ -1,4 +1,4 @@
---> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan' ]
+--> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-dynamodb.pem'
@@ -8,6 +8,7 @@ Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'
 Found 'ansible' with version '1.9.2'
 --> {hostname} - refresh
+--> Refreshed state to '{root}/test/scenario/dynamodb/.frey/state/terraform.tfstate'
 --> {hostname} - validate
 --> {hostname} - plan
 The Terraform execution plan has been generated and is shown below.
@@ -24,9 +25,13 @@ Path: {root}/test/scenario/dynamodb/.frey/residu/terraform.plan
 
 + aws_dynamodb_table.basic-dynamodb-table
     arn:                                                   "" => "<computed>"
-    attribute.#:                                           "" => "1"
+    attribute.#:                                           "" => "3"
     attribute.301566416.name:                              "" => "TopScore"
     attribute.301566416.type:                              "" => "N"
+    attribute.3178016421.name:                             "" => "GameTitle"
+    attribute.3178016421.type:                             "" => "S"
+    attribute.3403068082.name:                             "" => "UserId"
+    attribute.3403068082.type:                             "" => "N"
     global_secondary_index.#:                              "" => "1"
     global_secondary_index.505842399.hash_key:             "" => "GameTitle"
     global_secondary_index.505842399.name:                 "" => "GameTitleIndex"
@@ -43,4 +48,48 @@ Path: {root}/test/scenario/dynamodb/.frey/residu/terraform.plan
     write_capacity:                                        "" => "20"
 Plan: 1 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/dynamodb/.frey/residu/terraform.plan'
+--> {hostname} - backup
+I am a rad custom backup script performing some nice backup action!
+--> {hostname} - launch
+aws_dynamodb_table.basic-dynamodb-table: Creating...
+  arn:                                                   "" => "<computed>"
+  attribute.#:                                           "" => "3"
+  attribute.301566416.name:                              "" => "TopScore"
+  attribute.301566416.type:                              "" => "N"
+  attribute.3178016421.name:                             "" => "GameTitle"
+  attribute.3178016421.type:                             "" => "S"
+  attribute.3403068082.name:                             "" => "UserId"
+  attribute.3403068082.type:                             "" => "N"
+  global_secondary_index.#:                              "" => "1"
+  global_secondary_index.505842399.hash_key:             "" => "GameTitle"
+  global_secondary_index.505842399.name:                 "" => "GameTitleIndex"
+  global_secondary_index.505842399.non_key_attributes.#: "" => "1"
+  global_secondary_index.505842399.non_key_attributes.0: "" => "UserId"
+  global_secondary_index.505842399.projection_type:      "" => "INCLUDE"
+  global_secondary_index.505842399.range_key:            "" => "TopScore"
+  global_secondary_index.505842399.read_capacity:        "" => "10"
+  global_secondary_index.505842399.write_capacity:       "" => "10"
+  hash_key:                                              "" => "UserId"
+  name:                                                  "" => "GameScores"
+  range_key:                                             "" => "GameTitle"
+  read_capacity:                                         "" => "20"
+  write_capacity:                                        "" => "20"
+aws_dynamodb_table.basic-dynamodb-table: Creation complete
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+The state of your infrastructure has been saved to the path
+below. This state is required to modify and destroy your
+infrastructure, so keep it safe. To inspect the complete state
+use the `terraform show` command.
+
+State path: {root}/test/scenario/dynamodb/.frey/state/terraform.tfstate
+--> Saved state to '{root}/test/scenario/dynamodb/.frey/state/terraform.tfstate'
 Done
+Destroying..
+[0m[1maws_dynamodb_table.basic-dynamodb-table: Refreshing state... (ID: GameScores)[0m
+[0m[1maws_dynamodb_table.basic-dynamodb-table: Destroying...[21m[0m
+[0m[1maws_dynamodb_table.basic-dynamodb-table: Destruction complete[21m[0m
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.[0m
+Finished

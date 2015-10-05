@@ -13,6 +13,7 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 git init --quiet
 
+
 rm -f terraform.plan
 rm -f "${TMPDIR:-/tmp}/frey-dynamodb"* || true
 
@@ -21,5 +22,18 @@ rm -f "${TMPDIR:-/tmp}/frey-dynamodb"* || true
   --no-color \
   --verbose \
   --force-yes \
-  --bail-after plan \
+  --bail-after launch \
 && true
+
+echo "Destroying.."
+
+TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
+TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
+~/.frey/tools/terraform destroy \
+  -no-color \
+  -target=aws_dynamodb_table.basic-dynamodb-table \
+  -state=.frey/state/terraform.tfstate \
+  -force \
+.frey/residu
+
+echo "Finished"

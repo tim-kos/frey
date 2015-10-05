@@ -182,8 +182,8 @@ For now, we only support
  - [x] Port Prepare SSH Keys
  - [x] Port refresh
  - [x] Port plan
- - [ ] Port launch
- - [ ] Port backup
+ - [x] Port launch
+ - [x] Port backup
  - [ ] Port install
  - [ ] Port upload
  - [ ] Port setup

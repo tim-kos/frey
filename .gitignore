@@ -4,3 +4,4 @@ npm-debug.log
 coverage/
 env.sh
 test/scenario/*/.frey/residu/
+test/scenario/*/.frey/state/
