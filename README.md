@@ -46,15 +46,16 @@ dissolve Frey as well.
 
 Frey has some opinionated and magical parts, but less so than Otto.
 
-You can define all of this in a single `.toml` recipe, or choose to bundle your existing
-Terraform `.tf` and Ansible `.yml` inside a recipe directory, that Frey will use to create
-web infrastructure.
+You can define all of this in a single `Freyfile`. A Frefile is a recipe written in [TOML](https://github.com/toml-lang/toml).
+
+Alternatively you can point Frey to your existing
+Terraform `.tf` and Ansible `.yml` for creating web infrastructure.
 
 What Frey is not good at:
 
  - Scaling Microservices
- - Dependencies between projects
-
+ - Dependencies with other Frey projects. Even though you could a diverse cluster with different
+ roles and apps accross different cloud vendors - All of this should be defined in one Frey project.
 
 ## Install
 
