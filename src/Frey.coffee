@@ -69,7 +69,6 @@ class Frey extends Base
     nextCb null, options
 
   _normalize: (options, nextCb) ->
-
     # Resolve interdependent arguments
     for key, val of options
       if val == "#{val}"
@@ -85,10 +84,11 @@ class Frey extends Base
         val          = path.basename val
         options[key] = val
 
-    options.cwd    = path.resolve options.cwd
-    options.recipe = path.resolve options.cwd, options.recipe
-    options.tools  = path.resolve options.cwd, options.tools
-    options.root   = path.resolve "#{__dirname}/.."
+    options.cwd     = path.resolve options.cwd
+    options.sshkeys = path.resolve options.cwd, options.sshkeys
+    options.recipe  = path.resolve options.cwd, options.recipe
+    options.tools   = path.resolve options.cwd, options.tools
+    options.root    = path.resolve "#{__dirname}/.."
 
     if !options.tags?
       options.tags = ""
