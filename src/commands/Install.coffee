@@ -16,6 +16,8 @@ class Install extends Command
     if @options.tags
       args.push "--tags=#{@options.tags}"
 
+    args.push "-vvvv"
+
     args.push "--user=#{@runtime.ssh.user}"
     args.push "--private-key=#{@runtime.ssh.keyprv_file}"
     args.push "--inventory-file=#{terraformInvExe}"
