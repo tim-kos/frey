@@ -17,7 +17,7 @@ class Install extends Command
       args.push "--tags=#{@options.tags}"
 
     args.push "--user=#{@runtime.ssh.user}"
-    args.push "--private-key=#{@runtime.ssh.privkey}"
+    args.push "--private-key=#{@runtime.ssh.keyprv_file}"
     args.push "--inventory-file=#{terraformInvExe}"
     args.push "--sudo"
     args.push "#{@runtime.paths.playbookFile}"
