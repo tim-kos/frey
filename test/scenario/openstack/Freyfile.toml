@@ -1,0 +1,56 @@
+[infra.variable.FREY_OPENSTACK_TENANT_NAME]
+[infra.variable.FREY_OPENSTACK_PROJECT_NAME]
+[infra.variable.FREY_OPENSTACK_PASSWORD]
+[infra.variable.FREY_OPENSTACK_AUTH_URL]
+[infra.variable.FREY__RUNTIME__SSH__KEYPUB_FILE]
+
+[infra.provider.openstack]
+  tenant_name = "${var.FREY_OPENSTACK_TENANT_NAME}"
+  user_name   = "${var.FREY_OPENSTACK_PROJECT_NAME}"
+  password    = "${var.FREY_OPENSTACK_PASSWORD}"
+  auth_url    = "${var.FREY_OPENSTACK_AUTH_URL}"
+
+[infra.resource.openstack_compute_keypair_v2.freytest-keypair-1]
+  name       = "freytest-keypair-1"
+  public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
+
+[infra.resource.openstack_compute_secgroup_v2.freytest-secgroup-1]
+  name        = "freytest-secgroup-1"
+  description = "freytest-secgroup-1"
+
+  [[infra.resource.openstack_compute_secgroup_v2.freytest-secgroup-1.rule]]
+    from_port   = 22
+    to_port     = 22
+    ip_protocol = "tcp"
+    cidr        = "0.0.0.0/0"
+
+  [[infra.resource.openstack_compute_secgroup_v2.freytest-secgroup-1.rule]]
+    from_port   = 80
+    to_port     = 80
+    ip_protocol = "tcp"
+    cidr        = "0.0.0.0/0"
+
+[infra.resource.openstack_compute_instance_v2.freytest-server-1]
+  name            = "freytest-server-1"
+  image_id        = "cb6b7936-d2c5-4901-8678-c88b3a6ed84c"
+  flavor_id       = "3"
+  key_pair        = "freytest-keypair-1"
+  security_groups = [ "${openstack_compute_secgroup_v2.freytest-secgroup-1.name}" ]
+
+  [[infra.resource.openstack_compute_instance_v2.freytest-server-1.metadata]]
+    frey = "yes please"
+
+[install.config]
+  [install.config.defaults]
+
+  [install.config.ssh_connection]
+    ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
+
+[[install.playbooks]]
+  hosts = "infra-tusd-server"
+  name = "Install infra-tusd-server"
+
+  [[install.playbooks.tasks]]
+    action = "template src=templates/sources.list dest=/etc/apt/sources.list"
+    name = "Common | Add US APT Mirrors"
+    register = "apt_sources"

@@ -5,7 +5,7 @@ _     = require "lodash"
 debug = require("depurar")("frey")
 
 class Base
-  boot: []
+  boot     : []
   bootCargo: {}
 
   main: (bootOptions, cb) ->

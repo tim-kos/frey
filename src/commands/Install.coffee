@@ -13,7 +13,9 @@ class Install extends Command
     args            = []
     terraformInvExe = (dep.exe for dep in @runtime.deps when dep.name == "terraformInventory")[0]
 
-    args.push "--tags=#{@options.tags}"
+    if @options.tags
+      args.push "--tags=#{@options.tags}"
+
     args.push "--user=#{@runtime.ssh.user}"
     args.push "--private-key=#{@runtime.ssh.privkey}"
     args.push "--inventory-file=#{terraformInvExe}"

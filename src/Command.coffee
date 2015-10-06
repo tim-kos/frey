@@ -67,9 +67,9 @@ class Command extends Base
     return childEnv
 
   _exeScript: (shellArgs, argOpts, cb) ->
-    argOpts ?= {}
-    argOpts.env ?= {}
-    argOpts.verbose ?= true
+    argOpts              ?= {}
+    argOpts.env          ?= {}
+    argOpts.verbose      ?= true
     argOpts.limitSamples ?= 3
 
     opts =
