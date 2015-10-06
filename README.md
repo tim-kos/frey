@@ -184,6 +184,7 @@ For now, we only support
  - [x] Port plan
  - [x] Port launch
  - [x] Port backup
+ - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
  - [ ] Vagrant support
  - [ ] Port install
  - [ ] Port upload

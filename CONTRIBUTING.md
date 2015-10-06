@@ -52,3 +52,9 @@ The `DEBUG` environment variable can be very helpful here"
 cd test/scenario/dynamodb
 DEBUG=*:* bash ./run.sh
 ```
+
+## Check new versions of dependencies:
+
+ - <https://github.com/ansible/ansible/blob/devel/CHANGELOG.md>
+ - <https://github.com/hashicorp/terraform/blob/master/CHANGELOG.md>
+ - <https://github.com/adammck/terraform-inventory/releases>

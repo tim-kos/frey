@@ -68,7 +68,7 @@ class Runtime extends Command
       ansibleCfg         : "#{@options.residu}/ansible.cfg"
       planFile           : "#{@options.residu}/terraform.plan"
       infraFile          : "#{@options.residu}/infra.tf.json"
-      playbookFile       : "#{@options.residu}/config.yml"
+      playbookFile       : "#{@options.residu}/install.yml"
       stateFile          : "#{@options.state}/terraform.tfstate"
       pythonLib          : "#{@options.tools}/pip/lib/python2.7/site-packages"
       ansibleExe         : "#{@options.tools}/pip/bin/ansible"
