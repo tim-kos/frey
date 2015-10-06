@@ -197,9 +197,10 @@ For now, we only support
  - [x] Series/waterfall combination for boot 
  - [x] Pass {} to first boot function. Use @options like all other methods to avoid confusion
  - [x] Add (script to add) more encrypted cloud keys
+ - [ ] Enable DO support
  - [ ] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
  - [ ] Make arg & env functions of all other commands mimic Install's
- - [ ] Converting Freyfile to residu should be part of prepare. Then a single install can benefit from it (remove the `refresh` from that integration test) and validation can be ran against it/them
+ - [ ] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that integration test) and validation can be ran against it/them
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
  - [ ] Vagrant support
  - [ ] Port install
