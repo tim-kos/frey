@@ -1,0 +1,25 @@
+VAGRANTFILE_API_VERSION = "2"
+SHARE_NAME              = "freybox"
+SHARE_GUEST_DIR         = "/srv/current"
+DISKIMAGE               = "trusty-server-cloudimg-amd64"
+Vagrant.require_version ">= 1.7.2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # This is a minimal ubuntu box that should be very close to the AMI we use
+  # in production (the official vagrant boxes include ruby and shit)
+  config.vm.box_url          = "http://cloud-images.ubuntu.com/vagrant/trusty/20150930/#{DISKIMAGE}-vagrant-disk1.box"
+  config.vm.box_check_update = true
+
+  config.vm.network "private_network", ip: "192.168.33.19"
+
+  config.vm.synced_folder ".", "/vagrant", :disabled => true
+  config.vm.synced_folder ".", SHARE_GUEST_DIR
+
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm",     :id, "--memory", 4096, "--cpus", 8]
+    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/#{SHARE_NAME}", "1"]
+  end
+
+  # Runs every time on `vagrant provision`, configures up the machine & does a build
+  config.vm.provision :shell, :inline => "bash #{SHARE_GUEST_DIR}/scripts/bootstrap/vagrant-provision.sh"
+end

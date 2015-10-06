@@ -7,7 +7,7 @@ class Launch extends Command
     "_gatherTerraformArgs"
   ]
 
-  _gatherTerraformArgs: (filesWritten, cb) ->
+  _gatherTerraformArgs: (options, cb) ->
     terraformArgs = []
     if !chalk.enabled
       terraformArgs.push "-no-color"
@@ -17,9 +17,9 @@ class Launch extends Command
     cb null, terraformArgs
 
   main: (terraformArgs, cb) ->
-    tfExe = (dep.exe for dep in @runtime.deps when dep.name == "terraform")[0]
-    cmd   = [
-      tfExe
+    terraformExe = (dep.exe for dep in @runtime.deps when dep.name == "terraform")[0]
+    cmd          = [
+      terraformExe
       "apply"
     ]
     cmd = cmd.concat terraformArgs

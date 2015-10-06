@@ -46,7 +46,7 @@ class Refresh extends Command
   _splitToml: (tomlMerged, cb) ->
     filesWritten = []
 
-    async.parallel [
+    async.series [
       (callback) =>
         if !tomlMerged.infra?
           debug "No infra instructions found in merged toml"
@@ -59,13 +59,13 @@ class Refresh extends Command
         filesWritten.push @runtime.paths.infraFile
         fs.writeFile @runtime.paths.infraFile, encoded, callback
       (callback) =>
-        if !tomlMerged.config?
-          debug "No config instructions found in merged toml"
+        if !tomlMerged.install?
+          debug "No install instructions found in merged toml"
           return callback null # That's not fatal
 
-        encoded = YAML.safeDump tomlMerged.config
+        encoded = YAML.safeDump tomlMerged.install
         if !encoded
-          return callback new Error "Unable to convert recipe to config yml"
+          return callback new Error "Unable to convert recipe to install yml"
 
         filesWritten.push @runtime.paths.playbookFile
         fs.writeFile @runtime.paths.playbookFile, encoded, callback
