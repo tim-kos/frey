@@ -9,7 +9,7 @@ class Install extends Command
     "_gatherEnv"
   ]
 
-  _gatherArgs: (bootOptions, cb) ->
+  _gatherArgs: (cargo, cb) ->
     args            = []
     terraformInvExe = (dep.exe for dep in @runtime.deps when dep.name == "terraformInventory")[0]
 
@@ -20,12 +20,9 @@ class Install extends Command
     args.push "--sudo"
     args.push "#{@runtime.paths.playbookFile}"
 
-    bootOptions = _.extend bootOptions,
-      args: args
+    cb null, args
 
-    cb null, bootOptions
-
-  _gatherEnv: (bootOptions, cb) ->
+  _gatherEnv: (cargo, cb) ->
     env = {}
 
     if !chalk.enalbed
@@ -34,21 +31,18 @@ class Install extends Command
     env.ANSIBLE_OPTIONS = @runtime.paths.ansibleCfg
     env.TF_STATE        = @runtime.paths.stateFile
 
-    bootOptions = _.extend bootOptions,
-      env: env
+    cb null, env
 
-    cb null, bootOptions
-
-  main: (bootOptions, cb) ->
+  main: (cargo, cb) ->
     ansiblePlaybookExe = (dep.exePlaybook for dep in @runtime.deps when dep.name == "ansible")[0]
     cmd                = [
       ansiblePlaybookExe
     ]
-    cmd = cmd.concat bootOptions.args
+    cmd = cmd.concat @bootCargo._gatherArgs
     cmd = cmd.join " "
 
     opts =
-      env: bootOptions.env
+      env: @bootCargo._gatherEnv
 
     @_exeScript ["-c", cmd], opts, (err, stdout) ->
       if err

@@ -13,20 +13,17 @@ class Runtime extends Command
     "_findClosestResiduGit"
   ]
 
-  _findClosestStateGit: (options, cb) ->
+  _findClosestStateGit: (cargo, cb) ->
     @_findClosestGit @options.state, (filepath) ->
-      options["stateGit"] = filepath
-      cb null, options
+      cb null, filepath
 
-  _findClosestRecipeGit: (options, cb) ->
+  _findClosestRecipeGit: (cargo, cb) ->
     @_findClosestGit @options.recipe, (filepath) ->
-      options["recipeGit"] = filepath
-      cb null, options
+      cb null, filepath
 
-  _findClosestResiduGit: (options, cb) ->
+  _findClosestResiduGit: (cargo, cb) ->
     @_findClosestGit @options.residu, (filepath) ->
-      options["residuGit"] = filepath
-      cb null, options
+      cb null, filepath
 
   _findClosestGit: (filepath, cb) ->
     parts    = filepath.split "/"
@@ -62,9 +59,9 @@ class Runtime extends Command
       pip                : "7.1.2"
 
     @runtime.paths =
-      stateGit           : bootOptions.stateGit
-      residuGit          : bootOptions.residuGit
-      recipeGit          : bootOptions.recipeGit
+      stateGit           : @bootCargo._findClosestStateGit
+      residuGit          : @bootCargo._findClosestRecipeGit
+      recipeGit          : @bootCargo._findClosestResiduGit
       ansibleCfg         : "#{@options.residu}/ansible.cfg"
       planFile           : "#{@options.residu}/terraform.plan"
       infraFile          : "#{@options.residu}/infra.tf.json"

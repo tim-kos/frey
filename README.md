@@ -19,6 +19,16 @@ Ansible & Hashicorp's Terraform to to the heavy lifting.
 
 ### With Otto
 
+We use nearly all Hashicorp products in production and absolutely love it.
+We will be looking to utilize Otto as well. 
+
+However, we also felt the needed a tool that offered more in the way of
+provisioning tailor-made setups.
+
+Hashicorp acknowledges that Otto will be able to server 99% of the
+common use-cases. Frey aims to serve the remaining 1% - and 
+maybe once Otto offers more in the way of customization, we can cease to exist.
+
 When compared to Hashicorp's recently launched Otto, which also 
 uses Terraform under the hood, Frey fills a void for people that:
 
@@ -184,7 +194,8 @@ For now, we only support
  - [x] Port plan
  - [x] Port launch
  - [x] Port backup
- - [ ] Pass {} to first boot function. Use @options like all other methods to avoid confusion
+ - [x] Series/waterfall combination for boot 
+ - [x] Pass {} to first boot function. Use @options like all other methods to avoid confusion
  - [ ] Make arg & env functions of all other commands mimic Install's
  - [ ] Converting Freyfile to residu should be part of prepare. Then a single install can benefit from it (remove the `refresh` from that integration test) and validation can be ran against it/them
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
@@ -198,5 +209,6 @@ For now, we only support
  - [ ] Indent stdout/err
  - [ ] More tests!
  - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
+ - [ ] On the githubs  
  - [ ] How to implement different roles? Db/www/etc?
  - [ ] Switch to local npm install if available via LiftOff

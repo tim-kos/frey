@@ -18,7 +18,7 @@ class Refresh extends Command
     "_gatherTerraformArgs"
   ]
 
-  _findTomlFiles: (options, cb) ->
+  _findTomlFiles: (cargo, cb) ->
     tomlFiles = []
     pattern   = "#{@options.recipe}/*.toml"
     glob pattern, (err, files) ->
@@ -96,13 +96,13 @@ class Refresh extends Command
 
     cb null, terraformArgs
 
-  main: (terraformArgs, cb) ->
+  main: (cargo, cb) ->
     terraformExe = (dep.exe for dep in @runtime.deps when dep.name == "terraform")[0]
     cmd          = [
       terraformExe
       "refresh"
     ]
-    cmd = cmd.concat terraformArgs
+    cmd = cmd.concat @bootCargo._gatherTerraformArgs
     cmd = cmd.join " "
 
     @_exeScript ["-c", cmd], verbose: false, limitSamples: false, (err, stdout) ->

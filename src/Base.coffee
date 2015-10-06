@@ -6,6 +6,7 @@ debug = require("depurar")("frey")
 
 class Base
   boot: []
+  bootCargo: {}
 
   main: (bootOptions, cb) ->
     debug "You should override this with main class logic. "
@@ -13,9 +14,14 @@ class Base
   run: (cb)->
     methods = []
     for method in @boot
-      methods.push this[method].bind(this)
+      do (method) =>
+        methods.push (cargo, cb) =>
+          f = @[method].bind this
+          f cargo, (err, cargo) =>
+            @bootCargo[method] = cargo
+            cb err, cargo
 
-    methods.unshift async.constant(@options)
+    methods.unshift async.constant({})
 
     async.waterfall methods, (err, bootOptions) =>
       if err

@@ -10,7 +10,7 @@ class Prepare extends Command
     super name, options, runtime
     @dir = @options.cwd
 
-  main: (bootOptions, cb) ->
+  main: (cargo, cb) ->
     async.eachSeries @runtime.deps, @_make.bind(this), cb
 
   _make: (props, cb) ->

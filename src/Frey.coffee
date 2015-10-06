@@ -44,6 +44,7 @@ class Frey extends Base
     remote    : "Execute a remote command - or opens console"
 
   boot: [
+    "_injectOptions"
     "_defaults"
     "_normalize"
     "_setup"
@@ -51,8 +52,11 @@ class Frey extends Base
   ]
 
   constructor: (options) ->
-    @options         = options
-    @runtime         = {}
+    @options = options
+    @runtime = {}
+
+  _injectOptions: (options, nextCb) ->
+    nextCb null, _.clone @options
 
   _defaults: (options, nextCb) ->
     options      ?= {}

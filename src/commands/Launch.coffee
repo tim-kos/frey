@@ -16,13 +16,13 @@ class Launch extends Command
 
     cb null, terraformArgs
 
-  main: (terraformArgs, cb) ->
+  main: (cargo, cb) ->
     terraformExe = (dep.exe for dep in @runtime.deps when dep.name == "terraform")[0]
     cmd          = [
       terraformExe
       "apply"
     ]
-    cmd = cmd.concat terraformArgs
+    cmd = cmd.concat @bootCargo._gatherTerraformArgs
     cmd = cmd.join " "
 
     @_exeScript ["-c", cmd], verbose: true, limitSamples: false, (err, stdout) =>

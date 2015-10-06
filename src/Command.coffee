@@ -77,8 +77,8 @@ class Command extends Base
       env  : @_buildChildEnv(argOpts.env)
       stdio: [ "ignore", "pipe", "pipe" ]
 
-    debug
-      opts:opts
+    # debug
+    #   opts:opts
 
     cmdArgs = [
       "-o", "pipefail"

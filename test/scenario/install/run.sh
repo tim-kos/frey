@@ -17,8 +17,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 #
 # exit
 
-echo "WIP"
-exit 0
 
 rm -f terraform.plan
 rm -f "${TMPDIR:-/tmp}/frey-install"* || true
