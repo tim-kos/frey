@@ -17,6 +17,16 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 rm -f terraform.plan
 rm -f "${TMPDIR:-/tmp}/frey-dynamodb"* || true
 
+echo "(maybe) Destroying.."
+TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
+TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
+~/.frey/tools/terraform destroy \
+  -no-color \
+  -target=aws_dynamodb_table.basic-dynamodb-table \
+  -state=.frey/state/terraform.tfstate \
+  -force \
+.frey/residu > /dev/null 2>&1 || true
+
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
   --sshkeys "${TMPDIR:-/tmp}" \
   --no-color \
