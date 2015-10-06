@@ -48,7 +48,7 @@ class Command extends Base
 
       cb null
 
-  _buildChildEnv: ->
+  _buildChildEnv: (extra) ->
     childEnv = {}
 
     childEnv = _.extend childEnv,
@@ -61,18 +61,24 @@ class Command extends Base
 
     childEnv.PYTHONPATH = @runtime.paths.pythonLib
 
+    if extra?
+      childEnv = _.extend childEnv, extra
+
     return childEnv
 
   _exeScript: (shellArgs, argOpts, cb) ->
     argOpts ?= {}
+    argOpts.env ?= {}
     argOpts.verbose ?= true
     argOpts.limitSamples ?= 3
 
-
     opts =
       cwd  : @dir
-      env  : @_buildChildEnv()
+      env  : @_buildChildEnv(argOpts.env)
       stdio: [ "ignore", "pipe", "pipe" ]
+
+    debug
+      opts:opts
 
     cmdArgs = [
       "-o", "pipefail"

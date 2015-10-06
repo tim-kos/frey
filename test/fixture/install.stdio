@@ -1,12 +1,1 @@
---> Will run: [ 'runtime', 'prepare', 'install' ]
---> {hostname} - runtime
---> {hostname} - prepare
-Creating private key '{tmpdir}/frey-install.pem'
-Creating public key '{tmpdir}/frey-install.pub'
-Found 'terraform' with version '0.6.3'
-Found 'terraformInventory' with version '0.5.0'
-Found 'pip' with version '7.1.2'
-Found 'ansible' with version '1.9.2'
---> {hostname} - install
-Done
-Finished
+WIP

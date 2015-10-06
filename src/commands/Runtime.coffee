@@ -71,7 +71,6 @@ class Runtime extends Command
       playbookFile       : "#{@options.residu}/install.yml"
       stateFile          : "#{@options.state}/terraform.tfstate"
       pythonLib          : "#{@options.tools}/pip/lib/python2.7/site-packages"
-      ansibleExe         : "#{@options.tools}/pip/bin/ansible"
 
     @runtime.ssh =
       email              : "#{@options.user}@#{@options.app}.freyproject.io"
@@ -174,7 +173,7 @@ class Runtime extends Command
       type        : "App"
       name        : "ansible"
       range       : "#{@runtime.versions.ansible}"
-      exe         : "#{@options.tools}/pip/bin/ansible-playbook"
+      exe         : "#{@options.tools}/pip/bin/ansible"
       exePlaybook : "#{@options.tools}/pip/bin/ansible-playbook"
       cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
       cmdInstall  : [

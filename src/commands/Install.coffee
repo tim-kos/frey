@@ -1,66 +1,59 @@
 Command = require "../Command"
 chalk   = require "chalk"
+_       = require "lodash"
 debug   = require("depurar")("frey")
 
 class Install extends Command
   boot: [
-    "_gatherAnsibleArgs"
+    "_gatherArgs"
+    "_gatherEnv"
   ]
 
-  _gatherAnsibleArgs: (options, cb) ->
-    ansibleArgs = []
-    if !chalk.enabled
-      ansibleArgs.push "--no-color"
+  _gatherArgs: (bootOptions, cb) ->
+    args            = []
+    terraformInvExe = (dep.exe for dep in @runtime.deps when dep.name == "terraformInventory")[0]
 
-    ansibleArgs.push "--tags=#{options.tags}"
+    args.push "--tags=#{@options.tags}"
+    args.push "--user=#{@runtime.ssh.user}"
+    args.push "--private-key=#{@runtime.ssh.privkey}"
+    args.push "--inventory-file=#{terraformInvExe}"
+    args.push "--sudo"
+    args.push "#{@runtime.paths.playbookFile}"
 
-    cb null, ansibleArgs
+    bootOptions = _.extend bootOptions,
+      args: args
 
-  main: (ansibleArgs, cb) ->
-    ansibleExe = (dep.exe for dep in @runtime.deps when dep.name == "ansible")[0]
-    cmd   = [
-      ansibleExe
-      "plan"
+    cb null, bootOptions
+
+  _gatherEnv: (bootOptions, cb) ->
+    env = {}
+
+    if !chalk.enalbed
+      env.ANSIBLE_NOCOLOR = "true"
+
+    env.ANSIBLE_OPTIONS = @runtime.paths.ansibleCfg
+    env.TF_STATE        = @runtime.paths.stateFile
+
+    bootOptions = _.extend bootOptions,
+      env: env
+
+    cb null, bootOptions
+
+  main: (bootOptions, cb) ->
+    ansiblePlaybookExe = (dep.exePlaybook for dep in @runtime.deps when dep.name == "ansible")[0]
+    cmd                = [
+      ansiblePlaybookExe
     ]
-    cmd = cmd.concat ansibleArgs
+    cmd = cmd.concat bootOptions.args
     cmd = cmd.join " "
 
-    @_exeScript ["-c", cmd], {}, (err, stdout) =>
+    opts =
+      env: bootOptions.env
+
+    @_exeScript ["-c", cmd], opts, (err, stdout) ->
       if err
         return cb err
 
-      @_out "--> Saved plan as '#{@runtime.paths.planFile}'\n"
-
-      if stdout.match /No changes/
-        return cb null
-
-      m = stdout.match /Plan: (\d+) to add, (\d+) to change, (\d+) to destroy/
-      if !m
-        return cb new Error "Unable to parse add/change/destroy"
-
-      [ _, add, change, destroy ] = m
-
-      @runtime.launchPlan =
-        add    :add
-        change :change
-        destroy:destroy
-
       cb null
-
-  # tags=""
-  # if [ -n "${FREY__OPTIONS__TAGS}" ]; then
-  #   tags="--tags="${FREY__OPTIONS__TAGS}""
-  # fi
-  # ANSIBLE_OPTIONS="${__ansibleCfg}" \
-  # ANSIBLE_HOST_KEY_CHECKING=False \
-  # TF_STATE="${__stateFile}" \
-  #   "${__ansiblePlaybookExe}" \
-  #     ${tags} \
-  #     --user="${FREY__RUNTIME__SSH__USER}" \
-  #     --private-key="${FREY__RUNTIME__SSH__KEYPRV_FILE}" \
-  #     --inventory-file="${__ansibleInventoryExe}" \
-  #     --sudo \
-  #   "${__playbookFile}"
-  #
 
 module.exports = Install

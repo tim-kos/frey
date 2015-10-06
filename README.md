@@ -184,6 +184,9 @@ For now, we only support
  - [x] Port plan
  - [x] Port launch
  - [x] Port backup
+ - [ ] Pass {} to first boot function. Use @options like all other methods to avoid confusion
+ - [ ] Make arg & env functions of all other commands mimic Install's
+ - [ ] Converting Freyfile to residu should be part of prepare. Then a single install can benefit from it (remove the `refresh` from that integration test) and validation can be ran against it/them
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
  - [ ] Vagrant support
  - [ ] Port install
