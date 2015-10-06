@@ -31,6 +31,7 @@ if !which remarshal 2>/dev/null; then
 fi
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
+  cd "${GOPATH}/src/github.com/dbohdan/remarshal"
   cmdRemarshal="go run remarshal.go"
 else
   cmdRemarshal="remarshal"
@@ -39,7 +40,6 @@ fi
 echo "Writing '${jsonFile}'"
 hcltool "${tfFile}" "${jsonFile}"
 
-cd "${GOPATH}/src/github.com/dbohdan/remarshal"
 echo "Writing '${tomlFile}'"
 ${cmdRemarshal} -if json -of toml -wrap infra -i "${jsonFile}" > "${tomlFile}"
 echo "" >> "${tomlFile}"
