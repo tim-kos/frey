@@ -196,6 +196,7 @@ For now, we only support
  - [x] Port backup
  - [x] Series/waterfall combination for boot 
  - [x] Pass {} to first boot function. Use @options like all other methods to avoid confusion
+ - [x] Add (script to add) more encrypted cloud keys
  - [ ] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
  - [ ] Make arg & env functions of all other commands mimic Install's
  - [ ] Converting Freyfile to residu should be part of prepare. Then a single install can benefit from it (remove the `refresh` from that integration test) and validation can be ran against it/them

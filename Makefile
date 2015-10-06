@@ -12,6 +12,10 @@ lint:
 	@[ ! -f coffeelint.json ] && $(COFFEELINT) --makeconfig > coffeelint.json || true
 	@$(COFFEELINT) --file ./coffeelint.json src
 
+.PHONY: encrypt
+encrypt:
+	@source env.sh && bash bin/encrypt.sh
+
 .PHONY: build
 build:
 	@make lint || true
