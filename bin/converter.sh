@@ -15,32 +15,56 @@ jsonFile="${tfDir}/${tfBase}.tf.json"
 csonFile="${tfDir}/${tfBase}.cson"
 tomlFile="${tfDir}/Freyfile.toml"
 
-which hcltool || pip install pyhcl
+echo "Installing hcltool.."
+(which hcltool || sudo pip install pyhcl) >/dev/null 2>&1
 
-go get github.com/dbohdan/remarshal
+echo "Installing remarshal.."
+if !which remarshal 2>/dev/null; then
+  if [[ "${OSTYPE}" == "darwin"* ]]; then
+    go get github.com/dbohdan/remarshal
+  else
+    pushd /tmp
+      wget https://github.com/dbohdan/remarshal/releases/download/v0.3.0/remarshal-0.3.0-linux-amd64.tar.gz
+      tar -zxvf remarshal-0.3.0-linux-amd64.tar.gz
+    popd
+  fi
+fi
+
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  cmdRemarshal="go run remarshal.go"
+else
+  cmdRemarshal="/tmp/remarshal/remarshal"
+fi
 
 echo "Writing '${jsonFile}'"
 hcltool "${tfFile}" "${jsonFile}"
 
 cd "${GOPATH}/src/github.com/dbohdan/remarshal"
 echo "Writing '${tomlFile}'"
-go run remarshal.go -if json -of toml -wrap "infra" -i "${jsonFile}" > "${tomlFile}"
+${cmdRemarshal} -if json -of toml -wrap infra -i "${jsonFile}" > "${tomlFile}"
+echo "" >> "${tomlFile}"
 
 if [ -n "${ansCfgFile}" ]; then
   echo "Appending '${tomlFile}'"
-  cat "${ansCfgFile}" >> "${tomlFile}"
+  cat "${ansCfgFile}" \
+    |sed 's@\[@[install.config.@g' \
+  >> "${tomlFile}"
+  echo "" >> "${tomlFile}"
 fi
 
 if [ -n "${ansFile}" ]; then
   echo "Appending '${tomlFile}'"
-  go run remarshal.go -if yaml -of toml -wrap "install.playbooks" -i "${ansFile}" >> "${tomlFile}"
+  ${cmdRemarshal} -if yaml -of toml -wrap playbooks -i "${ansFile}" \
+    |sed 's@\[playbooks@[install.playbooks@g' \
+  >> "${tomlFile}"
+  echo "" >> "${tomlFile}"
 fi
 
-echo "Reading '${tfFile}'"
+echo "Reading '${tomlFile}'"
 cat "${tomlFile}"
 
-echo "Moving '${tfFile}'"
-mv "${tfFile}" "${tfFile}.bak-$(date +%s)"
+# echo "Moving '${tfFile}'"
+# mv "${tfFile}" "${tfFile}.bak-$(date +%s)"
 
 echo "Removing '${jsonFile}'"
 rm -f "${jsonFile}"

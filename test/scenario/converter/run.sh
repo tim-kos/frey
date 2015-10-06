@@ -14,4 +14,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 "${__root}/bin/converter.sh" \
   converterApp \
   "${__dir}/infra.tf" \
-  "${__dir}/main.yml"
+  "${__dir}/main.yml" \
+  "${__dir}/ansible.cfg" \
+&& true
