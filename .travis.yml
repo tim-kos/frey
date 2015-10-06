@@ -22,9 +22,10 @@ matrix:
   allow_failures:
   - node_js: "iojs-v3.0.0"
 
-install:
-  - pip install --user pyhcl
+before_install:
+  - pip install --user pyhcl==0.1.15
   - wget https://github.com/dbohdan/remarshal/releases/download/v0.3.0/remarshal-0.3.0-linux-amd64.tar.gz
   - tar -zxvf remarshal-0.3.0-linux-amd64.tar.gz
+  - sudo cp -af remarshal/remarshal /usr/local/bin/remarshal
 
 script: make test-full

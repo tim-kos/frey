@@ -16,7 +16,7 @@ csonFile="${tfDir}/${tfBase}.cson"
 tomlFile="${tfDir}/Freyfile.toml"
 
 echo "Installing hcltool.."
-(which hcltool || sudo pip install pyhcl) >/dev/null 2>&1
+(which hcltool || sudo -HE pip install pyhcl==0.1.15) >/dev/null 2>&1
 
 echo "Installing remarshal.."
 if !which remarshal 2>/dev/null; then
@@ -33,7 +33,7 @@ fi
 if [[ "${OSTYPE}" == "darwin"* ]]; then
   cmdRemarshal="go run remarshal.go"
 else
-  cmdRemarshal="/tmp/remarshal/remarshal"
+  cmdRemarshal="remarshal"
 fi
 
 echo "Writing '${jsonFile}'"
