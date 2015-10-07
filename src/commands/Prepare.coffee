@@ -1,9 +1,10 @@
-Command = require "../Command"
-mkdirp  = require "mkdirp"
-semver  = require "semver"
-fs      = require "fs"
-async   = require "async"
-debug   = require("depurar")("frey")
+Command  = require "../Command"
+mkdirp   = require "mkdirp"
+semver   = require "semver"
+fs       = require "fs"
+async    = require "async"
+debug    = require("depurar")("frey")
+Mustache = require "mustache"
 
 class Prepare extends Command
   constructor: (name, options, runtime) ->
@@ -33,7 +34,7 @@ class Prepare extends Command
         "ssh-keygen -b 2048 -t rsa -C '#{props.email}' -f '#{props.privkey}' -q -N ''"
         "rm -f '#{props.privkey}.pub'"
       ].join " && "
-      @_exeScript ["-c", cmd], verbose: true, limitSamples: false, cb
+      @_exeScript cmd, verbose: true, limitSamples: false, cb
 
   _makePubkey: (props, cb) ->
     fs.stat props.pubkey, (err) =>
@@ -47,11 +48,11 @@ class Prepare extends Command
         "echo -n $(ssh-keygen -yf '#{props.privkey}') > '#{props.pubkey}'"
         "echo ' #{props.email}' >> '#{props.pubkey}'"
       ].join " && "
-      @_exeScript ["-c", cmd], verbose: true, limitSamples: false, cb
+      @_exeScript cmd, verbose: true, limitSamples: false, cb
 
   _makePubkeyFingerprint: (props, cb) ->
     cmd = "ssh-keygen -lf '#{props.pubkey}' | awk '{print $2}'"
-    @_exeScript ["-c", cmd], verbose: false, limitSamples: false, (err, stdout) =>
+    @_exeScript cmd, verbose: false, limitSamples: false, (err, stdout) =>
       @runtime.ssh.keypub_fingerprint = "#{stdout}".trim()
       cb err
 
@@ -83,7 +84,7 @@ class Prepare extends Command
   _satisfy: (props, cb) ->
     cmd = @_transform props.cmdVersion, props
 
-    @_exeScript ["-c", cmd], verbose: false, limitSamples: false, (err, stdout) =>
+    @_exeScript cmd, verbose: false, limitSamples: false, (err, stdout) =>
       if err
         # We don't want to bail out if version command does not exist yet
         # Or maybe --version returns non-zero exit code, which is common
@@ -104,8 +105,7 @@ class Prepare extends Command
       cb true
 
   _transform: (cmd, props) ->
-    cmd = cmd.replace /{exe}/g, props.exe
-    cmd = cmd.replace /{zip}/g, props.zip
+    cmd = Mustache.render cmd, props
     return cmd
 
 module.exports = Prepare

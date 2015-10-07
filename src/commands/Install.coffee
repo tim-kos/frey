@@ -43,12 +43,11 @@ class Install extends Command
       ansiblePlaybookExe
     ]
     cmd = cmd.concat @bootCargo._gatherArgs
-    cmd = cmd.join " "
 
     opts =
-      env: @bootCargo._gatherEnv
+      env  : @bootCargo._gatherEnv
 
-    @_exeScript ["-c", cmd], opts, (err, stdout) ->
+    @_exe cmd, opts, (err, stdout) ->
       if err
         return cb err
 

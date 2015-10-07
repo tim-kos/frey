@@ -11,32 +11,32 @@ yargs
   .example "frey backup -d ./envs/production", "backup platform described in ./envs/production"
   .options
     app:
-      default : "{cwd}|basename"
+      default : "{{{cwd}}}|basename"
       nargs   : 1
       type    : "string"
       describe: "Name of application for which we're creating infrastructure"
     recipe:
-      default : "{cwd}"
+      default : "{{{cwd}}}"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the Freyfile"
     state:
-      default : "{cwd}/.frey/state"
+      default : "{{{cwd}}}/.frey/state"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the state. This needs to be comitted to Git"
     residu:
-      default : "{cwd}/.frey/residu"
+      default : "{{{cwd}}}/.frey/residu"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains residue. This needs to be ignored by Git"
     sshkeys:
-      default : "{home}/.ssh"
+      default : "{{{home}}}/.ssh"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains SSH keys. This needs to be ignored by Git"
     tools:
-      default : "{home}/.frey/tools"
+      default : "{{{home}}}/.frey/tools"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the tools. This needs to be ignored by Git"

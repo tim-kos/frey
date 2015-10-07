@@ -23,9 +23,8 @@ class Launch extends Command
       "apply"
     ]
     cmd = cmd.concat @bootCargo._gatherTerraformArgs
-    cmd = cmd.join " "
 
-    @_exeScript ["-c", cmd], verbose: true, limitSamples: false, (err, stdout) =>
+    @_exe cmd, verbose: true, limitSamples: false, (err, stdout) =>
       if err
         return cb err
 

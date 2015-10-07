@@ -11,16 +11,20 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
-rm -f "${TMPDIR:-/tmp}/frey-sshkeygen."* || true
+__sysTmpDir="${TMPDIR:-/tmp}"
+__sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
+
+
+rm -f "${__sysTmpDir}/frey-sshkeygen."* || true
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
-  --sshkeys "${TMPDIR:-/tmp}" \
+  --sshkeys "${__sysTmpDir}" \
   --bail-after prepare
 
-ls "${TMPDIR:-/tmp}/frey-sshkeygen."* || true
+ls "${__sysTmpDir}/frey-sshkeygen."* || true
 
-rm -f "${TMPDIR:-/tmp}/frey-sshkeygen.pub" || true
+rm -f "${__sysTmpDir}/frey-sshkeygen.pub" || true
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
-  --sshkeys "${TMPDIR:-/tmp}" \
+  --sshkeys "${__sysTmpDir}" \
   --bail-after prepare
 
-ls "${TMPDIR:-/tmp}/frey-sshkeygen."* || true
+ls "${__sysTmpDir}/frey-sshkeygen."* || true

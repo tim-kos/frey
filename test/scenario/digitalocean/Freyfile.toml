@@ -1,0 +1,33 @@
+[infra.variable.FREY_DO_TOKEN]
+[infra.variable.FREY__RUNTIME__SSH__KEYPUB_FILE]
+
+[infra.provider.digitalocean]
+  token = "${var.FREY_DO_TOKEN}"
+
+[infra.resource.digitalocean_droplet.freytest-web]
+  image    = "ubuntu-14-04-x64"
+  name     = "web-1"
+  region   = "nyc2"
+  size     = "512mb"
+  ssh_keys = [ "${digitalocean_ssh_key.freytest-sshkey.id}" ]
+
+[infra.resource.digitalocean_ssh_key.freytest-sshkey]
+  name       = "Frey test"
+  public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
+
+
+[install.config]
+  [install.config.defaults]
+
+  [install.config.ssh_connection]
+    ssh_args = "-vvvv -o User=root -o ControlMaster=auto -o ControlPersist=60s"
+
+
+[[install.playbooks]]
+  hosts = "freytest-web"
+  name  = "Install freytest-web"
+
+  [[install.playbooks.tasks]]
+    action   = "template src=../sources.list dest=/etc/apt/sources.list"
+    name     = "Common | Add US APT Mirrors"
+    register = "apt_sources"

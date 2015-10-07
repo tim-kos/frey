@@ -11,6 +11,7 @@ path       = require "path"
 mkdirp     = require "mkdirp"
 chalk      = require "chalk"
 Base       = require "./Base"
+Mustache   = require "mustache"
 osHomedir  = require "os-homedir"
 
 class Frey extends Base
@@ -65,17 +66,17 @@ class Frey extends Base
     options.cwd  ?= process.cwd()
     options.home ?= osHomedir()
     options.user ?= process.env.USER
+    options.root ?= "#{__dirname}/.."
 
     nextCb null, options
 
   _normalize: (options, nextCb) ->
-    # Resolve interdependent arguments
+    # Render interdependent arguments
     for key, val of options
       if val == "#{val}"
-        val          = val.replace "{cwd}", options.cwd
-        val          = val.replace "{home}", options.home
-        val          = val.replace "{user}", options.user
-        options[key] = val
+        options[key] = Mustache.render val, options
+        if options[key].indexOf("{{") > -1
+          return nextCb new Error "Unable to render vars in '#{key}' '#{options[key]}'"
 
     # Apply simple functions
     for key, val of options
@@ -84,11 +85,9 @@ class Frey extends Base
         val          = path.basename val
         options[key] = val
 
-    options.cwd     = path.resolve options.cwd
-    options.sshkeys = path.resolve options.cwd, options.sshkeys
-    options.recipe  = path.resolve options.cwd, options.recipe
-    options.tools   = path.resolve options.cwd, options.tools
-    options.root    = path.resolve "#{__dirname}/.."
+    # Resolve to absolute paths
+    for key in [ "cwd", "sshkeys", "recipe", "tools", "root"]
+      options[key] = path.resolve options.cwd, options[key]
 
     if !options.tags?
       options.tags = ""

@@ -5,6 +5,7 @@ MOCHA      := node_modules/.bin/mocha --compilers coffee:coffee-script --require
 REPORTER   := spec
 ISTANBUL   := node_modules/.bin/istanbul
 COVERALLS  := node_modules/.bin/coveralls
+GREP       :=
 scenario   :=
 
 .PHONY: lint

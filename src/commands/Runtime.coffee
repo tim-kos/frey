@@ -122,16 +122,16 @@ class Runtime extends Command
         @runtime.os.platform
         "#{@runtime.os.arch}.zip"
       ].join "_"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
+      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $NF}'"
       cmdInstall  : [
         "cd #{@options.tools}"
         [
           "curl -sSL '"
           "https://dl.bintray.com/mitchellh/terraform/"
-          "{zip}'"
-          "> '{zip}'"
+          "{{{zip}}}'"
+          "> '{{{zip}}}'"
         ].join("")
-        "unzip -o '{zip}'"
+        "unzip -o '{{{zip}}}'"
       ].join " && "
 
     @runtime.deps.push
@@ -145,17 +145,17 @@ class Runtime extends Command
         @runtime.os.platform
         "#{@runtime.os.arch}.zip"
       ].join "_"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF \".0\"}'"
+      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $NF \".0\"}'"
       cmdInstall  : [
         "cd #{@options.tools}"
         [
           "curl -sSL '"
           "https://github.com/adammck/terraform-inventory/releases/download/"
           "v#{@runtime.versions.terraformInventory}/"
-          "{zip}'"
-          "> '{zip}'"
+          "{{{zip}}}'"
+          "> '{{{zip}}}'"
         ].join ""
-        "unzip -o '{zip}'"
+        "unzip -o '{{{zip}}}'"
       ].join " && "
 
     @runtime.deps.push
@@ -163,7 +163,7 @@ class Runtime extends Command
       name        : "pip"
       exe         : "pip"
       range       : ">= #{@runtime.versions.pip}"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $2}'"
+      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $2}'"
       cmdInstall  : "sudo easy_install --upgrade pip"
 
     @runtime.deps.push
@@ -172,7 +172,7 @@ class Runtime extends Command
       range       : "#{@runtime.versions.ansible}"
       exe         : "#{@options.tools}/pip/bin/ansible"
       exePlaybook : "#{@options.tools}/pip/bin/ansible-playbook"
-      cmdVersion  : "{exe} --version |head -n1 |awk '{print $NF}'"
+      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $NF}'"
       cmdInstall  : [
         "pip install"
         "--install-option='--prefix=pip'"

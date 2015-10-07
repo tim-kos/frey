@@ -20,11 +20,11 @@ class Command extends Base
       if !ok
         return cb new Error "Question declined. Aborting. "
 
-      cmd = [
-        cmd
-      ]
+      # cmd = [
+      #   cmd
+      # ]
 
-      @_exeScript ["-c", cmd], {}, (err, stdout) ->
+      @_exeScript cmd, {}, (err, stdout) ->
         if err
           return cb new Error "Error while executing '#{cmd}'. #{err}"
 
@@ -66,52 +66,57 @@ class Command extends Base
 
     return childEnv
 
-  _exeScript: (shellArgs, argOpts, cb) ->
-    argOpts              ?= {}
-    argOpts.env          ?= {}
-    argOpts.verbose      ?= true
-    argOpts.limitSamples ?= 3
+  _exeScript: (scriptArgs, cmdOpts, cb) ->
+    scriptArgs = [
+      "bash"
+      "-o", "pipefail"
+      "-o", "errexit"
+      "-o", "nounset"
+      "-c"
+    ].concat scriptArgs
+
+    @_exe scriptArgs, cmdOpts, cb
+
+  _exe: (cmdArgs, cmdOpts, cb) ->
+    cmdOpts              ?= {}
+    cmdOpts.env          ?= {}
+    cmdOpts.verbose      ?= true
+    cmdOpts.limitSamples ?= 3
 
     opts =
       cwd  : @dir
-      env  : @_buildChildEnv(argOpts.env)
+      env  : @_buildChildEnv cmdOpts.env
       stdio: [ "ignore", "pipe", "pipe" ]
 
     # debug
     #   opts:opts
 
-    cmdArgs = [
-      "-o", "pipefail"
-      "-o", "errexit"
-      "-o", "nounset"
-    ]
-
-    cmdArgs    = cmdArgs.concat shellArgs
-    bash       = spawn "bash", cmdArgs, opts
+    cmd        = cmdArgs.shift()
+    bash       = spawn cmd, cmdArgs, opts
     lastStderr = []
     lastStdout = []
 
     bash.stdout.on "data", (data) =>
       if data?
         lastStdout.push "#{data}"
-        if argOpts.limitSamples
-          lastStdout = _.takeRight lastStdout, argOpts.limitSamples
+        if cmdOpts.limitSamples
+          lastStdout = _.takeRight lastStdout, cmdOpts.limitSamples
 
-      if argOpts.verbose
+      if cmdOpts.verbose
         @_out chalk.gray(data)
 
     bash.stderr.on "data", (data) =>
       if data?
         lastStderr.push "#{data}"
-        if argOpts.limitSamples
-          lastStderr = _.takeRight lastStderr, argOpts.limitSamples
+        if cmdOpts.limitSamples
+          lastStderr = _.takeRight lastStderr, cmdOpts.limitSamples
 
-      if argOpts.verbose
+      if cmdOpts.verbose
         @_out chalk.red(data)
 
     bash.on "close", (code) ->
       if code != 0
-        msg = "Script '#{shellArgs.join(" ")}' exited with code: '#{code}'"
+        msg = "Script '#{cmd} #{cmdArgs.join(" ")}' exited with code: '#{code}'"
         err = new Error msg
 
         if lastStderr.length

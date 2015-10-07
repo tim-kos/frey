@@ -28,9 +28,8 @@ class Plan extends Command
       "plan"
     ]
     cmd = cmd.concat @bootCargo._gatherTerraformArgs
-    cmd = cmd.join " "
 
-    @_exeScript ["-c", cmd], {}, (err, stdout) =>
+    @_exe cmd, {}, (err, stdout) =>
       if err
         return cb err
 

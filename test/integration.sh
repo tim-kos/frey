@@ -13,8 +13,10 @@ __root="$(cd "$(dirname "${__dir}")" && pwd)"
 
 scenarios="${1:-$(ls ${__dir}/scenario/|egrep -v ^prepare$)}"
 
-tmpDir="${TMPDIR:-/tmp}/frey"
-mkdir -p "${tmpDir}"
+__sysTmpDir="${TMPDIR:-/tmp}"
+__sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
+__freyTmpDir="${__sysTmpDir}/frey"
+mkdir -p "${__freyTmpDir}"
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
   cmdSed=gsed
@@ -45,13 +47,13 @@ for scenario in $(echo prepare ${scenarios}); do
 
     # Run scenario
     (bash ./run.sh \
-      > "${tmpDir}/${scenario}.stdio" 2>&1; \
-      echo "${?}" > "${tmpDir}/${scenario}.exitcode" \
+      > "${__freyTmpDir}/${scenario}.stdio" 2>&1; \
+      echo "${?}" > "${__freyTmpDir}/${scenario}.exitcode" \
     ) || true
 
     # Clear out environmental specifics
     for typ in $(echo stdio exitcode); do
-      curFile="${tmpDir}/${scenario}.${typ}"
+      curFile="${__freyTmpDir}/${scenario}.${typ}"
       "${cmdSed}" -i \
         -e "s@${__coffee}@{coffee}@g" "${curFile}" \
         -e "s@${__root}@{root}@g" "${curFile}" \
@@ -59,7 +61,7 @@ for scenario in $(echo prepare ${scenarios}); do
         -e "s@{home}/build/kvz/fre{coffee}@{coffee}@g" "${curFile}" \
         -e "s@${HOME:-/home/travis}@{home}@g" "${curFile}" \
         -e "s@${USER:-travis}@{user}@g" "${curFile}" \
-        -e "s@${TMPDIR:-/tmp}@{tmpdir}@g" "${curFile}" \
+        -e "s@${__sysTmpDir}@{tmpdir}@g" "${curFile}" \
         -e "s@${HOSTNAME}@{hostname}@g" "${curFile}" \
         -e "s@${__os}@{os}@g" "${curFile}" \
         -e "s@${__arch}@{arch}@g" "${curFile}" \
@@ -71,7 +73,7 @@ for scenario in $(echo prepare ${scenarios}); do
     # Save these as new fixtures?
     if [ "${SAVE_FIXTURES:-}" = "true" ]; then
       for typ in $(echo stdio exitcode); do
-        curFile="${tmpDir}/${scenario}.${typ}"
+        curFile="${__freyTmpDir}/${scenario}.${typ}"
         cp -f \
           "${curFile}" \
           "${__dir}/fixture/${scenario}.${typ}"
@@ -80,7 +82,7 @@ for scenario in $(echo prepare ${scenarios}); do
 
     # Compare
     for typ in $(echo stdio exitcode); do
-      curFile="${tmpDir}/${scenario}.${typ}"
+      curFile="${__freyTmpDir}/${scenario}.${typ}"
 
       echo -n "    comparing ${typ}.. "
 
@@ -99,7 +101,7 @@ for scenario in $(echo prepare ${scenarios}); do
         echo -e "\n\n==> EXPECTED STDIO: ";
         cat "${__dir}/fixture/${scenario}.stdio";
         echo -e "\n\n==> ACTUAL STDIO: ";
-        cat "${tmpDir}/${scenario}.stdio";
+        cat "${__freyTmpDir}/${scenario}.stdio";
         exit 1; \
       )
 
