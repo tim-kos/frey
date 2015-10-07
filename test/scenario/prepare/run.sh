@@ -14,6 +14,8 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
+__sysTmpDir="${TMPDIR:-/tmp}"
+__sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 # We don't want to enforce PIP versions since that's affects the
 # user's global state.
@@ -22,11 +24,11 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 # specify:
 echo "FREY:SKIP_COMPARE_STDIO"
 
-rm -f "${TMPDIR:-/tmp}/frey-prepare"* || true
+rm -f "${__sysTmpDir}/frey-prepare"* || true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
-  --sshkeys "${TMPDIR:-/tmp}" \
+  --sshkeys "${__sysTmpDir}" \
   --verbose \
   --recipe "." \
   --bail

@@ -10,6 +10,8 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
+__sysTmpDir="${TMPDIR:-/tmp}"
+__sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 # PYTHONPATH="${HOME}/.frey/tools/pip/lib/python2.7/site-packages" \
 #   "${HOME}/.frey/tools/pip/bin/ansible" \
@@ -21,10 +23,10 @@ echo WIP
 exit 0
 
 rm -f terraform.plan
-rm -f "${TMPDIR:-/tmp}/frey-install"* || true
+rm -f "${__sysTmpDir}/frey-install"* || true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
-  --sshkeys "${TMPDIR:-/tmp}" \
+  --sshkeys "${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \
@@ -32,7 +34,7 @@ rm -f "${TMPDIR:-/tmp}/frey-install"* || true
 && true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
-  --sshkeys "${TMPDIR:-/tmp}" \
+  --sshkeys "${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \

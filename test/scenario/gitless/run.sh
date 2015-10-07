@@ -10,11 +10,13 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
+__sysTmpDir="${TMPDIR:-/tmp}"
+__sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
-rm -f "${TMPDIR:-/tmp}/frey-gitless"* || true
+rm -f "${__sysTmpDir}/frey-gitless"* || true
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" validate \
   --verbose \
   --force-yes \
-  --sshkeys "${TMPDIR:-/tmp}" \
-  --state "${TMPDIR:-/tmp}" \
+  --sshkeys "${__sysTmpDir}" \
+  --state "${__sysTmpDir}" \
   --bail

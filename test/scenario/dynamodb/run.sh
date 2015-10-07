@@ -10,12 +10,11 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
-
-
-
+__sysTmpDir="${TMPDIR:-/tmp}"
+__sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 rm -f terraform.plan
-rm -f "${TMPDIR:-/tmp}/frey-dynamodb"* || true
+rm -f "${__sysTmpDir}/frey-dynamodb"* || true
 
 echo "(maybe) Destroying.."
 TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
@@ -28,7 +27,7 @@ TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
 .frey/residu > /dev/null 2>&1 || true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
-  --sshkeys "${TMPDIR:-/tmp}" \
+  --sshkeys "${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \
