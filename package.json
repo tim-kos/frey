@@ -36,7 +36,7 @@
     "yesno": "0.0.1"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
+    "chai": "^3.4.1",
     "coffee-coverage": "^0.6.3",
     "coffeelint": "^1.10.1",
     "coveralls": "^2.11.2",
