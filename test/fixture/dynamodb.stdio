@@ -84,6 +84,10 @@ infrastructure, so keep it safe. To inspect the complete state
 use the `terraform show` command.
 
 State path: {root}/test/scenario/dynamodb/.frey/state/terraform.tfstate
+
+Outputs:
+
+  arn = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
 --> Saved state to '{root}/test/scenario/dynamodb/.frey/state/terraform.tfstate'
 Done
 Destroying..
