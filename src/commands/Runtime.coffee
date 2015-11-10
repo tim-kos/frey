@@ -122,7 +122,10 @@ class Runtime extends Command
         @runtime.os.platform
         "#{@runtime.os.arch}.zip"
       ].join "_"
-      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $NF}'"
+      cmdVersion  : "{{{exe}}} --version"
+      versionTransformer: (stdout) ->
+        version = "#{stdout}".trim().split("\n")[0].split(/\s+/).pop().replace("v", "")
+        return version
       cmdInstall  : [
         "cd #{@options.tools}"
         [
@@ -137,7 +140,7 @@ class Runtime extends Command
     @runtime.deps.push
       type        : "App"
       name        : "terraformInventory"
-      range       : "#{@runtime.versions.terraformInventory}"
+      range       : "#{@runtime.versions.terraformInventory}".replace /^(\d+\.\d+)/, "$1.0"
       exe         : "#{@options.tools}/terraform-inventory"
       zip         : [
         "terraform-inventory"
@@ -145,7 +148,11 @@ class Runtime extends Command
         @runtime.os.platform
         "#{@runtime.os.arch}.zip"
       ].join "_"
-      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $NF \".0\"}'"
+      cmdVersion  : "{{{exe}}} --version"
+      versionTransformer: (stdout) ->
+        version = "#{stdout}".trim().split("\n")[0].split(/\s+/).pop().replace("v", "")
+        version = version.replace /^(\d+\.\d+)/, "$1.0"
+        return version
       cmdInstall  : [
         "cd #{@options.tools}"
         [
@@ -163,7 +170,10 @@ class Runtime extends Command
       name        : "pip"
       exe         : "pip"
       range       : ">= #{@runtime.versions.pip}"
-      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $2}'"
+      cmdVersion  : "{{{exe}}} --version"
+      versionTransformer: (stdout) ->
+        version = "#{stdout}".trim().split("\n")[0].split(/\s+/)[1].replace("v", "")
+        return version
       cmdInstall  : "sudo easy_install --upgrade pip"
 
     @runtime.deps.push
@@ -172,7 +182,10 @@ class Runtime extends Command
       range       : "#{@runtime.versions.ansible}"
       exe         : "#{@options.tools}/pip/bin/ansible"
       exePlaybook : "#{@options.tools}/pip/bin/ansible-playbook"
-      cmdVersion  : "{{{exe}}} --version |head -n1 |awk '{print $NF}'"
+      cmdVersion  : "{{{exe}}} --version"
+      versionTransformer: (stdout) ->
+        version = "#{stdout}".trim().split("\n")[0].split(/\s+/).pop().replace("v", "")
+        return version
       cmdInstall  : [
         "pip install"
         "--install-option='--prefix=pip'"

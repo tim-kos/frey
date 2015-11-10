@@ -48,7 +48,7 @@ class Prepare extends Command
         "echo -n $(ssh-keygen -yf '#{props.privkey}') > '#{props.pubkey}'"
         "echo ' #{props.email}' >> '#{props.pubkey}'"
       ].join " && "
-      
+
       @_exeScript cmd, verbose: true, limitSamples: false, stdin: 0, cb
 
   _makePubkeyFingerprint: (props, cb) ->
@@ -96,7 +96,8 @@ class Prepare extends Command
           err         :err
           stdout      :stdout
 
-      foundVersion = "#{stdout}".trim().replace "v", ""
+      foundVersion = props.versionTransformer stdout
+
       @_out "Found '#{props.name}' with version '#{foundVersion}'\n"
 
       if !stdout || !semver.satisfies foundVersion, props.range
