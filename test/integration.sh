@@ -24,6 +24,12 @@ else
   cmdSed=sed
 fi
 
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  cmdTimeout="gtimeout --kill-after=6m 5m"
+else
+  cmdTimeout="timeout --kill-after=6m 5m"
+fi
+
 __coffee="$(which coffee)"
 
 __os="linux"
@@ -46,9 +52,8 @@ for scenario in $(echo prepare ${scenarios}); do
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
     # Run scenario
-    # @todo: Remove tee to make tests less verbose
-    (bash ./run.sh \
-      |tee "${__freyTmpDir}/${scenario}.stdio" 2>&1; \
+    (${cmdTimeout} bash ./run.sh \
+      > "${__freyTmpDir}/${scenario}.stdio" 2>&1; \
       echo "${?}" > "${__freyTmpDir}/${scenario}.exitcode" \
     ) || true
 
