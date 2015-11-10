@@ -81,15 +81,19 @@ class Command extends Base
     cmdOpts              ?= {}
     cmdOpts.env          ?= {}
     cmdOpts.verbose      ?= true
+    cmdOpts.stdin        ?= "ignore"
+    cmdOpts.stdout       ?= "pipe"
+    cmdOpts.stderr       ?= "pipe"
     cmdOpts.limitSamples ?= 3
 
     opts =
       cwd  : @dir
       env  : @_buildChildEnv cmdOpts.env
-      stdio: [ "ignore", "pipe", "pipe" ]
+      stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
 
-    # debug
-    #   opts:opts
+    debug
+      opts   :opts.stdio
+      cmdArgs:cmdArgs
 
     cmd        = cmdArgs.shift()
     bash       = spawn cmd, cmdArgs, opts

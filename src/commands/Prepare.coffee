@@ -48,7 +48,8 @@ class Prepare extends Command
         "echo -n $(ssh-keygen -yf '#{props.privkey}') > '#{props.pubkey}'"
         "echo ' #{props.email}' >> '#{props.pubkey}'"
       ].join " && "
-      @_exeScript cmd, verbose: true, limitSamples: false, cb
+      
+      @_exeScript cmd, verbose: true, limitSamples: false, stdin: 0, cb
 
   _makePubkeyFingerprint: (props, cb) ->
     cmd = "ssh-keygen -lf '#{props.pubkey}' | awk '{print $2}'"
