@@ -10,13 +10,19 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
-
-echo WIP
-exit
+__sysTmpDir="${TMPDIR:-/tmp}"
+__sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 rm -f terraform.plan
-rm -f "${TMPDIR:-/tmp}/frey-dynamodb"* || true
+rm -f "${__sysTmpDir}/frey-dynamodb"* || true
 
+echo "WIP"
+# ex
+#
+#
+# ssh -C -tt -vvv -o User=root -o ControlMaster=auto -o ControlPersist=60s -o ControlPath="/Users/kvz/.ansible/cp/ansible-ssh-%h-%p-%r" -o IdentityFile="/Users/kvz/code/frey/test/scenario/digitalocean/frey-digitalocean.pem" -o KbdInteractiveAuthentication=no -o PreferredAuthentications=gssapi-with-mic,gssapi-keyex,hostbased,publickey -o PasswordAuthentication=no -o User=root -o ConnectTimeout=10 107.170.43.164 /bin/sh -c 'mkdir -p $HOME/.ansible/tmp/ansible-tmp-1444209667.88-5193272149572 && echo $HOME/.ansible/tmp/ansible-tmp-1444209667.88-5193272149572'
+#
+# exit
 
 if false; then
   echo "(maybe) Destroying.."
