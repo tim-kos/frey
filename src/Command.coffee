@@ -91,9 +91,9 @@ class Command extends Base
       env  : @_buildChildEnv cmdOpts.env
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
 
-    debug
-      opts   :opts.stdio
-      cmdArgs:cmdArgs
+    # debug
+    #   opts   :opts.stdio
+    #   cmdArgs:cmdArgs
 
     cmd        = cmdArgs.shift()
     bash       = spawn cmd, cmdArgs, opts
