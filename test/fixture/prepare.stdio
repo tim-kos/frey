@@ -5,7 +5,7 @@ FREY:SKIP_COMPARE_STDIO
 Creating private key '{tmpdir}/frey-prepare.pem'
 Creating public key '{tmpdir}/frey-prepare.pub'
 Found 'terraform' with version '0.6.6'
-Found 'terraformInventory' with version '0.5.0'
+Found 'terraformInventory' with version '0.6.0-pre'
 Found 'pip' with version '7.1.2'
 Found 'ansible' with version '1.9.2'
 Done
