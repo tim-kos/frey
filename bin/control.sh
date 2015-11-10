@@ -1,5 +1,5 @@
 __ansibleVersion="1.9.2"
-__terraformVersion="0.6.3"
+__terraformVersion="0.6.6"
 __terraformInventoryVersion="0.5"
 
 __terraformDir="${FREY__OPTIONS__TOOLS}/terraform"

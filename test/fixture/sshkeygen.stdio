@@ -3,7 +3,7 @@
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-sshkeygen.pem'
 Creating public key '{tmpdir}/frey-sshkeygen.pub'
-Found 'terraform' with version '0.6.3'
+Found 'terraform' with version '0.6.6'
 Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'
 Found 'ansible' with version '1.9.2'
@@ -14,7 +14,7 @@ Done
 --> {hostname} - runtime
 --> {hostname} - prepare
 Creating public key '{tmpdir}/frey-sshkeygen.pub'
-Found 'terraform' with version '0.6.3'
+Found 'terraform' with version '0.6.6'
 Found 'terraformInventory' with version '0.5.0'
 Found 'pip' with version '7.1.2'
 Found 'ansible' with version '1.9.2'

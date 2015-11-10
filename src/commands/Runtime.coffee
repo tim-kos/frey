@@ -54,7 +54,7 @@ class Runtime extends Command
 
     @runtime.versions =
       ansible            : "1.9.2"
-      terraform          : "0.6.3"
+      terraform          : "0.6.6"
       terraformInventory : "0.5"
       pip                : "7.1.2"
 
