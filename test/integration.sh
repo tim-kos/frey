@@ -46,8 +46,9 @@ for scenario in $(echo prepare ${scenarios}); do
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
     # Run scenario
+    # @todo: Remove tee to make tests less verbose
     (bash ./run.sh \
-      > "${__freyTmpDir}/${scenario}.stdio" 2>&1; \
+      |tee "${__freyTmpDir}/${scenario}.stdio" 2>&1; \
       echo "${?}" > "${__freyTmpDir}/${scenario}.exitcode" \
     ) || true
 
