@@ -198,11 +198,14 @@ For now, we only support
  - [x] Series/waterfall combination for boot 
  - [x] Pass {} to first boot function. Use @options like all other methods to avoid confusion
  - [x] Add (script to add) more encrypted cloud keys
+ - [x] exeScript should become exe. new exeScript prepends bash -o
+ - [ ] - role: ":frey:/consul/v1.0.0"
  - [ ] Enable DO support
  - [ ] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
  - [ ] Make arg & env functions of all other commands mimic Install's
  - [ ] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that integration test) and validation can be ran against it/them
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
+ - [ ] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
  - [ ] Vagrant support
  - [ ] Port install
  - [ ] Port upload
