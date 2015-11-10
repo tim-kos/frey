@@ -17,6 +17,7 @@ rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-dynamodb"* || true
 
 echo "WIP"
+exit 1
 # ex
 #
 #
