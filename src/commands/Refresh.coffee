@@ -21,6 +21,7 @@ class Refresh extends Command
   _findTomlFiles: (cargo, cb) ->
     tomlFiles = []
     pattern   = "#{@options.recipe}/*.toml"
+    debug "Reading from '#{pattern}'"
     glob pattern, (err, files) ->
       if err
         return cb err
