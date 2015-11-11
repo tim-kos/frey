@@ -31,7 +31,7 @@ rm -f "${__sysTmpDir}/frey-install"* || true
   --verbose \
   --force-yes \
   --bail \
-&& true
+|| false
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
   --sshkeys "${__sysTmpDir}" \
@@ -39,6 +39,6 @@ rm -f "${__sysTmpDir}/frey-install"* || true
   --verbose \
   --force-yes \
   --bail \
-&& true
+|| false
 
 echo "Finished"

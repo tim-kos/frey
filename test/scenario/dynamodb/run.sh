@@ -16,15 +16,20 @@ __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-dynamodb"* || true
 
-echo "(maybe) Destroying.."
-TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
-TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
-~/.frey/tools/terraform destroy \
-  -no-color \
-  -target=aws_dynamodb_table.basic-dynamodb-table \
-  -state=.frey/state/terraform.tfstate \
-  -force \
-.frey/residu > /dev/null 2>&1 || true
+function destroy() {
+  echo "(maybe) Destroying.."
+  TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
+  TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
+  ~/.frey/tools/terraform destroy \
+    -no-color \
+    -target=aws_dynamodb_table.basic-dynamodb-table \
+    -state=.frey/state/terraform.tfstate \
+    -force \
+  .frey/residu > /dev/null 2>&1 || true
+}
+
+destroy
+trap destroy EXIT
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
   --sshkeys "${__sysTmpDir}" \
@@ -32,17 +37,6 @@ TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
   --verbose \
   --force-yes \
   --bail-after launch \
-&& true
-
-echo "Destroying.."
-
-TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
-TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
-~/.frey/tools/terraform destroy \
-  -no-color \
-  -target=aws_dynamodb_table.basic-dynamodb-table \
-  -state=.frey/state/terraform.tfstate \
-  -force \
-.frey/residu
+|| false
 
 echo "Finished"

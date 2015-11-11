@@ -18,7 +18,7 @@ echo "FREY:SKIP_COMPARE_STDIO"
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-openstack"* || true
 
-if true; then
+function destroy() {
   echo "(maybe) Destroying.."
   TF_VAR_FREY_OPENSTACK_TENANT_NAME="${FREY_OPENSTACK_TENANT_NAME}" \
   TF_VAR_FREY_OPENSTACK_EXTERNAL_GATEWAY="${FREY_OPENSTACK_EXTERNAL_GATEWAY}" \
@@ -33,7 +33,10 @@ if true; then
     -state=.frey/state/terraform.tfstate \
     -force \
   .frey/residu > /dev/null 2>&1 || true
-fi
+}
+
+destroy
+trap destroy EXIT
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
   --sshkeys "${__dir}" \
@@ -58,6 +61,6 @@ fi
 #   --verbose \
 #   --force-yes \
 #   --bail \
-# && true
+# || false
 
 echo "Finished"

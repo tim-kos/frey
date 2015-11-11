@@ -25,7 +25,7 @@ exit 1
 #
 # exit
 
-if false; then
+function destroy() {
   echo "(maybe) Destroying.."
   TF_VAR_FREY_DO_TOKEN="${FREY_DO_TOKEN}" \
   TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="${__dir}/frey-digitalocean.pub" \
@@ -35,7 +35,10 @@ if false; then
     -force \
   .frey/residu #> /dev/null 2>&1 || true
     # -target=digitalocean_droplet.freytest-web \
-fi
+}
+
+destroy
+trap destroy EXIT
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
   --sshkeys "." \

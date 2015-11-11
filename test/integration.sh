@@ -73,7 +73,7 @@ for scenario in $(echo prepare ${scenarios}); do
         -e "s@${__arch}@{arch}@g" "${curFile}" \
         -e "s@OSX@{os}@g" "${curFile}" \
         -e "s@Linux@{os}@g" "${curFile}" \
-      && true
+      || false
     done
 
     # Save these as new fixtures?
