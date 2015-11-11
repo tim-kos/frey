@@ -100,23 +100,25 @@ class Command extends Base
     lastStderr = []
     lastStdout = []
 
-    bash.stdout.on "data", (data) =>
-      if data?
-        lastStdout.push "#{data}"
-        if cmdOpts.limitSamples
-          lastStdout = _.takeRight lastStdout, cmdOpts.limitSamples
+    if bash.stdout
+      bash.stdout.on "data", (data) =>
+        if data?
+          lastStdout.push "#{data}"
+          if cmdOpts.limitSamples
+            lastStdout = _.takeRight lastStdout, cmdOpts.limitSamples
 
-      if cmdOpts.verbose
-        @_out chalk.gray(data)
+        if cmdOpts.verbose
+          @_out chalk.gray(data)
 
-    bash.stderr.on "data", (data) =>
-      if data?
-        lastStderr.push "#{data}"
-        if cmdOpts.limitSamples
-          lastStderr = _.takeRight lastStderr, cmdOpts.limitSamples
+    if bash.stderr
+      bash.stderr.on "data", (data) =>
+        if data?
+          lastStderr.push "#{data}"
+          if cmdOpts.limitSamples
+            lastStderr = _.takeRight lastStderr, cmdOpts.limitSamples
 
-      if cmdOpts.verbose
-        @_out chalk.red(data)
+        if cmdOpts.verbose
+          @_out chalk.red(data)
 
     bash.on "close", (code) ->
       if code != 0
