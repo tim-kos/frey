@@ -14,7 +14,7 @@ __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 rm -f terraform.plan
-rm -f "${__sysTmpDir}/frey-dynamodb"* || true
+rm -f "${__sysTmpDir}/frey-digitalocean"* || true
 
 echo "WIP"
 exit 1
