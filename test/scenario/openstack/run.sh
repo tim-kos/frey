@@ -13,31 +13,26 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
-# PYTHONPATH="${HOME}/.frey/tools/pip/lib/python2.7/site-packages" \
-#   "${HOME}/.frey/tools/pip/bin/ansible" \
-#   --help 2>&1
-#
-# exit
-
-echo "WIP until https://github.com/adammck/terraform-inventory/issues/14"
-exit 0
+echo "FREY:SKIP_COMPARE_STDIO"
 
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-openstack"* || true
 
-if false; then
+if true; then
   echo "(maybe) Destroying.."
   TF_VAR_FREY_OPENSTACK_TENANT_NAME="${FREY_OPENSTACK_TENANT_NAME}" \
+  TF_VAR_FREY_OPENSTACK_EXTERNAL_GATEWAY="${FREY_OPENSTACK_EXTERNAL_GATEWAY}" \
   TF_VAR_FREY_OPENSTACK_PROJECT_NAME="${FREY_OPENSTACK_PROJECT_NAME}" \
   TF_VAR_FREY_OPENSTACK_PASSWORD="${FREY_OPENSTACK_PASSWORD}" \
   TF_VAR_FREY_OPENSTACK_AUTH_URL="${FREY_OPENSTACK_AUTH_URL}" \
-  TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="" \
+  TF_VAR_FREY__RUNTIME__SSH__USER="ubuntu" \
+  TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="${__dir}/frey-openstack.pub" \
+  TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE="${__dir}/frey-openstack.pem" \
   ~/.frey/tools/terraform destroy \
     -no-color \
-    -target=openstack_compute_instance_v2.freytest-server-1 \
     -state=.frey/state/terraform.tfstate \
     -force \
-  .frey/residu #> /dev/null 2>&1 || true
+  .frey/residu > /dev/null 2>&1 || true
 fi
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
@@ -48,15 +43,13 @@ fi
   --bailAfter launch \
 || false
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" remote \
-  --sshkeys "${__dir}" \
-  --no-color \
-  --verbose \
-  --force-yes \
-  --bail \
-|| false
-
-
+# "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" remote \
+#   --sshkeys "${__dir}" \
+#   --no-color \
+#   --verbose \
+#   --force-yes \
+#   --bail \
+# || false
 
 #
 # "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
