@@ -46,7 +46,8 @@ class Remote extends Command
     args.push "-o", "UserKnownHostsFile=/dev/null"
     args.push "-o", "CheckHostIP=no"
     args.push "-o", "StrictHostKeyChecking=no"
-    args.push "-vvvv"
+    if @options.verbose
+      args.push "-vvvv"
 
     # @todo command here for non-interactive/shell mode:
     # args.push "<cmd>"
