@@ -20,11 +20,11 @@ bin/converter.sh \
 
 ## Testing scenarios
 
-We use an Amazon Free Tier account to run integration tests.
+We use an Amazon Free Tier account to run acceptance tests.
 
 It credentials are available to Travis via encrypted environment variables.
 
-If you want to run integration tests yourself locally, you can supply (the) 
+If you want to run acceptance tests yourself locally, you can supply (the) 
 credentials as such:
 
 ```bash
@@ -36,12 +36,12 @@ export FREY_AWS_SECRET_KEY=YYYYYYYYY
 Now you can:
 
 ```bash
-# Run all integration tests:
-make test-integration
+# Run all acceptance tests:
+make test-acceptance
 # Isolate just the dynamodb test:
-make test-integration scenario=dynamodb
+make test-acceptance scenario=dynamodb
 # Save new fixtures
-make save-integration-fixtures
+make save-acceptance-fixtures
 ```
 
 ## Developing scenarios

@@ -199,7 +199,7 @@ For now, we only support
  - [x] Pass {} to first boot function. Use @options like all other methods to avoid confusion
  - [x] Add (script to add) more encrypted cloud keys
  - [x] exeScript should become exe. new exeScript prepends bash -o
- - [ ] Rename integration to acceptance (test) https://en.wikipedia.org/wiki/Acceptance_testing
+ - [x] Rename integration to acceptance (test) https://en.wikipedia.org/wiki/Acceptance_testing
  - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?)
  - [ ] Put `_transform` in a central place (utils?)
  - [ ] - role: ":frey:/consul/v1.0.0"
@@ -207,7 +207,7 @@ For now, we only support
  - [ ] Enable DO support
  - [ ] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
  - [ ] Make arg & env functions of all other commands mimic Install's
- - [ ] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that integration test) and validation can be ran against it/them
+ - [ ] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that acceptance test) and validation can be ran against it/them
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
  - [ ] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
  - [ ] Vagrant support

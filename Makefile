@@ -37,16 +37,16 @@ test-coverage:
 test: build
 	@DEBUG=*:*,-mocha:* $(MOCHA) --reporter $(REPORTER) test/ --grep "$(GREP)"
 
-.PHONY: test-integration
-test-integration:
-	@./test/integration.sh $(scenario)
+.PHONY: test-acceptance
+test-acceptance:
+	@./test/acceptance.sh $(scenario)
 
-.PHONY: save-integration-fixtures
-save-integration-fixtures:
-	@source env.sh && env SAVE_FIXTURES=true ./test/integration.sh
+.PHONY: save-acceptance-fixtures
+save-acceptance-fixtures:
+	@source env.sh && env SAVE_FIXTURES=true ./test/acceptance.sh
 
 .PHONY: test-full
-test-full: test-coverage test-integration
+test-full: test-coverage test-acceptance
 	@echo "Okay : )"
 
 .PHONY: release-major
