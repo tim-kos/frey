@@ -199,6 +199,8 @@ For now, we only support
  - [x] Pass {} to first boot function. Use @options like all other methods to avoid confusion
  - [x] Add (script to add) more encrypted cloud keys
  - [x] exeScript should become exe. new exeScript prepends bash -o
+ - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?)
+ - [ ] Put `_transform` in a central place (utils?)
  - [ ] - role: ":frey:/consul/v1.0.0"
  - [ ] Enable DO support
  - [ ] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
@@ -209,10 +211,11 @@ For now, we only support
  - [ ] Vagrant support
  - [ ] Port install
  - [ ] Port upload
+ - [ ] Port remote
  - [ ] Port setup
  - [ ] Port show 
  - [ ] Dynamodb scenario can evolve to be a full run
- - [ ] iculture theme for static site
+ - [ ] iculture theme for static site. vue.js. middleman are also nice examples
  - [ ] Indent stdout/err
  - [ ] More tests!
  - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
