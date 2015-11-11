@@ -4,6 +4,9 @@
 [infra.variable.FREY_OPENSTACK_AUTH_URL]
 [infra.variable.FREY__RUNTIME__SSH__KEYPUB_FILE]
 
+[infra.output.public_address]
+  value = "${openstack_compute_instance_v2.freytest-server-2.access_ip_v4}"
+
 [infra.provider.openstack]
   tenant_name = "${var.FREY_OPENSTACK_TENANT_NAME}"
   user_name   = "${var.FREY_OPENSTACK_PROJECT_NAME}"
@@ -14,40 +17,36 @@
   name       = "freytest-keypair-1"
   public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
 
-[infra.resource.openstack_compute_secgroup_v2.freytest-secgroup-1]
-  name        = "freytest-secgroup-1"
-  description = "freytest-secgroup-1"
+# [infra.resource.openstack_networking_floatingip_v2.freytest-floatip-1]
+#   pool = "public"
 
-  [[infra.resource.openstack_compute_secgroup_v2.freytest-secgroup-1.rule]]
-    from_port   = 22
-    to_port     = 22
-    ip_protocol = "tcp"
-    cidr        = "0.0.0.0/0"
+# [infra.resource.openstack_networking_router_v2.freytest-router-1]
+#   name             = "freytest-router-1"
+#   admin_state_up   = "true"
+#   external_network = "public"
 
-  [[infra.resource.openstack_compute_secgroup_v2.freytest-secgroup-1.rule]]
-    from_port   = 80
-    to_port     = 80
-    ip_protocol = "tcp"
-    cidr        = "0.0.0.0/0"
-
-[infra.resource.openstack_compute_instance_v2.freytest-server-1]
-  name            = "freytest-server-1"
+[infra.resource.openstack_compute_instance_v2.freytest-server-2]
+  name            = "freytest-server-2"
   image_id        = "cb6b7936-d2c5-4901-8678-c88b3a6ed84c"
   flavor_id       = "3"
   key_pair        = "freytest-keypair-1"
-  security_groups = [ "${openstack_compute_secgroup_v2.freytest-secgroup-1.name}" ]
+  # floating_ip     = "${openstack_networking_floatingip_v2.freytest-floatip-1.address}"
 
-  [[infra.resource.openstack_compute_instance_v2.freytest-server-1.metadata]]
-    frey = "yes please"
+  [[infra.resource.openstack_compute_instance_v2.freytest-server-2.network]]
+    # uuid = "${openstack_networking_router_v2.freytest-router-1.id}"
+    # uuid = "0e43db46-8fd9-4ef1-8826-4cf9e809aede"
+    name = "public"
 
-[install.config]
-  [install.config.defaults]
+  [[infra.resource.openstack_compute_instance_v2.freytest-server-2.metadata]]
+    Frey = "yes please"
 
-  [install.config.ssh_connection]
-    ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
+[install.config.defaults]
+
+[install.config.ssh_connection]
+  ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
 
 [[install.playbooks]]
-  hosts = "infra-tusd-server"
+  hosts = "freytest-server-2"
   name = "Install infra-tusd-server"
 
   [[install.playbooks.tasks]]

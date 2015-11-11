@@ -23,7 +23,7 @@ echo "WIP until https://github.com/adammck/terraform-inventory/issues/14"
 exit 0
 
 rm -f terraform.plan
-rm -f "${__sysTmpDir}/frey-dynamodb"* || true
+rm -f "${__sysTmpDir}/frey-openstack"* || true
 
 if false; then
   echo "(maybe) Destroying.."
@@ -45,8 +45,19 @@ fi
   --no-color \
   --verbose \
   --force-yes \
-  --bailAfter install \
-&& true
+  --bailAfter launch \
+|| false
+
+"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" remote \
+  --sshkeys "${__dir}" \
+  --no-color \
+  --verbose \
+  --force-yes \
+  --bail \
+|| false
+
+
+
 #
 # "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
 #   --sshkeys "${__sysTmpDir}" \
