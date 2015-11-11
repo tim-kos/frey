@@ -90,10 +90,5 @@ Outputs:
   arn = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
 --> Saved state to '{root}/test/scenario/dynamodb/.frey/state/terraform.tfstate'
 Done
-Destroying..
-aws_dynamodb_table.basic-dynamodb-table: Refreshing state... (ID: GameScores)
-aws_dynamodb_table.basic-dynamodb-table: Destroying...
-aws_dynamodb_table.basic-dynamodb-table: Destruction complete
-
-Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 Finished
+(maybe) Destroying..

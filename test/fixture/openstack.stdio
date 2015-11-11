@@ -1,3 +1,4 @@
+FREY:SKIP_COMPARE_STDIO
 (maybe) Destroying..
 --> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
 --> {hostname} - runtime
@@ -120,14 +121,14 @@ openstack_networking_network_v2.freytest: Creating...
   name:           "" => "freytest"
   shared:         "" => "<computed>"
   tenant_id:      "" => "<computed>"
+openstack_compute_keypair_v2.freytest: Creating...
+  name:       "" => "freytest-keypair-1"
+  public_key: "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe33HmuH6x/JLVJAkPg9EYHCdFoILCMJefBzIIWJ0BKlTfZPHHndFhyKFA7PStMiwntkd1XcqP5kL2VyJXHB6gMNHcqQ4XBEK8hDdESK3r1Gp4YP2RzqO5KEaQzjw0zrEr8dWm8kzAjhlkqq89sAFA+FC833wdW5NCGT+aQWKhdcJVhl89ppfPgJVXpeQ5ZuGWvOdxJM3h1V0GL8I+0NFb7MuOEneGezth1VIOL+eJJeAMzBWcXO6cAWZG31JkCuNpOG9vDhjYPim+tsozTdRg6g7R0Fmikxw3c3PFEOVKSmDXbOKLVTaXCYvDR0wOM+cLFOzSPl7Dt4aAMBT2h1xL {user}@openstack.freyproject.io\n"
 openstack_networking_router_v2.freytest: Creating...
   admin_state_up:   "" => "1"
   external_gateway: "" => "0e43db46-8fd9-4ef1-8826-4cf9e809aede"
   name:             "" => "freytest"
   tenant_id:        "" => "<computed>"
-openstack_compute_keypair_v2.freytest: Creating...
-  name:       "" => "freytest-keypair-1"
-  public_key: "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe33HmuH6x/JLVJAkPg9EYHCdFoILCMJefBzIIWJ0BKlTfZPHHndFhyKFA7PStMiwntkd1XcqP5kL2VyJXHB6gMNHcqQ4XBEK8hDdESK3r1Gp4YP2RzqO5KEaQzjw0zrEr8dWm8kzAjhlkqq89sAFA+FC833wdW5NCGT+aQWKhdcJVhl89ppfPgJVXpeQ5ZuGWvOdxJM3h1V0GL8I+0NFb7MuOEneGezth1VIOL+eJJeAMzBWcXO6cAWZG31JkCuNpOG9vDhjYPim+tsozTdRg6g7R0Fmikxw3c3PFEOVKSmDXbOKLVTaXCYvDR0wOM+cLFOzSPl7Dt4aAMBT2h1xL {user}@openstack.freyproject.io\n"
 openstack_compute_keypair_v2.freytest: Creation complete
 openstack_networking_network_v2.freytest: Creation complete
 openstack_networking_subnet_v2.freytest: Creating...
@@ -139,13 +140,13 @@ openstack_networking_subnet_v2.freytest: Creating...
   gateway_ip:                 "" => "<computed>"
   ip_version:                 "" => "4"
   name:                       "" => "freytest"
-  network_id:                 "" => "d8c43bd1-2005-422f-8f0f-683111a622e8"
+  network_id:                 "" => "763bbdce-af7d-46bb-b781-cd90c92b0a11"
   tenant_id:                  "" => "<computed>"
 openstack_networking_router_v2.freytest: Creation complete
 openstack_networking_subnet_v2.freytest: Creation complete
 openstack_networking_router_interface_v2.freytest: Creating...
-  router_id: "" => "e29c166a-16a5-4e2b-b3ab-9f5b4433ced1"
-  subnet_id: "" => "0e80f21e-aad2-485b-87a5-1e86783e9c77"
+  router_id: "" => "ce4b26a6-fc58-4bfe-90d1-f144644181b0"
+  subnet_id: "" => "c9b7d05f-2891-4152-bc27-c337d0b812b6"
 openstack_compute_secgroup_v2.freytest: Creation complete
 openstack_networking_router_interface_v2.freytest: Creation complete
 openstack_compute_floatingip_v2.freytest: Creating...
@@ -159,7 +160,7 @@ openstack_compute_instance_v2.freytest: Creating...
   access_ip_v6:          "" => "<computed>"
   flavor_id:             "" => "<computed>"
   flavor_name:           "" => "m1.small"
-  floating_ip:           "" => "128.136.179.149"
+  floating_ip:           "" => "128.136.179.159"
   image_id:              "" => "<computed>"
   image_name:            "" => "ubuntu14.04-LTS"
   key_pair:              "" => "freytest-keypair-1"
@@ -170,425 +171,43 @@ openstack_compute_instance_v2.freytest: Creating...
   network.0.mac:         "" => "<computed>"
   network.0.name:        "" => "<computed>"
   network.0.port:        "" => "<computed>"
-  network.0.uuid:        "" => "d8c43bd1-2005-422f-8f0f-683111a622e8"
+  network.0.uuid:        "" => "763bbdce-af7d-46bb-b781-cd90c92b0a11"
   security_groups.#:     "" => "1"
   security_groups.0:     "" => "freytest"
 openstack_compute_instance_v2.freytest: Provisioning with 'remote-exec'...
 openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.149
+openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
 openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
 openstack_compute_instance_v2.freytest (remote-exec):   Password: false
 openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
 openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
 openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.149
+openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
 openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
 openstack_compute_instance_v2.freytest (remote-exec):   Password: false
 openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
 openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
 openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.149
+openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
 openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
 openstack_compute_instance_v2.freytest (remote-exec):   Password: false
 openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
 openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
 openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.149
+openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
 openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
 openstack_compute_instance_v2.freytest (remote-exec):   Password: false
 openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
 openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
 openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.149
-openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
-openstack_compute_instance_v2.freytest (remote-exec):   Password: false
-openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
-openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
-openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.149
+openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
 openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
 openstack_compute_instance_v2.freytest (remote-exec):   Password: false
 openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
 openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
 openstack_compute_instance_v2.freytest (remote-exec): Connected!
 openstack_compute_instance_v2.freytest (remote-exec): sudo: unable to resolve host freytest
-openstack_compute_instance_v2.freytest (remote-exec): 0% [Working]
-openstack_compute_instance_v2.freytest (remote-exec): Get:1 http://security.ubuntu.com trusty-security InRelease [64.4 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 8% [Waiting for headers] [1 InRelease 5,099 B/64.4 kB 8%]
-openstack_compute_instance_v2.freytest (remote-exec): Ign http://nova.clouds.archive.ubuntu.com trusty InRelease
-openstack_compute_instance_v2.freytest (remote-exec): 20% [1 InRelease 13.2 kB/64.4 kB 20%]
-openstack_compute_instance_v2.freytest (remote-exec): Get:2 http://nova.clouds.archive.ubuntu.com trusty-updates InRelease [64.4 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 10% [2 InRelease 0 B/64.4 kB 0%] [1 InRelease 13.2 kB/64.4 kB 20%]
-openstack_compute_instance_v2.freytest (remote-exec): 92% [2 InRelease 53.6 kB/64.4 kB 83%]
-openstack_compute_instance_v2.freytest (remote-exec): 92% [1 InRelease gpgv 64.4 kB] [2 InRelease 53.6 kB/64.4 kB 83%]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [1 InRelease gpgv 64.4 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [2 InRelease gpgv 64.4 kB] [Waiting for headers] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Waiting for headers] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Hit http://nova.clouds.archive.ubuntu.com trusty Release.gpg
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Get:3 http://nova.clouds.archive.ubuntu.com trusty-updates/main Sources [244 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 37% [3 Sources 10.5 kB/244 kB 4%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Get:4 http://security.ubuntu.com trusty-security/main Sources [99.2 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 35% [3 Sources 10.5 kB/244 kB 4%] [4 Sources 23.9 kB/99.2 kB 24%]
-openstack_compute_instance_v2.freytest (remote-exec): 70% [3 Sources 103 kB/244 kB 42%]
-openstack_compute_instance_v2.freytest (remote-exec): 70% [4 Sources bzip2 0 B] [3 Sources 103 kB/244 kB 42%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): 70% [3 Sources 103 kB/244 kB 42%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Get:5 http://security.ubuntu.com trusty-security/universe Sources [31.5 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 71% [3 Sources 128 kB/244 kB 52%] [5 Sources 2,368 B/31.5 kB 8%]
-openstack_compute_instance_v2.freytest (remote-exec): 77% [3 Sources 128 kB/244 kB 52%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): 77% [5 Sources bzip2 0 B] [3 Sources 128 kB/244 kB 52%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): 77% [3 Sources 128 kB/244 kB 52%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Get:6 http://security.ubuntu.com trusty-security/main {arch} Packages [370 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 48% [3 Sources 155 kB/244 kB 64%] [6 Packages 5,062 B/370 kB 1%]
-openstack_compute_instance_v2.freytest (remote-exec): 72% [6 Packages 129 kB/370 kB 35%]
-openstack_compute_instance_v2.freytest (remote-exec): 72% [3 Sources bzip2 0 B] [6 Packages 129 kB/370 kB 35%]
-openstack_compute_instance_v2.freytest (remote-exec): 72% [Waiting for headers] [6 Packages 129 kB/370 kB 35%]
-openstack_compute_instance_v2.freytest (remote-exec): Get:7 http://nova.clouds.archive.ubuntu.com trusty-updates/universe Sources [143 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 69% [7 Sources 28.0 kB/143 kB 20%] [6 Packages 174 kB/370 kB 47%]
-openstack_compute_instance_v2.freytest (remote-exec): 99% [7 Sources 133 kB/143 kB 93%]
-openstack_compute_instance_v2.freytest (remote-exec): 99% [6 Packages bzip2 0 B] [7 Sources 133 kB/143 kB 93%]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [6 Packages bzip2 0 B] [Waiting for headers] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Get:8 http://security.ubuntu.com trusty-security/universe {arch} Packages [119 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 90% [6 Packages bzip2 0 B] [Waiting for headers] [8 Packages 2,366 B/119 kB 2%]
-openstack_compute_instance_v2.freytest (remote-exec): Get:9 http://nova.clouds.archive.ubuntu.com trusty-updates/main {arch} Packages [652 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 60% [6 Packages bzip2 0 B] [9 Packages 3,729 B/652 kB 1%] [8 Packages 59.0 kB/1
-openstack_compute_instance_v2.freytest (remote-exec): 60% [9 Packages 3,729 B/652 kB 1%] [8 Packages 59.0 kB/119 kB 49%]
-openstack_compute_instance_v2.freytest (remote-exec): 60% [7 Sources bzip2 0 B] [9 Packages 3,729 B/652 kB 1%] [8 Packages 59.0 kB/11
-openstack_compute_instance_v2.freytest (remote-exec): 60% [9 Packages 3,729 B/652 kB 1%] [8 Packages 59.0 kB/119 kB 49%]
-openstack_compute_instance_v2.freytest (remote-exec): 64% [9 Packages 7,773 B/652 kB 1%]
-openstack_compute_instance_v2.freytest (remote-exec): 64% [8 Packages bzip2 0 B] [9 Packages 7,773 B/652 kB 1%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): 64% [9 Packages 10.5 kB/652 kB 2%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Get:10 http://security.ubuntu.com trusty-security/main Translation-en [200 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 59% [9 Packages 17.2 kB/652 kB 3%] [10 Translation-en 15.8 kB/200 kB 8%]
-openstack_compute_instance_v2.freytest (remote-exec): 71% [9 Packages 68.4 kB/652 kB 10%]
-openstack_compute_instance_v2.freytest (remote-exec): 71% [10 Translation-en bzip2 0 B] [9 Packages 68.4 kB/652 kB 10%]
-openstack_compute_instance_v2.freytest (remote-exec): 71% [9 Packages 76.5 kB/652 kB 12%] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Get:11 http://security.ubuntu.com trusty-security/universe Translation-en [69.6 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 70% [9 Packages 81.9 kB/652 kB 13%] [11 Translation-en 26.6 kB/69.6 kB 38%]
-openstack_compute_instance_v2.freytest (remote-exec): 73% [9 Packages 94.0 kB/652 kB 14%]
-openstack_compute_instance_v2.freytest (remote-exec): 73% [11 Translation-en bzip2 0 B] [9 Packages 94.0 kB/652 kB 14%]
-openstack_compute_instance_v2.freytest (remote-exec): 73% [9 Packages 99.4 kB/652 kB 15%]
-openstack_compute_instance_v2.freytest (remote-exec): 76% [9 Packages 157 kB/652 kB 24%]
-openstack_compute_instance_v2.freytest (remote-exec): 80% [9 Packages 234 kB/652 kB 36%]
-openstack_compute_instance_v2.freytest (remote-exec): 84% [9 Packages 325 kB/652 kB 50%]
-openstack_compute_instance_v2.freytest (remote-exec): 90% [9 Packages 440 kB/652 kB 68%]
-openstack_compute_instance_v2.freytest (remote-exec): 96% [9 Packages 570 kB/652 kB 87%]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [9 Packages bzip2 0 B]
-openstack_compute_instance_v2.freytest (remote-exec): Get:12 http://nova.clouds.archive.ubuntu.com trusty-updates/universe {arch} Packages [326 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 87% [9 Packages bzip2 0 B] [12 Packages 23.9 kB/326 kB 7%]          343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 88% [12 Packages 49.6 kB/326 kB 15%]                                343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 94% [12 Packages 192 kB/326 kB 59%]                                 343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                      343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [12 Packages bzip2 0 B]                                        343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Get:13 http://nova.clouds.archive.ubuntu.com trusty-updates/main Translation-en [319 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 89% [12 Packages bzip2 0 B] [13 Translation-en 28.0 kB/319 kB 9%]   343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 89% [13 Translation-en 28.0 kB/319 kB 9%]                           343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 93% [13 Translation-en 129 kB/319 kB 40%]                           343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 96% [13 Translation-en 199 kB/319 kB 62%]                           343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 98% [13 Translation-en 256 kB/319 kB 80%]                           343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                      343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [13 Translation-en bzip2 0 B]                                  343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Get:14 http://nova.clouds.archive.ubuntu.com trusty-updates/universe Translation-en [172 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 95% [13 Translation-en bzip2 0 B] [14 Translation-en 14.5 kB/172 kB 8%]
-openstack_compute_instance_v2.freytest (remote-exec): 95% [14 Translation-en 14.5 kB/172 kB 8%]                           343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 97% [14 Translation-en 91.4 kB/172 kB 53%]                          343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [14 Translation-en 171 kB/172 kB 99%]                          343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                      343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [14 Translation-en bzip2 0 B]                                  343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Waiting for headers]                                          343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Hit http://nova.clouds.archive.ubuntu.com trusty Release
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                      343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Release gpgv 58.5 kB]                                         343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                      343 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Get:15 http://nova.clouds.archive.ubuntu.com trusty/main Sources [1,064 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 73% [15 Sources 14.5 kB/1,064 kB 1%]                                343 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 75% [15 Sources 84.6 kB/1,064 kB 8%]                                343 kB/s 2s
-openstack_compute_instance_v2.freytest (remote-exec): 77% [15 Sources 163 kB/1,064 kB 15%]                                343 kB/s 2s
-openstack_compute_instance_v2.freytest (remote-exec): 79% [15 Sources 236 kB/1,064 kB 22%]                                170 kB/s 4s
-openstack_compute_instance_v2.freytest (remote-exec): 81% [15 Sources 311 kB/1,064 kB 29%]                                170 kB/s 4s
-openstack_compute_instance_v2.freytest (remote-exec): 83% [15 Sources 376 kB/1,064 kB 35%]                                170 kB/s 4s
-openstack_compute_instance_v2.freytest (remote-exec): 84% [15 Sources 435 kB/1,064 kB 41%]                                170 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 85% [15 Sources 486 kB/1,064 kB 46%]                                170 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 87% [15 Sources 551 kB/1,064 kB 52%]                                170 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 89% [15 Sources 616 kB/1,064 kB 58%]                                170 kB/s 2s
-openstack_compute_instance_v2.freytest (remote-exec): 91% [15 Sources 691 kB/1,064 kB 65%]                                170 kB/s 2s
-openstack_compute_instance_v2.freytest (remote-exec): 91% [15 Sources 714 kB/1,064 kB 67%]                                170 kB/s 2s
-openstack_compute_instance_v2.freytest (remote-exec): 92% [15 Sources 740 kB/1,064 kB 70%]                                170 kB/s 1s
-openstack_compute_instance_v2.freytest (remote-exec): 93% [15 Sources 788 kB/1,064 kB 74%]                                170 kB/s 1s
-openstack_compute_instance_v2.freytest (remote-exec): 94% [15 Sources 835 kB/1,064 kB 78%]                                170 kB/s 1s
-openstack_compute_instance_v2.freytest (remote-exec): 96% [15 Sources 888 kB/1,064 kB 83%]                                109 kB/s 1s
-openstack_compute_instance_v2.freytest (remote-exec): 97% [15 Sources 946 kB/1,064 kB 89%]                                109 kB/s 1s
-openstack_compute_instance_v2.freytest (remote-exec): 99% [15 Sources 1,015 kB/1,064 kB 95%]                              109 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                      109 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [15 Sources bzip2 0 B]                                         109 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Get:16 http://nova.clouds.archive.ubuntu.com trusty/universe Sources [6,399 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 38% [15 Sources bzip2 0 B] [16 Sources 7,758 B/6,399 kB 0%]        109 kB/s 58s
-openstack_compute_instance_v2.freytest (remote-exec): 38% [16 Sources 13.2 kB/6,399 kB 0%]                               109 kB/s 58s
-openstack_compute_instance_v2.freytest (remote-exec): 45% [16 Sources 744 kB/6,399 kB 12%]                               109 kB/s 52s
-openstack_compute_instance_v2.freytest (remote-exec): 53% [16 Sources 1,543 kB/6,399 kB 24%]                             109 kB/s 44s
-openstack_compute_instance_v2.freytest (remote-exec): 58% [16 Sources 2,026 kB/6,399 kB 32%]                             109 kB/s 40s
-openstack_compute_instance_v2.freytest (remote-exec): 62% [16 Sources 2,476 kB/6,399 kB 39%]                             109 kB/s 36s
-openstack_compute_instance_v2.freytest (remote-exec): 65% [16 Sources 2,786 kB/6,399 kB 44%]                             109 kB/s 33s
-openstack_compute_instance_v2.freytest (remote-exec): 68% [16 Sources 3,091 kB/6,399 kB 48%]                             109 kB/s 30s
-openstack_compute_instance_v2.freytest (remote-exec): 71% [16 Sources 3,420 kB/6,399 kB 53%]                             109 kB/s 27s
-openstack_compute_instance_v2.freytest (remote-exec): 74% [16 Sources 3,746 kB/6,399 kB 59%]                             109 kB/s 24s
-openstack_compute_instance_v2.freytest (remote-exec): 77% [16 Sources 4,013 kB/6,399 kB 63%]                              687 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 79% [16 Sources 4,271 kB/6,399 kB 67%]                              687 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 82% [16 Sources 4,581 kB/6,399 kB 72%]                              687 kB/s 2s
-openstack_compute_instance_v2.freytest (remote-exec): 85% [16 Sources 4,900 kB/6,399 kB 77%]                              687 kB/s 2s
-openstack_compute_instance_v2.freytest (remote-exec): 88% [16 Sources 5,210 kB/6,399 kB 81%]                              687 kB/s 1s
-openstack_compute_instance_v2.freytest (remote-exec): 91% [16 Sources 5,463 kB/6,399 kB 85%]                              687 kB/s 1s
-openstack_compute_instance_v2.freytest (remote-exec): 94% [16 Sources 5,743 kB/6,399 kB 90%]                              687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 96% [16 Sources 6,010 kB/6,399 kB 94%]                              687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 99% [16 Sources 6,258 kB/6,399 kB 98%]                              687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                      687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [16 Sources bzip2 0 B]                                         687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Hit http://nova.clouds.archive.ubuntu.com trusty/main {arch} Packages
-openstack_compute_instance_v2.freytest (remote-exec): 100% [16 Sources bzip2 0 B]                                         687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 8,235 kB] [16 Sources bzip2 0 B] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Hit http://nova.clouds.archive.ubuntu.com trusty/universe {arch} Packages
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 8,235 kB] [16 Sources bzip2 0 B]                     687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Hit http://nova.clouds.archive.ubuntu.com trusty/main Translation-en
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 8,235 kB] [16 Sources bzip2 0 B]                     687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [16 Sources bzip2 0 B] [Waiting for headers]                   687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 31.7 MB] [16 Sources bzip2 0 B] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Hit http://nova.clouds.archive.ubuntu.com trusty/universe Translation-en
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 31.7 MB] [16 Sources bzip2 0 B]                      687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 31.7 MB] [16 Sources bzip2 0 B] [Waiting for headers]
-openstack_compute_instance_v2.freytest (remote-exec): Ign http://nova.clouds.archive.ubuntu.com trusty/main Translation-en_US
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 31.7 MB] [16 Sources bzip2 0 B]                      687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Ign http://nova.clouds.archive.ubuntu.com trusty/universe Translation-en_US
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 31.7 MB] [16 Sources bzip2 0 B]                      687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Packages 31.7 MB] [16 Sources bzip2 0 B]                      687 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [16 Sources bzip2 0 B]                                       6,956 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Translation-en 4,149 kB] [16 Sources bzip2 0 B]             6,956 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [16 Sources bzip2 0 B]                                       6,956 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Translation-en 18.6 MB] [16 Sources bzip2 0 B]              6,956 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Translation-en 18.6 MB] [16 Sources bzip2 0 B]              6,956 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [16 Sources bzip2 0 B]                                       6,956 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                    6,956 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Fetched 10.3 MB in 31s (330 kB/s)
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 0%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 0%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 1%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 10%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 10%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 42%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 49%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 49%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 55%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 55%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 78%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 78%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 83%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 83%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 86%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 86%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 90%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 90%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 91%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 91%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 94%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 94%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 95%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 95%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 96%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 99%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 99%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 99%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 99%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... Done
-openstack_compute_instance_v2.freytest (remote-exec): sudo: unable to resolve host freytest
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 0%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... 100%
-openstack_compute_instance_v2.freytest (remote-exec): Reading package lists... Done
-openstack_compute_instance_v2.freytest (remote-exec): Building dependency tree... 0%
-openstack_compute_instance_v2.freytest (remote-exec): Building dependency tree... 0%
-openstack_compute_instance_v2.freytest (remote-exec): Building dependency tree... 50%
-openstack_compute_instance_v2.freytest (remote-exec): Building dependency tree... 50%
-openstack_compute_instance_v2.freytest (remote-exec): Building dependency tree
-openstack_compute_instance_v2.freytest (remote-exec): Reading state information... 0%
-openstack_compute_instance_v2.freytest (remote-exec): Reading state information... 8%
-openstack_compute_instance_v2.freytest (remote-exec): Reading state information... Done
-openstack_compute_instance_v2.freytest (remote-exec): The following extra packages will be installed:
-openstack_compute_instance_v2.freytest (remote-exec):   fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
-openstack_compute_instance_v2.freytest (remote-exec):   libjpeg-turbo8 libjpeg8 libtiff5 libvpx1 libxpm4 libxslt1.1 nginx-common
-openstack_compute_instance_v2.freytest (remote-exec):   nginx-core
-openstack_compute_instance_v2.freytest (remote-exec): Suggested packages:
-openstack_compute_instance_v2.freytest (remote-exec):   libgd-tools fcgiwrap nginx-doc
-openstack_compute_instance_v2.freytest (remote-exec): The following NEW packages will be installed:
-openstack_compute_instance_v2.freytest (remote-exec):   fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0
-openstack_compute_instance_v2.freytest (remote-exec):   libjpeg-turbo8 libjpeg8 libtiff5 libvpx1 libxpm4 libxslt1.1 nginx
-openstack_compute_instance_v2.freytest (remote-exec):   nginx-common nginx-core
-openstack_compute_instance_v2.freytest (remote-exec): 0 upgraded, 14 newly installed, 0 to remove and 57 not upgraded.
-openstack_compute_instance_v2.freytest (remote-exec): Need to get 2,704 kB of archives.
-openstack_compute_instance_v2.freytest (remote-exec): After this operation, 9,057 kB of additional disk space will be used.
-openstack_compute_instance_v2.freytest (remote-exec): 0% [Working]
-openstack_compute_instance_v2.freytest (remote-exec): Get:1 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty/main fonts-dejavu-core all 2.34-1ubuntu1 [1,024 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 0% [1 fonts-dejavu-core 0 B/1,024 kB 0%]
-openstack_compute_instance_v2.freytest (remote-exec): 3% [1 fonts-dejavu-core 80.6 kB/1,024 kB 8%]
-openstack_compute_instance_v2.freytest (remote-exec): 7% [1 fonts-dejavu-core 202 kB/1,024 kB 20%]
-openstack_compute_instance_v2.freytest (remote-exec): 10% [1 fonts-dejavu-core 261 kB/1,024 kB 26%]
-openstack_compute_instance_v2.freytest (remote-exec): 12% [1 fonts-dejavu-core 315 kB/1,024 kB 31%]
-openstack_compute_instance_v2.freytest (remote-exec): 14% [1 fonts-dejavu-core 369 kB/1,024 kB 36%]
-openstack_compute_instance_v2.freytest (remote-exec): 16% [1 fonts-dejavu-core 423 kB/1,024 kB 41%]
-openstack_compute_instance_v2.freytest (remote-exec): 17% [1 fonts-dejavu-core 472 kB/1,024 kB 46%]
-openstack_compute_instance_v2.freytest (remote-exec): 20% [1 fonts-dejavu-core 534 kB/1,024 kB 52%]
-openstack_compute_instance_v2.freytest (remote-exec): 22% [1 fonts-dejavu-core 601 kB/1,024 kB 59%]
-openstack_compute_instance_v2.freytest (remote-exec): 25% [1 fonts-dejavu-core 663 kB/1,024 kB 65%]
-openstack_compute_instance_v2.freytest (remote-exec): 27% [1 fonts-dejavu-core 722 kB/1,024 kB 71%]
-openstack_compute_instance_v2.freytest (remote-exec): 29% [1 fonts-dejavu-core 787 kB/1,024 kB 77%]                      121 kB/s 15s
-openstack_compute_instance_v2.freytest (remote-exec): 31% [1 fonts-dejavu-core 850 kB/1,024 kB 83%]                      121 kB/s 15s
-openstack_compute_instance_v2.freytest (remote-exec): 34% [1 fonts-dejavu-core 912 kB/1,024 kB 89%]                      121 kB/s 14s
-openstack_compute_instance_v2.freytest (remote-exec): 36% [1 fonts-dejavu-core 973 kB/1,024 kB 95%]                      121 kB/s 14s
-openstack_compute_instance_v2.freytest (remote-exec): 38% [Working]                                                      121 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): Get:2 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty-updates/main fontconfig-config all 2.11.0-0ubuntu4.1 [47.4 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 38% [2 fontconfig-config 0 B/47.4 kB 0%]                           121 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): 39% [2 fontconfig-config 41.6 kB/47.4 kB 88%]                      121 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): 40% [Working]                                                      121 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): Get:3 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty-updates/main libfontconfig1 {arch} 2.11.0-0ubuntu4.1 [123 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 40% [3 libfontconfig1 0 B/123 kB 0%]                               121 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): 41% [3 libfontconfig1 40.2 kB/123 kB 33%]                          121 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): 43% [3 libfontconfig1 87.4 kB/123 kB 71%]                          121 kB/s 12s
-openstack_compute_instance_v2.freytest (remote-exec): 44% [Working]                                                      121 kB/s 12s
-openstack_compute_instance_v2.freytest (remote-exec): Get:4 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty/main libjpeg-turbo8 {arch} 1.3.0-0ubuntu2 [104 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 44% [4 libjpeg-turbo8 0 B/104 kB 0%]                               121 kB/s 12s
-openstack_compute_instance_v2.freytest (remote-exec): 45% [4 libjpeg-turbo8 28.1 kB/104 kB 27%]                          121 kB/s 12s
-openstack_compute_instance_v2.freytest (remote-exec): 46% [4 libjpeg-turbo8 60.4 kB/104 kB 58%]                          121 kB/s 11s
-openstack_compute_instance_v2.freytest (remote-exec): 48% [Working]                                                      121 kB/s 11s
-openstack_compute_instance_v2.freytest (remote-exec): Get:5 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty/main libjpeg8 {arch} 8c-2ubuntu8 [2,194 B]
-openstack_compute_instance_v2.freytest (remote-exec): 48% [5 libjpeg8 0 B/2,194 B 0%]                                    121 kB/s 11s
-openstack_compute_instance_v2.freytest (remote-exec): 48% [Working]                                                      121 kB/s 11s
-openstack_compute_instance_v2.freytest (remote-exec): Get:6 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty-updates/main libjbig0 {arch} 2.0-2ubuntu4.1 [26.1 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 48% [6 libjbig0 0 B/26.1 kB 0%]                                    121 kB/s 11s
-openstack_compute_instance_v2.freytest (remote-exec): 49% [Working]                                                     89.2 kB/s 15s
-openstack_compute_instance_v2.freytest (remote-exec): Get:7 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty-updates/main libtiff5 {arch} 4.0.3-7ubuntu0.3 [143 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 49% [7 libtiff5 0 B/143 kB 0%]                                    89.2 kB/s 15s
-openstack_compute_instance_v2.freytest (remote-exec): 51% [7 libtiff5 56.4 kB/143 kB 40%]                               89.2 kB/s 14s
-openstack_compute_instance_v2.freytest (remote-exec): 53% [7 libtiff5 104 kB/143 kB 73%]                                89.2 kB/s 14s
-openstack_compute_instance_v2.freytest (remote-exec): 54% [Working]                                                     89.2 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): Get:8 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty/main libvpx1 {arch} 1.3.0-2 [556 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 54% [8 libvpx1 0 B/556 kB 0%]                                     89.2 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): 56% [8 libvpx1 56.4 kB/556 kB 10%]                                89.2 kB/s 13s
-openstack_compute_instance_v2.freytest (remote-exec): 58% [8 libvpx1 112 kB/556 kB 20%]                                 89.2 kB/s 12s
-openstack_compute_instance_v2.freytest (remote-exec): 61% [8 libvpx1 170 kB/556 kB 31%]                                 89.2 kB/s 11s
-openstack_compute_instance_v2.freytest (remote-exec): 63% [8 libvpx1 234 kB/556 kB 42%]                                 89.2 kB/s 11s
-openstack_compute_instance_v2.freytest (remote-exec): 65% [8 libvpx1 275 kB/556 kB 49%]                                 89.2 kB/s 10s
-openstack_compute_instance_v2.freytest (remote-exec): 66% [8 libvpx1 302 kB/556 kB 54%]                                 89.2 kB/s 10s
-openstack_compute_instance_v2.freytest (remote-exec): 67% [8 libvpx1 337 kB/556 kB 61%]                                 89.2 kB/s 10s
-openstack_compute_instance_v2.freytest (remote-exec): 68% [8 libvpx1 377 kB/556 kB 68%]                                  89.2 kB/s 9s
-openstack_compute_instance_v2.freytest (remote-exec): 70% [8 libvpx1 420 kB/556 kB 76%]                                  93.0 kB/s 8s
-openstack_compute_instance_v2.freytest (remote-exec): 71% [8 libvpx1 461 kB/556 kB 83%]                                  93.0 kB/s 8s
-openstack_compute_instance_v2.freytest (remote-exec): 72% [8 libvpx1 490 kB/556 kB 88%]                                  93.0 kB/s 8s
-openstack_compute_instance_v2.freytest (remote-exec): 74% [8 libvpx1 521 kB/556 kB 94%]                                  93.0 kB/s 7s
-openstack_compute_instance_v2.freytest (remote-exec): 75% [8 libvpx1 550 kB/556 kB 99%]                                  93.0 kB/s 7s
-openstack_compute_instance_v2.freytest (remote-exec): 75% [Working]                                                      93.0 kB/s 7s
-openstack_compute_instance_v2.freytest (remote-exec): Get:9 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty/main libxpm4 {arch} 1:3.5.10-1 [38.3 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 75% [9 libxpm4 0 B/38.3 kB 0%]                                     93.0 kB/s 7s
-openstack_compute_instance_v2.freytest (remote-exec): 76% [Working]                                                      93.0 kB/s 6s
-openstack_compute_instance_v2.freytest (remote-exec): Get:10 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty/main libgd3 {arch} 2.1.0-3 [147 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 76% [10 libgd3 0 B/147 kB 0%]                                      93.0 kB/s 6s
-openstack_compute_instance_v2.freytest (remote-exec): 82% [Working]                                                      93.0 kB/s 5s
-openstack_compute_instance_v2.freytest (remote-exec): Get:11 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty/main libxslt1.1 {arch} 1.1.28-2build1 [145 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 82% [11 libxslt1.1 0 B/145 kB 0%]                                  93.0 kB/s 5s
-openstack_compute_instance_v2.freytest (remote-exec): 87% [Working]                                                      93.0 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): Get:12 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty-updates/main nginx-common all 1.4.6-1ubuntu3.3 [18.1 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 87% [12 nginx-common 0 B/18.1 kB 0%]                               93.0 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 88% [Working]                                                      93.0 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): Get:13 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty-updates/main nginx-core {arch} 1.4.6-1ubuntu3.3 [324 kB]
-openstack_compute_instance_v2.freytest (remote-exec): 88% [13 nginx-core 0 B/324 kB 0%]                                  93.0 kB/s 3s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                     93.0 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Get:14 http://nova.clouds.archive.ubuntu.com/ubuntu/ trusty-updates/main nginx all 1.4.6-1ubuntu3.3 [5,452 B]
-openstack_compute_instance_v2.freytest (remote-exec): 100% [14 nginx 0 B/5,452 B 0%]                                     93.0 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): 100% [Working]                                                     93.0 kB/s 0s
-openstack_compute_instance_v2.freytest (remote-exec): Fetched 2,704 kB in 21s (124 kB/s)
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package fonts-dejavu-core.
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ...
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 5%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 10%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 15%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 20%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 25%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 30%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 35%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 40%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 45%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 50%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 55%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 60%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 65%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 70%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 75%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 80%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 85%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 90%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 95%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 100%
-openstack_compute_instance_v2.freytest (remote-exec): (Reading database ... 51148 files and directories currently installed.)
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../fonts-dejavu-core_2.34-1ubuntu1_all.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking fonts-dejavu-core (2.34-1ubuntu1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package fontconfig-config.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../fontconfig-config_2.11.0-0ubuntu4.1_all.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking fontconfig-config (2.11.0-0ubuntu4.1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libfontconfig1:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libfontconfig1_2.11.0-0ubuntu4.1_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libfontconfig1:{arch} (2.11.0-0ubuntu4.1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libjpeg-turbo8:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libjpeg-turbo8_1.3.0-0ubuntu2_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libjpeg-turbo8:{arch} (1.3.0-0ubuntu2) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libjpeg8:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libjpeg8_8c-2ubuntu8_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libjpeg8:{arch} (8c-2ubuntu8) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libjbig0:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libjbig0_2.0-2ubuntu4.1_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libjbig0:{arch} (2.0-2ubuntu4.1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libtiff5:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libtiff5_4.0.3-7ubuntu0.3_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libtiff5:{arch} (4.0.3-7ubuntu0.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libvpx1:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libvpx1_1.3.0-2_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libvpx1:{arch} (1.3.0-2) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libxpm4:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libxpm4_1%3a3.5.10-1_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libxpm4:{arch} (1:3.5.10-1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libgd3:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libgd3_2.1.0-3_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libgd3:{arch} (2.1.0-3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package libxslt1.1:{arch}.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../libxslt1.1_1.1.28-2build1_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking libxslt1.1:{arch} (1.1.28-2build1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package nginx-common.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../nginx-common_1.4.6-1ubuntu3.3_all.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking nginx-common (1.4.6-1ubuntu3.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package nginx-core.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../nginx-core_1.4.6-1ubuntu3.3_{arch}.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking nginx-core (1.4.6-1ubuntu3.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Selecting previously unselected package nginx.
-openstack_compute_instance_v2.freytest (remote-exec): Preparing to unpack .../nginx_1.4.6-1ubuntu3.3_all.deb ...
-openstack_compute_instance_v2.freytest (remote-exec): Unpacking nginx (1.4.6-1ubuntu3.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Processing triggers for man-db (2.6.7.1-1ubuntu1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Processing triggers for ufw (0.34~rc-0ubuntu2) ...
-openstack_compute_instance_v2.freytest (remote-exec): Processing triggers for ureadahead (0.100.0-16) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up fonts-dejavu-core (2.34-1ubuntu1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up fontconfig-config (2.11.0-0ubuntu4.1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libfontconfig1:{arch} (2.11.0-0ubuntu4.1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libjpeg-turbo8:{arch} (1.3.0-0ubuntu2) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libjpeg8:{arch} (8c-2ubuntu8) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libjbig0:{arch} (2.0-2ubuntu4.1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libtiff5:{arch} (4.0.3-7ubuntu0.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libvpx1:{arch} (1.3.0-2) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libxpm4:{arch} (1:3.5.10-1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libgd3:{arch} (2.1.0-3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up libxslt1.1:{arch} (1.1.28-2build1) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up nginx-common (1.4.6-1ubuntu3.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Processing triggers for ufw (0.34~rc-0ubuntu2) ...
-openstack_compute_instance_v2.freytest (remote-exec): Processing triggers for ureadahead (0.100.0-16) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up nginx-core (1.4.6-1ubuntu3.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Setting up nginx (1.4.6-1ubuntu3.3) ...
-openstack_compute_instance_v2.freytest (remote-exec): Processing triggers for libc-bin (2.19-0ubuntu6.6) ...
-openstack_compute_instance_v2.freytest (remote-exec): sudo: unable to resolve host freytest
+openstack_compute_instance_v2.freytest (remote-exec): /home/ubuntu
 openstack_compute_instance_v2.freytest: Creation complete
 
 Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
@@ -602,7 +221,8 @@ State path: {root}/test/scenario/openstack/.frey/state/terraform.tfstate
 
 Outputs:
 
-  public_address = 128.136.179.149
+  public_address = 128.136.179.159
 --> Saved state to '{root}/test/scenario/openstack/.frey/state/terraform.tfstate'
 Done
 Finished
+(maybe) Destroying..
