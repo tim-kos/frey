@@ -39,22 +39,17 @@ class Remote extends Command
   _gatherArgs: (cargo, cb) ->
     args   = []
 
-
     debug cargo:cargo
-    # [ -z "${host:-}" ] && host="$(${__terraformExe} output public_address)"
-    # chmod 600 "${FREY__RUNTIME__SSH__KEYPUB_FILE}"
-    # chmod 600 "${FREY__RUNTIME__SSH__KEYPRV_FILE}"
-
     args.push "#{@bootCargo._gatherHost}"
-    args.push "-i #{@runtime.ssh.keyprv_file}"
-    args.push "-l #{@runtime.ssh.user}"
-    args.push "-o UserKnownHostsFile=/dev/null"
-    args.push "-o CheckHostIP=no"
-    args.push "-o StrictHostKeyChecking=no"
+    args.push "-i", "#{@runtime.ssh.keyprv_file}"
+    args.push "-l", "#{@runtime.ssh.user}"
+    args.push "-o", "UserKnownHostsFile=/dev/null"
+    args.push "-o", "CheckHostIP=no"
+    args.push "-o", "StrictHostKeyChecking=no"
     args.push "-vvvv"
 
     # @todo command here for non-interactive/shell mode:
-    # args.push "-o StrictHostKeyChecking=no"
+    # args.push "<cmd>"
     cb null, args
 
   _gatherEnv: (cargo, cb) ->
