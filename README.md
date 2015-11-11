@@ -25,7 +25,7 @@ We will be looking to utilize Otto as well.
 However, we also felt the needed a tool that offered more in the way of
 provisioning tailor-made setups.
 
-Hashicorp acknowledges that Otto will be able to server 99% of the
+Hashicorp acknowledges that Otto will be able to serve 99% of the
 common use-cases. Frey aims to serve the remaining 1% - and 
 maybe once Otto offers more in the way of customization, we can cease to exist.
 
@@ -166,6 +166,7 @@ For now, we only support
 - Ubuntu as remote server OS
 - Git for version control - and Frey assumes your project has Git already set up
 
+Frey is intended to service many use-cases and we'll work on removing some of these limitations as we go.
 
 ## Todo
 
