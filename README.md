@@ -202,6 +202,7 @@ For now, we only support
  - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?)
  - [ ] Put `_transform` in a central place (utils?)
  - [ ] - role: ":frey:/consul/v1.0.0"
+ - [ ] Default appname should be basename of dirname of Freyfile, not pwd
  - [ ] Enable DO support
  - [ ] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
  - [ ] Make arg & env functions of all other commands mimic Install's
