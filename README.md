@@ -199,6 +199,7 @@ For now, we only support
  - [x] Pass {} to first boot function. Use @options like all other methods to avoid confusion
  - [x] Add (script to add) more encrypted cloud keys
  - [x] exeScript should become exe. new exeScript prepends bash -o
+ - [ ] Rename integration to acceptance (test) https://en.wikipedia.org/wiki/Acceptance_testing
  - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?)
  - [ ] Put `_transform` in a central place (utils?)
  - [ ] - role: ":frey:/consul/v1.0.0"
