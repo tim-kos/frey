@@ -118,18 +118,6 @@ openstack_networking_network_v2.freytest: Creating...
   shared:         "" => "<computed>"
   tenant_id:      "" => "<computed>"
 openstack_networking_network_v2.freytest: Creation complete
-openstack_networking_subnet_v2.freytest: Creating...
-  cidr:                       "" => "{ip}/24"
-  dns_nameservers.#:          "" => "2"
-  dns_nameservers.3811298194: "" => "{ip}"
-  dns_nameservers.3817307869: "" => "{ip}"
-  enable_dhcp:                "" => "<computed>"
-  gateway_ip:                 "" => "<computed>"
-  ip_version:                 "" => "4"
-  name:                       "" => "freytest"
-  network_id:                 "" => "{uuid}"
-  tenant_id:                  "" => "<computed>"
-openstack_networking_subnet_v2.freytest: Creation complete
 openstack_compute_secgroup_v2.freytest: Creating...
   description:        "" => "This is only here to guarantee launch order - testhelper{uuid}"
   name:               "" => "freytest"
@@ -147,6 +135,18 @@ openstack_compute_secgroup_v2.freytest: Creating...
   rule.1.self:        "" => "0"
   rule.1.to_port:     "" => "22"
 openstack_compute_secgroup_v2.freytest: Creation complete
+openstack_networking_subnet_v2.freytest: Creating...
+  cidr:                       "" => "{ip}/24"
+  dns_nameservers.#:          "" => "2"
+  dns_nameservers.3811298194: "" => "{ip}"
+  dns_nameservers.3817307869: "" => "{ip}"
+  enable_dhcp:                "" => "<computed>"
+  gateway_ip:                 "" => "<computed>"
+  ip_version:                 "" => "4"
+  name:                       "" => "freytest"
+  network_id:                 "" => "{uuid}"
+  tenant_id:                  "" => "<computed>"
+openstack_networking_subnet_v2.freytest: Creation complete
 openstack_networking_router_interface_v2.freytest_app: Creating...
   router_id: "" => "{uuid}"
   subnet_id: "" => "{uuid}"

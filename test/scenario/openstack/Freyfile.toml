@@ -33,8 +33,9 @@
   cidr            = "10.0.0.0/24"
   dns_nameservers = ["8.8.8.8", "8.8.4.4"]
   ip_version      = 4
-  name            = "freytest"
   network_id      = "${openstack_networking_network_v2.freytest.id}"
+  # This helps guarantee launch order - useful for acceptance tests:
+  name            = "testhelper-${openstack_networking_network_v2.freytest.id}"
 
 # router
 [infra.resource.openstack_networking_router_v2.freytest]
