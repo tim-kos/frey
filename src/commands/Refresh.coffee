@@ -58,20 +58,26 @@ class Refresh extends Command
 
         encoded = JSON.stringify tomlMerged.infra, null, "  "
         if !encoded
-          return callback new Error "Unable to convert recipe to infra json"
+          return callback new Error "Unable to convert recipe to Terraform infra JSON"
 
         filesWritten.push @runtime.paths.infraFile
         fs.writeFile @runtime.paths.infraFile, encoded, callback
       (callback) =>
         if !tomlMerged.install?.config?
-          debug "No install config instructions found in merged toml"
+          debug "No config instructions found in merged toml"
           fs.unlink @runtime.paths.ansibleCfg, (err) ->
             callback null # That's not fatal
           return
 
         encoded = INI.encode tomlMerged.install.config
         if !encoded
-          return callback new Error "Unable to convert recipe to install ini"
+          return callback new Error "Unable to convert recipe to ansibleCfg INI"
+
+        # Ansible strips over a quoted `ssh_args="-o x=y -o w=z"`, as it uses exec to call
+        # ssh, and all treats multiple option arguments as one.
+        # So we remove all double-quotes here. If that poses problems I don't foresee at
+        # this point, the replace has to be limited in scope:
+        encoded = encoded.replace /\"/g, ""
 
         filesWritten.push @runtime.paths.ansibleCfg
         fs.writeFile @runtime.paths.ansibleCfg, encoded, callback
@@ -84,7 +90,7 @@ class Refresh extends Command
 
         encoded = YAML.safeDump tomlMerged.install.playbooks
         if !encoded
-          return callback new Error "Unable to convert recipe to install yml"
+          return callback new Error "Unable to convert recipe to Ansible playbook YAML"
 
         filesWritten.push @runtime.paths.playbookFile
         fs.writeFile @runtime.paths.playbookFile, encoded, callback
