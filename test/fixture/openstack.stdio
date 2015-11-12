@@ -206,7 +206,7 @@ changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates
 changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "state": "present"}
 
 PLAY RECAP ******************************************************************** 
-{ip}            : ok=2    changed=1    unreachable=0    failed=0   
+{ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 Done
 Finished

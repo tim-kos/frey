@@ -79,6 +79,12 @@ for scenario in $(echo prepare ${scenarios}); do
         "${cmdSed}" -i \
           -r 's@[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}@{ip}@g' \
         "${curFile}"
+
+        # IPs vary in length. Ansible uses padding. {ip} does not vary in length
+        # so kill the padding after it for consistent output
+        "${cmdSed}" -i \
+          -r 's@\{ip\}\s+@{ip} @g' \
+        "${curFile}"
       fi
       if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_UUIDS' |wc -l)" -gt 0 ]; then
         "${cmdSed}" -i \
