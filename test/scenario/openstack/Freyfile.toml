@@ -19,28 +19,14 @@
 
 # keypair
 [infra.resource.openstack_compute_keypair_v2.freytest]
-  name       = "freytest-keypair-1"
+  name       = "freytest"
   public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
-
-# secgroup
-[infra.resource.openstack_compute_secgroup_v2.freytest]
-  description = "This is only here to guarantee launch order - useful for acceptance tests: ${openstack_networking_network_v2.freytest.name}"
-  name        = "freytest"
-  [[infra.resource.openstack_compute_secgroup_v2.freytest.rule]]
-    cidr        = "0.0.0.0/0"
-    from_port   = -1
-    ip_protocol = "icmp"
-    to_port     = -1
-  [[infra.resource.openstack_compute_secgroup_v2.freytest.rule]]
-    cidr        = "0.0.0.0/0"
-    from_port   = 22
-    ip_protocol = "tcp"
-    to_port     = 22
 
 # network
 [infra.resource.openstack_networking_network_v2.freytest]
   admin_state_up = "true"
-  name           = "freytest"
+  # This helps guarantee launch order - useful for acceptance tests:
+  name           = "${openstack_compute_keypair_v2.freytest.name}"
 
 # subnet
 [infra.resource.openstack_networking_subnet_v2.freytest]
@@ -65,6 +51,21 @@
 [infra.resource.openstack_compute_floatingip_v2.freytest_app]
   depends_on = ["openstack_networking_router_interface_v2.freytest_app"]
   pool       = "public"
+
+# secgroup
+[infra.resource.openstack_compute_secgroup_v2.freytest]
+  description = "This is only here to guarantee launch order - useful for acceptance tests: ${openstack_networking_network_v2.freytest.name}"
+  name        = "freytest"
+  [[infra.resource.openstack_compute_secgroup_v2.freytest.rule]]
+    cidr        = "0.0.0.0/0"
+    from_port   = -1
+    ip_protocol = "icmp"
+    to_port     = -1
+  [[infra.resource.openstack_compute_secgroup_v2.freytest.rule]]
+    cidr        = "0.0.0.0/0"
+    from_port   = 22
+    ip_protocol = "tcp"
+    to_port     = 22
 
 # instance
 [infra.resource.openstack_compute_instance_v2.freytest_app]
@@ -95,7 +96,7 @@
 
 [[install.playbooks]]
   hosts = "freytest_app"
-  name  = "Install infra-tusd-server"
+  name  = "Install app servers"
 
 [[install.playbooks.tasks]]
   apt_repository = "repo='{{ item }}' state=present"
