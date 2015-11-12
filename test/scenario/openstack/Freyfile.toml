@@ -10,40 +10,21 @@
 [infra.output.public_address]
   value = "${openstack_compute_instance_v2.freytest_app.access_ip_v4}"
 
+# Openstack
 [infra.provider.openstack]
   tenant_name = "${var.FREY_OPENSTACK_TENANT_NAME}"
   user_name   = "${var.FREY_OPENSTACK_PROJECT_NAME}"
   password    = "${var.FREY_OPENSTACK_PASSWORD}"
   auth_url    = "${var.FREY_OPENSTACK_AUTH_URL}"
 
-[infra.resource.openstack_compute_floatingip_v2.freytest_app]
-  depends_on = ["openstack_networking_router_interface_v2.freytest_app"]
-  pool       = "public"
-
-[infra.resource.openstack_compute_instance_v2.freytest_app]
-  flavor_name     = "m1.small"
-  floating_ip     = "${openstack_compute_floatingip_v2.freytest_app.address}"
-  image_name      = "ubuntu14.04-LTS"
-  key_pair        = "${openstack_compute_keypair_v2.freytest.name}"
-  name            = "freytest_app"
-  security_groups = ["${openstack_compute_secgroup_v2.freytest.name}"]
-  [infra.resource.openstack_compute_instance_v2.freytest_app.network]
-    uuid = "${openstack_networking_network_v2.freytest.id}"
-
-  [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec]
-    inline = [
-      "sudo pwd",
-    ]
-    [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec.connection]
-      key_file = "${var.FREY__RUNTIME__SSH__KEYPRV_FILE}"
-      user     = "${var.FREY__RUNTIME__SSH__USER}"
-
+# keypair
 [infra.resource.openstack_compute_keypair_v2.freytest]
   name       = "freytest-keypair-1"
   public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
 
+# secgroup
 [infra.resource.openstack_compute_secgroup_v2.freytest]
-  description = "Security group for the Terraform example instances"
+  description = "This is only here to guarantee launch order - useful for acceptance tests: ${openstack_networking_network_v2.freytest.name}"
   name        = "freytest"
   [[infra.resource.openstack_compute_secgroup_v2.freytest.rule]]
     cidr        = "0.0.0.0/0"
@@ -56,25 +37,55 @@
     ip_protocol = "tcp"
     to_port     = 22
 
+# network
 [infra.resource.openstack_networking_network_v2.freytest]
   admin_state_up = "true"
   name           = "freytest"
 
-[infra.resource.openstack_networking_router_interface_v2.freytest_app]
-  router_id = "${openstack_networking_router_v2.freytest.id}"
-  subnet_id = "${openstack_networking_subnet_v2.freytest.id}"
-
-[infra.resource.openstack_networking_router_v2.freytest]
-  admin_state_up   = "true"
-  external_gateway = "${var.FREY_OPENSTACK_EXTERNAL_GATEWAY}"
-  name             = "freytest"
-
+# subnet
 [infra.resource.openstack_networking_subnet_v2.freytest]
   cidr            = "10.0.0.0/24"
   dns_nameservers = ["8.8.8.8", "8.8.4.4"]
   ip_version      = 4
   name            = "freytest"
   network_id      = "${openstack_networking_network_v2.freytest.id}"
+
+# router
+[infra.resource.openstack_networking_router_v2.freytest]
+  admin_state_up   = "true"
+  external_gateway = "${var.FREY_OPENSTACK_EXTERNAL_GATEWAY}"
+  name             = "freytest"
+
+# router_interface
+[infra.resource.openstack_networking_router_interface_v2.freytest_app]
+  router_id = "${openstack_networking_router_v2.freytest.id}"
+  subnet_id = "${openstack_networking_subnet_v2.freytest.id}"
+
+# floatingip
+[infra.resource.openstack_compute_floatingip_v2.freytest_app]
+  depends_on = ["openstack_networking_router_interface_v2.freytest_app"]
+  pool       = "public"
+
+# instance
+[infra.resource.openstack_compute_instance_v2.freytest_app]
+  flavor_name     = "m1.small"
+  floating_ip     = "${openstack_compute_floatingip_v2.freytest_app.address}"
+  image_name      = "ubuntu14.04-LTS"
+  key_pair        = "${openstack_compute_keypair_v2.freytest.name}"
+  name            = "freytest_app"
+  security_groups = ["${openstack_compute_secgroup_v2.freytest.name}"]
+
+  [infra.resource.openstack_compute_instance_v2.freytest_app.network]
+    uuid = "${openstack_networking_network_v2.freytest.id}"
+
+  [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec]
+    inline = [
+      "sudo pwd",
+    ]
+
+    [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec.connection]
+      key_file = "${var.FREY__RUNTIME__SSH__KEYPRV_FILE}"
+      user     = "${var.FREY__RUNTIME__SSH__USER}"
 
 
 [install.config.defaults]
