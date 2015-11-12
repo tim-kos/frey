@@ -75,3 +75,23 @@
   ip_version      = 4
   name            = "freytest"
   network_id      = "${openstack_networking_network_v2.freytest.id}"
+
+
+[install.config.defaults]
+
+[install.config.ssh_connection]
+  ssh_args = '-oControlMaster=auto -oControlPersist=60s -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no'
+
+[[install.playbooks]]
+  hosts = "freytest_app"
+  name  = "Install infra-tusd-server"
+
+[[install.playbooks.tasks]]
+  apt_repository = "repo='{{ item }}' state=present"
+  with_items     = [
+    "deb http://us.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} main restricted universe multiverse",
+    "deb http://us.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-updates main restricted universe multiverse",
+    "deb http://us.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-security main restricted universe multiverse",
+  ]
+  name           = "Common | Add APT sources"
+  register       = "apt_sources"
