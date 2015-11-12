@@ -46,7 +46,7 @@ trap destroy EXIT
   --no-color \
   --verbose \
   --force-yes \
-  --bailAfter launch \
+  --terraform-parallelism=1 \
 || false
 
 # "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" remote \

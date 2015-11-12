@@ -12,6 +12,7 @@ class Launch extends Command
     if !chalk.enabled
       terraformArgs.push "-no-color"
 
+    terraformArgs.push "-parallelism=#{@options.terraformParallelism}"
     terraformArgs.push "-state=#{@runtime.paths.stateFile}"
 
     cb null, terraformArgs
