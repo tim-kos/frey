@@ -52,7 +52,9 @@ class Refresh extends Command
       (callback) =>
         if !tomlMerged.infra?
           debug "No infra instructions found in merged toml"
-          return callback null # That's not fatal
+          fs.unlink @runtime.paths.infraFile, (err) ->
+            callback null # That's not fatal
+          return
 
         encoded = JSON.stringify tomlMerged.infra, null, "  "
         if !encoded
@@ -63,7 +65,9 @@ class Refresh extends Command
       (callback) =>
         if !tomlMerged.install?.config?
           debug "No install config instructions found in merged toml"
-          return callback null # That's not fatal
+          fs.unlink @runtime.paths.ansibleCfg, (err) ->
+            callback null # That's not fatal
+          return
 
         encoded = INI.encode tomlMerged.install.config
         if !encoded
@@ -74,7 +78,9 @@ class Refresh extends Command
       (callback) =>
         if !tomlMerged.install?.playbooks?
           debug "No install playbook instructions found in merged toml"
-          return callback null # That's not fatal
+          fs.unlink @runtime.paths.playbookFile, (err) ->
+            callback null # That's not fatal
+          return
 
         encoded = YAML.safeDump tomlMerged.install.playbooks
         if !encoded
