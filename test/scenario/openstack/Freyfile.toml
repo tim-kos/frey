@@ -26,7 +26,7 @@
 [infra.resource.openstack_networking_network_v2.freytest]
   admin_state_up = "true"
   # This helps guarantee launch order - useful for acceptance tests:
-  name           = "${openstack_compute_keypair_v2.freytest.name}"
+  name           = "testhelper-${openstack_compute_keypair_v2.freytest.id}"
 
 # subnet
 [infra.resource.openstack_networking_subnet_v2.freytest]
@@ -54,7 +54,7 @@
 
 # secgroup
 [infra.resource.openstack_compute_secgroup_v2.freytest]
-  description = "This is only here to guarantee launch order - useful for acceptance tests: ${openstack_networking_network_v2.freytest.name}"
+  description = "This is only here to guarantee launch order - testhelper-${openstack_networking_network_v2.freytest.id}"
   name        = "freytest"
   [[infra.resource.openstack_compute_secgroup_v2.freytest.rule]]
     cidr        = "0.0.0.0/0"
