@@ -26,16 +26,15 @@ However, we also felt the needed a tool that offered more in the way of
 provisioning tailor-made setups.
 
 Hashicorp acknowledges that Otto will be able to serve 99% of the
-common use-cases. Frey aims to serve the remaining 1% - and 
-maybe once Otto offers more in the way of customization, we can cease to exist.
+common use-cases. Frey aims to serve the remaining 1%.
 
 When compared to Hashicorp's recently launched Otto, which also 
-uses Terraform under the hood, Frey fills a void for people that:
+uses Terraform under the hood, Frey fills a void for people that feel:
 
  - Feel Otto is too opinionated about configuration for their needs
  - Feel the Customizations Otto offers are too high level for their needs and would like to have more fine grained control
  - Would like to deploy to other cloud vendors besides AWS
- - Don't want to rely purely on disk images / containers to provision their
+ - Don't want to rely solely on disk images / containers to provision their
 servers
  - Want a tighter grip on dependencies via version pinning
  - Had hoped on more than bash scripts / Dockerfiles to do actual provisioning, such as the declarative style of Ansible Playbooks
@@ -54,8 +53,7 @@ Terraform `.tf` and Ansible `.yml` for creating web infrastructure.
 What Frey is not good at:
 
  - Scaling Microservices
- - Dependencies with other Frey projects. Even though you could a diverse cluster with different
- roles and apps accross different cloud vendors - All of this should be defined in one Frey project.
+ - Dependencies with other Frey projects. Even though you could launch a heterogeneous cluster with different roles and apps across different cloud vendors - All of this should be defined in one Frey project.
 
 ## Install
 
