@@ -43,7 +43,7 @@ test-acceptance:
 
 .PHONY: save-acceptance-fixtures
 save-acceptance-fixtures:
-	@source env.sh && env SAVE_FIXTURES=true ./test/acceptance.sh
+	@source env.sh && env SAVE_FIXTURES=true ./test/acceptance.sh $(scenario)
 
 .PHONY: test-full
 test-full: test-coverage test-acceptance
