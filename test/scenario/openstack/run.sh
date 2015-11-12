@@ -13,7 +13,9 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
-echo "FREY:SKIP_COMPARE_STDIO"
+echo "FREY:STDIO_SKIP_COMPARE"
+echo "FREY:STDIO_REPLACE_IPS"
+echo "FREY:STDIO_REPLACE_UUIDS"
 
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-openstack"* || true

@@ -1,4 +1,4 @@
-FREY:SKIP_COMPARE_STDIO
+FREY:STDIO_SKIP_COMPARE
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
 --> {hostname} - prepare

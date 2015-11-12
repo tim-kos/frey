@@ -93,7 +93,7 @@ for scenario in $(echo prepare ${scenarios}); do
       echo -n "    comparing ${typ}.. "
 
       if [ "${typ}" = "stdio" ]; then
-        if [ "$(cat "${curFile}" |grep 'FREY:SKIP_COMPARE_STDIO' |wc -l)" -gt 0 ]; then
+        if [ "$(cat "${curFile}" |grep 'FREY:STDIO_SKIP_COMPARE' |wc -l)" -gt 0 ]; then
           echo "skip"
           continue
         fi

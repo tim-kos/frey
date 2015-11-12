@@ -203,6 +203,7 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [x] Rename integration to acceptance (test) https://en.wikipedia.org/wiki/Acceptance_testing
  - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?)
  - [ ] Put `_transform` in a central place (utils?)
+ - [ ] If you set terramform -parallelism=1, replace IPs and UUIDs, it's possible to disable SKIP_COMPARE_STDIO on the openstack acceptace test
  - [ ] - role: ":frey:/consul/v1.0.0"
  - [ ] Default appname should be basename of dirname of Freyfile, not pwd
  - [ ] Enable DO support

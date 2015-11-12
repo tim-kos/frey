@@ -1,4 +1,4 @@
-FREY:SKIP_COMPARE_STDIO
+FREY:STDIO_SKIP_COMPARE
 (maybe) Destroying..
 --> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
 --> {hostname} - runtime
