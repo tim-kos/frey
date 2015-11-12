@@ -74,6 +74,21 @@ for scenario in $(echo prepare ${scenarios}); do
         -e "s@OSX@{os}@g" "${curFile}" \
         -e "s@Linux@{os}@g" "${curFile}" \
       || false
+
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_IPS' |wc -l)" -gt 0 ]; then
+        "${cmdSed}" -i \
+          -r 's@[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}@{ip}@g' \
+        "${curFile}"
+      fi
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_UUIDS' |wc -l)" -gt 0 ]; then
+        "${cmdSed}" -i \
+          -r 's@[0-9a-f\-]{36}@{uuid}@g' \
+        "${curFile}"
+      fi
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_REMOTE_EXEC' |wc -l)" -gt 0 ]; then
+        egrep -v 'remote-exec): [ a-zA-Z]' "${curFile}" > "${__sysTmpDir}/frey-filtered.txt"
+        mv "${__sysTmpDir}/frey-filtered.txt" "${curFile}"
+      fi
     done
 
     # Save these as new fixtures?

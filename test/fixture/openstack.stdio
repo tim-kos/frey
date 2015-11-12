@@ -1,6 +1,9 @@
 FREY:STDIO_SKIP_COMPARE
+FREY:STDIO_REPLACE_IPS
+FREY:STDIO_REPLACE_UUIDS
+FREY:STDIO_REPLACE_REMOTE_EXEC
 (maybe) Destroying..
---> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
+--> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
 Found 'terraform' with version '0.6.6'
@@ -22,22 +25,22 @@ plan.
 
 Path: {root}/test/scenario/openstack/.frey/residu/terraform.plan
 
-+ openstack_compute_floatingip_v2.freytest
++ openstack_compute_floatingip_v2.freytest_app
     address:     "" => "<computed>"
     fixed_ip:    "" => "<computed>"
     instance_id: "" => "<computed>"
     pool:        "" => "public"
 
-+ openstack_compute_instance_v2.freytest
++ openstack_compute_instance_v2.freytest_app
     access_ip_v4:          "" => "<computed>"
     access_ip_v6:          "" => "<computed>"
     flavor_id:             "" => "<computed>"
     flavor_name:           "" => "m1.small"
-    floating_ip:           "" => "${openstack_compute_floatingip_v2.freytest.address}"
+    floating_ip:           "" => "${openstack_compute_floatingip_v2.freytest_app.address}"
     image_id:              "" => "<computed>"
     image_name:            "" => "ubuntu14.04-LTS"
     key_pair:              "" => "freytest-keypair-1"
-    name:                  "" => "freytest"
+    name:                  "" => "freytest_app"
     network.#:             "" => "1"
     network.0.fixed_ip_v4: "" => "<computed>"
     network.0.fixed_ip_v6: "" => "<computed>"
@@ -56,13 +59,13 @@ Path: {root}/test/scenario/openstack/.frey/residu/terraform.plan
     description:        "" => "Security group for the Terraform example instances"
     name:               "" => "freytest"
     rule.#:             "0" => "2"
-    rule.0.cidr:        "" => "0.0.0.0/0"
+    rule.0.cidr:        "" => "{ip}/0"
     rule.0.from_port:   "" => "-1"
     rule.0.id:          "" => "<computed>"
     rule.0.ip_protocol: "" => "icmp"
     rule.0.self:        "" => "0"
     rule.0.to_port:     "" => "-1"
-    rule.1.cidr:        "" => "0.0.0.0/0"
+    rule.1.cidr:        "" => "{ip}/0"
     rule.1.from_port:   "" => "22"
     rule.1.id:          "" => "<computed>"
     rule.1.ip_protocol: "" => "tcp"
@@ -75,21 +78,21 @@ Path: {root}/test/scenario/openstack/.frey/residu/terraform.plan
     shared:         "" => "<computed>"
     tenant_id:      "" => "<computed>"
 
-+ openstack_networking_router_interface_v2.freytest
++ openstack_networking_router_interface_v2.freytest_app
     router_id: "" => "${openstack_networking_router_v2.freytest.id}"
     subnet_id: "" => "${openstack_networking_subnet_v2.freytest.id}"
 
 + openstack_networking_router_v2.freytest
     admin_state_up:   "" => "1"
-    external_gateway: "" => "0e43db46-8fd9-4ef1-8826-4cf9e809aede"
+    external_gateway: "" => "{uuid}"
     name:             "" => "freytest"
     tenant_id:        "" => "<computed>"
 
 + openstack_networking_subnet_v2.freytest
-    cidr:                       "" => "10.0.0.0/24"
+    cidr:                       "" => "{ip}/24"
     dns_nameservers.#:          "" => "2"
-    dns_nameservers.3811298194: "" => "8.8.4.4"
-    dns_nameservers.3817307869: "" => "8.8.8.8"
+    dns_nameservers.3811298194: "" => "{ip}"
+    dns_nameservers.3817307869: "" => "{ip}"
     enable_dhcp:                "" => "<computed>"
     gateway_ip:                 "" => "<computed>"
     ip_version:                 "" => "4"
@@ -100,115 +103,83 @@ Plan: 8 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/openstack/.frey/residu/terraform.plan'
 --> {hostname} - backup
 --> {hostname} - launch
-openstack_compute_secgroup_v2.freytest: Creating...
-  description:        "" => "Security group for the Terraform example instances"
-  name:               "" => "freytest"
-  rule.#:             "0" => "2"
-  rule.0.cidr:        "" => "0.0.0.0/0"
-  rule.0.from_port:   "" => "-1"
-  rule.0.id:          "" => "<computed>"
-  rule.0.ip_protocol: "" => "icmp"
-  rule.0.self:        "" => "0"
-  rule.0.to_port:     "" => "-1"
-  rule.1.cidr:        "" => "0.0.0.0/0"
-  rule.1.from_port:   "" => "22"
-  rule.1.id:          "" => "<computed>"
-  rule.1.ip_protocol: "" => "tcp"
-  rule.1.self:        "" => "0"
-  rule.1.to_port:     "" => "22"
 openstack_networking_network_v2.freytest: Creating...
   admin_state_up: "" => "true"
   name:           "" => "freytest"
   shared:         "" => "<computed>"
   tenant_id:      "" => "<computed>"
+openstack_networking_network_v2.freytest: Creation complete
+openstack_compute_secgroup_v2.freytest: Creating...
+  description:        "" => "Security group for the Terraform example instances"
+  name:               "" => "freytest"
+  rule.#:             "0" => "2"
+  rule.0.cidr:        "" => "{ip}/0"
+  rule.0.from_port:   "" => "-1"
+  rule.0.id:          "" => "<computed>"
+  rule.0.ip_protocol: "" => "icmp"
+  rule.0.self:        "" => "0"
+  rule.0.to_port:     "" => "-1"
+  rule.1.cidr:        "" => "{ip}/0"
+  rule.1.from_port:   "" => "22"
+  rule.1.id:          "" => "<computed>"
+  rule.1.ip_protocol: "" => "tcp"
+  rule.1.self:        "" => "0"
+  rule.1.to_port:     "" => "22"
+openstack_compute_secgroup_v2.freytest: Creation complete
+openstack_networking_router_v2.freytest: Creating...
+  admin_state_up:   "" => "1"
+  external_gateway: "" => "{uuid}"
+  name:             "" => "freytest"
+  tenant_id:        "" => "<computed>"
+openstack_networking_router_v2.freytest: Creation complete
 openstack_compute_keypair_v2.freytest: Creating...
   name:       "" => "freytest-keypair-1"
   public_key: "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe33HmuH6x/JLVJAkPg9EYHCdFoILCMJefBzIIWJ0BKlTfZPHHndFhyKFA7PStMiwntkd1XcqP5kL2VyJXHB6gMNHcqQ4XBEK8hDdESK3r1Gp4YP2RzqO5KEaQzjw0zrEr8dWm8kzAjhlkqq89sAFA+FC833wdW5NCGT+aQWKhdcJVhl89ppfPgJVXpeQ5ZuGWvOdxJM3h1V0GL8I+0NFb7MuOEneGezth1VIOL+eJJeAMzBWcXO6cAWZG31JkCuNpOG9vDhjYPim+tsozTdRg6g7R0Fmikxw3c3PFEOVKSmDXbOKLVTaXCYvDR0wOM+cLFOzSPl7Dt4aAMBT2h1xL {user}@openstack.freyproject.io\n"
-openstack_networking_router_v2.freytest: Creating...
-  admin_state_up:   "" => "1"
-  external_gateway: "" => "0e43db46-8fd9-4ef1-8826-4cf9e809aede"
-  name:             "" => "freytest"
-  tenant_id:        "" => "<computed>"
 openstack_compute_keypair_v2.freytest: Creation complete
-openstack_networking_network_v2.freytest: Creation complete
 openstack_networking_subnet_v2.freytest: Creating...
-  cidr:                       "" => "10.0.0.0/24"
+  cidr:                       "" => "{ip}/24"
   dns_nameservers.#:          "" => "2"
-  dns_nameservers.3811298194: "" => "8.8.4.4"
-  dns_nameservers.3817307869: "" => "8.8.8.8"
+  dns_nameservers.3811298194: "" => "{ip}"
+  dns_nameservers.3817307869: "" => "{ip}"
   enable_dhcp:                "" => "<computed>"
   gateway_ip:                 "" => "<computed>"
   ip_version:                 "" => "4"
   name:                       "" => "freytest"
-  network_id:                 "" => "763bbdce-af7d-46bb-b781-cd90c92b0a11"
+  network_id:                 "" => "{uuid}"
   tenant_id:                  "" => "<computed>"
-openstack_networking_router_v2.freytest: Creation complete
 openstack_networking_subnet_v2.freytest: Creation complete
-openstack_networking_router_interface_v2.freytest: Creating...
-  router_id: "" => "ce4b26a6-fc58-4bfe-90d1-f144644181b0"
-  subnet_id: "" => "c9b7d05f-2891-4152-bc27-c337d0b812b6"
-openstack_compute_secgroup_v2.freytest: Creation complete
-openstack_networking_router_interface_v2.freytest: Creation complete
-openstack_compute_floatingip_v2.freytest: Creating...
+openstack_networking_router_interface_v2.freytest_app: Creating...
+  router_id: "" => "{uuid}"
+  subnet_id: "" => "{uuid}"
+openstack_networking_router_interface_v2.freytest_app: Creation complete
+openstack_compute_floatingip_v2.freytest_app: Creating...
   address:     "" => "<computed>"
   fixed_ip:    "" => "<computed>"
   instance_id: "" => "<computed>"
   pool:        "" => "public"
-openstack_compute_floatingip_v2.freytest: Creation complete
-openstack_compute_instance_v2.freytest: Creating...
+openstack_compute_floatingip_v2.freytest_app: Creation complete
+openstack_compute_instance_v2.freytest_app: Creating...
   access_ip_v4:          "" => "<computed>"
   access_ip_v6:          "" => "<computed>"
   flavor_id:             "" => "<computed>"
   flavor_name:           "" => "m1.small"
-  floating_ip:           "" => "128.136.179.159"
+  floating_ip:           "" => "{ip}"
   image_id:              "" => "<computed>"
   image_name:            "" => "ubuntu14.04-LTS"
   key_pair:              "" => "freytest-keypair-1"
-  name:                  "" => "freytest"
+  name:                  "" => "freytest_app"
   network.#:             "" => "1"
   network.0.fixed_ip_v4: "" => "<computed>"
   network.0.fixed_ip_v6: "" => "<computed>"
   network.0.mac:         "" => "<computed>"
   network.0.name:        "" => "<computed>"
   network.0.port:        "" => "<computed>"
-  network.0.uuid:        "" => "763bbdce-af7d-46bb-b781-cd90c92b0a11"
+  network.0.uuid:        "" => "{uuid}"
   security_groups.#:     "" => "1"
   security_groups.0:     "" => "freytest"
-openstack_compute_instance_v2.freytest: Provisioning with 'remote-exec'...
-openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
-openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
-openstack_compute_instance_v2.freytest (remote-exec):   Password: false
-openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
-openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
-openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
-openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
-openstack_compute_instance_v2.freytest (remote-exec):   Password: false
-openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
-openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
-openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
-openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
-openstack_compute_instance_v2.freytest (remote-exec):   Password: false
-openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
-openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
-openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
-openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
-openstack_compute_instance_v2.freytest (remote-exec):   Password: false
-openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
-openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
-openstack_compute_instance_v2.freytest (remote-exec): Connecting to remote host via SSH...
-openstack_compute_instance_v2.freytest (remote-exec):   Host: 128.136.179.159
-openstack_compute_instance_v2.freytest (remote-exec):   User: ubuntu
-openstack_compute_instance_v2.freytest (remote-exec):   Password: false
-openstack_compute_instance_v2.freytest (remote-exec):   Private key: true
-openstack_compute_instance_v2.freytest (remote-exec):   SSH Agent: true
-openstack_compute_instance_v2.freytest (remote-exec): Connected!
-openstack_compute_instance_v2.freytest (remote-exec): sudo: unable to resolve host freytest
-openstack_compute_instance_v2.freytest (remote-exec): /home/ubuntu
-openstack_compute_instance_v2.freytest: Creation complete
+openstack_compute_instance_v2.freytest_app: Provisioning with 'remote-exec'...
+openstack_compute_instance_v2.freytest_app (remote-exec): /home/ubuntu
+openstack_compute_instance_v2.freytest_app: Creation complete
 
 Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
 
@@ -221,8 +192,23 @@ State path: {root}/test/scenario/openstack/.frey/state/terraform.tfstate
 
 Outputs:
 
-  public_address = 128.136.179.159
+  public_address = {ip}
 --> Saved state to '{root}/test/scenario/openstack/.frey/state/terraform.tfstate'
+--> {hostname} - install
+
+PLAY [Install infra-tusd-server] ********************************************** 
+
+GATHERING FACTS *************************************************************** 
+ok: [{ip}]
+
+TASK: [Common | Add APT sources] ********************************************** 
+changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse", "state": "present"}
+changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse", "state": "present"}
+changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "state": "present"}
+
+PLAY RECAP ******************************************************************** 
+{ip}            : ok=2    changed=1    unreachable=0    failed=0   
+
 Done
 Finished
 (maybe) Destroying..

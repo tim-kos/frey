@@ -13,7 +13,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
-echo "FREY:STDIO_SKIP_COMPARE"
 echo "FREY:STDIO_REPLACE_IPS"
 echo "FREY:STDIO_REPLACE_UUIDS"
 echo "FREY:STDIO_REPLACE_REMOTE_EXEC" # (remote-exec): Connecting to remote host via SSH...
@@ -38,8 +37,8 @@ function destroy() {
   .frey/residu > /dev/null 2>&1 || true
 }
 
-destroy
-trap destroy EXIT
+if true; then destroy; fi
+if true; then trap destroy EXIT; fi
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
   --sshkeys "${__dir}" \
@@ -47,6 +46,7 @@ trap destroy EXIT
   --verbose \
   --force-yes \
   --terraform-parallelism=1 \
+  --bailAfter install \
 || false
 
 # "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" remote \
