@@ -82,7 +82,7 @@ for scenario in $(echo prepare ${scenarios}); do
       fi
       if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_UUIDS' |wc -l)" -gt 0 ]; then
         "${cmdSed}" -i \
-          -r 's@[0-9a-f\-]{36}@{uuid}@g' \
+          -r 's@[0-9a-f\-]{32,40}@{uuid}@g' \
         "${curFile}"
       fi
       if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_REMOTE_EXEC' |wc -l)" -gt 0 ]; then
