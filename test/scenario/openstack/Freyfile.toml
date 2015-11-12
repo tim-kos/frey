@@ -8,7 +8,7 @@
 [infra.variable.FREY__RUNTIME__SSH__USER]
 
 [infra.output.public_address]
-  value = "${openstack_compute_instance_v2.freytest.access_ip_v4}"
+  value = "${openstack_compute_instance_v2.freytest_app.access_ip_v4}"
 
 [infra.provider.openstack]
   tenant_name = "${var.FREY_OPENSTACK_TENANT_NAME}"
@@ -16,27 +16,27 @@
   password    = "${var.FREY_OPENSTACK_PASSWORD}"
   auth_url    = "${var.FREY_OPENSTACK_AUTH_URL}"
 
-[infra.resource.openstack_compute_floatingip_v2.freytest]
-  depends_on = ["openstack_networking_router_interface_v2.freytest"]
+[infra.resource.openstack_compute_floatingip_v2.freytest_app]
+  depends_on = ["openstack_networking_router_interface_v2.freytest_app"]
   pool       = "public"
 
-[infra.resource.openstack_compute_instance_v2.freytest]
+[infra.resource.openstack_compute_instance_v2.freytest_app]
   flavor_name     = "m1.small"
-  floating_ip     = "${openstack_compute_floatingip_v2.freytest.address}"
+  floating_ip     = "${openstack_compute_floatingip_v2.freytest_app.address}"
   image_name      = "ubuntu14.04-LTS"
   key_pair        = "${openstack_compute_keypair_v2.freytest.name}"
-  name            = "freytest"
+  name            = "freytest_app"
   security_groups = ["${openstack_compute_secgroup_v2.freytest.name}"]
-  [infra.resource.openstack_compute_instance_v2.freytest.network]
+  [infra.resource.openstack_compute_instance_v2.freytest_app.network]
     uuid = "${openstack_networking_network_v2.freytest.id}"
 
-    [infra.resource.openstack_compute_instance_v2.freytest.provisioner.remote-exec]
-      inline = [
-        "sudo pwd",
-      ]
-      [infra.resource.openstack_compute_instance_v2.freytest.provisioner.remote-exec.connection]
-        key_file = "${var.FREY__RUNTIME__SSH__KEYPRV_FILE}"
-        user     = "${var.FREY__RUNTIME__SSH__USER}"
+  [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec]
+    inline = [
+      "sudo pwd",
+    ]
+    [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec.connection]
+      key_file = "${var.FREY__RUNTIME__SSH__KEYPRV_FILE}"
+      user     = "${var.FREY__RUNTIME__SSH__USER}"
 
 [infra.resource.openstack_compute_keypair_v2.freytest]
   name       = "freytest-keypair-1"
@@ -60,7 +60,7 @@
   admin_state_up = "true"
   name           = "freytest"
 
-[infra.resource.openstack_networking_router_interface_v2.freytest]
+[infra.resource.openstack_networking_router_interface_v2.freytest_app]
   router_id = "${openstack_networking_router_v2.freytest.id}"
   subnet_id = "${openstack_networking_subnet_v2.freytest.id}"
 
