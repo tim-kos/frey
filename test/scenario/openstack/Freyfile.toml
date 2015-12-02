@@ -25,8 +25,9 @@
 # network
 [infra.resource.openstack_networking_network_v2.freytest]
   admin_state_up = "true"
+  name           = "freytest"
   # This helps guarantee launch order - useful for acceptance tests:
-  name           = "testhelper_${openstack_compute_keypair_v2.freytest.id}"
+  depends_on     = [ "openstack_compute_keypair_v2.freytest" ]
 
 # subnet
 [infra.resource.openstack_networking_subnet_v2.freytest]
@@ -34,8 +35,10 @@
   dns_nameservers = ["8.8.8.8", "8.8.4.4"]
   ip_version      = 4
   network_id      = "${openstack_networking_network_v2.freytest.id}"
+  name           = "freytest"
   # This helps guarantee launch order - useful for acceptance tests:
-  name            = "testhelper_${openstack_networking_network_v2.freytest.id}"
+  depends_on     = [ "openstack_networking_network_v2.freytest" ]
+
 
 # router
 [infra.resource.openstack_networking_router_v2.freytest]
