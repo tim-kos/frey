@@ -92,7 +92,7 @@ for scenario in $(echo prepare ${scenarios}); do
         "${curFile}"
       fi
       if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_REMOTE_EXEC' |wc -l)" -gt 0 ]; then
-        egrep -v 'remote-exec): [ a-zA-Z]' "${curFile}" > "${__sysTmpDir}/frey-filtered.txt"
+        egrep -v 'remote-exec\): [ a-zA-Z]' "${curFile}" > "${__sysTmpDir}/frey-filtered.txt"
         mv "${__sysTmpDir}/frey-filtered.txt" "${curFile}"
       fi
     done
