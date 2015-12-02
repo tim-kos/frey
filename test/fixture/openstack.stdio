@@ -73,7 +73,7 @@ Path: {root}/test/scenario/openstack/.frey/residu/terraform.plan
 
 + openstack_networking_network_v2.freytest
     admin_state_up: "" => "true"
-    name:           "" => "testhelper_${openstack_compute_keypair_v2.freytest.id}"
+    name:           "" => "freytest"
     shared:         "" => "<computed>"
     tenant_id:      "" => "<computed>"
 
@@ -95,26 +95,26 @@ Path: {root}/test/scenario/openstack/.frey/residu/terraform.plan
     enable_dhcp:                "" => "<computed>"
     gateway_ip:                 "" => "<computed>"
     ip_version:                 "" => "4"
-    name:                       "" => "testhelper_${openstack_networking_network_v2.freytest.id}"
+    name:                       "" => "freytest"
     network_id:                 "" => "${openstack_networking_network_v2.freytest.id}"
     tenant_id:                  "" => "<computed>"
 Plan: 8 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/openstack/.frey/residu/terraform.plan'
 --> {hostname} - backup
 --> {hostname} - launch
-openstack_compute_keypair_v2.freytest: Creating...
-  name:       "" => "freytest"
-  public_key: "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe33HmuH6x/JLVJAkPg9EYHCdFoILCMJefBzIIWJ0BKlTfZPHHndFhyKFA7PStMiwntkd1XcqP5kL2VyJXHB6gMNHcqQ4XBEK8hDdESK3r1Gp4YP2RzqO5KEaQzjw0zrEr8dWm8kzAjhlkqq89sAFA+FC833wdW5NCGT+aQWKhdcJVhl89ppfPgJVXpeQ5ZuGWvOdxJM3h1V0GL8I+0NFb7MuOEneGezth1VIOL+eJJeAMzBWcXO6cAWZG31JkCuNpOG9vDhjYPim+tsozTdRg6g7R0Fmikxw3c3PFEOVKSmDXbOKLVTaXCYvDR0wOM+cLFOzSPl7Dt4aAMBT2h1xL {user}@openstack.freyproject.io\n"
-openstack_compute_keypair_v2.freytest: Creation complete
 openstack_networking_router_v2.freytest: Creating...
   admin_state_up:   "" => "1"
   external_gateway: "" => "{uuid}"
   name:             "" => "freytest"
   tenant_id:        "" => "<computed>"
 openstack_networking_router_v2.freytest: Creation complete
+openstack_compute_keypair_v2.freytest: Creating...
+  name:       "" => "freytest"
+  public_key: "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe33HmuH6x/JLVJAkPg9EYHCdFoILCMJefBzIIWJ0BKlTfZPHHndFhyKFA7PStMiwntkd1XcqP5kL2VyJXHB6gMNHcqQ4XBEK8hDdESK3r1Gp4YP2RzqO5KEaQzjw0zrEr8dWm8kzAjhlkqq89sAFA+FC833wdW5NCGT+aQWKhdcJVhl89ppfPgJVXpeQ5ZuGWvOdxJM3h1V0GL8I+0NFb7MuOEneGezth1VIOL+eJJeAMzBWcXO6cAWZG31JkCuNpOG9vDhjYPim+tsozTdRg6g7R0Fmikxw3c3PFEOVKSmDXbOKLVTaXCYvDR0wOM+cLFOzSPl7Dt4aAMBT2h1xL {user}@openstack.freyproject.io\n"
+openstack_compute_keypair_v2.freytest: Creation complete
 openstack_networking_network_v2.freytest: Creating...
   admin_state_up: "" => "true"
-  name:           "" => "testhelper_freytest"
+  name:           "" => "freytest"
   shared:         "" => "<computed>"
   tenant_id:      "" => "<computed>"
 openstack_networking_network_v2.freytest: Creation complete
@@ -126,7 +126,7 @@ openstack_networking_subnet_v2.freytest: Creating...
   enable_dhcp:                "" => "<computed>"
   gateway_ip:                 "" => "<computed>"
   ip_version:                 "" => "4"
-  name:                       "" => "testhelper_{uuid}"
+  name:                       "" => "freytest"
   network_id:                 "" => "{uuid}"
   tenant_id:                  "" => "<computed>"
 openstack_networking_subnet_v2.freytest: Creation complete
