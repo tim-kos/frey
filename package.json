@@ -31,7 +31,7 @@
     "rc": "^1.1.5",
     "semver": "^5.0.3",
     "toml": "^2.3.0",
-    "update-notifier": "^0.5.0",
+    "update-notifier": "^0.6.0",
     "yargs": "^3.29.0",
     "yesno": "0.0.1"
   },
