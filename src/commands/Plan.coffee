@@ -38,7 +38,7 @@ class Plan extends Command
       if stdout.match /No changes/
         return cb null
 
-      m = stdout.match /Plan: (\d+) to add, (\d+) to change, (\d+) to destroy/
+      m = stdout.match /(\d+) to add, (\d+) to change, (\d+) to destroy/
       if !m
         return cb new Error "Unable to parse add/change/destroy"
 
