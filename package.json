@@ -1,6 +1,6 @@
 {
   "name": "frey",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Automated infrastructure CLI",
   "main": "lib/Frey",
   "scripts": {
