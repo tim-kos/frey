@@ -1,5 +1,9 @@
 #!/usr/bin/env coffee
-Frey           = require "../src/Frey"
+try
+  Frey = require "../src/Frey"
+catch error
+  Frey = require "../lib/Frey"
+
 debug          = require("depurar")("frey")
 yargs          = require "yargs"
 updateNotifier = require "update-notifier"
