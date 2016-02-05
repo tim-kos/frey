@@ -1,6 +1,6 @@
 var debug = require('depurar')('frey')
-var { spawn } = require('child_process')
 var chalk = require('chalk')
+var spawn = require('child_process').spawn
 var _ = require('lodash')
 var flatten = require('flat')
 var inflection = require('inflection')
