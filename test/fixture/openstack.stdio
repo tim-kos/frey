@@ -7,7 +7,7 @@ FREY:STDIO_REPLACE_REMOTE_EXEC
 --> {hostname} - prepare
 Found 'terraform' with version '0.6.6'
 Found 'terraformInventory' with version '0.6.0-pre'
-Found 'pip' with version '7.1.2'
+Found 'pip' with version {{global_pip_version}}
 Found 'ansible' with version '1.9.2'
 --> {hostname} - refresh
 --> {hostname} - validate

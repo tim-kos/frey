@@ -69,6 +69,7 @@ for scenario in $(echo prepare ${scenarios}); do
         -e "s@${USER:-travis}@{user}@g" "${curFile}" \
         -e "s@${__sysTmpDir}@{tmpdir}@g" "${curFile}" \
         -e "s@${HOSTNAME}@{hostname}@g" "${curFile}" \
+        -e "s@'pip' with version .*@'pip' with version {{global_pip_version}}@g" "${curFile}" \
         -e "s@${__os}@{os}@g" "${curFile}" \
         -e "s@${__arch}@{arch}@g" "${curFile}" \
         -e "s@OSX@{os}@g" "${curFile}" \
