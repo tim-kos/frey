@@ -37,43 +37,26 @@ function destroy() {
   .frey/residu > /dev/null 2>&1 || true
 }
 
-if false; then destroy; fi
-if false; then trap destroy EXIT; fi
+if true; then destroy; fi
+if true; then trap destroy EXIT; fi
 
-# "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
-#   --sshkeys-dir "${__dir}" \
-#   --no-color \
-#   --verbose \
-#   --force-yes \
-#   --terraform-parallelism=1 \
-#   --bailAfter install \
-# || false
-#
-# exit 0
-
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
+"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
   --sshkeys-dir "${__dir}" \
   --no-color \
   --verbose \
   --force-yes \
   --terraform-parallelism=1 \
-  --bail \
+  --bailAfter install \
 || false
 
-# "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" remote \
+# If you want to test just the install (don't forget to disable destroys):
+#
+# "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
 #   --sshkeys-dir "${__dir}" \
 #   --no-color \
 #   --verbose \
 #   --force-yes \
-#   --bail \
-# || false
-
-#
-# "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
-#   --sshkeys-dir "${__sysTmpDir}" \
-#   --no-color \
-#   --verbose \
-#   --force-yes \
+#   --terraform-parallelism=1 \
 #   --bail \
 # || false
 
