@@ -150,6 +150,8 @@ liftOff.launch
         console.error ""
         console.error err.details
         console.error ""
-        process.exit 1
-      else
-        console.log "Done"
+      process.exit 1
+      return
+
+    console.log "Done"
+    process.exit 0
