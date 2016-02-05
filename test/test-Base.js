@@ -1,6 +1,6 @@
 var Base = require('../src/Base')
 var expect = require('chai').expect
-var debug = require('depurar')('frey')
+// var debug = require('depurar')('frey')
 
 describe('Base', function () {
   this.timeout(10000)
@@ -32,6 +32,7 @@ describe('Base', function () {
       ]
 
       return base.run(function (err, result) {
+        expect(err).to.equal(null)
         expect(output).to.deep.equal([
           'function _a called with [object Object]',
           'function _b called with output:a',

@@ -1,7 +1,7 @@
 var Command = require('../Command')
 var chalk = require('chalk')
-var _ = require('lodash')
-var debug = require('depurar')('frey')
+// var _ = require('lodash')
+// var debug = require('depurar')('frey')
 
 class Install extends Command {
   constructor (name, options, runtime) {

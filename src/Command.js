@@ -1,5 +1,5 @@
 var debug = require('depurar')('frey')
-var { spawn, exec } = require('child_process')
+var { spawn } = require('child_process')
 var chalk = require('chalk')
 var _ = require('lodash')
 var flatten = require('flat')
@@ -86,8 +86,7 @@ class Command extends Base {
       '-o', 'errexit',
       '-o', 'nounset',
       '-c'
-    ].concat( scriptArgs
-    )
+    ].concat(scriptArgs)
 
     return this._exe(scriptArgs, cmdOpts, cb)
   }
@@ -110,7 +109,7 @@ class Command extends Base {
     debug({
       // opts: opts
       cwd: opts.cwd,
-      cmdArgs:cmdArgs
+      cmdArgs: cmdArgs
     })
 
     var cmd = cmdArgs.shift()
@@ -174,9 +173,7 @@ class Command extends Base {
 
     var delimiter = '__'
 
-    var flat = flatten( obj,
-      {delimiter: delimiter
-    })
+    var flat = flatten(obj, {delimiter: delimiter})
 
     var environment = {}
     for (var key in flat) {

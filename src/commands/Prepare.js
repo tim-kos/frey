@@ -38,8 +38,7 @@ class Prepare extends Command {
       var cmd = [
         `ssh-keygen -b 2048 -t rsa -C '${props.email}' -f '${props.privkey}' -q -N ''`,
         `rm -f '${props.privkey}.pub'`
-      ].join( ' && '
-      )
+      ].join(' && ')
       return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
     })
   }
@@ -56,8 +55,7 @@ class Prepare extends Command {
       var cmd = [
         `echo -n $(ssh-keygen -yf '${props.privkey}') > '${props.pubkey}'`,
         `echo ' ${props.email}' >> '${props.pubkey}'`
-      ].join( ' && '
-      )
+      ].join(' && ')
 
       return this._exeScript(cmd, {verbose: true, limitSamples: false, stdin: 0}, cb)
     })
@@ -121,7 +119,7 @@ class Prepare extends Command {
         debug({
           msg: `Continuing after failed command ${cmd}. ${err}`,
           exe: props.exe,
-          foundVersion:foundVersion,
+          foundVersion: foundVersion,
           err: err,
           stdout: stdout
         })

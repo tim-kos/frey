@@ -60,12 +60,15 @@ class Refresh extends Command {
   _splitToml (tomlMerged, cb) {
     var filesWritten = []
 
-    return async.series( [
+    return async.series([
       (callback) => {
         if (!(tomlMerged.infra != null)) {
           debug('No infra instructions found in merged toml')
           fs.unlink(this.runtime.paths.infraFile, function (err) {
-            return callback(null) // That's not fatal
+            if (err) {
+               // That's not fatal
+            }
+            return callback(null)
           })
           return
         }
@@ -80,10 +83,13 @@ class Refresh extends Command {
       },
       (callback) => {
         var ref
-        if (!((((ref = tomlMerged.install) != null) ? ref.config: undefined) != null)) {
+        if (!((((ref = tomlMerged.install) != null) ? ref.config : undefined) != null)) {
           debug('No config instructions found in merged toml')
           fs.unlink(this.runtime.paths.ansibleCfg, function (err) {
-            return callback(null) // That's not fatal
+            if (err) {
+              // That's not fatal
+            }
+            return callback(null)
           })
           return
         }
@@ -104,10 +110,13 @@ class Refresh extends Command {
       },
       (callback) => {
         var ref
-        if (!((((ref = tomlMerged.install) != null) ? ref.playbooks: undefined) != null)) {
+        if (!((((ref = tomlMerged.install) != null) ? ref.playbooks : undefined) != null)) {
           debug('No install playbook instructions found in merged toml')
           fs.unlink(this.runtime.paths.playbookFile, function (err) {
-            return callback(null) // That's not fatal
+            if (err) {
+               // That's not fatal
+            }
+            return callback(null)
           })
           return
         }

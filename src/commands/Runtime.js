@@ -1,9 +1,9 @@
 var Command = require('../Command')
-var mkdirp = require('mkdirp')
-var semver = require('semver')
+// var mkdirp = require('mkdirp')
+// var semver = require('semver')
 var async = require('async')
 var fs = require('fs')
-var debug = require('depurar')('frey')
+// var debug = require('depurar')('frey')
 var os = require('os')
 
 class Runtime extends Command {
@@ -39,7 +39,7 @@ class Runtime extends Command {
     // be in the same order as the original. Hence, use the last/longest/closest
     // path that has Git.
     return async.reject(paths, fs.stat, function (results) {
-      if (!(((typeof results !== 'undefined' && results !== null) ? results.length: undefined) != null)) {
+      if (!(((typeof results !== 'undefined' && results !== null) ? results.length : undefined) != null)) {
         return cb(undefined)
       }
 
@@ -143,8 +143,7 @@ class Runtime extends Command {
         this.runtime.versions.terraform,
         this.runtime.os.platform,
         `${this.runtime.os.arch}.zip`
-      ].join( '_'
-      ),
+      ].join('_'),
       cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
         var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
@@ -159,8 +158,7 @@ class Runtime extends Command {
           "> '{{{zip}}}'"
         ].join(''),
         "unzip -o '{{{zip}}}'"
-      ].join( ' && '
-      )
+      ].join(' && ')
     })
 
     this.runtime.deps.push({
@@ -173,8 +171,7 @@ class Runtime extends Command {
         this.runtime.versions.terraformInventory,
         this.runtime.os.platform,
         `${this.runtime.os.arch}.zip`
-      ].join( '_'
-      ),
+      ].join('_'),
       cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
         var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
@@ -189,11 +186,9 @@ class Runtime extends Command {
           `v${this.runtime.versions.terraformInventory}/`,
           "{{{zip}}}'",
           "> '{{{zip}}}'"
-        ].join( ''
-        ),
+        ].join(''),
         "unzip -o '{{{zip}}}'"
-      ].join( ' && '
-      )
+      ].join(' && ')
     })
 
     this.runtime.deps.push({
@@ -229,8 +224,7 @@ class Runtime extends Command {
         '--upgrade',
         '--disable-pip-version-check',
         `ansible==${this.runtime.versions.ansible}`
-      ].join( ' '
-      )
+      ].join(' ')
     })
 
     return cb(null)

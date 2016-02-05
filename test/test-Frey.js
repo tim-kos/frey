@@ -58,10 +58,10 @@ describe('Frey', function () {
     it('should not add prepare if the command was prepare', function (done) {
       var frey = new Frey()
 
-      var options =
-        {_        : ['prepare'],
+      var options = {
+        _: ['prepare'],
         bailAfter: 'prepare'
-        }
+      }
 
       return frey._composeChain(options, function (err, options) {
         expect(err).to.equal(null)
@@ -100,7 +100,7 @@ describe('Frey', function () {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
-          'install', 'deploy', 'restart', 'show',
+          'install', 'deploy', 'restart', 'show'
         ])
         return done()
       })
@@ -110,7 +110,7 @@ describe('Frey', function () {
       var frey = new Frey()
 
       var options =
-        {_   : ['deploy'],
+        {_: ['deploy'],
         bail: true
         }
 
@@ -128,10 +128,10 @@ describe('Frey', function () {
     return it('should return some links for bailAfter', function (done) {
       var frey = new Frey()
 
-      var options =
-        {_        : ['refresh'],
+      var options = {
+        _: ['refresh'],
         bailAfter: 'plan'
-        }
+      }
 
       return frey._composeChain(options, function (err, options) {
         expect(err).to.equal(null)

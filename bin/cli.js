@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var ref
 var Frey = require('../src/Frey')
-var debug = require('depurar')('frey')
+// var debug = require('depurar')('frey')
 var yargs = require('yargs')
 var updateNotifier = require('update-notifier')
 var pkg = require('../package.json')
@@ -103,7 +103,7 @@ for (var i = 0, cmd; i < chain.length; i++) {
 }
 
 // Now add any remaining commands, not added already
-for (var cmd in commands) {
+for (cmd in commands) {
   description = commands[cmd]
   if (done.indexOf(cmd) < 0) {
     yargs.command(cmd, description)
@@ -137,12 +137,11 @@ var liftOff = new LiftOff({
   configName: 'Freyfile',
   processTitle: 'frey',
   extensions: {'.toml': null}
+})
 
-
-});liftOff.launch({
+liftOff.launch({
   cwd: argv.recipeDir
 }, function (env) {
-
   if (!(env.configBase != null)) {
     var msg = 'Could not find a Freyfile.toml in current directory or upwards, or in recipe directory.'
     throw new Error(msg)

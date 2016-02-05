@@ -1,9 +1,9 @@
 var Command = require('../Command')
-var debug = require('depurar')('frey')
-var fs = require('fs')
 var chalk = require('chalk')
-var _ = require('lodash')
-var async = require('async')
+// var debug = require('depurar')('frey')
+// var fs = require('fs')
+// var _ = require('lodash')
+// var async = require('async')
 
 class Plan extends Command {
   constructor (name, options, runtime) {
@@ -60,13 +60,13 @@ class Plan extends Command {
         return cb(new Error('Unable to parse add/change/destroy'))
       }
 
-      var [ _, add, change, destroy ] = m
+      var [ , add, change, destroy ] = m
 
-      this.runtime.launchPlan =
-        {add: add,
+      this.runtime.launchPlan = {
+        add: add,
         change: change,
-        destroy:destroy
-        }
+        destroy: destroy
+      }
 
       return cb(null)
     })

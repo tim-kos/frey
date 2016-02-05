@@ -1,5 +1,5 @@
 var Command = require('../Command')
-var debug = require('depurar')('frey')
+// var debug = require('depurar')('frey')
 var chalk = require('chalk')
 
 class Launch extends Command {

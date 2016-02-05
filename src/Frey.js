@@ -1,11 +1,11 @@
-var Depurar = require('depurar')
-var debug = Depurar('frey')
-var info = Depurar('frey')
+// var Depurar = require('depurar')
+// var debug = Depurar('frey')
+// var info = Depurar('frey')
 var inflection = require('inflection')
 var async = require('async')
-var util = require('util')
+// var util = require('util')
 var _ = require('lodash')
-var fs = require('fs')
+// var fs = require('fs')
 var os = require('os')
 var path = require('path')
 var mkdirp = require('mkdirp')
@@ -13,6 +13,8 @@ var chalk = require('chalk')
 var Base = require('./Base')
 var Mustache = require('mustache')
 var osHomedir = require('os-homedir')
+// var commands = require('../src/commands')
+var chain = require('../src/chain')
 
 class Frey extends Base {
   constructor (options) {
@@ -45,8 +47,8 @@ class Frey extends Base {
 
   _normalize (options, nextCb) {
     // Render interdependent arguments
-    for (var key in options) {
-      var val = options[key]
+    for (var k1 in options) {
+      var val = options[k1]
       if (val === `${val}`) {
         options[key] = Mustache.render(val, options)
         if (options[key].indexOf('{{{') > -1) {
@@ -56,12 +58,12 @@ class Frey extends Base {
     }
 
     // Apply simple functions
-    for (var key in options) {
-      val = options[key]
+    for (var k2 in options) {
+      val = options[k2]
       if (`${val}`.match(/\|basename$/)) {
         val = val.replace(/\|basename$/, '')
         val = path.basename(val)
-        options[key] = val
+        options[k2] = val
       }
     }
 
@@ -84,7 +86,7 @@ class Frey extends Base {
   }
 
   _setup (options, nextCb) {
-    return async.parallel( [
+    return async.parallel([
       function (callback) {
         return mkdirp(options.toolsDir, callback)
       }
@@ -138,7 +140,7 @@ class Frey extends Base {
     var className = inflection.classify(command)
     var p = `./commands/${className}`
     var Class = require(p)
-    var obj = new c(command, this.options, this.runtime)
+    var obj = new Class(command, this.options, this.runtime)
     var func = obj.run.bind(obj)
 
     this._out(chalk.gray('--> '))

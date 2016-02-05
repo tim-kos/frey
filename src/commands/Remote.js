@@ -1,7 +1,7 @@
 var Command = require('../Command')
 var chalk = require('chalk')
-var _ = require('lodash')
 var debug = require('depurar')('frey')
+// var _ = require('lodash')
 
 class Remote extends Command {
   constructor (name, options, runtime) {
@@ -57,7 +57,7 @@ class Remote extends Command {
   _gatherArgs (cargo, cb) {
     var args = []
 
-    debug({cargo:cargo})
+    debug({cargo: cargo})
     args.push(`${this.bootCargo._gatherHost}`)
     args.push('-i', `${this.runtime.ssh.keyprv_file}`)
     args.push('-l', `${this.runtime.ssh.user}`)
@@ -95,8 +95,8 @@ class Remote extends Command {
       }
 
     debug({
-      opts:opts,
-      cmd:cmd
+      opts: opts,
+      cmd: cmd
     })
 
     return this._exe(cmd, opts, function (err, stdout) {
