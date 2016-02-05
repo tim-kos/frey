@@ -67,6 +67,8 @@ for scenario in $(echo prepare ${scenarios}); do
         -e "s@{home}/build/kvz/fre{coffee}@{coffee}@g" "${curFile}" \
         -e "s@${HOME:-/home/travis}@{home}@g" "${curFile}" \
         -e "s@${USER:-travis}@{user}@g" "${curFile}" \
+        -e "s@travis@{user}@g" "${curFile}" \
+        -e "s@kvz@{user}@g" "${curFile}" \
         -e "s@${__sysTmpDir}@{tmpdir}@g" "${curFile}" \
         -e "s@${HOSTNAME}@{hostname}@g" "${curFile}" \
         -e "s@'pip' with version .*@'pip' with version {{global_pip_version}}@g" "${curFile}" \
