@@ -22,7 +22,7 @@ Your plan was also saved to the path below. Call the "apply" subcommand
 with this plan file and Terraform will exactly execute this execution
 plan.
 
-Path: {root}/test/scenario/openstack/.frey/residu/terraform.plan
+Path: {root}/test/scenario/openstack/Frey-residu-terraform.plan
 
 + openstack_compute_floatingip_v2.freytest_app
     address:     "" => "<computed>"
@@ -99,7 +99,7 @@ Path: {root}/test/scenario/openstack/.frey/residu/terraform.plan
     network_id:                 "" => "${openstack_networking_network_v2.freytest.id}"
     tenant_id:                  "" => "<computed>"
 Plan: 8 to add, 0 to change, 0 to destroy.
---> Saved plan as '{root}/test/scenario/openstack/.frey/residu/terraform.plan'
+--> Saved plan as '{root}/test/scenario/openstack/Frey-residu-terraform.plan'
 --> {hostname} - backup
 --> {hostname} - launch
 openstack_compute_keypair_v2.freytest: Creating...
@@ -187,12 +187,12 @@ below. This state is required to modify and destroy your
 infrastructure, so keep it safe. To inspect the complete state
 use the `terraform show` command.
 
-State path: {root}/test/scenario/openstack/.frey/state/terraform.tfstate
+State path: {root}/test/scenario/openstack/Frey-state-terraform.tfstate
 
 Outputs:
 
   public_address = {ip}
---> Saved state to '{root}/test/scenario/openstack/.frey/state/terraform.tfstate'
+--> Saved state to '{root}/test/scenario/openstack/Frey-state-terraform.tfstate'
 --> {hostname} - install
 
 PLAY [Install app servers] **************************************************** 

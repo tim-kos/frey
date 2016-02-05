@@ -21,7 +21,7 @@ Your plan was also saved to the path below. Call the "apply" subcommand
 with this plan file and Terraform will exactly execute this execution
 plan.
 
-Path: {root}/test/scenario/dynamodb/.frey/residu/terraform.plan
+Path: {root}/test/scenario/dynamodb/Frey-residu-terraform.plan
 
 + aws_dynamodb_table.basic-dynamodb-table
     arn:                                                   "" => "<computed>"
@@ -47,7 +47,7 @@ Path: {root}/test/scenario/dynamodb/.frey/residu/terraform.plan
     read_capacity:                                         "" => "20"
     write_capacity:                                        "" => "20"
 Plan: 1 to add, 0 to change, 0 to destroy.
---> Saved plan as '{root}/test/scenario/dynamodb/.frey/residu/terraform.plan'
+--> Saved plan as '{root}/test/scenario/dynamodb/Frey-residu-terraform.plan'
 --> {hostname} - backup
 I am a rad custom backup script performing some nice backup action!
 --> {hostname} - launch
@@ -83,12 +83,12 @@ below. This state is required to modify and destroy your
 infrastructure, so keep it safe. To inspect the complete state
 use the `terraform show` command.
 
-State path: {root}/test/scenario/dynamodb/.frey/state/terraform.tfstate
+State path: {root}/test/scenario/dynamodb/Frey-state-terraform.tfstate
 
 Outputs:
 
   arn = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
---> Saved state to '{root}/test/scenario/dynamodb/.frey/state/terraform.tfstate'
+--> Saved state to '{root}/test/scenario/dynamodb/Frey-state-terraform.tfstate'
 Done
 Finished
 (maybe) Destroying..

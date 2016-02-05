@@ -17,12 +17,10 @@ Commands:
   remote      Execute a remote command - or opens console
 
 Options:
-  --app                    Name of application for which we're creating infrastructure  [string] [default: "{{{cwd}}}|basename"]
-  --recipe                 Directory that contains the Freyfile  [string] [default: "{{{cwd}}}"]
-  --state                  Directory that contains the state. This needs to be comitted to Git  [string] [default: "{{{cwd}}}/.frey/state"]
-  --residu                 Directory that contains residue. This needs to be ignored by Git  [string] [default: "{{{cwd}}}/.frey/residu"]
-  --sshkeys                Directory that contains SSH keys. This needs to be ignored by Git  [string] [default: "{{{home}}}/.ssh"]
-  --tools                  Directory that contains the tools. This needs to be ignored by Git  [string] [default: "{{{home}}}/.frey/tools"]
+  --recipeDir              Directory that contains the Freyfile.toml. Frey will traverse upwards if empty.  [string]
+  --app                    Name of application for which we're creating infrastructure  [string] [default: "{{{recipeDir}}}|basename"]
+  --sshkeysDir             Directory that contains SSH keys. This needs to be ignored by Git  [string] [default: "{{{home}}}/.ssh"]
+  --toolsDir               Directory that contains the tools. This needs to be ignored by Git  [string] [default: "{{{home}}}/.frey/tools"]
   --force-yes              Answer yes to all questions (dangerous!)  [boolean] [default: false]
   --terraform-parallelism  Limit the number of concurrent operations. Useful for consistent test output  [default: 10]
   --tags                   A list of tags to execute in isolation  [string]
