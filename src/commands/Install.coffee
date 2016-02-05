@@ -47,7 +47,7 @@ class Install extends Command
     cmd = cmd.concat @bootCargo._gatherArgs
 
     opts =
-      env  : @bootCargo._gatherEnv
+      env : @bootCargo._gatherEnv
 
     @_exe cmd, opts, (err, stdout) ->
       if err

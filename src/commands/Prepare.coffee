@@ -57,6 +57,10 @@ class Prepare extends Command
       @runtime.ssh.keypub_fingerprint = "#{stdout}".trim()
       cb err
 
+  _makePermission: (props, cb) ->
+    debug "perming #{props.file} #{props.mode}"
+    fs.chmod props.file, props.mode, cb
+
   _makeDir: (props, cb) ->
     mkdirp props.dir, (err) ->
       if err

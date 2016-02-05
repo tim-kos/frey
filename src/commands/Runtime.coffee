@@ -108,8 +108,19 @@ class Runtime extends Command
       email       : "#{@runtime.ssh.email}"
 
     @runtime.deps.push
-      type        : "PubkeyFingerprint"
+      type        : "Privkey"
+      privkey     : "#{@runtime.ssh.keyprv_file}"
       pubkey      : "#{@runtime.ssh.keypub_file}"
+
+    @runtime.deps.push
+      type        : "Permission"
+      mode        : 0o400
+      file        : "#{@runtime.ssh.keypub_file}"
+
+    @runtime.deps.push
+      type        : "Permission"
+      mode        : 0o400
+      file        : "#{@runtime.ssh.keyprv_file}"
 
     @runtime.deps.push
       type        : "App"
