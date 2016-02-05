@@ -7,3 +7,4 @@ test/scenario/*/.frey/residu/
 test/scenario/*/.frey/state/
 
 test/scenario/converter/Freyfile.toml
+frey-residu*

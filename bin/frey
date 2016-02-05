@@ -8,32 +8,28 @@ debug          = require("depurar")("frey")
 yargs          = require "yargs"
 updateNotifier = require "update-notifier"
 pkg            = require "../package.json"
+LiftOff        = require "liftoff"
 updateNotifier(pkg: pkg).notify(defer: false)
 
 yargs
   .usage "Usage: frey <command> [options]"
   .example "frey backup -d ./envs/production", "backup platform described in ./envs/production"
   .options
-    app:
-      default : "{{{cwd}}}|basename"
-      nargs   : 1
-      type    : "string"
-      describe: "Name of application for which we're creating infrastructure"
     recipe:
       default : "{{{cwd}}}"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the Freyfile"
+    app:
+      default : "{{{recipe}}}|basename"
+      nargs   : 1
+      type    : "string"
+      describe: "Name of application for which we're creating infrastructure"
     state:
-      default : "{{{cwd}}}/.frey/state"
+      default : "{{{recipe}}}/.frey/state"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the state. This needs to be comitted to Git"
-    residu:
-      default : "{{{cwd}}}/.frey/residu"
-      nargs   : 1
-      type    : "string"
-      describe: "Directory that contains residue. This needs to be ignored by Git"
     sshkeys:
       default : "{{{home}}}/.ssh"
       nargs   : 1
@@ -116,23 +112,41 @@ if argv._?[0]? && argv._?[0] not of Frey.commands
   console.error "--> Command '#{argv._?[0]}' is not recognized"
   process.exit 1
 
-# Apply any rc options
-options = require("rc")("frey", {}, argv)
+# For Frey, LiftOff:
+#  - Scans for the closest Freyfile.toml
+#  - Switches to local npm install if available
+liftOff = new LiftOff
+  name        : "frey"
+  configName  : "Freyfile"
+  processTitle: "frey"
+  extensions  :
+    ".toml": null
 
-# Instantiate Frey with options
-frey = new Frey options
+liftOff.launch
+  cwd: argv.recipe,
+, (env) ->
 
-# Bombs away
-frey.run (err) ->
-  if err
-    # yargs.showHelp()
-    console.error ""
-    console.error "--> Exiting with error: #{err.message}"
-    if err.details?
-      console.error "--> Details:"
+  # debug
+  #   env :env
+  #   argv:argv
+  #   also:this
+  # process.exit 0
+
+  # Let LiftOff override the recipe dir
+  argv.recipe = env.configBase
+  frey = new Frey argv
+
+  # Bombs away
+  frey.run (err) ->
+    if err
+      # yargs.showHelp()
       console.error ""
-      console.error err.details
-    console.error ""
-    process.exit 1
-  else
-    console.log "Done"
+      console.error "--> Exiting with error: #{err.message}"
+      if err.details?
+        console.error "--> Details:"
+        console.error ""
+        console.error err.details
+        console.error ""
+        process.exit 1
+      else
+        console.log "Done"

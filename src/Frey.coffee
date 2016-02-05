@@ -64,6 +64,7 @@ class Frey extends Base
     options._    ?= []
     options._[0] ?= "prepare"
     options.cwd  ?= process.cwd()
+    options.tmp  ?= os.tmpdir()
     options.home ?= osHomedir()
     options.user ?= process.env.USER
     options.root ?= "#{__dirname}/.."
@@ -75,7 +76,7 @@ class Frey extends Base
     for key, val of options
       if val == "#{val}"
         options[key] = Mustache.render val, options
-        if options[key].indexOf("{{") > -1
+        if options[key].indexOf("{{{") > -1
           return nextCb new Error "Unable to render vars in '#{key}' '#{options[key]}'"
 
     # Apply simple functions

@@ -13,7 +13,7 @@ class Command extends Base
     @name    = name
     @options = options
     @runtime = runtime
-    @dir     = @options.residu
+    @dir     = @options.cwd
 
   _cmdYesNo: (cmd, cb) ->
     @promptYesNo "May I run '#{cmd}' for you? [yes|No]", (ok) =>
@@ -91,9 +91,10 @@ class Command extends Base
       env  : @_buildChildEnv cmdOpts.env
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
 
-    # debug
-    #   opts   :opts.stdio
-    #   cmdArgs:cmdArgs
+    debug
+      # opts   :opts
+      cwd    :opts.cwd
+      cmdArgs:cmdArgs
 
     cmd        = cmdArgs.shift()
     bash       = spawn cmd, cmdArgs, opts

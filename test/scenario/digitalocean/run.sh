@@ -33,7 +33,7 @@ function destroy() {
     -no-color \
     -state=.frey/state/terraform.tfstate \
     -force \
-  .frey/residu #> /dev/null 2>&1 || true
+  . #> /dev/null 2>&1 || true
     # -target=digitalocean_droplet.freytest-web \
 }
 

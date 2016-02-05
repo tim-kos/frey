@@ -168,6 +168,8 @@ Frey is intended to service many use-cases and we'll work on removing some of th
 
 ## Todo
 
+ - [x] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
+ - [x] Switch to local npm install if available via LiftOff
  - [x] Coveralls
  - [x] Chalk
  - [x] Glob & extend all \*.toml. Infra = terraform Config = Ansible.

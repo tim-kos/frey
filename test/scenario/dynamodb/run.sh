@@ -25,7 +25,7 @@ function destroy() {
     -target=aws_dynamodb_table.basic-dynamodb-table \
     -state=.frey/state/terraform.tfstate \
     -force \
-  .frey/residu > /dev/null 2>&1 || true
+  . > /dev/null 2>&1 || true
 }
 
 destroy

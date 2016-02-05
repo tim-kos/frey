@@ -10,7 +10,6 @@ class Runtime extends Command
   boot: [
     "_findClosestStateGit"
     "_findClosestRecipeGit"
-    "_findClosestResiduGit"
   ]
 
   _findClosestStateGit: (cargo, cb) ->
@@ -19,10 +18,6 @@ class Runtime extends Command
 
   _findClosestRecipeGit: (cargo, cb) ->
     @_findClosestGit @options.recipe, (filepath) ->
-      cb null, filepath
-
-  _findClosestResiduGit: (cargo, cb) ->
-    @_findClosestGit @options.residu, (filepath) ->
       cb null, filepath
 
   _findClosestGit: (filepath, cb) ->
@@ -60,12 +55,11 @@ class Runtime extends Command
 
     @runtime.paths =
       stateGit           : @bootCargo._findClosestStateGit
-      residuGit          : @bootCargo._findClosestRecipeGit
-      recipeGit          : @bootCargo._findClosestResiduGit
-      ansibleCfg         : "#{@options.residu}/ansible.cfg"
-      planFile           : "#{@options.residu}/terraform.plan"
-      infraFile          : "#{@options.residu}/infra.tf.json"
-      playbookFile       : "#{@options.residu}/install.yml"
+      recipeGit          : @bootCargo._findClosestRecipeGit
+      ansibleCfg         : "#{@options.cwd}/frey-residu-ansible.cfg"
+      planFile           : "#{@options.cwd}/frey-residu-terraform.plan"
+      infraFile          : "#{@options.cwd}/frey-residu-infra.tf.json"
+      playbookFile       : "#{@options.cwd}/frey-residu-install.yml"
       stateFile          : "#{@options.state}/terraform.tfstate"
       pythonLib          : "#{@options.tools}/pip/lib/python2.7/site-packages"
 
@@ -87,13 +81,13 @@ class Runtime extends Command
 
     @runtime.deps.push
       type        : "Dir"
-      name        : "state"
-      dir         : "#{@options.state}"
+      name        : "recipe"
+      dir         : "#{@options.recipe}"
 
     @runtime.deps.push
       type        : "Dir"
-      name        : "residu"
-      dir         : "#{@options.residu}"
+      name        : "state"
+      dir         : "#{@options.state}"
 
     @runtime.deps.push
       type        : "Privkey"
