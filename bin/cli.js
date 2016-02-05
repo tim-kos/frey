@@ -122,11 +122,12 @@ if ((((ref = argv._) != null) ? ref[0] : undefined) === 'completion') {
   process.exit(0)
 }
 
-// if argv._?[0]? && argv._?[0] not of commands
-//   yargs.showHelp()
-//   console.error ""
-//   console.error "--> Command '#{argv._?[0]}' is not recognized"
-//   process.exit 1
+if (!commands[argv._[0]]) {
+  yargs.showHelp()
+  console.error('')
+  console.error(`--> Command '${argv._[0]}' is not recognized`)
+  process.exit(1)
+}
 
 // For Frey, LiftOff:
 //  - Scans for the closest Freyfile.toml
