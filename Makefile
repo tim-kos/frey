@@ -1,5 +1,5 @@
 SHELL      := /usr/bin/env bash
-MOCHA      := node_modules/.bin/mocha
+MOCHA      := node_modules/.bin/mocha --compilers js:mocha-traceur
 REPORTER   := spec
 ISTANBUL   := node_modules/.bin/istanbul
 COVERALLS  := node_modules/.bin/coveralls

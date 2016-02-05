@@ -28,6 +28,7 @@
     "js-yaml": "^3.4.3",
     "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
+    "mocha-traceur": "2.1.0",
     "mustache": "^2.2.0",
     "os-homedir": "^1.0.1",
     "rc": "^1.1.5",
@@ -37,7 +38,7 @@
     "yargs": "^3.29.0",
     "yesno": "0.0.1"
   },
-  "engineStrict" : true,
+  "engineStrict": true,
   "engines": {
     "node": ">= 4.0.0"
   },

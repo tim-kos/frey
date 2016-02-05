@@ -10,6 +10,7 @@ var Base = require('./Base')
 
 class Command extends Base {
   constructor (name, options, runtime) {
+    super()
     this.name = name
     this.options = options
     this.runtime = runtime
