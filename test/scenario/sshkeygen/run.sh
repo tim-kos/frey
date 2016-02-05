@@ -22,8 +22,8 @@ rm -f "${__sysTmpDir}/frey-sshkeygen."* || true
 ls "${__sysTmpDir}/frey-sshkeygen."* || true
 
 rm -f "${__sysTmpDir}/frey-sshkeygen.pub" || true
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
-  --sshkeys-dir "${__sysTmpDir}" \
+node --harmony "${__root}/bin/cli.js" \
+  --sshkeys "${__sysTmpDir}" \
   --bail-after prepare
 
 ls "${__sysTmpDir}/frey-sshkeygen."* || true

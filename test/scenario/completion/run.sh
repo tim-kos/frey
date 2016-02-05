@@ -13,6 +13,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 
 
-node --harmony"${__root}/bin/frey" completion
+node --harmony "${__root}/bin/cli.js" completion
 
 exit 0
