@@ -102,14 +102,14 @@ class Command extends Base {
     if (!(cmdOpts.limitSamples != null)) { cmdOpts.limitSamples = 3 }
 
     var opts =
-      {cwd  : this.dir,
-      env  : this._buildChildEnv(cmdOpts.env),
+      {cwd: this.dir,
+      env: this._buildChildEnv(cmdOpts.env),
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
       }
 
     debug({
-      // opts   :opts
-      cwd    :opts.cwd,
+      // opts: opts
+      cwd: opts.cwd,
       cmdArgs:cmdArgs
     })
 

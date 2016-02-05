@@ -6,8 +6,8 @@ describe('Command', function () {
   return describe('_toEnvFormat', function () {
     return it('should transform periods', function (done) {
       var command = new Command( 'prepare',
-        {recipeDir : '{{{cwd}}}/frey/production',
-        toolsDir  : '{{{home}}}/.frey/tools'
+        {recipeDir: '{{{cwd}}}/frey/production',
+        toolsDir: '{{{home}}}/.frey/tools'
       })
 
 

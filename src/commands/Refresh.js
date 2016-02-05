@@ -80,7 +80,7 @@ class Refresh extends Command {
       },
       (callback) => {
         var ref
-        if (!((((ref = tomlMerged.install) != null) ? ref.config : undefined) != null)) {
+        if (!((((ref = tomlMerged.install) != null) ? ref.config: undefined) != null)) {
           debug('No config instructions found in merged toml')
           fs.unlink(this.runtime.paths.ansibleCfg, function (err) {
             return callback(null) // That's not fatal
@@ -104,7 +104,7 @@ class Refresh extends Command {
       },
       (callback) => {
         var ref
-        if (!((((ref = tomlMerged.install) != null) ? ref.playbooks : undefined) != null)) {
+        if (!((((ref = tomlMerged.install) != null) ? ref.playbooks: undefined) != null)) {
           debug('No install playbook instructions found in merged toml')
           fs.unlink(this.runtime.paths.playbookFile, function (err) {
             return callback(null) // That's not fatal

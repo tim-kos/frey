@@ -8,10 +8,10 @@ describe('Frey', function () {
       var frey = new Frey()
 
       var options =
-        {recipeDir  : '{{{cwd}}}/frey/production',
-        toolsDir   : '{{{home}}}/.frey/tools',
-        sshkeysDir : '{{{home}}}/.ssh',
-        rootDir    : '/opt/frey'
+        {recipeDir: '{{{cwd}}}/frey/production',
+        toolsDir: '{{{home}}}/.frey/tools',
+        sshkeysDir: '{{{home}}}/.ssh',
+        rootDir: '/opt/frey'
         }
 
       return frey._normalize(options, function (err, options) {
@@ -26,11 +26,11 @@ describe('Frey', function () {
       var frey = new Frey()
 
       var options =
-        {app        : './tusd|basename',
-        recipeDir  : '{{{cwd}}}/frey/production',
-        toolsDir   : '{{{home}}}/.frey/tools',
-        sshkeysDir : '{{{home}}}/.ssh',
-        rootDir    : '/opt/frey'
+        {app: './tusd|basename',
+        recipeDir: '{{{cwd}}}/frey/production',
+        toolsDir: '{{{home}}}/.frey/tools',
+        sshkeysDir: '{{{home}}}/.ssh',
+        rootDir: '/opt/frey'
         }
 
       return frey._normalize(options, function (err, options) {

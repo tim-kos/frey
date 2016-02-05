@@ -16,70 +16,70 @@ yargs
   .example('frey backup -d ./envs/production', 'backup platform described in ./envs/production')
   .options({
     recipeDir:
-      {nargs   : 1,
-      type    : 'string',
+      {nargs: 1,
+      type: 'string',
       describe: 'Directory that contains the Freyfile.toml. Frey will traverse upwards if empty. '
       },
     app:
-      {default : '{{{recipeDir}}}|basename',
-      nargs   : 1,
-      type    : 'string',
+      {default: '{{{recipeDir}}}|basename',
+      nargs: 1,
+      type: 'string',
       describe: "Name of application for which we're creating infrastructure"
       },
     sshkeysDir:
-      {default : '{{{home}}}/.ssh',
-      nargs   : 1,
-      type    : 'string',
+      {default: '{{{home}}}/.ssh',
+      nargs: 1,
+      type: 'string',
       describe: 'Directory that contains SSH keys. This needs to be ignored by Git'
       },
     toolsDir:
-      {default : '{{{home}}}/.frey/tools',
-      nargs   : 1,
-      type    : 'string',
+      {default: '{{{home}}}/.frey/tools',
+      nargs: 1,
+      type: 'string',
       describe: 'Directory that contains the tools. This needs to be ignored by Git'
       },
     'force-yes':
-      {default : false,
-      boolean : true,
+      {default: false,
+      boolean: true,
       describe: 'Answer yes to all questions (dangerous!)'
       },
     'terraform-parallelism':
-      {default : 10,
-      nargs   : 1,
-      type    : 'number',
+      {default: 10,
+      nargs: 1,
+      type: 'number',
       describe: 'Limit the number of concurrent operations. Useful for consistent test output'
       },
     tags:
-      {nargs   : 1,
-      type    : 'string',
+      {nargs: 1,
+      type: 'string',
       describe: 'A list of tags to execute in isolation'
       },
     sleep:
-      {default : 5,
-      nargs   : 1,
-      type    : 'number',
+      {default: 5,
+      nargs: 1,
+      type: 'number',
       describe: 'Wait x seconds between showing infra plan, and executing it'
       },
     bail:
-      {boolean : true,
+      {boolean: true,
       describe: 'Do not follow the chain of commands, run a one-off command'
       },
     'bail-after':
-      {nargs   : 1,
-      type    : 'string',
+      {nargs: 1,
+      type: 'string',
       describe: 'After running this command, abort the chain'
       },
     'no-color':
-      {boolean : true,
+      {boolean: true,
       describe: 'Color support is detected, this forces colors off'
       },
     verbose:
-      {alias   : 'v',
-      count   : true,
+      {alias: 'v',
+      count: true,
       describe: 'Show debug info'
       },
     unsafe:
-      {boolean : true,
+      {boolean: true,
       describe: 'Allow execution, even though your Git working directory is unclean'
       }
   })
@@ -133,11 +133,10 @@ if (!commands[argv._[0]]) {
 //  - Scans for the closest Freyfile.toml
 //  - Switches to local npm install if available
 var liftOff = new LiftOff({
-  name        : 'frey',
-  configName  : 'Freyfile',
+  name: 'frey',
+  configName: 'Freyfile',
   processTitle: 'frey',
-  extensions  :
-    {'.toml': null}
+  extensions: {'.toml': null}
 
 
 });liftOff.launch({
@@ -150,7 +149,7 @@ var liftOff = new LiftOff({
   }
 
   // debug
-  //   env :env
+  //   env: env
   //   argv:argv
   //   also:this
   // process.exit 0

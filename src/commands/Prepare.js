@@ -119,11 +119,11 @@ class Prepare extends Command {
         // We don't want to bail out if version command does not exist yet
         // Or maybe --version returns non-zero exit code, which is common
         debug({
-          msg         : `Continuing after failed command ${cmd}. ${err}`,
-          exe         :props.exe,
+          msg: `Continuing after failed command ${cmd}. ${err}`,
+          exe: props.exe,
           foundVersion:foundVersion,
-          err         :err,
-          stdout      :stdout
+          err: err,
+          stdout: stdout
         })
       }
 

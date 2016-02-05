@@ -39,7 +39,7 @@ class Runtime extends Command {
     // be in the same order as the original. Hence, use the last/longest/closest
     // path that has Git.
     return async.reject(paths, fs.stat, function (results) {
-      if (!(((typeof results !== 'undefined' && results !== null) ? results.length : undefined) != null)) {
+      if (!(((typeof results !== 'undefined' && results !== null) ? results.length: undefined) != null)) {
         return cb(undefined)
       }
 
@@ -49,34 +49,34 @@ class Runtime extends Command {
 
   main (bootOptions, cb) {
     this.runtime.os =
-      {platform           : os.platform(),
-      hostname           : os.hostname(),
-      arch               : `${os.arch()}`.replace('x64', 'amd64')
+      {platform: os.platform(),
+      hostname: os.hostname(),
+      arch: `${os.arch()}`.replace('x64', 'amd64')
       }
 
     this.runtime.versions =
-      {ansible            : '1.9.2',
-      terraform          : '0.6.6',
-      terraformInventory : '0.6-pre',
-      pip                : '7.1.2'
+      {ansible: '1.9.2',
+      terraform: '0.6.6',
+      terraformInventory: '0.6-pre',
+      pip: '7.1.2'
       }
 
     this.runtime.paths =
-      {recipeGit          : this.bootCargo._findClosestRecipeGit,
-      ansibleCfg         : `${this.options.recipeDir}/Frey-residu-ansible.cfg`,
-      planFile           : `${this.options.recipeDir}/Frey-residu-terraform.plan`,
-      infraFile          : `${this.options.recipeDir}/Frey-residu-infra.tf.json`,
-      playbookFile       : `${this.options.recipeDir}/Frey-residu-install.yml`,
-      stateFile          : `${this.options.recipeDir}/Frey-state-terraform.tfstate`,
-      pythonLib          : `${this.options.toolsDir}/pip/lib/python2.7/site-packages`
+      {recipeGit: this.bootCargo._findClosestRecipeGit,
+      ansibleCfg: `${this.options.recipeDir}/Frey-residu-ansible.cfg`,
+      planFile: `${this.options.recipeDir}/Frey-residu-terraform.plan`,
+      infraFile: `${this.options.recipeDir}/Frey-residu-infra.tf.json`,
+      playbookFile: `${this.options.recipeDir}/Frey-residu-install.yml`,
+      stateFile: `${this.options.recipeDir}/Frey-state-terraform.tfstate`,
+      pythonLib: `${this.options.toolsDir}/pip/lib/python2.7/site-packages`
       }
 
     this.runtime.ssh =
-      {email              : `${this.options.user}@${this.options.app}.freyproject.io`,
-      keypair_name       : `${this.options.app}`,
-      keyprv_file        : `${this.options.sshkeysDir}/frey-${this.options.app}.pem`,
-      keypub_file        : `${this.options.sshkeysDir}/frey-${this.options.app}.pub`,
-      user               : 'ubuntu'
+      {email: `${this.options.user}@${this.options.app}.freyproject.io`,
+      keypair_name: `${this.options.app}`,
+      keyprv_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pem`,
+      keypub_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pub`,
+      user: 'ubuntu'
       }
       // keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       // keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
@@ -84,73 +84,73 @@ class Runtime extends Command {
     this.runtime.deps = []
 
     this.runtime.deps.push({
-      type        : 'Dir',
-      name        : 'toolsDir',
-      dir         : `${this.options.toolsDir}`
+      type: 'Dir',
+      name: 'toolsDir',
+      dir: `${this.options.toolsDir}`
     })
 
     this.runtime.deps.push({
-      type        : 'Dir',
-      name        : 'recipeDir',
-      dir         : `${this.options.recipeDir}`
+      type: 'Dir',
+      name: 'recipeDir',
+      dir: `${this.options.recipeDir}`
     })
 
     this.runtime.deps.push({
-      type        : 'Dir',
-      name        : 'sshkeysDir',
-      dir         : `${this.options.sshkeysDir}`
+      type: 'Dir',
+      name: 'sshkeysDir',
+      dir: `${this.options.sshkeysDir}`
     })
 
     this.runtime.deps.push({
-      type        : 'Privkey',
-      privkey     : `${this.runtime.ssh.keyprv_file}`,
-      pubkey      : `${this.runtime.ssh.keypub_file}`,
-      email       : `${this.runtime.ssh.email}`
+      type: 'Privkey',
+      privkey: `${this.runtime.ssh.keyprv_file}`,
+      pubkey: `${this.runtime.ssh.keypub_file}`,
+      email: `${this.runtime.ssh.email}`
     })
 
     this.runtime.deps.push({
-      type        : 'Pubkey',
-      privkey     : `${this.runtime.ssh.keyprv_file}`,
-      pubkey      : `${this.runtime.ssh.keypub_file}`,
-      email       : `${this.runtime.ssh.email}`
+      type: 'Pubkey',
+      privkey: `${this.runtime.ssh.keyprv_file}`,
+      pubkey: `${this.runtime.ssh.keypub_file}`,
+      email: `${this.runtime.ssh.email}`
     })
 
     this.runtime.deps.push({
-      type        : 'Privkey',
-      privkey     : `${this.runtime.ssh.keyprv_file}`,
-      pubkey      : `${this.runtime.ssh.keypub_file}`
+      type: 'Privkey',
+      privkey: `${this.runtime.ssh.keyprv_file}`,
+      pubkey: `${this.runtime.ssh.keypub_file}`
     })
 
     this.runtime.deps.push({
-      type        : 'Permission',
-      mode        : 0o400,
-      file        : `${this.runtime.ssh.keypub_file}`
+      type: 'Permission',
+      mode: 0o400,
+      file: `${this.runtime.ssh.keypub_file}`
     })
 
     this.runtime.deps.push({
-      type        : 'Permission',
-      mode        : 0o400,
-      file        : `${this.runtime.ssh.keyprv_file}`
+      type: 'Permission',
+      mode: 0o400,
+      file: `${this.runtime.ssh.keyprv_file}`
     })
 
     this.runtime.deps.push({
-      type        : 'App',
-      name        : 'terraform',
-      range       : `${this.runtime.versions.terraform}`,
-      exe         : `${this.options.toolsDir}/terraform`,
-      zip         : [
+      type: 'App',
+      name: 'terraform',
+      range: `${this.runtime.versions.terraform}`,
+      exe: `${this.options.toolsDir}/terraform`,
+      zip: [
         'terraform',
         this.runtime.versions.terraform,
         this.runtime.os.platform,
         `${this.runtime.os.arch}.zip`
       ].join( '_'
       ),
-      cmdVersion  : '{{{exe}}} --version',
+      cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
         var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         return version
       },
-      cmdInstall  : [
+      cmdInstall: [
         `cd ${this.options.toolsDir}`,
         [
           "curl -sSL '",
@@ -164,24 +164,24 @@ class Runtime extends Command {
     })
 
     this.runtime.deps.push({
-      type        : 'App',
-      name        : 'terraformInventory',
-      range       : `${this.runtime.versions.terraformInventory}`.replace(/^(\d+\.\d+)/, '$1.0'),
-      exe         : `${this.options.toolsDir}/terraform-inventory`,
-      zip         : [
+      type: 'App',
+      name: 'terraformInventory',
+      range: `${this.runtime.versions.terraformInventory}`.replace(/^(\d+\.\d+)/, '$1.0'),
+      exe: `${this.options.toolsDir}/terraform-inventory`,
+      zip: [
         'terraform-inventory',
         this.runtime.versions.terraformInventory,
         this.runtime.os.platform,
         `${this.runtime.os.arch}.zip`
       ].join( '_'
       ),
-      cmdVersion  : '{{{exe}}} --version',
+      cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
         var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         version = version.replace(/^(\d+\.\d+)/, '$1.0')
         return version
       },
-      cmdInstall  : [
+      cmdInstall: [
         `cd ${this.options.toolsDir}`,
         [
           "curl -sSL '",
@@ -197,30 +197,30 @@ class Runtime extends Command {
     })
 
     this.runtime.deps.push({
-      type        : 'App',
-      name        : 'pip',
-      exe         : 'pip',
-      range       : `>= ${this.runtime.versions.pip}`,
-      cmdVersion  : '{{{exe}}} --version',
+      type: 'App',
+      name: 'pip',
+      exe: 'pip',
+      range: `>= ${this.runtime.versions.pip}`,
+      cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
         var version = `${stdout}`.trim().split('\n')[0].split(/\s+/)[1].replace('v', '')
         return version
       },
-      cmdInstall  : 'sudo easy_install --upgrade pip'
+      cmdInstall: 'sudo easy_install --upgrade pip'
     })
 
     this.runtime.deps.push({
-      type        : 'App',
-      name        : 'ansible',
-      range       : `${this.runtime.versions.ansible}`,
-      exe         : `${this.options.toolsDir}/pip/bin/ansible`,
-      exePlaybook : `${this.options.toolsDir}/pip/bin/ansible-playbook`,
-      cmdVersion  : '{{{exe}}} --version',
+      type: 'App',
+      name: 'ansible',
+      range: `${this.runtime.versions.ansible}`,
+      exe: `${this.options.toolsDir}/pip/bin/ansible`,
+      exePlaybook: `${this.options.toolsDir}/pip/bin/ansible-playbook`,
+      cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
         var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         return version
       },
-      cmdInstall  : [
+      cmdInstall: [
         'pip install',
         "--install-option='--prefix=pip'",
         '--ignore-installed',

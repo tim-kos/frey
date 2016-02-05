@@ -75,7 +75,7 @@ class Install extends Command {
     cmd = cmd.concat(this.bootCargo._gatherArgs)
 
     var opts =
-      {env : this.bootCargo._gatherEnv}
+      {env: this.bootCargo._gatherEnv}
 
     ; return this._exe(cmd, opts, function (err, stdout) {
       if (err) {

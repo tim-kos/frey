@@ -63,8 +63,8 @@ class Plan extends Command {
       var [ _, add, change, destroy ] = m
 
       this.runtime.launchPlan =
-        {add    :add,
-        change :change,
+        {add: add,
+        change: change,
         destroy:destroy
         }
 

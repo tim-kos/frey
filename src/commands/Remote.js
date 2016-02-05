@@ -88,10 +88,10 @@ class Remote extends Command {
     cmd = cmd.concat(this.bootCargo._gatherArgs)
 
     var opts =
-      {env    : this.bootCargo._gatherEnv,
-      stdin  : 'inherit',
-      stdout : 'inherit',
-      stderr : 'inherit'
+      {env: this.bootCargo._gatherEnv,
+      stdin: 'inherit',
+      stdout: 'inherit',
+      stderr: 'inherit'
       }
 
     debug({
