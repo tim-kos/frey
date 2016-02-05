@@ -63,13 +63,13 @@ for scenario in $(echo prepare ${scenarios}); do
       "${cmdSed}" -i \
         -e "s@${__coffee}@{coffee}@g" "${curFile}" \
         -e "s@${__root}@{root}@g" "${curFile}" \
+        -e "s@${__sysTmpDir}@{tmpdir}@g" "${curFile}" \
         -e "s@${HOME:-/home/travis}@{home}@g" "${curFile}" \
         -e "s@${USER:-travis}@{user}@g" "${curFile}" \
         -e "s@travis@{user}@g" "${curFile}" \
         -e "s@kvz@{user}@g" "${curFile}" \
         -e "s@{root}/node_modules/\.bin/coffee@{coffee}@g" "${curFile}" \
         -e "s@{home}/build/{user}/fre{coffee}@{coffee}@g" "${curFile}" \
-        -e "s@${__sysTmpDir}@{tmpdir}@g" "${curFile}" \
         -e "s@${HOSTNAME}@{hostname}@g" "${curFile}" \
         -e "s@'pip' with version .*@'pip' with version {{global_pip_version}}@g" "${curFile}" \
         -e "s@${__os}@{os}@g" "${curFile}" \

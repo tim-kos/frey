@@ -14,18 +14,12 @@ __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 rm -rf "${__sysTmpDir}/frey-gitless" || true
-
 mkdir -p "${__sysTmpDir}/frey-gitless"
-
 cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
-
-pushd "${__sysTmpDir}/frey-gitless/"
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" validate \
   --verbose \
   --force-yes \
-  --sshkeysDir "." \
-  --recipeDir "." \
+  --sshkeysDir "${__sysTmpDir}/frey-gitless/" \
+  --recipeDir "${__sysTmpDir}/frey-gitless/" \
   --bail
-
-popd

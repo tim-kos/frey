@@ -34,7 +34,7 @@ function destroy() {
     -no-color \
     -state=Frey-state-terraform.tfstate \
     -force \
-  .frey/residu > /dev/null 2>&1 || true
+  . > /dev/null 2>&1 || true
 }
 
 if true; then destroy; fi
