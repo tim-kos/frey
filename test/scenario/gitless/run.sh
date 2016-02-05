@@ -13,10 +13,19 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
-rm -f "${__sysTmpDir}/frey-gitless"* || true
+rm -rf "${__sysTmpDir}/frey-gitless" || true
+
+mkdir -p "${__sysTmpDir}/frey-gitless"
+
+cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
+
+pushd "${__sysTmpDir}/frey-gitless/"
+
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" validate \
   --verbose \
   --force-yes \
-  --sshkeysDir "${__sysTmpDir}" \
-  --recipeDir "${__sysTmpDir}" \
+  --sshkeysDir "." \
+  --recipeDir "." \
   --bail
+
+popd
