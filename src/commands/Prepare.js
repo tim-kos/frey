@@ -1,3 +1,4 @@
+'use strict'
 var Command = require('../Command')
 var mkdirp = require('mkdirp')
 var semver = require('semver')

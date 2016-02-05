@@ -1,3 +1,4 @@
+'use strict'
 var Command = require('../Command')
 var chalk = require('chalk')
 // var _ = require('lodash')

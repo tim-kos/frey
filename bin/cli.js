@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var ref
+'use strict'
 var Frey = require('../src/Frey')
 // var debug = require('depurar')('frey')
 var yargs = require('yargs')
@@ -114,8 +114,12 @@ for (cmd in commands) {
 // 'Execute' yargs
 var argv = yargs.argv
 
+if (argv._[0] === undefined) {
+  argv._[0] = chain[0]
+}
+
 // We override built-in completion command
-if ((((ref = argv._) != null) ? ref[0] : undefined) === 'completion') {
+if (argv._[0] === 'completion') {
   // we want to make sure we have the global /usr/local/bin/frey instead of
   // ../../../frey/bin/frey in the ~/.bash_profile
   yargs.showCompletionScript(process.env._)

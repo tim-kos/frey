@@ -40,7 +40,7 @@ function destroy() {
 destroy
 trap destroy EXIT
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
+node --harmony "${__root}/bin/cli.js" install \
   --sshkeys-dir "." \
   --no-color \
   --verbose \

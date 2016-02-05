@@ -1,3 +1,4 @@
+'use strict'
 // var Depurar = require('depurar')
 // var debug = Depurar('frey')
 // var info = Depurar('frey')

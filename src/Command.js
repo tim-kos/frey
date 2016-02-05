@@ -1,3 +1,4 @@
+'use strict'
 var debug = require('depurar')('frey')
 var chalk = require('chalk')
 var spawn = require('child_process').spawn
