@@ -18,5 +18,5 @@ rm -f "${__sysTmpDir}/frey-gitless"* || true
   --verbose \
   --force-yes \
   --sshkeysDir "${__sysTmpDir}" \
-  --stateDir "${__sysTmpDir}" \
+  --recipeDir "${__sysTmpDir}" \
   --bail

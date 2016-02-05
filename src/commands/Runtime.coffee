@@ -8,13 +8,8 @@ os      = require "os"
 
 class Runtime extends Command
   boot: [
-    "_findClosestStateGit"
     "_findClosestRecipeGit"
   ]
-
-  _findClosestStateGit: (cargo, cb) ->
-    @_findClosestGit @options.stateDir, (filepath) ->
-      cb null, filepath
 
   _findClosestRecipeGit: (cargo, cb) ->
     @_findClosestGit @options.recipeDir, (filepath) ->
@@ -54,13 +49,12 @@ class Runtime extends Command
       pip                : "7.1.2"
 
     @runtime.paths =
-      stateGit           : @bootCargo._findClosestStateGit
       recipeGit          : @bootCargo._findClosestRecipeGit
-      ansibleCfg         : "#{@options.recipeDir}/frey-residu-ansible.cfg"
-      planFile           : "#{@options.recipeDir}/frey-residu-terraform.plan"
-      infraFile          : "#{@options.recipeDir}/frey-residu-infra.tf.json"
-      playbookFile       : "#{@options.recipeDir}/frey-residu-install.yml"
-      stateFile          : "#{@options.stateDir}/terraform.tfstate"
+      ansibleCfg         : "#{@options.recipeDir}/Frey-residu-ansible.cfg"
+      planFile           : "#{@options.recipeDir}/Frey-residu-terraform.plan"
+      infraFile          : "#{@options.recipeDir}/Frey-residu-infra.tf.json"
+      playbookFile       : "#{@options.recipeDir}/Frey-residu-install.yml"
+      stateFile          : "#{@options.recipeDir}/Frey-state-terraform.tfstate"
       pythonLib          : "#{@options.toolsDir}/pip/lib/python2.7/site-packages"
 
     @runtime.ssh =
@@ -83,11 +77,6 @@ class Runtime extends Command
       type        : "Dir"
       name        : "recipeDir"
       dir         : "#{@options.recipeDir}"
-
-    @runtime.deps.push
-      type        : "Dir"
-      name        : "stateDir"
-      dir         : "#{@options.stateDir}"
 
     @runtime.deps.push
       type        : "Dir"

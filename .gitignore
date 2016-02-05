@@ -3,8 +3,6 @@ lib/
 npm-debug.log
 coverage/
 env.sh
-test/scenario/*/.frey/residu/
-test/scenario/*/.frey/state/
-
 test/scenario/converter/Freyfile.toml
-frey-residu*
+test/scenario/*/Frey-state*
+Frey-residu*

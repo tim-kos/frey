@@ -23,7 +23,7 @@ function destroy() {
   ~/.frey/tools/terraform destroy \
     -no-color \
     -target=aws_dynamodb_table.basic-dynamodb-table \
-    -state=.frey/state/terraform.tfstate \
+    -state=Frey-state-terraform.tfstate \
     -force \
   . > /dev/null 2>&1 || true
 }

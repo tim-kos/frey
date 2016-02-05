@@ -32,7 +32,7 @@ function destroy() {
   TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE="${__dir}/frey-openstack.pem" \
   ~/.frey/tools/terraform destroy \
     -no-color \
-    -stateD=.frey/state/terraform.tfstate \
+    -state=Frey-state-terraform.tfstate \
     -force \
   .frey/residu > /dev/null 2>&1 || true
 }

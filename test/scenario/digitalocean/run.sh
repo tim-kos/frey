@@ -31,7 +31,7 @@ function destroy() {
   TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="${__dir}/frey-digitalocean.pub" \
   ~/.frey/tools/terraform destroy \
     -no-color \
-    -state=.frey/state/terraform.tfstate \
+    -state=Frey-state-terraform.tfstate \
     -force \
   . #> /dev/null 2>&1 || true
     # -target=digitalocean_droplet.freytest-web \

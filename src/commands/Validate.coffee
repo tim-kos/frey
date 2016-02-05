@@ -3,8 +3,9 @@ debug   = require("depurar")("frey")
 
 class Validate extends Command
   main: (cargo, cb) ->
-    if !@runtime.paths.stateGit?
-      return cb new Error "Frey requires state to be under Git."
+    if !@runtime.paths.recipeGit?
+      msg = "Frey requires recipe (and state) to be under Git, and residu to be ignored."
+      return cb new Error msg
 
     cb null
 
