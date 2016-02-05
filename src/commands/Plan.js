@@ -60,12 +60,10 @@ class Plan extends Command {
         return cb(new Error('Unable to parse add/change/destroy'))
       }
 
-      var [ , add, change, destroy ] = m
-
       this.runtime.launchPlan = {
-        add: add,
-        change: change,
-        destroy: destroy
+        add: m[1],
+        change: m[2],
+        destroy: m[3]
       }
 
       return cb(null)
