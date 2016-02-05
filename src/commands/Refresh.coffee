@@ -20,7 +20,7 @@ class Refresh extends Command
 
   _findTomlFiles: (cargo, cb) ->
     tomlFiles = []
-    pattern   = "#{@options.recipe}/*.toml"
+    pattern   = "#{@options.recipeDir}/*.toml"
     debug "Reading from '#{pattern}'"
     glob pattern, (err, files) ->
       if err

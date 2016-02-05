@@ -32,25 +32,36 @@ function destroy() {
   TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE="${__dir}/frey-openstack.pem" \
   ~/.frey/tools/terraform destroy \
     -no-color \
-    -state=.frey/state/terraform.tfstate \
+    -stateD=.frey/state/terraform.tfstate \
     -force \
   .frey/residu > /dev/null 2>&1 || true
 }
 
-if true; then destroy; fi
-if true; then trap destroy EXIT; fi
+if false; then destroy; fi
+if false; then trap destroy EXIT; fi
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
-  --sshkeys "${__dir}" \
+# "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
+#   --sshkeys-dir "${__dir}" \
+#   --no-color \
+#   --verbose \
+#   --force-yes \
+#   --terraform-parallelism=1 \
+#   --bailAfter install \
+# || false
+#
+# exit 0
+
+"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
+  --sshkeys-dir "${__dir}" \
   --no-color \
   --verbose \
   --force-yes \
   --terraform-parallelism=1 \
-  --bailAfter install \
+  --bail \
 || false
 
 # "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" remote \
-#   --sshkeys "${__dir}" \
+#   --sshkeys-dir "${__dir}" \
 #   --no-color \
 #   --verbose \
 #   --force-yes \
@@ -59,7 +70,7 @@ if true; then trap destroy EXIT; fi
 
 #
 # "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
-#   --sshkeys "${__sysTmpDir}" \
+#   --sshkeys-dir "${__sysTmpDir}" \
 #   --no-color \
 #   --verbose \
 #   --force-yes \

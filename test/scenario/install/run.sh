@@ -26,7 +26,7 @@ rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
-  --sshkeys "${__sysTmpDir}" \
+  --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \
@@ -34,7 +34,7 @@ rm -f "${__sysTmpDir}/frey-install"* || true
 || false
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
-  --sshkeys "${__sysTmpDir}" \
+  --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \

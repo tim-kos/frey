@@ -96,9 +96,12 @@
 
 
 [install.config.defaults]
+  # https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
+  remote_user       = root
+  host_key_checking = False
 
 [install.config.ssh_connection]
-  ssh_args = '-oControlMaster=auto -oControlPersist=60s -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no'
+  ssh_args = "-oControlMaster=auto -oControlPersist=60s -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no"
 
 [[install.playbooks]]
   hosts = "freytest_app"

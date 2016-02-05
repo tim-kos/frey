@@ -41,7 +41,7 @@ destroy
 trap destroy EXIT
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
-  --sshkeys "." \
+  --sshkeys-dir "." \
   --no-color \
   --verbose \
   --force-yes \

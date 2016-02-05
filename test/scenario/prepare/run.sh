@@ -28,9 +28,9 @@ rm -f "${__sysTmpDir}/frey-prepare"* || true
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
   --force-yes \
-  --sshkeys "${__sysTmpDir}" \
+  --sshkeys-dir "${__sysTmpDir}" \
   --verbose \
-  --recipe "." \
+  --recipe-dir "." \
   --bail
 
 echo "Running help on all required tools"

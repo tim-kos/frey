@@ -6,9 +6,8 @@ describe "Command", ->
   describe "_toEnvFormat", ->
     it "should transform periods", (done) ->
       command = new Command "prepare",
-        recipe : "{{{cwd}}}/frey/production"
-        cwd    : "."
-        tools  : "{{{home}}}/.frey/tools"
+        recipeDir : "{{{cwd}}}/frey/production"
+        toolsDir  : "{{{home}}}/.frey/tools"
 
 
       env = command._toEnvFormat {"os.arch": "amd64"}, "prepare"

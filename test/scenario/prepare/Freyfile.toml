@@ -1,0 +1,5 @@
+[install.config]
+  [install.config.defaults]
+
+  [install.config.ssh_connection]
+    ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"

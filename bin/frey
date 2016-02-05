@@ -15,27 +15,27 @@ yargs
   .usage "Usage: frey <command> [options]"
   .example "frey backup -d ./envs/production", "backup platform described in ./envs/production"
   .options
-    recipe:
+    recipeDir:
       default : "{{{cwd}}}"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the Freyfile"
     app:
-      default : "{{{recipe}}}|basename"
+      default : "{{{recipeDir}}}|basename"
       nargs   : 1
       type    : "string"
       describe: "Name of application for which we're creating infrastructure"
-    state:
-      default : "{{{recipe}}}/.frey/state"
+    stateDir:
+      default : "{{{recipeDir}}}/.frey/state"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains the state. This needs to be comitted to Git"
-    sshkeys:
+    sshkeysDir:
       default : "{{{home}}}/.ssh"
       nargs   : 1
       type    : "string"
       describe: "Directory that contains SSH keys. This needs to be ignored by Git"
-    tools:
+    toolsDir:
       default : "{{{home}}}/.frey/tools"
       nargs   : 1
       type    : "string"
@@ -123,8 +123,12 @@ liftOff = new LiftOff
     ".toml": null
 
 liftOff.launch
-  cwd: argv.recipe,
+  cwd: argv.recipeDir,
 , (env) ->
+
+  if !env.configBase?
+    msg = "Could not find a Freyfile.toml in current directory or upwards, or in recipe directory."
+    throw new Error msg
 
   # debug
   #   env :env
@@ -133,7 +137,7 @@ liftOff.launch
   # process.exit 0
 
   # Let LiftOff override the recipe dir
-  argv.recipe = env.configBase
+  argv.recipeDir = env.configBase
   frey = new Frey argv
 
   # Bombs away

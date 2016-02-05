@@ -32,7 +32,7 @@ destroy
 trap destroy EXIT
 
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
-  --sshkeys "${__sysTmpDir}" \
+  --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \

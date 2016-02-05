@@ -13,11 +13,11 @@ class Runtime extends Command
   ]
 
   _findClosestStateGit: (cargo, cb) ->
-    @_findClosestGit @options.state, (filepath) ->
+    @_findClosestGit @options.stateDir, (filepath) ->
       cb null, filepath
 
   _findClosestRecipeGit: (cargo, cb) ->
-    @_findClosestGit @options.recipe, (filepath) ->
+    @_findClosestGit @options.recipeDir, (filepath) ->
       cb null, filepath
 
   _findClosestGit: (filepath, cb) ->
@@ -56,18 +56,18 @@ class Runtime extends Command
     @runtime.paths =
       stateGit           : @bootCargo._findClosestStateGit
       recipeGit          : @bootCargo._findClosestRecipeGit
-      ansibleCfg         : "#{@options.cwd}/frey-residu-ansible.cfg"
-      planFile           : "#{@options.cwd}/frey-residu-terraform.plan"
-      infraFile          : "#{@options.cwd}/frey-residu-infra.tf.json"
-      playbookFile       : "#{@options.cwd}/frey-residu-install.yml"
-      stateFile          : "#{@options.state}/terraform.tfstate"
-      pythonLib          : "#{@options.tools}/pip/lib/python2.7/site-packages"
+      ansibleCfg         : "#{@options.recipeDir}/frey-residu-ansible.cfg"
+      planFile           : "#{@options.recipeDir}/frey-residu-terraform.plan"
+      infraFile          : "#{@options.recipeDir}/frey-residu-infra.tf.json"
+      playbookFile       : "#{@options.recipeDir}/frey-residu-install.yml"
+      stateFile          : "#{@options.stateDir}/terraform.tfstate"
+      pythonLib          : "#{@options.toolsDir}/pip/lib/python2.7/site-packages"
 
     @runtime.ssh =
       email              : "#{@options.user}@#{@options.app}.freyproject.io"
       keypair_name       : "#{@options.app}"
-      keyprv_file        : "#{@options.sshkeys}/frey-#{@options.app}.pem"
-      keypub_file        : "#{@options.sshkeys}/frey-#{@options.app}.pub"
+      keyprv_file        : "#{@options.sshkeysDir}/frey-#{@options.app}.pem"
+      keypub_file        : "#{@options.sshkeysDir}/frey-#{@options.app}.pub"
       user               : "ubuntu"
       # keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       # keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
@@ -76,18 +76,23 @@ class Runtime extends Command
 
     @runtime.deps.push
       type        : "Dir"
-      name        : "tools"
-      dir         : "#{@options.tools}"
+      name        : "toolsDir"
+      dir         : "#{@options.toolsDir}"
 
     @runtime.deps.push
       type        : "Dir"
-      name        : "recipe"
-      dir         : "#{@options.recipe}"
+      name        : "recipeDir"
+      dir         : "#{@options.recipeDir}"
 
     @runtime.deps.push
       type        : "Dir"
-      name        : "state"
-      dir         : "#{@options.state}"
+      name        : "stateDir"
+      dir         : "#{@options.stateDir}"
+
+    @runtime.deps.push
+      type        : "Dir"
+      name        : "sshkeysDir"
+      dir         : "#{@options.sshkeysDir}"
 
     @runtime.deps.push
       type        : "Privkey"
@@ -120,7 +125,7 @@ class Runtime extends Command
       type        : "App"
       name        : "terraform"
       range       : "#{@runtime.versions.terraform}"
-      exe         : "#{@options.tools}/terraform"
+      exe         : "#{@options.toolsDir}/terraform"
       zip         : [
         "terraform"
         @runtime.versions.terraform
@@ -132,7 +137,7 @@ class Runtime extends Command
         version = "#{stdout}".trim().split("\n")[0].split(/\s+/).pop().replace("v", "")
         return version
       cmdInstall  : [
-        "cd #{@options.tools}"
+        "cd #{@options.toolsDir}"
         [
           "curl -sSL '"
           "https://dl.bintray.com/mitchellh/terraform/"
@@ -146,7 +151,7 @@ class Runtime extends Command
       type        : "App"
       name        : "terraformInventory"
       range       : "#{@runtime.versions.terraformInventory}".replace /^(\d+\.\d+)/, "$1.0"
-      exe         : "#{@options.tools}/terraform-inventory"
+      exe         : "#{@options.toolsDir}/terraform-inventory"
       zip         : [
         "terraform-inventory"
         @runtime.versions.terraformInventory
@@ -159,7 +164,7 @@ class Runtime extends Command
         version = version.replace /^(\d+\.\d+)/, "$1.0"
         return version
       cmdInstall  : [
-        "cd #{@options.tools}"
+        "cd #{@options.toolsDir}"
         [
           "curl -sSL '"
           "https://github.com/adammck/terraform-inventory/releases/download/"
@@ -185,8 +190,8 @@ class Runtime extends Command
       type        : "App"
       name        : "ansible"
       range       : "#{@runtime.versions.ansible}"
-      exe         : "#{@options.tools}/pip/bin/ansible"
-      exePlaybook : "#{@options.tools}/pip/bin/ansible-playbook"
+      exe         : "#{@options.toolsDir}/pip/bin/ansible"
+      exePlaybook : "#{@options.toolsDir}/pip/bin/ansible-playbook"
       cmdVersion  : "{{{exe}}} --version"
       versionTransformer: (stdout) ->
         version = "#{stdout}".trim().split("\n")[0].split(/\s+/).pop().replace("v", "")
@@ -196,7 +201,7 @@ class Runtime extends Command
         "--install-option='--prefix=pip'"
         "--ignore-installed"
         "--force-reinstall"
-        "--root '#{@options.tools}'"
+        "--root '#{@options.toolsDir}'"
         "--upgrade"
         "--disable-pip-version-check"
         "ansible==#{@runtime.versions.ansible}"

@@ -63,11 +63,9 @@ class Frey extends Base
     options      ?= {}
     options._    ?= []
     options._[0] ?= "prepare"
-    options.cwd  ?= process.cwd()
     options.tmp  ?= os.tmpdir()
     options.home ?= osHomedir()
     options.user ?= process.env.USER
-    options.root ?= "#{__dirname}/.."
 
     nextCb null, options
 
@@ -87,8 +85,11 @@ class Frey extends Base
         options[key] = val
 
     # Resolve to absolute paths
-    for key in [ "cwd", "sshkeys", "recipe", "tools", "root"]
-      options[key] = path.resolve options.cwd, options[key]
+    for key in [ "sshkeysDir", "recipeDir", "toolsDir" ]
+      if !options[key]?
+        throw new Error "options.#{key} was found empty"
+
+      options[key] = path.resolve options.recipeDir, options[key]
 
     if !options.tags?
       options.tags = ""
@@ -98,7 +99,7 @@ class Frey extends Base
   _setup: (options, nextCb) ->
     async.parallel [
       (callback) ->
-        mkdirp options.tools, callback
+        mkdirp options.toolsDir, callback
     ], (err) ->
       nextCb err, options
 

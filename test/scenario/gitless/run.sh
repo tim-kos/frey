@@ -17,6 +17,6 @@ rm -f "${__sysTmpDir}/frey-gitless"* || true
 "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" validate \
   --verbose \
   --force-yes \
-  --sshkeys "${__sysTmpDir}" \
-  --state "${__sysTmpDir}" \
+  --sshkeysDir "${__sysTmpDir}" \
+  --stateDir "${__sysTmpDir}" \
   --bail

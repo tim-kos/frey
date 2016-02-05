@@ -9,7 +9,7 @@ Mustache = require "mustache"
 class Prepare extends Command
   constructor: (name, options, runtime) ->
     super name, options, runtime
-    @dir = @options.cwd
+    @dir = @options.recipeDir
 
   main: (cargo, cb) ->
     async.eachSeries @runtime.deps, @_make.bind(this), cb

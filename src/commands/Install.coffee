@@ -34,8 +34,8 @@ class Install extends Command
     if !chalk.enalbed
       env.ANSIBLE_NOCOLOR = "true"
 
-    env.ANSIBLE_OPTIONS = @runtime.paths.ansibleCfg
-    env.TF_STATE        = @runtime.paths.stateFile
+    env.ANSIBLE_CONFIG = @runtime.paths.ansibleCfg
+    env.TF_STATE       = @runtime.paths.stateFile
 
     cb null, env
 

@@ -117,11 +117,11 @@ facts     : "Show Ansible facts"
 If you think it's better to keep the infra recipes outside of your own app code
 for security reasons or similar, we recommend that alongside your `app` repo, you create an
 `infra-app` repo, where you'll keep Frey's recipes in. We recommend you then keep the recipes
-in the root, and run Frey with `--recipe .`:
+in the root, and run Frey with `--recipe-dir .`:
 
 ```bash
 cd ~/code/infra-myapp
-frey --recipe .
+frey --recipe-dir .
 ```
 
 ### Multiple setups in one repository
@@ -130,7 +130,7 @@ Also possible, via:
 
 ```bash
 cd ~/code/infra-myapp
-frey --recipe ./envs/production
+frey --recipe-dir ./envs/production
 ```
 
 ## Recipes
@@ -170,6 +170,36 @@ Frey is intended to service many use-cases and we'll work on removing some of th
 
  - [x] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
  - [x] Switch to local npm install if available via LiftOff
+ - [x] Consider storing residu files in ~/.frey/tmp/
+ - [ ] Ansible must run from configBase
+ - [x] Default appname should be basename of dirname of Freyfile, not pwd
+ - [ ] Tools should be saved under version number only. This way different versions of frey can use their own tested tools, while also still being able to share between same frey installs
+ - [ ] A project's package.json should refer to a frey version, which should be used, vs the global one.
+ - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
+ - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?). No: abstract both Terraform and Ansible
+ - [ ] Put `_transform` in a central place (utils?)
+ - [ ] - role: ":frey:/consul/v1.0.0"
+ - [ ] Enable DO support
+ - [ ] Make arg & env functions of all other commands, mimic Install's
+ - [ ] New command: `frey compile` that's prefixed to any chain, so you can trust your updates are present in residu, and have its configuration available too (ssh user for instance)
+ - [-] If you do a `frey install` you must trust that at least the Ansible files are re-compiled
+ - [-] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that acceptance test) and validation can be ran against it/them
+ - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
+ - [ ] Vagrant support
+ - [ ] Port install
+ - [ ] Port upload
+ - [ ] Port remote
+ - [ ] Port setup
+ - [ ] Port show 
+ - [ ] Dynamodb scenario can evolve to be a full run, passing all stages
+ - [ ] Indent stdout/err
+ - [ ] More tests!
+ - [ ] How to implement different roles? Db/www/etc?
+ - [ ] website: Take uppy as a base maybe?
+ - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
+ - [ ] website: On the githubs  
+ - [x] replace IPs and UUIDs, it's possible to disable SKIP_COMPARE_STDIO on the openstack acceptace test
+ - [x] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
  - [x] Coveralls
  - [x] Chalk
  - [x] Glob & extend all \*.toml. Infra = terraform Config = Ansible.
@@ -202,28 +232,3 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [x] exeScript should become exe. new exeScript prepends bash -o
  - [x] Rename integration to acceptance (test) https://en.wikipedia.org/wiki/Acceptance_testing
  - [x] terraform -parallelism=1
- - [ ] replace IPs and UUIDs, it's possible to disable SKIP_COMPARE_STDIO on the openstack acceptace test
- - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?)
- - [ ] Put `_transform` in a central place (utils?)
- - [ ] - role: ":frey:/consul/v1.0.0"
- - [ ] Default appname should be basename of dirname of Freyfile, not pwd
- - [ ] Enable DO support
- - [ ] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
- - [ ] Make arg & env functions of all other commands mimic Install's
- - [ ] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that acceptance test) and validation can be ran against it/them
- - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
- - [ ] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
- - [ ] Vagrant support
- - [ ] Port install
- - [ ] Port upload
- - [ ] Port remote
- - [ ] Port setup
- - [ ] Port show 
- - [ ] Dynamodb scenario can evolve to be a full run
- - [ ] iculture theme for static site. vue.js. middleman are also nice examples
- - [ ] Indent stdout/err
- - [ ] More tests!
- - [ ] Vagrant because it gave us a consistent and repeatable setup. And predictability 
- - [ ] On the githubs  
- - [ ] How to implement different roles? Db/www/etc?
- - [ ] Switch to local npm install if available via LiftOff

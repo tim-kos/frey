@@ -8,28 +8,26 @@ describe "Frey", ->
       frey = new Frey
 
       options =
-        recipe  : "{{{cwd}}}/frey/production"
-        cwd     : "."
-        tools   : "{{{home}}}/.frey/tools"
-        sshkeys : "{{{home}}}/.ssh"
-        root    : "/opt/frey"
+        recipeDir  : "{{{cwd}}}/frey/production"
+        toolsDir   : "{{{home}}}/.frey/tools"
+        sshkeysDir : "{{{home}}}/.ssh"
+        rootDir    : "/opt/frey"
 
       frey._normalize options, (err, options) ->
         expect(err).to.equal null
-        expect(options.recipe).to.match /\/frey\/production$/
-        expect(options.root).to.match /^\/opt\/frey$/
+        expect(options.recipeDir).to.match /\/frey\/production$/
+        expect(options.rootDir).to.match /^\/opt\/frey$/
         done()
 
     it "should transform the basename function", (done) ->
       frey = new Frey
 
       options =
-        app     : "./tusd|basename"
-        recipe  : "{{{cwd}}}/frey/production"
-        cwd     : "."
-        tools   : "{{{home}}}/.frey/tools"
-        sshkeys : "{{{home}}}/.ssh"
-        root    : "/opt/frey"
+        app        : "./tusd|basename"
+        recipeDir  : "{{{cwd}}}/frey/production"
+        toolsDir   : "{{{home}}}/.frey/tools"
+        sshkeysDir : "{{{home}}}/.ssh"
+        rootDir    : "/opt/frey"
 
       frey._normalize options, (err, options) ->
         expect(err).to.equal null
