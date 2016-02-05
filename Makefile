@@ -15,7 +15,7 @@ encrypt:
 
 .PHONY: test-coverage
 test-coverage:
-	@export DEBUG=*:*,-mocha:* && mocha --recursive \
+	@export DEBUG=*:*,-mocha:* && $(MOCHA) --recursive \
 	      test
 	@$(ISTANBUL) report text-summary lcov
 	@cat coverage/lcov.info | $(COVERALLS) || true
