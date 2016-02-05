@@ -16,10 +16,9 @@ yargs
   .example "frey backup -d ./envs/production", "backup platform described in ./envs/production"
   .options
     recipeDir:
-      default : "{{{cwd}}}"
       nargs   : 1
       type    : "string"
-      describe: "Directory that contains the Freyfile"
+      describe: "Directory that contains the Freyfile.toml. Frey will traverse upwards if empty. "
     app:
       default : "{{{recipeDir}}}|basename"
       nargs   : 1
