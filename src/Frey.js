@@ -51,9 +51,9 @@ class Frey extends Base {
     for (var k1 in options) {
       var val = options[k1]
       if (val === `${val}`) {
-        options[key] = Mustache.render(val, options)
-        if (options[key].indexOf('{{{') > -1) {
-          return nextCb(new Error(`Unable to render vars in '${key}' '${options[key]}'`))
+        options[k1] = Mustache.render(val, options)
+        if (options[k1].indexOf('{{{') > -1) {
+          return nextCb(new Error(`Unable to render vars in '${k1}' '${options[k1]}'`))
         }
       }
     }
@@ -70,13 +70,13 @@ class Frey extends Base {
 
     // Resolve to absolute paths
     var iterable = [ 'sshkeysDir', 'recipeDir', 'toolsDir' ]
-    for (var i = 0, key; i < iterable.length; i++) {
-      key = iterable[i]
-      if (!(options[key] != null)) {
-        throw new Error(`options.${key} was found empty`)
+    for (var i = 0, k3; i < iterable.length; i++) {
+      k3 = iterable[i]
+      if (!(options[k3] != null)) {
+        throw new Error(`options.${k3} was found empty`)
       }
 
-      options[key] = path.resolve(options.recipeDir, options[key])
+      options[k3] = path.resolve(options.recipeDir, options[k3])
     }
 
     if (!(options.tags != null)) {
