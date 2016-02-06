@@ -168,11 +168,7 @@ Frey is intended to service many use-cases and we'll work on removing some of th
 
 ## Todo
 
- - [x] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
- - [x] Switch to local npm install if available via LiftOff
- - [x] Consider storing residu files in ~/.frey/tmp/
  - [ ] Ansible must run from configBase
- - [x] Default appname should be basename of dirname of Freyfile, not pwd
  - [ ] Tools should be saved under version number only. This way different versions of frey can use their own tested tools, while also still being able to share between same frey installs
  - [ ] A project's package.json should refer to a frey version, which should be used, vs the global one.
  - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
@@ -182,8 +178,6 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] Enable DO support
  - [ ] Make arg & env functions of all other commands, mimic Install's
  - [ ] New command: `frey compile` that's prefixed to any chain, so you can trust your updates are present in residu, and have its configuration available too (ssh user for instance)
- - [-] If you do a `frey install` you must trust that at least the Ansible files are re-compiled
- - [-] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that acceptance test) and validation can be ran against it/them
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
  - [ ] Vagrant support
  - [ ] Port install
@@ -195,9 +189,16 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] Indent stdout/err
  - [ ] More tests!
  - [ ] How to implement different roles? Db/www/etc?
+ - [ ] website: Console window like http://lebab.io/ ?
  - [ ] website: Take uppy as a base maybe?
  - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] website: On the githubs  
+ - [-] If you do a `frey install` you must trust that at least the Ansible files are re-compiled
+ - [-] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that acceptance test) and validation can be ran against it/them
+ - [x] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
+ - [x] Switch to local npm install if available via LiftOff
+ - [x] Consider storing residu files in ~/.frey/tmp/
+ - [x] Default appname should be basename of dirname of Freyfile, not pwd
  - [x] replace IPs and UUIDs, it's possible to disable SKIP_COMPARE_STDIO on the openstack acceptace test
  - [x] Enable Openstack support after https://github.com/adammck/terraform-inventory/issues/14
  - [x] Coveralls
