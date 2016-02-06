@@ -31,7 +31,7 @@ function destroy() {
 destroy
 trap destroy EXIT
 
-node --harmony "${__root}/bin/cli.js" \
+node --harmony "${__root}/lib/cli.js" \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \

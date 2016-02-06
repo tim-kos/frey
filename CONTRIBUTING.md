@@ -11,7 +11,7 @@ npm link # Makes /usr/local/bin/frey point to ~/code/frey/bin/frey instead of th
 ## Converting Terraform HCL & Ansible YML to unified Frey TOML
 
 ```bash
-bin/converter.sh \
+scripts/converter.sh \
   tusd \
   ~/code/infra-tusd/envs/production/infra.tf \
   ~/code/infra-tusd/envs/production/main.yml

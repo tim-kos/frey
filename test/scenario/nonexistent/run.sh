@@ -11,4 +11,4 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
-node --harmony "${__root}/bin/cli.js" nonexistent
+node --harmony "${__root}/lib/cli.js" nonexistent

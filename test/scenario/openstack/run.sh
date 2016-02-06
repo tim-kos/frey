@@ -40,7 +40,7 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
-node --harmony "${__root}/bin/cli.js" refresh \
+node --harmony "${__root}/lib/cli.js" refresh \
   --sshkeys-dir "${__dir}" \
   --no-color \
   --verbose \
@@ -51,7 +51,7 @@ node --harmony "${__root}/bin/cli.js" refresh \
 
 # If you want to test just the install (don't forget to disable destroys):
 #
-# node --harmony "${__root}/bin/cli.js" install \
+# node --harmony "${__root}/lib/cli.js" install \
 #   --sshkeys-dir "${__dir}" \
 #   --no-color \
 #   --verbose \

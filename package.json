@@ -5,7 +5,7 @@
   "scripts": {
     "babel": "babel src --out-dir lib --source-maps",
     "build": "npm run test && npm run babel && npm run libversion",
-    "encrypt": "source env.sh && bash bin/encrypt.sh",
+    "encrypt": "source env.sh && bash scripts/encrypt.sh",
     "fix": "eslint . --fix",
     "libversion": "node ./lib/cli.js --version",
     "lint": "eslint .",

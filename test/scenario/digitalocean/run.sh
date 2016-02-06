@@ -40,7 +40,7 @@ function destroy() {
 destroy
 trap destroy EXIT
 
-node --harmony "${__root}/bin/cli.js" install \
+node --harmony "${__root}/lib/cli.js" install \
   --sshkeys-dir "." \
   --no-color \
   --verbose \
