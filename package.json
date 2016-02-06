@@ -9,14 +9,14 @@
     "fix": "eslint . --fix",
     "libversion": "node ./lib/cli.js --version",
     "lint": "eslint .",
-    "mocha": "mocha --compilers js:mocha-traceur --reporter spec test/ --grep \"${GREP}\"",
+    "mocha": "mocha --compilers js:babel-register --reporter spec test/ --grep \"${GREP}\"",
     "prepublish": "npm run build",
     "release:major": "npm version major -m \"Release %s\" && git push && npm publish",
     "release:minor": "npm version minor -m \"Release %s\" && git push && npm publish",
     "release:patch": "npm version patch -m \"Release %s\" && git push && npm publish",
     "save:acceptance:fixtures": "source env.sh && env SAVE_FIXTURES=true ./test/acceptance.sh ${SCENARIO}",
     "test:acceptance": "./test/acceptance.sh ${SCENARIO}",
-    "test:coverage": "mocha --compilers js:mocha-traceur --recursive test && istanbul report text-summary lcov && (cat coverage/lcov.info | coveralls || true)",
+    "test:coverage": "mocha --compilers js:babel-register --recursive test && istanbul report text-summary lcov && (cat coverage/lcov.info | coveralls || true)",
     "test:full": "npm run test:coverage && npm run test:acceptance",
     "test": "npm run lint && npm run mocha"
   },
@@ -56,6 +56,7 @@
   "devDependencies": {
     "babel-cli": "6.4.5",
     "babel-preset-es2015": "6.3.13",
+    "babel-register": "6.4.3",
     "chai": "^3.4.1",
     "coveralls": "^2.11.4",
     "eslint": "1.10.3",
@@ -63,7 +64,6 @@
     "eslint-plugin-standard": "1.3.1",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.3",
-    "mocha-traceur": "2.1.0",
     "should": "^7.1.1"
   },
   "keywords": [
