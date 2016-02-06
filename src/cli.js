@@ -6,8 +6,8 @@ var yargs = require('yargs')
 var updateNotifier = require('update-notifier')
 var pkg = require('../package.json')
 var LiftOff = require('liftoff')
-var commands = require('../src/commands')
-var chain = require('../src/chain')
+var commands = require('./commands')
+var chain = require('./chain')
 
 updateNotifier({pkg: pkg}).notify({defer: false})
 

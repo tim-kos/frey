@@ -14,8 +14,8 @@ var chalk = require('chalk')
 var Base = require('./Base')
 var Mustache = require('mustache')
 var osHomedir = require('os-homedir')
-// var commands = require('../src/commands')
-var chain = require('../src/chain')
+// var commands = require('./commands')
+var chain = require('./chain')
 
 class Frey extends Base {
   constructor (options) {

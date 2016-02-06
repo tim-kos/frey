@@ -4,8 +4,9 @@
   "description": "Automated infrastructure CLI",
   "scripts": {
     "babel": "babel src --out-dir lib --source-maps",
-    "build": "npm run test && npm run babel",
+    "build": "npm run test && npm run babel && npm run libversion",
     "fix": "eslint . --fix",
+    "libversion": "node ./lib/cli.js --version",
     "lint": "eslint .",
     "mocha": "mocha --compilers js:mocha-traceur --reporter spec test/ --grep \"${GREP}\"",
     "prepublish": "npm run build",
