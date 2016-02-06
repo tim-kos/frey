@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 import Frey from '../src/Frey'
 import { expect } from 'chai'
 

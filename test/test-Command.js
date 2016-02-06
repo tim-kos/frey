@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 import Command from '../src/Command'
 import { expect } from 'chai'
 
