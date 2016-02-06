@@ -19,7 +19,7 @@ before_install:
   - wget https://github.com/dbohdan/remarshal/releases/download/v0.3.0/remarshal-0.3.0-linux-amd64.tar.gz
   - tar -zxvf remarshal-0.3.0-linux-amd64.tar.gz
   - sudo cp -af remarshal/remarshal /usr/local/bin/remarshal
-script: make test-full
+script: npm run test-full
 env:
   global:
     - secure: S01jYvhHmsaVsj9tQYDFICkcvrc0WzD5Xi1a6LvtTztTRHXSfdTd++ghZQfo1f6Z6LNMvQpTcCeHM8mY1ik0mC0b2rTqyecq/eVE+jEh7khGnKUucmrPu9ZI2yKZA3jkQdmjw28EhZLjzESV2iNrxh6DclWJkKaxYqQKtkV0X02hipX398yUokP50vk/spLFc5Pf7gozKf91sCSROA5mmizjG7Dei04K+LYQ0la8+OthDjwZ8NXwASIT9MLADczpfJK59m9cyB+f4/EvFIPyplLwN2Tj6h/knZJUgRumMhhKnpQfoOd3ztfYqlvyBdnQreJmK+klrl6IeOjI89lOHRZtvoZfW6JC1KtKYQeco7OqedycXJq63S7aFOV606cXE3kIMhQteIR3wN4IlQGNA/7pUr47k3btDmHDuS+xu3aDy4imue4kiiUrvb0cmk77ts5yVYmll04DK0Ytg6zGaiTnmPpRUhi0r3mGExBVOxRxcOZjtgo0KudQY2u2pFTN26HEmV+QVsrd6DN3kjna6b3IQk8Tc8xWKtpxPw2c9nhnTFNkinwCCrQyjXuUegTGRpw9M+EySgJk3TBd7uAS+An1eWBmURGW6M/S9sOExAp6a1a5kXDVyfRtBowk7SUFaGvEdGsMX3PytcPZfco4KmwImFRYCeOPmhGjrusSsPg=
