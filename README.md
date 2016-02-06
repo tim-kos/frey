@@ -168,7 +168,6 @@ Frey is intended to service many use-cases and we'll work on removing some of th
 
 ## Todo
 
- - [ ] Ansible must run from configBase
  - [ ] Tools should be saved under version number only. This way different versions of frey can use their own tested tools, while also still being able to share between same frey installs
  - [ ] A project's package.json should refer to a frey version, which should be used, vs the global one.
  - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
@@ -193,6 +192,7 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] website: Take uppy as a base maybe?
  - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] website: On the githubs  
+ - [x] Ansible must run from configBase
  - [-] If you do a `frey install` you must trust that at least the Ansible files are re-compiled
  - [-] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that acceptance test) and validation can be ran against it/them
  - [x] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
