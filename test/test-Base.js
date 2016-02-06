@@ -4,7 +4,7 @@ import { expect } from 'chai'
 
 describe('Base', () => {
   return describe('run', () => {
-    return iaat('should run a bootchain', done => {
+    return it('should run a bootchain', done => {
       const output = []
       const base = new Base()
       base._a = function (cargo, cb) {
