@@ -31,7 +31,7 @@ function destroy() {
 destroy
 trap destroy EXIT
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
+node --harmony "${__root}/lib/cli.js" \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \

@@ -40,7 +40,7 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" refresh \
+node --harmony "${__root}/lib/cli.js" refresh \
   --sshkeys-dir "${__dir}" \
   --no-color \
   --verbose \
@@ -51,7 +51,7 @@ if true; then trap destroy EXIT; fi
 
 # If you want to test just the install (don't forget to disable destroys):
 #
-# "${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" install \
+# node --harmony "${__root}/lib/cli.js" install \
 #   --sshkeys-dir "${__dir}" \
 #   --no-color \
 #   --verbose \

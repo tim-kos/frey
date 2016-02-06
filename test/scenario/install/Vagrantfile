@@ -21,5 +21,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Runs every time on `vagrant provision`, configures up the machine & does a build
-  config.vm.provision :shell, :inline => "bash #{SHARE_GUEST_DIR}/scripts/bootstrap/vagrant-provision.sh"
+  config.vm.provision: shell, :inline => "bash #{SHARE_GUEST_DIR}/scripts/bootstrap/vagrant-provision.sh"
 end

@@ -37,7 +37,7 @@
   network_id      = "${openstack_networking_network_v2.freytest.id}"
   name           = "freytest"
   # This helps guarantee launch order - useful for acceptance tests:
-  depends_on     = [ "openstack_networking_network_v2.freytest" ]
+  depends_on     = [ "openstack_compute_secgroup_v2.freytest" ]
 
 # router
 [infra.resource.openstack_networking_router_v2.freytest]
@@ -45,7 +45,7 @@
   external_gateway = "${var.FREY_OPENSTACK_EXTERNAL_GATEWAY}"
   name             = "freytest"
   # This helps guarantee launch order - useful for acceptance tests:
-  depends_on     = [ "openstack_compute_secgroup_v2.freytest" ]
+  depends_on     = [ "openstack_networking_subnet_v2.freytest" ]
 
 # router_interface
 [infra.resource.openstack_networking_router_interface_v2.freytest_app]

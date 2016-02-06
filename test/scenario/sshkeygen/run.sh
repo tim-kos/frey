@@ -15,14 +15,14 @@ __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 
 rm -f "${__sysTmpDir}/frey-sshkeygen."* || true
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
+node --harmony "${__root}/lib/cli.js" \
   --sshkeys-dir "${__sysTmpDir}" \
   --bail-after prepare
 
 ls "${__sysTmpDir}/frey-sshkeygen."* || true
 
 rm -f "${__sysTmpDir}/frey-sshkeygen.pub" || true
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" \
+node --harmony "${__root}/lib/cli.js" \
   --sshkeys-dir "${__sysTmpDir}" \
   --bail-after prepare
 

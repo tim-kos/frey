@@ -11,7 +11,7 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
-"${__root}/bin/converter.sh" \
+"${__root}/scripts/converter.sh" \
   converterApp \
   "${__dir}/infra.tf" \
   "${__dir}/main.yml" \

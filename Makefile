@@ -1,68 +1,34 @@
-SHELL      := /usr/bin/env bash
-COFFEE     := node_modules/.bin/coffee
-COFFEELINT := node_modules/.bin/coffeelint
-MOCHA      := node_modules/.bin/mocha --compilers coffee:coffee-script --require "coffee-script/register"
-REPORTER   := spec
-ISTANBUL   := node_modules/.bin/istanbul
-COVERALLS  := node_modules/.bin/coveralls
-GREP       :=
-scenario   :=
+# Licensed under MIT.
+# Copyright (2016) by Kevin van Zonneveld https://twitter.com/kvz
+#
+# This Makefile offers convience shortcuts into any Node.js project that utilizes npm scripts.
+# It functions as a wrapper around the actual listed in `package.json`
+# So instead of typing:
+#
+#  $ npm script build:assets
+#
+# you could also type:
+#
+#  $ make build-assets
+#
+# Notice that colons (:) are replaced by dashes for Makefile compatibility.
+#
+# The benefits of this wrapper are:
+#
+# - You get to keep the the scripts package.json, which is more portable
+#   (Makefiles & Windows are harder to mix)
+# - Offer a polite way into the project for developers coming from different
+#   languages (npm scripts is obviously very Node centric)
+# - Profit from better autocomplete (make <TAB><TAB>) than npm currently offers.
+#   OSX users will have to install bash-completion
+#   (http://davidalger.com/development/bash-completion-on-os-x-with-brew/)
 
-.PHONY: lint
-lint:
-	@[ ! -f coffeelint.json ] && $(COFFEELINT) --makeconfig > coffeelint.json || true
-	@$(COFFEELINT) --file ./coffeelint.json src
+define npm_script_targets
+TARGETS := $(shell node -e 'for (var k in require("./package.json").scripts) {console.log(k.replace(/:/g, "-"));}')
+$$(TARGETS):
+	npm run $(subst -,:,$(MAKECMDGOALS))
 
-.PHONY: encrypt
-encrypt:
-	@source env.sh && bash bin/encrypt.sh
+.PHONY: $$(TARGETS)
+endef
 
-.PHONY: build
-build:
-	@make lint || true
-	@$(COFFEE) $(CSOPTS) --map --compile --output lib src
-
-.PHONY: test-coverage
-test-coverage:
-	# https://github.com/benbria/coffee-coverage/blob/master/docs/HOWTO-codeship-and-coveralls.md
-	# npm install --save-dev coffee-coverage istanbul coveralls
-	@export DEBUG=*:*,-mocha:* && mocha --recursive \
-	      --compilers coffee:coffee-script/register \
-				--require ./coffee-coverage-loader.js \
-	      test
-	@$(ISTANBUL) report text-summary lcov
-	@cat coverage/lcov.info | $(COVERALLS) || true
-
-.PHONY: test
-test: build
-	@DEBUG=*:*,-mocha:* $(MOCHA) --reporter $(REPORTER) test/ --grep "$(GREP)"
-
-.PHONY: test-acceptance
-test-acceptance:
-	@./test/acceptance.sh $(scenario)
-
-.PHONY: save-acceptance-fixtures
-save-acceptance-fixtures:
-	@source env.sh && env SAVE_FIXTURES=true ./test/acceptance.sh $(scenario)
-
-.PHONY: test-full
-test-full: test-coverage test-acceptance
-	@echo "Okay : )"
-
-.PHONY: release-major
-release-major: test
-	@npm version major -m "Release %s"
-	@git push
-	@npm publish
-
-.PHONY: release-minor
-release-minor: test
-	@npm version minor -m "Release %s"
-	@git push
-	@npm publish
-
-.PHONY: release-patch
-release-patch: test
-	@npm version patch -m "Release %s"
-	@git push
-	@npm publish
+$(eval $(call npm_script_targets))

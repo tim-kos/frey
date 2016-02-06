@@ -26,7 +26,7 @@ echo "FREY:STDIO_SKIP_COMPARE"
 
 rm -f "${__sysTmpDir}/frey-prepare"* || true
 
-"${__root}/node_modules/.bin/coffee" "${__root}/bin/frey" prepare \
+node --harmony "${__root}/lib/cli.js" prepare \
   --force-yes \
   --sshkeys-dir "${__sysTmpDir}" \
   --verbose \
