@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict'
-var Frey = require('../src/Frey')
+var Frey = require('./Frey')
 // var debug = require('depurar')('frey')
 var yargs = require('yargs')
 var updateNotifier = require('update-notifier')

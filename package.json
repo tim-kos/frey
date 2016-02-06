@@ -2,14 +2,21 @@
   "name": "frey",
   "version": "0.1.2",
   "description": "Automated infrastructure CLI",
-  "main": "lib/Frey",
   "scripts": {
-    "test": "make test",
+    "babel": "babel src --out-dir lib --source-maps",
+    "build": "npm run test && npm run babel",
+    "fix": "eslint . --fix",
     "lint": "eslint .",
-    "fix": "eslint . --fix"
+    "mocha": "mocha --compilers js:mocha-traceur --reporter spec test/ --grep \"${GREP}\"",
+    "prepublish": "npm run build",
+    "test": "npm run lint && npm run mocha"
   },
+  "files": [
+    "lib"
+  ],
+  "main": "lib/Frey",
   "bin": {
-    "frey": "./bin/cli.js"
+    "frey": "lib/cli.js"
   },
   "preferGlobal": true,
   "repository": {
@@ -43,13 +50,15 @@
     "node": ">= 4.0.0"
   },
   "devDependencies": {
+    "babel-cli": "6.4.5",
+    "babel-preset-es2015": "6.3.13",
     "chai": "^3.4.1",
     "coveralls": "^2.11.4",
-    "istanbul": "^0.4.0",
-    "mocha": "^2.3.3",
     "eslint": "1.10.3",
     "eslint-config-standard": "4.4.0",
     "eslint-plugin-standard": "1.3.1",
+    "istanbul": "^0.4.0",
+    "mocha": "^2.3.3",
     "should": "^7.1.1"
   },
   "keywords": [
