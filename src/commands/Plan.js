@@ -1,10 +1,10 @@
 'use strict'
-const Command = require('../Command')
-const chalk = require('chalk')
-// var debug = require('depurar')('frey')
-// var fs = require('fs')
-// var _ = require('lodash')
-// var async = require('async')
+import Command from '../Command'
+import chalk from 'chalk'
+// import depurar from 'depurar'; const debug = depurar('frey')
+// import fs from 'fs'
+// import _ from 'lodash'
+// import async from 'async'
 
 class Plan extends Command {
   constructor (name, options, runtime) {

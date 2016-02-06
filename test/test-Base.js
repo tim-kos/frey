@@ -1,6 +1,6 @@
-const Base = require('../src/Base')
-const expect = require('chai').expect
-// var debug = require('depurar')('frey')
+import Base from '../src/Base'
+import { expect } from 'chai'
+// import depurar from 'depurar'; const debug = depurar('frey')
 
 describe('Base', () => {
   return describe('run', () => {

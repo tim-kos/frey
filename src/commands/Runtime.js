@@ -1,10 +1,10 @@
 'use strict'
-const Command = require('../Command')
-// var mkdirp = require('mkdirp')
-// var semver = require('semver')
-const async = require('async')
-const fs = require('fs')
-// var debug = require('depurar')('frey')
+import Command from '../Command'
+// import mkdirp from 'mkdirp'
+// import semver from 'semver'
+import async from 'async'
+import fs from 'fs'
+// import depurar from 'depurar'; const debug = depurar('frey')
 let os = require('os')
 
 class Runtime extends Command {

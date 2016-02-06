@@ -1,6 +1,6 @@
 'use strict'
-const Command = require('../Command')
-// var debug = require('depurar')('frey')
+import Command from '../Command'
+// import depurar from 'depurar'; const debug = depurar('frey')
 
 class Show extends Command {}
 

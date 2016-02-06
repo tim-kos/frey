@@ -1,11 +1,11 @@
 'use strict'
-const Command = require('../Command')
-const mkdirp = require('mkdirp')
-const semver = require('semver')
-const fs = require('fs')
-const async = require('async')
-const debug = require('depurar')('frey')
-const Mustache = require('mustache')
+import Command from '../Command'
+import mkdirp from 'mkdirp'
+import semver from 'semver'
+import fs from 'fs'
+import async from 'async'
+import depurar from 'depurar'; const debug = depurar('frey')
+import Mustache from 'mustache'
 
 class Prepare extends Command {
   constructor (name, options, runtime) {

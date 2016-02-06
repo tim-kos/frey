@@ -1,5 +1,5 @@
-const Frey = require('../src/Frey')
-const expect = require('chai').expect
+import Frey from '../src/Frey'
+import { expect } from 'chai'
 
 describe('Frey', () => {
   describe('_normalize', () => {

@@ -1,8 +1,8 @@
 'use strict'
-const Command = require('../Command')
-const chalk = require('chalk')
-// var _ = require('lodash')
-// var debug = require('depurar')('frey')
+import Command from '../Command'
+import chalk from 'chalk'
+// import _ from 'lodash'
+// import depurar from 'depurar'; const debug = depurar('frey')
 
 class Install extends Command {
   constructor (name, options, runtime) {

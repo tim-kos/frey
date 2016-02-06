@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict'
-const Frey = require('./Frey')
-// var debug = require('depurar')('frey')
-const yargs = require('yargs')
+import Frey from './Frey'
+// import depurar from 'depurar'; const debug = depurar('frey')
+import yargs from 'yargs'
 const updateNotifier = require('update-notifier')
-const pkg = require('../package.json')
-const LiftOff = require('liftoff')
-const commands = require('./commands')
-const chain = require('./chain')
+import pkg from '../package.json'
+import LiftOff from 'liftoff'
+import commands from './commands'
+import chain from './chain'
 
 updateNotifier({pkg: pkg}).notify({defer: false})
 

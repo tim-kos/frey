@@ -1,5 +1,5 @@
-const Command = require('../src/Command')
-const expect = require('chai').expect
+import Command from '../src/Command'
+import { expect } from 'chai'
 
 describe('Command', () => {
   return describe('_toEnvFormat', () => {

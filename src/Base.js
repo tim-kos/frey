@@ -1,9 +1,10 @@
 'use strict'
-const chalk = require('chalk')
-const util = require('util')
-const async = require('async')
-const _ = require('lodash')
-const debug = require('depurar')('frey')
+import chalk from 'chalk'
+import util from 'util'
+import async from 'async'
+import _ from 'lodash'
+import depurar from 'depurar'
+const debug = depurar('frey')
 
 class Base {
   constructor () {

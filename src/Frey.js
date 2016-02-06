@@ -1,21 +1,21 @@
 'use strict'
-// var Depurar = require('depurar')
+// import Depurar from 'depurar'
 // var debug = Depurar('frey')
 // var info = Depurar('frey')
-const inflection = require('inflection')
-const async = require('async')
-// var util = require('util')
+import inflection from 'inflection'
+import async from 'async'
+// import util from 'util'
 let _ = require('lodash')
-// var fs = require('fs')
-const os = require('os')
-const path = require('path')
-const mkdirp = require('mkdirp')
-const chalk = require('chalk')
-const Base = require('./Base')
-const Mustache = require('mustache')
+// import fs from 'fs'
+import os from 'os'
+import path from 'path'
+import mkdirp from 'mkdirp'
+import chalk from 'chalk'
+import Base from './Base'
+import Mustache from 'mustache'
 const osHomedir = require('os-homedir')
-// var commands = require('./commands')
-const chain = require('./chain')
+// import commands from './commands'
+import chain from './chain'
 
 class Frey extends Base {
   constructor (options) {

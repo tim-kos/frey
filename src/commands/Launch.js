@@ -1,7 +1,7 @@
 'use strict'
-const Command = require('../Command')
-// var debug = require('depurar')('frey')
-const chalk = require('chalk')
+import Command from '../Command'
+// import depurar from 'depurar'; const debug = depurar('frey')
+import chalk from 'chalk'
 
 class Launch extends Command {
   constructor (name, options, runtime) {

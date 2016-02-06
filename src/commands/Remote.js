@@ -1,8 +1,8 @@
 'use strict'
-const Command = require('../Command')
-const chalk = require('chalk')
-const debug = require('depurar')('frey')
-// var _ = require('lodash')
+import Command from '../Command'
+import chalk from 'chalk'
+import depurar from 'depurar'; const debug = depurar('frey')
+// import _ from 'lodash'
 
 class Remote extends Command {
   constructor (name, options, runtime) {

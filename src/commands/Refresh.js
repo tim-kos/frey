@@ -1,14 +1,14 @@
 'use strict'
-const Command = require('../Command')
-const debug = require('depurar')('frey')
-const chalk = require('chalk')
-const glob = require('glob')
-const async = require('async')
-const fs = require('fs')
-const _ = require('lodash')
-const INI = require('ini')
+import Command from '../Command'
+import depurar from 'depurar'; const debug = depurar('frey')
+import chalk from 'chalk'
+import glob from 'glob'
+import async from 'async'
+import fs from 'fs'
+import _ from 'lodash'
+import INI from 'ini'
 const YAML = require('js-yaml')
-const TOML = require('toml')
+import TOML from 'toml'
 
 class Refresh extends Command {
   constructor (name, options, runtime) {

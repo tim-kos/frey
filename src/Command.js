@@ -1,13 +1,13 @@
 'use strict'
-const debug = require('depurar')('frey')
-const chalk = require('chalk')
-const spawn = require('child_process').spawn
-const _ = require('lodash')
-const flatten = require('flat')
-const inflection = require('inflection')
-const fs = require('fs')
-const yesno = require('yesno')
-const Base = require('./Base')
+import depurar from 'depurar'; const debug = depurar('frey')
+import chalk from 'chalk'
+import { spawn } from 'child_process'
+import _ from 'lodash'
+import flatten from 'flat'
+import inflection from 'inflection'
+import fs from 'fs'
+import yesno from 'yesno'
+import Base from './Base'
 
 class Command extends Base {
   constructor (name, options, runtime) {
