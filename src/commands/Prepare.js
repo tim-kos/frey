@@ -1,11 +1,11 @@
 'use strict'
-var Command = require('../Command')
-var mkdirp = require('mkdirp')
-var semver = require('semver')
-var fs = require('fs')
-var async = require('async')
-var debug = require('depurar')('frey')
-var Mustache = require('mustache')
+const Command = require('../Command')
+const mkdirp = require('mkdirp')
+const semver = require('semver')
+const fs = require('fs')
+const async = require('async')
+const debug = require('depurar')('frey')
+const Mustache = require('mustache')
 
 class Prepare extends Command {
   constructor (name, options, runtime) {
@@ -18,7 +18,7 @@ class Prepare extends Command {
   }
 
   _make (props, cb) {
-    var func = this[`_make${props.type}`]
+    let func = this[`_make${props.type}`]
     if (!func) {
       return cb(new Error(`Unsupported dependency type: '${props.type}'`))
     }
@@ -36,7 +36,7 @@ class Prepare extends Command {
       }
 
       this._out(`Creating private key '${props.privkey}'\n`)
-      var cmd = [
+      const cmd = [
         `ssh-keygen -b 2048 -t rsa -C '${props.email}' -f '${props.privkey}' -q -N ''`,
         `rm -f '${props.privkey}.pub'`
       ].join(' && ')
@@ -53,7 +53,7 @@ class Prepare extends Command {
       }
 
       this._out(`Creating public key '${props.pubkey}'\n`)
-      var cmd = [
+      const cmd = [
         `echo -n $(ssh-keygen -yf '${props.privkey}') > '${props.pubkey}'`,
         `echo ' ${props.email}' >> '${props.pubkey}'`
       ].join(' && ')
@@ -63,7 +63,7 @@ class Prepare extends Command {
   }
 
   _makePubkeyFingerprint (props, cb) {
-    var cmd = `ssh-keygen -lf '${props.pubkey}' | awk '{print $2}'`
+    const cmd = `ssh-keygen -lf '${props.pubkey}' | awk '{print $2}'`
     return this._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
       this.runtime.ssh.keypub_fingerprint = `${stdout}`.trim()
       return cb(err)
@@ -76,7 +76,7 @@ class Prepare extends Command {
   }
 
   _makeDir (props, cb) {
-    return mkdirp(props.dir, function (err) {
+    return mkdirp(props.dir, err => {
       if (err) {
         return cb(err)
       }
@@ -92,15 +92,15 @@ class Prepare extends Command {
         return cb(null)
       }
 
-      var cmd = this._transform(props.cmdInstall, props)
+      const cmd = this._transform(props.cmdInstall, props)
       return this._cmdYesNo(cmd, (err) => {
         if (err) {
           return cb(new Error(`Failed to install '${props.name}'. ${err}`))
         }
 
-        return this._satisfy(props, function (satisfied) {
+        return this._satisfy(props, satisfied => {
           if (!satisfied) {
-            var msg = `Version of '${props.name}' still not satisfied after install`
+            const msg = `Version of '${props.name}' still not satisfied after install`
             return cb(new Error(msg))
           }
 
@@ -111,7 +111,7 @@ class Prepare extends Command {
   }
 
   _satisfy (props, cb) {
-    var cmd = this._transform(props.cmdVersion, props)
+    let cmd = this._transform(props.cmdVersion, props)
 
     return this._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
       if (err) {
@@ -126,7 +126,7 @@ class Prepare extends Command {
         })
       }
 
-      var foundVersion = props.versionTransformer(stdout)
+      const foundVersion = props.versionTransformer(stdout)
 
       this._out(`Found '${props.name}' with version '${foundVersion}'\n`)
 

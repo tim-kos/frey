@@ -1,20 +1,19 @@
-var Frey = require('../src/Frey')
-var expect = require('chai').expect
+const Frey = require('../src/Frey')
+const expect = require('chai').expect
 
-describe('Frey', function () {
-  this.timeout(10000)
-  describe('_normalize', function () {
-    it('should transform the cwd variable', function (done) {
-      var frey = new Frey()
+describe('Frey', () => {
+  describe('_normalize', () => {
+    it('should transform the cwd variable', done => {
+      const frey = new Frey()
 
-      var options =
+      const options =
         {recipeDir: '{{{cwd}}}/frey/production',
         toolsDir: '{{{home}}}/.frey/tools',
         sshkeysDir: '{{{home}}}/.ssh',
         rootDir: '/opt/frey'
         }
 
-      return frey._normalize(options, function (err, options) {
+      return frey._normalize(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.recipeDir).to.match(/\/frey\/production$/)
         expect(options.rootDir).to.match(/^\/opt\/frey$/)
@@ -22,10 +21,10 @@ describe('Frey', function () {
       })
     })
 
-    return it('should transform the basename function', function (done) {
-      var frey = new Frey()
+    return it('should transform the basename function', done => {
+      const frey = new Frey()
 
-      var options =
+      const options =
         {app: './tusd|basename',
         recipeDir: '{{{cwd}}}/frey/production',
         toolsDir: '{{{home}}}/.frey/tools',
@@ -33,7 +32,7 @@ describe('Frey', function () {
         rootDir: '/opt/frey'
         }
 
-      return frey._normalize(options, function (err, options) {
+      return frey._normalize(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.app).to.equal('tusd')
         return done()
@@ -41,12 +40,12 @@ describe('Frey', function () {
     })
   })
 
-  describe('_defaults', function () {
-    return it('should instantiate Frey with defaults', function (done) {
-      var frey = new Frey()
+  describe('_defaults', () => {
+    return it('should instantiate Frey with defaults', done => {
+      const frey = new Frey()
 
-      var options = {}
-      return frey._defaults(options, function (err, options) {
+      const options = {}
+      return frey._defaults(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options._).to.deep.equal([ 'prepare' ])
         return done()
@@ -54,16 +53,16 @@ describe('Frey', function () {
     })
   })
 
-  return describe('_composeChain', function () {
-    it('should not add prepare if the command was prepare', function (done) {
-      var frey = new Frey()
+  return describe('_composeChain', () => {
+    it('should not add prepare if the command was prepare', done => {
+      const frey = new Frey()
 
-      var options = {
+      const options = {
         _: ['prepare'],
         bailAfter: 'prepare'
       }
 
-      return frey._composeChain(options, function (err, options) {
+      return frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime',
@@ -73,30 +72,33 @@ describe('Frey', function () {
       })
     })
 
-    it('should return auto bail on docbuild which is not part of a chain', function (done) {
-      var frey = new Frey()
+    it(
+      'should return auto bail on docbuild which is not part of a chain',
+      done => {
+        const frey = new Frey()
 
-      var options =
-        {_: ['docbuild']}
+        const options =
+          {_: ['docbuild']}
 
-      ; return frey._composeChain(options, function (err, options) {
-        expect(err).to.equal(null)
-        expect(options.filteredChain).to.deep.equal([
-          'runtime',
-          'prepare',
-          'docbuild'
-        ])
-        return done()
-      })
-    })
+        ; return frey._composeChain(options, (err, options) => {
+          expect(err).to.equal(null)
+          expect(options.filteredChain).to.deep.equal([
+            'runtime',
+            'prepare',
+            'docbuild'
+          ])
+          return done()
+        })
+      }
+    )
 
-    it('should return all links for prepare', function (done) {
-      var frey = new Frey()
+    it('should return all links for prepare', done => {
+      const frey = new Frey()
 
-      var options =
+      const options =
         {_: ['prepare']}
 
-      ; return frey._composeChain(options, function (err, options) {
+      ; return frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
@@ -106,15 +108,15 @@ describe('Frey', function () {
       })
     })
 
-    it('should return one link for bail', function (done) {
-      var frey = new Frey()
+    it('should return one link for bail', done => {
+      const frey = new Frey()
 
-      var options =
+      const options =
         {_: ['deploy'],
         bail: true
         }
 
-      return frey._composeChain(options, function (err, options) {
+      return frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime',
@@ -125,15 +127,15 @@ describe('Frey', function () {
       })
     })
 
-    return it('should return some links for bailAfter', function (done) {
-      var frey = new Frey()
+    return it('should return some links for bailAfter', done => {
+      const frey = new Frey()
 
-      var options = {
+      const options = {
         _: ['refresh'],
         bailAfter: 'plan'
       }
 
-      return frey._composeChain(options, function (err, options) {
+      return frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime',

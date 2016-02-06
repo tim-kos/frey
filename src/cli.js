@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict'
-var Frey = require('./Frey')
+const Frey = require('./Frey')
 // var debug = require('depurar')('frey')
-var yargs = require('yargs')
-var updateNotifier = require('update-notifier')
-var pkg = require('../package.json')
-var LiftOff = require('liftoff')
-var commands = require('./commands')
-var chain = require('./chain')
+const yargs = require('yargs')
+const updateNotifier = require('update-notifier')
+const pkg = require('../package.json')
+const LiftOff = require('liftoff')
+const commands = require('./commands')
+const chain = require('./chain')
 
 updateNotifier({pkg: pkg}).notify({defer: false})
 
@@ -87,24 +87,25 @@ yargs
   .epilog('Copyright 2015 Transloadit')
   .help('help')
   .wrap(yargs.terminalWidth())
-  .version(function () {
+  .version(() => {
     return pkg.version
   })
 
 // First add chained commands, in order
-var done = []
-for (var i = 0, cmd; i < chain.length; i++) {
+const done = []
+let cmd
+for (let i = 0; i < chain.length; i++) {
   cmd = chain[i]
   if (done.indexOf(cmd) < 0) {
-    var description = commands[cmd]
-    yargs.command(cmd, description + ' (chained)')
+    const description = commands[cmd]
+    yargs.command(cmd, `${description} (chained)`)
     done.push(cmd)
   }
 }
 
 // Now add any remaining commands, not added already
 for (cmd in commands) {
-  description = commands[cmd]
+  const description = commands[cmd]
   if (done.indexOf(cmd) < 0) {
     yargs.command(cmd, description)
     done.push(cmd)
@@ -112,7 +113,7 @@ for (cmd in commands) {
 }
 
 // 'Execute' yargs
-var argv = yargs.argv
+const argv = yargs.argv
 
 if (argv._[0] === undefined) {
   argv._[0] = chain[0]
@@ -136,7 +137,7 @@ if (!commands[argv._[0]]) {
 // For Frey, LiftOff:
 //  - Scans for the closest Freyfile.toml
 //  - Switches to local npm install if available
-var liftOff = new LiftOff({
+const liftOff = new LiftOff({
   name: 'frey',
   configName: 'Freyfile',
   processTitle: 'frey',
@@ -145,9 +146,9 @@ var liftOff = new LiftOff({
 
 liftOff.launch({
   cwd: argv.recipeDir
-}, function (env) {
+}, env => {
   if (!(env.configBase != null)) {
-    var msg = 'Could not find a Freyfile.toml in current directory or upwards, or in recipe directory.'
+    const msg = 'Could not find a Freyfile.toml in current directory or upwards, or in recipe directory.'
     throw new Error(msg)
   }
 
@@ -159,10 +160,10 @@ liftOff.launch({
 
   // Let LiftOff override the recipe dir
   argv.recipeDir = env.configBase
-  var frey = new Frey(argv)
+  const frey = new Frey(argv)
 
   // Bombs away
-  return frey.run(function (err) {
+  return frey.run(err => {
     if (err) {
       // yargs.showHelp()
       console.error('')
@@ -180,5 +181,4 @@ liftOff.launch({
     console.log('Done')
     return process.exit(0)
   })
-}
-)
+})

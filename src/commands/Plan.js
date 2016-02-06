@@ -1,6 +1,6 @@
 'use strict'
-var Command = require('../Command')
-var chalk = require('chalk')
+const Command = require('../Command')
+const chalk = require('chalk')
 // var debug = require('depurar')('frey')
 // var fs = require('fs')
 // var _ = require('lodash')
@@ -15,7 +15,7 @@ class Plan extends Command {
   }
 
   _gatherTerraformArgs (options, cb) {
-    var terraformArgs = []
+    const terraformArgs = []
     if (!chalk.enabled) {
       terraformArgs.push('-no-color')
     }
@@ -28,10 +28,10 @@ class Plan extends Command {
   }
 
   main (cargo, cb) {
-    var terraformExe = ((() => {
-      var result = []
-      var iterable = this.runtime.deps
-      for (var i = 0, dep; i < iterable.length; i++) {
+    const terraformExe = ((() => {
+      const result = []
+      const iterable = this.runtime.deps
+      for (let i = 0, dep; i < iterable.length; i++) {
         dep = iterable[i]
         if (dep.name === 'terraform') {
           result.push(dep.exe)
@@ -39,7 +39,7 @@ class Plan extends Command {
       }
       return result
     })())[0]
-    var cmd = [
+    let cmd = [
       terraformExe,
       'plan'
     ]
@@ -56,7 +56,7 @@ class Plan extends Command {
         return cb(null)
       }
 
-      var m = stdout.match(/(\d+) to add, (\d+) to change, (\d+) to destroy/)
+      const m = stdout.match(/(\d+) to add, (\d+) to change, (\d+) to destroy/)
       if (!m) {
         return cb(new Error('Unable to parse add/change/destroy'))
       }

@@ -1,11 +1,11 @@
 'use strict'
-var Command = require('../Command')
+const Command = require('../Command')
 // var mkdirp = require('mkdirp')
 // var semver = require('semver')
-var async = require('async')
-var fs = require('fs')
+const async = require('async')
+const fs = require('fs')
 // var debug = require('depurar')('frey')
-var os = require('os')
+let os = require('os')
 
 class Runtime extends Command {
   constructor (name, options, runtime) {
@@ -16,17 +16,17 @@ class Runtime extends Command {
   }
 
   _findClosestRecipeGit (cargo, cb) {
-    return this._findClosestGit(this.options.recipeDir, function (filepath) {
+    return this._findClosestGit(this.options.recipeDir, filepath => {
       return cb(null, filepath)
     })
   }
 
   _findClosestGit (filepath, cb) {
-    var parts = filepath.split('/')
-    var paths = []
-    var rem = ''
+    const parts = filepath.split('/')
+    let paths = []
+    let rem = ''
 
-    for (var i = 0, part; i < parts.length; i++) {
+    for (let i = 0, part; i < parts.length; i++) {
       part = parts[i]
       if (!part) {
         continue
@@ -39,7 +39,7 @@ class Runtime extends Command {
     // This operation is performed in parallel, but the results array will
     // be in the same order as the original. Hence, use the last/longest/closest
     // path that has Git.
-    return async.reject(paths, fs.stat, function (results) {
+    return async.reject(paths, fs.stat, results => {
       if (!(((typeof results !== 'undefined' && results !== null) ? results.length : undefined) != null)) {
         return cb(undefined)
       }
@@ -49,36 +49,32 @@ class Runtime extends Command {
   }
 
   main (bootOptions, cb) {
-    this.runtime.os =
-      {platform: os.platform(),
-      hostname: os.hostname(),
-      arch: `${os.arch()}`.replace('x64', 'amd64')
-      }
+    this.runtime.os = {platform: os.platform(),
+    hostname: os.hostname(),
+    arch: `${os.arch()}`.replace('x64', 'amd64')
+    }
 
-    this.runtime.versions =
-      {ansible: '1.9.2',
-      terraform: '0.6.6',
-      terraformInventory: '0.6-pre',
-      pip: '7.1.2'
-      }
+    this.runtime.versions = {ansible: '1.9.2',
+    terraform: '0.6.6',
+    terraformInventory: '0.6-pre',
+    pip: '7.1.2'
+    }
 
-    this.runtime.paths =
-      {recipeGit: this.bootCargo._findClosestRecipeGit,
-      ansibleCfg: `${this.options.recipeDir}/Frey-residu-ansible.cfg`,
-      planFile: `${this.options.recipeDir}/Frey-residu-terraform.plan`,
-      infraFile: `${this.options.recipeDir}/Frey-residu-infra.tf.json`,
-      playbookFile: `${this.options.recipeDir}/Frey-residu-install.yml`,
-      stateFile: `${this.options.recipeDir}/Frey-state-terraform.tfstate`,
-      pythonLib: `${this.options.toolsDir}/pip/lib/python2.7/site-packages`
-      }
+    this.runtime.paths = {recipeGit: this.bootCargo._findClosestRecipeGit,
+    ansibleCfg: `${this.options.recipeDir}/Frey-residu-ansible.cfg`,
+    planFile: `${this.options.recipeDir}/Frey-residu-terraform.plan`,
+    infraFile: `${this.options.recipeDir}/Frey-residu-infra.tf.json`,
+    playbookFile: `${this.options.recipeDir}/Frey-residu-install.yml`,
+    stateFile: `${this.options.recipeDir}/Frey-state-terraform.tfstate`,
+    pythonLib: `${this.options.toolsDir}/pip/lib/python2.7/site-packages`
+    }
 
-    this.runtime.ssh =
-      {email: `${this.options.user}@${this.options.app}.freyproject.io`,
-      keypair_name: `${this.options.app}`,
-      keyprv_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pem`,
-      keypub_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pub`,
-      user: 'ubuntu'
-      }
+    this.runtime.ssh = {email: `${this.options.user}@${this.options.app}.freyproject.io`,
+    keypair_name: `${this.options.app}`,
+    keyprv_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pem`,
+    keypub_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pub`,
+    user: 'ubuntu'
+    }
       // keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       // keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
 
@@ -147,7 +143,7 @@ class Runtime extends Command {
       ].join('_'),
       cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
-        var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
+        const version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         return version
       },
       cmdInstall: [
@@ -175,7 +171,7 @@ class Runtime extends Command {
       ].join('_'),
       cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
-        var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
+        let version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         version = version.replace(/^(\d+\.\d+)/, '$1.0')
         return version
       },
@@ -199,7 +195,7 @@ class Runtime extends Command {
       range: `>= ${this.runtime.versions.pip}`,
       cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
-        var version = `${stdout}`.trim().split('\n')[0].split(/\s+/)[1].replace('v', '')
+        const version = `${stdout}`.trim().split('\n')[0].split(/\s+/)[1].replace('v', '')
         return version
       },
       cmdInstall: 'sudo easy_install --upgrade pip'
@@ -213,7 +209,7 @@ class Runtime extends Command {
       exePlaybook: `${this.options.toolsDir}/pip/bin/ansible-playbook`,
       cmdVersion: '{{{exe}}} --version',
       versionTransformer (stdout) {
-        var version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
+        const version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         return version
       },
       cmdInstall: [

@@ -1,7 +1,7 @@
 'use strict'
-var Command = require('../Command')
-var chalk = require('chalk')
-var debug = require('depurar')('frey')
+const Command = require('../Command')
+const chalk = require('chalk')
+const debug = require('depurar')('frey')
 // var _ = require('lodash')
 
 class Remote extends Command {
@@ -16,7 +16,7 @@ class Remote extends Command {
   }
 
   _gatherTerraformArgs (options, cb) {
-    var terraformArgs = []
+    const terraformArgs = []
     if (!chalk.enabled) {
       terraformArgs.push('-no-color')
     }
@@ -27,10 +27,10 @@ class Remote extends Command {
   }
 
   _gatherHost (cargo, cb) {
-    var terraformExe = ((() => {
-      var result = []
-      var iterable = this.runtime.deps
-      for (var i = 0, dep; i < iterable.length; i++) {
+    const terraformExe = ((() => {
+      const result = []
+      const iterable = this.runtime.deps
+      for (let i = 0, dep; i < iterable.length; i++) {
         dep = iterable[i]
         if (dep.name === 'terraform') {
           result.push(dep.exe)
@@ -38,25 +38,25 @@ class Remote extends Command {
       }
       return result
     })())[0]
-    var cmd = [
+    let cmd = [
       terraformExe,
       'output'
     ]
     cmd = cmd.concat(this.bootCargo._gatherTerraformArgs)
     cmd = cmd.concat('public_address')
 
-    return this._exe(cmd, {}, function (err, stdout) {
+    return this._exe(cmd, {}, (err, stdout) => {
       if (err) {
         return cb(err)
       }
 
-      var host = `${stdout}`.split('\n')[0].trim()
+      const host = `${stdout}`.split('\n')[0].trim()
       return cb(null, host)
     })
   }
 
   _gatherArgs (cargo, cb) {
-    var args = []
+    const args = []
 
     debug({cargo: cargo})
     args.push(`${this.bootCargo._gatherHost}`)
@@ -75,20 +75,20 @@ class Remote extends Command {
   }
 
   _gatherEnv (cargo, cb) {
-    var env = {}
+    const env = {}
 
     return cb(null, env)
   }
 
   main (cargo, cb) {
     // sshExe = (dep.exe for dep in @runtime.deps when dep.name == "ssh")[0]
-    var sshExe = 'ssh'
-    var cmd = [
+    const sshExe = 'ssh'
+    let cmd = [
       sshExe
     ]
     cmd = cmd.concat(this.bootCargo._gatherArgs)
 
-    var opts =
+    const opts =
       {env: this.bootCargo._gatherEnv,
       stdin: 'inherit',
       stdout: 'inherit',
@@ -100,7 +100,7 @@ class Remote extends Command {
       cmd: cmd
     })
 
-    return this._exe(cmd, opts, function (err, stdout) {
+    return this._exe(cmd, opts, (err, stdout) => {
       if (err) {
         return cb(err)
       }

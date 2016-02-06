@@ -1,9 +1,9 @@
 'use strict'
-var chalk = require('chalk')
-var util = require('util')
-var async = require('async')
-var _ = require('lodash')
-var debug = require('depurar')('frey')
+const chalk = require('chalk')
+const util = require('util')
+const async = require('async')
+const _ = require('lodash')
+const debug = require('depurar')('frey')
 
 class Base {
   constructor () {
@@ -16,13 +16,13 @@ class Base {
   }
 
   run (cb) {
-    var methods = []
-    var iterable = this.boot
-    for (var i = 0, method; i < iterable.length; i++) {
+    const methods = []
+    const iterable = this.boot
+    for (let i = 0, method; i < iterable.length; i++) {
       method = iterable[i];
-      ((method) => {
+      (method => {
         return methods.push((cargo, cb) => {
-          var f = this[method].bind(this)
+          const f = this[method].bind(this)
           return f(cargo, (err, cargo) => {
             this.bootCargo[method] = cargo
             return cb(err, cargo)
@@ -43,15 +43,15 @@ class Base {
   }
 
   _out (...args) {
-    var index = 0
-    var str = args[0]
-    str = `${str}`.replace(/%[o%s]/, function (m) {
+    let index = 0
+    let str = args[0]
+    str = `${str}`.replace(/%[o%s]/, m => {
       if (m === '%%') {
         return m
       }
 
       index++
-      var ret = (_.pullAt(args, index))[0]
+      let ret = (_.pullAt(args, index))[0]
       ret = util.inspect(ret, {colors: chalk.supportsColor})
 
       if (m === '%o') {

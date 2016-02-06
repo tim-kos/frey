@@ -1,13 +1,12 @@
-var Base = require('../src/Base')
-var expect = require('chai').expect
+const Base = require('../src/Base')
+const expect = require('chai').expect
 // var debug = require('depurar')('frey')
 
-describe('Base', function () {
-  this.timeout(10000)
-  return describe('run', function () {
-    return it('should run a bootchain', function (done) {
-      var output = []
-      var base = new Base()
+describe('Base', () => {
+  return describe('run', () => {
+    return it('should run a bootchain', done => {
+      const output = []
+      const base = new Base()
       base._a = function (cargo, cb) {
         output.push(`function _a called with ${cargo}`)
         cargo = 'output:a'
@@ -31,7 +30,7 @@ describe('Base', function () {
         '_b'
       ]
 
-      return base.run(function (err, result) {
+      return base.run((err, result) => {
         expect(err).to.equal(null)
         expect(output).to.deep.equal([
           'function _a called with [object Object]',

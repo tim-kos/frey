@@ -1,14 +1,14 @@
 'use strict'
-var Command = require('../Command')
-var debug = require('depurar')('frey')
-var chalk = require('chalk')
-var glob = require('glob')
-var async = require('async')
-var fs = require('fs')
-var _ = require('lodash')
-var INI = require('ini')
-var YAML = require('js-yaml')
-var TOML = require('toml')
+const Command = require('../Command')
+const debug = require('depurar')('frey')
+const chalk = require('chalk')
+const glob = require('glob')
+const async = require('async')
+const fs = require('fs')
+const _ = require('lodash')
+const INI = require('ini')
+const YAML = require('js-yaml')
+const TOML = require('toml')
 
 class Refresh extends Command {
   constructor (name, options, runtime) {
@@ -23,10 +23,10 @@ class Refresh extends Command {
   }
 
   _findTomlFiles (cargo, cb) {
-    var tomlFiles = []
-    var pattern = `${this.options.recipeDir}/*.toml`
+    let tomlFiles = []
+    const pattern = `${this.options.recipeDir}/*.toml`
     debug(`Reading from '${pattern}'`)
-    return glob(pattern, function (err, files) {
+    return glob(pattern, (err, files) => {
       if (err) {
         return cb(err)
       }
@@ -37,8 +37,8 @@ class Refresh extends Command {
   }
 
   _readTomlFiles (tomlFiles, cb) {
-    var tomlContents = []
-    return async.map(tomlFiles, fs.readFile, function (err, buf) {
+    const tomlContents = []
+    return async.map(tomlFiles, fs.readFile, (err, buf) => {
       if (err) {
         return cb(err)
       }
@@ -49,8 +49,8 @@ class Refresh extends Command {
   }
 
   _mergeToml (tomlContents, cb) {
-    var tomlMerged = {}
-    for (var i = 0, tom; i < tomlContents.length; i++) {
+    let tomlMerged = {}
+    for (let i = 0, tom; i < tomlContents.length; i++) {
       tom = tomlContents[i]
       tomlMerged = _.extend(tomlMerged, tom)
     }
@@ -59,13 +59,13 @@ class Refresh extends Command {
   }
 
   _splitToml (tomlMerged, cb) {
-    var filesWritten = []
+    const filesWritten = []
 
     return async.series([
       (callback) => {
         if (!(tomlMerged.infra != null)) {
           debug('No infra instructions found in merged toml')
-          fs.unlink(this.runtime.paths.infraFile, function (err) {
+          fs.unlink(this.runtime.paths.infraFile, err => {
             if (err) {
                // That's not fatal
             }
@@ -74,7 +74,7 @@ class Refresh extends Command {
           return
         }
 
-        var encoded = JSON.stringify(tomlMerged.infra, null, '  ')
+        const encoded = JSON.stringify(tomlMerged.infra, null, '  ')
         if (!encoded) {
           return callback(new Error('Unable to convert recipe to Terraform infra JSON'))
         }
@@ -83,10 +83,10 @@ class Refresh extends Command {
         return fs.writeFile(this.runtime.paths.infraFile, encoded, callback)
       },
       (callback) => {
-        var ref
+        let ref
         if (!((((ref = tomlMerged.install) != null) ? ref.config : undefined) != null)) {
           debug('No config instructions found in merged toml')
-          fs.unlink(this.runtime.paths.ansibleCfg, function (err) {
+          fs.unlink(this.runtime.paths.ansibleCfg, err => {
             if (err) {
               // That's not fatal
             }
@@ -95,7 +95,7 @@ class Refresh extends Command {
           return
         }
 
-        var encoded = INI.encode(tomlMerged.install.config)
+        let encoded = INI.encode(tomlMerged.install.config)
         if (!encoded) {
           return callback(new Error('Unable to convert recipe to ansibleCfg INI'))
         }
@@ -110,10 +110,10 @@ class Refresh extends Command {
         return fs.writeFile(this.runtime.paths.ansibleCfg, encoded, callback)
       },
       (callback) => {
-        var ref
+        let ref
         if (!((((ref = tomlMerged.install) != null) ? ref.playbooks : undefined) != null)) {
           debug('No install playbook instructions found in merged toml')
-          fs.unlink(this.runtime.paths.playbookFile, function (err) {
+          fs.unlink(this.runtime.paths.playbookFile, err => {
             if (err) {
                // That's not fatal
             }
@@ -122,7 +122,7 @@ class Refresh extends Command {
           return
         }
 
-        var encoded = YAML.safeDump(tomlMerged.install.playbooks)
+        const encoded = YAML.safeDump(tomlMerged.install.playbooks)
         if (!encoded) {
           return callback(new Error('Unable to convert recipe to Ansible playbook YAML'))
         }
@@ -130,7 +130,7 @@ class Refresh extends Command {
         filesWritten.push(this.runtime.paths.playbookFile)
         return fs.writeFile(this.runtime.paths.playbookFile, encoded, callback)
       }
-    ], function (err) {
+    ], err => {
       if (err) {
         return cb(err)
       }
@@ -141,7 +141,7 @@ class Refresh extends Command {
   }
 
   _gatherTerraformArgs (filesWritten, cb) {
-    var terraformArgs = []
+    const terraformArgs = []
     if (!chalk.enabled) {
       terraformArgs.push('-no-color')
     }
@@ -152,10 +152,10 @@ class Refresh extends Command {
   }
 
   main (cargo, cb) {
-    var terraformExe = ((() => {
-      var result = []
-      var iterable = this.runtime.deps
-      for (var i = 0, dep; i < iterable.length; i++) {
+    const terraformExe = ((() => {
+      const result = []
+      const iterable = this.runtime.deps
+      for (let i = 0, dep; i < iterable.length; i++) {
         dep = iterable[i]
         if (dep.name === 'terraform') {
           result.push(dep.exe)
@@ -163,13 +163,13 @@ class Refresh extends Command {
       }
       return result
     })())[0]
-    var cmd = [
+    let cmd = [
       terraformExe,
       'refresh'
     ]
     cmd = cmd.concat(this.bootCargo._gatherTerraformArgs)
 
-    return this._exe(cmd, {verbose: false, limitSamples: false}, function (err, stdout) {
+    return this._exe(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
       if (err) {
         if (`${err.details}`.match(/when there is existing state/)) {
           debug('Ignoring refresh error about missing statefile')

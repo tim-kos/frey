@@ -1,5 +1,5 @@
 'use strict'
-var Command = require('../Command')
+const Command = require('../Command')
 // var debug = require('depurar')('frey')
 
 class Restore extends Command {}

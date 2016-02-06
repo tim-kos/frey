@@ -1,6 +1,6 @@
 'use strict'
-var Command = require('../Command')
-var chalk = require('chalk')
+const Command = require('../Command')
+const chalk = require('chalk')
 // var _ = require('lodash')
 // var debug = require('depurar')('frey')
 
@@ -14,11 +14,11 @@ class Install extends Command {
   }
 
   _gatherArgs (cargo, cb) {
-    var args = []
-    var terraformInvExe = ((() => {
-      var result = []
-      var iterable = this.runtime.deps
-      for (var i = 0, dep; i < iterable.length; i++) {
+    const args = []
+    const terraformInvExe = ((() => {
+      const result = []
+      const iterable = this.runtime.deps
+      for (let i = 0, dep; i < iterable.length; i++) {
         dep = iterable[i]
         if (dep.name === 'terraformInventory') {
           result.push(dep.exe)
@@ -46,7 +46,7 @@ class Install extends Command {
   }
 
   _gatherEnv (cargo, cb) {
-    var env = {}
+    const env = {}
 
     if (!chalk.enalbed) {
       env.ANSIBLE_NOCOLOR = 'true'
@@ -59,10 +59,10 @@ class Install extends Command {
   }
 
   main (cargo, cb) {
-    var ansiblePlaybookExe = ((() => {
-      var result = []
-      var iterable = this.runtime.deps
-      for (var i = 0, dep; i < iterable.length; i++) {
+    const ansiblePlaybookExe = ((() => {
+      const result = []
+      const iterable = this.runtime.deps
+      for (let i = 0, dep; i < iterable.length; i++) {
         dep = iterable[i]
         if (dep.name === 'ansible') {
           result.push(dep.exePlaybook)
@@ -70,15 +70,15 @@ class Install extends Command {
       }
       return result
     })())[0]
-    var cmd = [
+    let cmd = [
       ansiblePlaybookExe
     ]
     cmd = cmd.concat(this.bootCargo._gatherArgs)
 
-    var opts =
+    const opts =
       {env: this.bootCargo._gatherEnv}
 
-    ; return this._exe(cmd, opts, function (err, stdout) {
+    ; return this._exe(cmd, opts, (err, stdout) => {
       if (err) {
         return cb(err)
       }

@@ -1,7 +1,7 @@
 'use strict'
-var Command = require('../Command')
+const Command = require('../Command')
 // var debug = require('depurar')('frey')
-var chalk = require('chalk')
+const chalk = require('chalk')
 
 class Launch extends Command {
   constructor (name, options, runtime) {
@@ -12,7 +12,7 @@ class Launch extends Command {
   }
 
   _gatherTerraformArgs (options, cb) {
-    var terraformArgs = []
+    const terraformArgs = []
     if (!chalk.enabled) {
       terraformArgs.push('-no-color')
     }
@@ -24,10 +24,10 @@ class Launch extends Command {
   }
 
   main (cargo, cb) {
-    var terraformExe = ((() => {
-      var result = []
-      var iterable = this.runtime.deps
-      for (var i = 0, dep; i < iterable.length; i++) {
+    const terraformExe = ((() => {
+      const result = []
+      const iterable = this.runtime.deps
+      for (let i = 0, dep; i < iterable.length; i++) {
         dep = iterable[i]
         if (dep.name === 'terraform') {
           result.push(dep.exe)
@@ -35,7 +35,7 @@ class Launch extends Command {
       }
       return result
     })())[0]
-    var cmd = [
+    let cmd = [
       terraformExe,
       'apply'
     ]

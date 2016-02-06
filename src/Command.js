@@ -1,13 +1,13 @@
 'use strict'
-var debug = require('depurar')('frey')
-var chalk = require('chalk')
-var spawn = require('child_process').spawn
-var _ = require('lodash')
-var flatten = require('flat')
-var inflection = require('inflection')
-var fs = require('fs')
-var yesno = require('yesno')
-var Base = require('./Base')
+const debug = require('depurar')('frey')
+const chalk = require('chalk')
+const spawn = require('child_process').spawn
+const _ = require('lodash')
+const flatten = require('flat')
+const inflection = require('inflection')
+const fs = require('fs')
+const yesno = require('yesno')
+const Base = require('./Base')
 
 class Command extends Base {
   constructor (name, options, runtime) {
@@ -28,7 +28,7 @@ class Command extends Base {
       //   cmd
       // ]
 
-      return this._exeScript(cmd, {}, function (err, stdout) {
+      return this._exeScript(cmd, {}, (err, stdout) => {
         if (err) {
           return cb(new Error(`Error while executing '${cmd}'. ${err}`))
         }
@@ -50,7 +50,7 @@ class Command extends Base {
   }
 
   main (bootOptions, cb) {
-    var runScript = `${this.options.recipeDir}/${this.name}.sh`
+    const runScript = `${this.options.recipeDir}/${this.name}.sh`
     debug(`Checking for existance of '${runScript}'`)
     return fs.stat(runScript, (err, stat) => {
       if (!err) {
@@ -62,12 +62,12 @@ class Command extends Base {
   }
 
   _buildChildEnv (extra) {
-    var childEnv = {}
+    let childEnv = {}
 
     childEnv = _.extend(childEnv, process.env, this._toEnvFormat(this.runtime, 'runtime'), this._toEnvFormat(this.options, 'options'))
 
-    for (var key in childEnv) {
-      var val = childEnv[key]
+    for (const key in childEnv) {
+      const val = childEnv[key]
       childEnv[`TF_VAR_${key}`] = val
     }
 
@@ -101,7 +101,7 @@ class Command extends Base {
     if (!(cmdOpts.stderr != null)) { cmdOpts.stderr = 'pipe' }
     if (!(cmdOpts.limitSamples != null)) { cmdOpts.limitSamples = 3 }
 
-    var opts =
+    const opts =
       {cwd: this.dir,
       env: this._buildChildEnv(cmdOpts.env),
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
@@ -113,10 +113,10 @@ class Command extends Base {
       cmdArgs: cmdArgs
     })
 
-    var cmd = cmdArgs.shift()
-    var bash = spawn(cmd, cmdArgs, opts)
-    var lastStderr = []
-    var lastStdout = []
+    const cmd = cmdArgs.shift()
+    const bash = spawn(cmd, cmdArgs, opts)
+    let lastStderr = []
+    let lastStdout = []
 
     if (bash.stdout) {
       bash.stdout.on('data', (data) => {
@@ -148,13 +148,14 @@ class Command extends Base {
       })
     }
 
-    return bash.on('close', function (code) {
+    return bash.on('close', code => {
       if (code !== 0) {
-        var msg = `Script '${cmd} ${cmdArgs.join(' ')}' exited with code: '${code}'`
-        var err = new Error(msg)
+        const msg = `Script '${cmd} ${cmdArgs.join(' ')}' exited with code: '${code}'`
+        const err = new Error(msg)
+        let lastInfo
 
         if (lastStderr.length) {
-          var lastInfo = lastStderr
+          lastInfo = lastStderr
         } else {
           lastInfo = lastStdout
         }
@@ -172,14 +173,14 @@ class Command extends Base {
       return {}
     }
 
-    var delimiter = '__'
+    const delimiter = '__'
 
-    var flat = flatten(obj, {delimiter: delimiter})
+    const flat = flatten(obj, {delimiter: delimiter})
 
-    var environment = {}
-    for (var key in flat) {
-      var val = flat[key]
-      var parts = []
+    const environment = {}
+    for (const key in flat) {
+      const val = flat[key]
+      const parts = []
       parts.push('FREY')
 
       if ((typeof prefix !== 'undefined' && prefix !== null)) {
@@ -188,7 +189,7 @@ class Command extends Base {
 
       parts.push(inflection.underscore(key).toUpperCase())
 
-      var envKey = parts.join(delimiter)
+      let envKey = parts.join(delimiter)
       envKey = envKey.replace('.', '_')
       environment[envKey] = val
     }

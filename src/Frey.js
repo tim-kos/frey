@@ -2,20 +2,20 @@
 // var Depurar = require('depurar')
 // var debug = Depurar('frey')
 // var info = Depurar('frey')
-var inflection = require('inflection')
-var async = require('async')
+const inflection = require('inflection')
+const async = require('async')
 // var util = require('util')
-var _ = require('lodash')
+let _ = require('lodash')
 // var fs = require('fs')
-var os = require('os')
-var path = require('path')
-var mkdirp = require('mkdirp')
-var chalk = require('chalk')
-var Base = require('./Base')
-var Mustache = require('mustache')
-var osHomedir = require('os-homedir')
+const os = require('os')
+const path = require('path')
+const mkdirp = require('mkdirp')
+const chalk = require('chalk')
+const Base = require('./Base')
+const Mustache = require('mustache')
+const osHomedir = require('os-homedir')
 // var commands = require('./commands')
-var chain = require('./chain')
+const chain = require('./chain')
 
 class Frey extends Base {
   constructor (options) {
@@ -48,8 +48,8 @@ class Frey extends Base {
 
   _normalize (options, nextCb) {
     // Render interdependent arguments
-    for (var k1 in options) {
-      var val = options[k1]
+    for (let k1 in options) {
+      let val = options[k1]
       if (val === `${val}`) {
         options[k1] = Mustache.render(val, options)
         if (options[k1].indexOf('{{{') > -1) {
@@ -59,8 +59,8 @@ class Frey extends Base {
     }
 
     // Apply simple functions
-    for (var k2 in options) {
-      val = options[k2]
+    for (let k2 in options) {
+      let val = options[k2]
       if (`${val}`.match(/\|basename$/)) {
         val = val.replace(/\|basename$/, '')
         val = path.basename(val)
@@ -69,8 +69,8 @@ class Frey extends Base {
     }
 
     // Resolve to absolute paths
-    var iterable = [ 'sshkeysDir', 'recipeDir', 'toolsDir' ]
-    for (var i = 0, k3; i < iterable.length; i++) {
+    const iterable = [ 'sshkeysDir', 'recipeDir', 'toolsDir' ]
+    for (let i = 0, k3; i < iterable.length; i++) {
       k3 = iterable[i]
       if (!(options[k3] != null)) {
         throw new Error(`options.${k3} was found empty`)
@@ -91,22 +91,23 @@ class Frey extends Base {
       function (callback) {
         return mkdirp(options.toolsDir, callback)
       }
-    ], function (err) {
+    ], err => {
       return nextCb(err, options)
     }
     )
   }
 
   _composeChain (options, nextCb) {
-    var cmd = options._[0]
-    var indexStart = chain.indexOf(cmd)
+    const cmd = options._[0]
+    const indexStart = chain.indexOf(cmd)
 
     if (indexStart < 0) {
       // This command is not part of the chain
       options.filteredChain = [ cmd ]
     } else {
+      let length = 0
       if (options.bail) {
-        var length = indexStart + 1
+        length = indexStart + 1
       } else if (options.bailAfter && chain.indexOf(options.bailAfter) > -1) {
         length = chain.indexOf(options.bailAfter) + 1
       } else {
@@ -138,11 +139,11 @@ class Frey extends Base {
   }
 
   _runOne (command, cb) {
-    var className = inflection.classify(command)
-    var p = `./commands/${className}`
-    var Class = require(p)
-    var obj = new Class(command, this.options, this.runtime)
-    var func = obj.run.bind(obj)
+    const className = inflection.classify(command)
+    const p = `./commands/${className}`
+    const Class = require(p)
+    const obj = new Class(command, this.options, this.runtime)
+    const func = obj.run.bind(obj)
 
     this._out(chalk.gray('--> '))
     this._out(chalk.gray(`${os.hostname()} - `))
@@ -150,7 +151,7 @@ class Frey extends Base {
     this._out(chalk.green('\n'))
 
     return func((err, result) => {
-      var append = {}
+      const append = {}
       append[command] = result
       this.runtime = _.extend(this.runtime, append)
       return cb(err)
