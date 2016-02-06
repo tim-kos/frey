@@ -23,7 +23,7 @@ ls "${__sysTmpDir}/frey-sshkeygen."* || true
 
 rm -f "${__sysTmpDir}/frey-sshkeygen.pub" || true
 node --harmony "${__root}/bin/cli.js" \
-  --sshkeys "${__sysTmpDir}" \
+  --sshkeys-dir "${__sysTmpDir}" \
   --bail-after prepare
 
 ls "${__sysTmpDir}/frey-sshkeygen."* || true
