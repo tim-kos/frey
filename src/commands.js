@@ -1,5 +1,6 @@
 module.exports = {
   prepare: 'Install dependencies like Terraform',
+  compile: 'Compiles configuration and loads it',
   refresh: 'Refreshes current infra state and saves to terraform.tfstate',
   validate: 'Checks your recipes',
   plan: 'Shows infra changes and saves in an executable plan',

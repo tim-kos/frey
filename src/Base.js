@@ -46,7 +46,7 @@ class Base {
   _out (...args) {
     let index = 0
     let str = args[0]
-    str = `${str}`.replace(/%[o%s]/, m => {
+    str = `${str}`.replace(/%[o%s]/g, m => {
       if (m === '%%') {
         return m
       }

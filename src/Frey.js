@@ -16,6 +16,7 @@ import Mustache from 'mustache'
 const osHomedir = require('os-homedir')
 // import commands from './commands'
 import chain from './chain'
+import pkgConfig from '../package.json'
 
 class Frey extends Base {
   constructor (options) {
@@ -129,6 +130,7 @@ class Frey extends Base {
   main (bootOptions, cb) {
     this.options = bootOptions
 
+    this._out('--> Frey version %s\n', pkgConfig.version)
     if (this.options.verbose > 0) {
       this._out('--> Will run: %o\n', this.options.filteredChain)
     } else {
