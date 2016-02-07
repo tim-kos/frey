@@ -1,6 +1,6 @@
 {
   "name": "frey",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Automated infrastructure CLI",
   "scripts": {
     "babel": "babel src --out-dir lib --source-maps",
