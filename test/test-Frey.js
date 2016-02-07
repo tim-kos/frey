@@ -101,7 +101,7 @@ describe('Frey', () => {
       ; return frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
-          'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
+          'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch',
           'install', 'deploy', 'restart', 'show'
         ])
         return done()
