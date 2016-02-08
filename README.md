@@ -177,7 +177,7 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] - role: ":frey:/consul/v1.0.0"
  - [x] Merge chain & commands
  - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
- - [ ] Would be cool to signify chained via ▾ in cli.js
+ - [ ] Would be cool to signify chained via ▾ in cli.js ▽
  - [ ] Enable DO support
  - [ ] Make arg & env functions of all other commands, mimic Install's
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
