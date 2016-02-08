@@ -62,7 +62,7 @@ yargs
     },
     bail: {
       boolean: true,
-      describe: 'Do not follow the commands of commands, run a one-off command'
+      describe: 'Do not follow the chain of commands, run a one-off command'
     },
     'bail-after': {
       nargs: 1,
