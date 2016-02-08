@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Frey. Copyright (c) 2015, Transloadit Ltd.
+# Frey. Copyright (c) 2016, Transloadit Ltd.
 #
 # This file:
 #

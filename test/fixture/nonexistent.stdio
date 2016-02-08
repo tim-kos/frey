@@ -37,7 +37,7 @@ Options:
 Examples:
   frey backup -d ./envs/production  backup platform described in ./envs/production
 
-Copyright 2015 Transloadit
+Copyright 2016 Transloadit
 
 
 --> Command 'nonexistent' is not recognized
