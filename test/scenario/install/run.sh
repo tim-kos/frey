@@ -25,7 +25,7 @@ exit 0
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true
 
-node --harmony "${__root}/lib/cli.js" refresh \
+node "${__root}/lib/cli.js" compile \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \
@@ -33,7 +33,7 @@ node --harmony "${__root}/lib/cli.js" refresh \
   --bail \
 || false
 
-node --harmony "${__root}/lib/cli.js" install \
+node "${__root}/lib/cli.js" install \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \

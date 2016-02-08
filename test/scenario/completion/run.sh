@@ -13,6 +13,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 
 
-node --harmony "${__root}/lib/cli.js" completion
+node "${__root}/lib/cli.js" completion
 
 exit 0

@@ -17,7 +17,7 @@ rm -rf "${__sysTmpDir}/frey-gitless" || true
 mkdir -p "${__sysTmpDir}/frey-gitless"
 cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
 
-node --harmony "${__root}/lib/cli.js" validate \
+node "${__root}/lib/cli.js" validate \
   --verbose \
   --force-yes \
   --sshkeysDir "${__sysTmpDir}/frey-gitless/" \
