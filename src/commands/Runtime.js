@@ -150,7 +150,7 @@ class Runtime extends Command {
         `cd ${this.options.toolsDir}`,
         [
           "curl -sSL '",
-          'https://dl.bintray.com/mitchellh/terraform/',
+          `https://releases.hashicorp.com/terraform/${this.runtime.versions.terraform}/`,
           "{{{zip}}}'",
           "> '{{{zip}}}'"
         ].join(''),
