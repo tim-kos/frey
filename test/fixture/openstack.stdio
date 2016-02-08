@@ -2,13 +2,15 @@ FREY:STDIO_REPLACE_IPS
 FREY:STDIO_REPLACE_UUIDS
 FREY:STDIO_REPLACE_REMOTE_EXEC
 (maybe) Destroying..
---> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
+--> Frey version '0.3.0'
+--> Will run: [ 'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
 Found 'terraform' with version '0.6.6'
 Found 'terraformInventory' with version '0.6.0-pre'
 Found 'pip' with version {{global_pip_version}}
 Found 'ansible' with version '1.9.2'
+--> {hostname} - compile
 --> {hostname} - refresh
 --> {hostname} - validate
 --> {hostname} - plan

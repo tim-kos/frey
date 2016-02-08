@@ -1,4 +1,5 @@
 FREY:STDIO_SKIP_COMPARE
+--> Frey version '0.3.0'
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
 --> {hostname} - prepare

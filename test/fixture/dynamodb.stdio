@@ -1,5 +1,6 @@
 (maybe) Destroying..
---> Will run: [ 'runtime', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
+--> Frey version '0.3.0'
+--> Will run: [ 'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-dynamodb.pem'
@@ -8,6 +9,7 @@ Found 'terraform' with version '0.6.6'
 Found 'terraformInventory' with version '0.6.0-pre'
 Found 'pip' with version {{global_pip_version}}
 Found 'ansible' with version '1.9.2'
+--> {hostname} - compile
 --> {hostname} - refresh
 --> {hostname} - validate
 --> {hostname} - plan
