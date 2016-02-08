@@ -67,7 +67,7 @@ yargs
     'bail-after': {
       nargs: 1,
       type: 'string',
-      describe: 'After running this command, abort the commands'
+      describe: 'After running this command, abort the chain'
     },
     'no-color': {
       boolean: true,
