@@ -37,11 +37,11 @@ Now you can:
 
 ```bash
 # Run all acceptance tests:
-npm run test:acceptance
+npm run acceptance
 # Isolate just the dynamodb test:
-SCENARIO=dynamodb npm run test:acceptance
+SCENARIO=dynamodb npm run acceptance
 # Save new fixtures
-npm run save:acceptance:fixtures
+npm run acceptance:savefixtures
 ```
 
 ## Developing scenarios
