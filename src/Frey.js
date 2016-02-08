@@ -2,19 +2,18 @@
 // import Depurar from 'depurar'
 // var debug = Depurar('frey')
 // var info = Depurar('frey')
+// import util from 'util'
+// import fs from 'fs'
 import inflection from 'inflection'
 import async from 'async'
-// import util from 'util'
-let _ = require('lodash')
-// import fs from 'fs'
 import os from 'os'
+import _ from 'lodash'
 import path from 'path'
 import mkdirp from 'mkdirp'
 import chalk from 'chalk'
 import Base from './Base'
 import Mustache from 'mustache'
-const osHomedir = require('os-homedir')
-// import commands from './commands'
+import osHomedir from 'os-homedir'
 import chain from './chain'
 import pkgConfig from '../package.json'
 
@@ -100,22 +99,24 @@ class Frey extends Base {
 
   _composeChain (options, nextCb) {
     const cmd = options._[0]
-    const indexStart = chain.indexOf(cmd)
+    const realChain = _.filter(chain, { 'chained': true })
+    const indexStart = _.findIndex(realChain, {name: cmd})
 
     if (indexStart < 0) {
-      // This command is not part of the chain
+      // This command is not part of the realChain
       options.filteredChain = [ cmd ]
     } else {
       let length = 0
       if (options.bail) {
         length = indexStart + 1
-      } else if (options.bailAfter && chain.indexOf(options.bailAfter) > -1) {
-        length = chain.indexOf(options.bailAfter) + 1
+      } else if (options.bailAfter && _.findIndex(realChain, {name: options.bailAfter}) > -1) {
+        length = _.findIndex(realChain, {name: options.bailAfter}) + 1
       } else {
-        length = chain.length
+        length = realChain.length
       }
 
-      options.filteredChain = chain.slice(indexStart, length)
+      const sliced = realChain.slice(indexStart, length)
+      options.filteredChain = _.map(sliced, 'name')
     }
 
     if (options.filteredChain.indexOf('prepare') < 0) {

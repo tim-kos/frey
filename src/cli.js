@@ -6,8 +6,8 @@ import yargs from 'yargs'
 const updateNotifier = require('update-notifier')
 import pkg from '../package.json'
 import LiftOff from 'liftoff'
-import commands from './commands'
 import chain from './chain'
+import _ from 'lodash'
 
 updateNotifier({pkg: pkg}).notify({defer: false})
 
@@ -92,24 +92,13 @@ yargs
   })
 
 // First add chained commands, in order
-const done = []
-let cmd
 for (let i = 0; i < chain.length; i++) {
-  cmd = chain[i]
-  if (done.indexOf(cmd) < 0) {
-    const description = commands[cmd]
-    yargs.command(cmd, `${description} (chained)`)
-    done.push(cmd)
+  let cmd = chain[i]
+  let description = `${cmd.description}`
+  if (cmd.chained === true) {
+    description += ' (chained)'
   }
-}
-
-// Now add any remaining commands, not added already
-for (cmd in commands) {
-  const description = commands[cmd]
-  if (done.indexOf(cmd) < 0) {
-    yargs.command(cmd, description)
-    done.push(cmd)
-  }
+  yargs.command(cmd, `${cmd.description} (chained)`)
 }
 
 // 'Execute' yargs
@@ -127,7 +116,7 @@ if (argv._[0] === 'completion') {
   process.exit(0)
 }
 
-if (!commands[argv._[0]]) {
+if (!_.find(chain, { 'name': argv._[0] })) {
   yargs.showHelp()
   console.error('')
   console.error(`--> Command '${argv._[0]}' is not recognized`)
