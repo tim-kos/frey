@@ -92,13 +92,12 @@ yargs
   })
 
 // First add chained commands, in order
-for (let i = 0; i < chain.length; i++) {
-  let cmd = chain[i]
+for (let cmd of chain) {
   let description = `${cmd.description}`
   if (cmd.chained === true) {
     description += ' (chained)'
   }
-  yargs.command(cmd, `${cmd.description} (chained)`)
+  yargs.command(cmd.name, `${cmd.description} (chained)`)
 }
 
 // 'Execute' yargs
