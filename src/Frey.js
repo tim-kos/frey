@@ -14,7 +14,7 @@ import chalk from 'chalk'
 import Base from './Base'
 import Mustache from 'mustache'
 import osHomedir from 'os-homedir'
-import chain from './chain'
+import commands from './commands'
 import pkgConfig from '../package.json'
 
 class Frey extends Base {
@@ -98,23 +98,23 @@ class Frey extends Base {
 
   _composeChain (options, nextCb) {
     const cmd = options._[0]
-    const realChain = _.filter(chain, { 'chained': true })
-    const indexStart = _.findIndex(realChain, {name: cmd})
+    const chain = _.filter(commands, { 'chained': true })
+    const indexStart = _.findIndex(chain, {name: cmd})
 
     if (indexStart < 0) {
-      // This command is not part of the realChain
+      // This command is not part of the chain
       options.filteredChain = [ cmd ]
     } else {
       let length = 0
       if (options.bail) {
         length = indexStart + 1
-      } else if (options.bailAfter && _.findIndex(realChain, {name: options.bailAfter}) > -1) {
-        length = _.findIndex(realChain, {name: options.bailAfter}) + 1
+      } else if (options.bailAfter && _.findIndex(chain, {name: options.bailAfter}) > -1) {
+        length = _.findIndex(chain, {name: options.bailAfter}) + 1
       } else {
-        length = realChain.length
+        length = chain.length
       }
 
-      const sliced = realChain.slice(indexStart, length)
+      const sliced = chain.slice(indexStart, length)
       options.filteredChain = _.map(sliced, 'name')
     }
 

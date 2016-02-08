@@ -6,7 +6,7 @@ import yargs from 'yargs'
 const updateNotifier = require('update-notifier')
 import pkg from '../package.json'
 import LiftOff from 'liftoff'
-import chain from './chain'
+import commands from './commands'
 import _ from 'lodash'
 
 updateNotifier({pkg: pkg}).notify({defer: false})
@@ -62,12 +62,12 @@ yargs
     },
     bail: {
       boolean: true,
-      describe: 'Do not follow the chain of commands, run a one-off command'
+      describe: 'Do not follow the commands of commands, run a one-off command'
     },
     'bail-after': {
       nargs: 1,
       type: 'string',
-      describe: 'After running this command, abort the chain'
+      describe: 'After running this command, abort the commands'
     },
     'no-color': {
       boolean: true,
@@ -92,19 +92,20 @@ yargs
   })
 
 // First add chained commands, in order
-for (let cmd of chain) {
+for (let cmd of commands) {
   let description = `${cmd.description}`
   if (cmd.chained === true) {
+    // ▾
     description += ' (chained)'
   }
-  yargs.command(cmd.name, `${cmd.description} (chained)`)
+  yargs.command(cmd.name, description)
 }
 
-// 'Execute' yargs
+// 'Execute' yargss
 const argv = yargs.argv
 
 if (argv._[0] === undefined) {
-  argv._[0] = chain[0].name
+  argv._[0] = commands[0].name
 }
 
 // We override built-in completion command
@@ -115,7 +116,7 @@ if (argv._[0] === 'completion') {
   process.exit(0)
 }
 
-if (!_.find(chain, { 'name': argv._[0] })) {
+if (!_.find(commands, { 'name': argv._[0] })) {
   yargs.showHelp()
   console.error('')
   console.error(`--> Command '${argv._[0]}' is not recognized`)
