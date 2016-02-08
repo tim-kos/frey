@@ -16,7 +16,19 @@ class Base {
     return debug('You should override this with main class logic. ')
   }
 
+  /**
+   * Runs a methods found in this.boot similar to async.waterfall,
+   * but stores each result in this.bootCargo[method] so it's accessible
+   * not just by the next method, but methods after that too.
+   *
+   * After all the methods in this.boot are called, it finally coveralls
+   * this.main
+   *
+   * @param {cb} function when done
+   */
   run (cb) {
+    // Create an array of wrapper methods that can store results
+    // in bootCargo, before executing the callback
     const methods = []
     const iterable = this.boot
     for (let i = 0, method; i < iterable.length; i++) {
@@ -32,14 +44,16 @@ class Base {
       })(method)
     }
 
+    // Prefix a fake method so all methods can have the same signature
     methods.unshift(async.constant({}))
 
+    // Run the wrappers
     return async.waterfall(methods, (err, bootOptions) => {
       if (err) {
         return cb(err)
       }
 
-      return this.main(bootOptions, cb)
+      this.main(bootOptions, cb)
     })
   }
 
