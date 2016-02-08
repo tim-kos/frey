@@ -15,76 +15,76 @@ yargs
   .usage('Usage: frey <command> [options]')
   .example('frey backup -d ./envs/production', 'backup platform described in ./envs/production')
   .options({
-    recipeDir:
-      {nargs: 1,
+    recipeDir: {
+      nargs: 1,
       type: 'string',
       describe: 'Directory that contains the Freyfile.toml. Frey will traverse upwards if empty. '
-      },
-    app:
-      {default: '{{{recipeDir}}}|basename',
+    },
+    app: {
+      default: '{{{recipeDir}}}|basename',
       nargs: 1,
       type: 'string',
       describe: "Name of application for which we're creating infrastructure"
-      },
-    sshkeysDir:
-      {default: '{{{home}}}/.ssh',
+    },
+    sshkeysDir: {
+      default: '{{{home}}}/.ssh',
       nargs: 1,
       type: 'string',
       describe: 'Directory that contains SSH keys. This needs to be ignored by Git'
-      },
-    toolsDir:
-      {default: '{{{home}}}/.frey/tools',
+    },
+    toolsDir: {
+      default: '{{{home}}}/.frey/tools',
       nargs: 1,
       type: 'string',
       describe: 'Directory that contains the tools. This needs to be ignored by Git'
-      },
-    'force-yes':
-      {default: false,
+    },
+    'force-yes': {
+      default: false,
       boolean: true,
       describe: 'Answer yes to all questions (dangerous!)'
-      },
-    'terraform-parallelism':
-      {default: 10,
+    },
+    'terraform-parallelism': {
+      default: 10,
       nargs: 1,
       type: 'number',
       describe: 'Limit the number of concurrent operations. Useful for consistent test output'
-      },
-    tags:
-      {nargs: 1,
+    },
+    tags: {
+      nargs: 1,
       type: 'string',
       describe: 'A list of tags to execute in isolation'
-      },
-    sleep:
-      {default: 5,
+    },
+    sleep: {
+      default: 5,
       nargs: 1,
       type: 'number',
       describe: 'Wait x seconds between showing infra plan, and executing it'
-      },
-    bail:
-      {boolean: true,
+    },
+    bail: {
+      boolean: true,
       describe: 'Do not follow the chain of commands, run a one-off command'
-      },
-    'bail-after':
-      {nargs: 1,
+    },
+    'bail-after': {
+      nargs: 1,
       type: 'string',
       describe: 'After running this command, abort the chain'
-      },
-    'no-color':
-      {boolean: true,
+    },
+    'no-color': {
+      boolean: true,
       describe: 'Color support is detected, this forces colors off'
-      },
-    verbose:
-      {alias: 'v',
+    },
+    verbose: {
+      alias: 'v',
       count: true,
       describe: 'Show debug info'
-      },
-    unsafe:
-      {boolean: true,
+    },
+    unsafe: {
+      boolean: true,
       describe: 'Allow execution, even though your Git working directory is unclean'
-      }
+    }
   })
   .command('completion', 'Install CLI auto completion')
-  .epilog('Copyright 2015 Transloadit')
+  .epilog('Copyright 2016 Transloadit')
   .help('help')
   .wrap(yargs.terminalWidth())
   .version(() => {
@@ -104,7 +104,7 @@ for (let cmd of chain) {
 const argv = yargs.argv
 
 if (argv._[0] === undefined) {
-  argv._[0] = chain[0]
+  argv._[0] = chain[0].name
 }
 
 // We override built-in completion command
@@ -139,12 +139,6 @@ liftOff.launch({
     const msg = 'Could not find a Freyfile.toml in current directory or upwards, or in recipe directory.'
     throw new Error(msg)
   }
-
-  // debug
-  //   env: env
-  //   argv:argv
-  //   also:this
-  // process.exit 0
 
   // Let LiftOff override the recipe dir
   argv.recipeDir = env.configBase
