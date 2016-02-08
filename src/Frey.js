@@ -93,8 +93,7 @@ class Frey extends Base {
       }
     ], err => {
       return nextCb(err, options)
-    }
-    )
+    })
   }
 
   _composeChain (options, nextCb) {
@@ -132,11 +131,7 @@ class Frey extends Base {
     this.options = bootOptions
 
     this._out('--> Frey version %s\n', pkgConfig.version)
-    if (this.options.verbose > 0) {
-      this._out('--> Will run: %o\n', this.options.filteredChain)
-    } else {
-      this._out('--> Will run: %o\n', this.options.filteredChain)
-    }
+    this._out('--> Will run: %o\n', this.options.filteredChain)
 
     return async.eachSeries(this.options.filteredChain, this._runOne.bind(this), cb)
   }
