@@ -17,7 +17,6 @@ scripts/converter.sh \
   ~/code/infra-tusd/envs/production/main.yml
 ``` 
 
-
 ## Testing scenarios
 
 We use an Amazon Free Tier account to run acceptance tests.
@@ -36,6 +35,8 @@ export FREY_AWS_SECRET_KEY=YYYYYYYYY
 Now you can:
 
 ```bash
+# Load secrets
+source env.sh
 # Run all acceptance tests:
 npm run acceptance
 # Isolate just the dynamodb test:

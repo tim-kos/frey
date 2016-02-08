@@ -4,7 +4,7 @@
   "description": "Automated infrastructure CLI",
   "scripts": {
     "acceptance:savefixtures": "env SAVE_FIXTURES=true npm run acceptance",
-    "acceptance": "npm run build && source env.sh && ./test/acceptance.sh ${SCENARIO}",
+    "acceptance": "npm run build && ./test/acceptance.sh ${SCENARIO}",
     "babel": "babel src --out-dir lib --source-maps",
     "build": "npm run babel && npm run libversion",
     "encrypt": "source env.sh && bash scripts/encrypt.sh",
