@@ -168,16 +168,17 @@ Frey is intended to service many use-cases and we'll work on removing some of th
 
 ## Todo
 
- - [x] New command: `frey compile` that's prefixed to any chain, so you can trust your updates are present in residu, and have its configuration available too (ssh user for instance)
+ - [ ] Upgrade Terraform 
+ - [ ] Upgrade Terraform-inventory 
+ - [ ] Upgrade Ansible 
+ - [ ] Would be cool to signify chained via ▾ in cli.js ▽
  - [ ] All config should come from Freyfile (think ssh). env only used for secrets. argv only for cwd
+ - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
  - [ ] Tools should be saved under version number only. This way different versions of frey can use their own tested tools, while also still being able to share between same frey installs
  - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
  - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?). No: abstract both Terraform and Ansible
  - [ ] Put `_transform` in a central place (utils?)
  - [ ] - role: ":frey:/consul/v1.0.0"
- - [x] Merge chain & commands
- - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
- - [ ] Would be cool to signify chained via ▾ in cli.js ▽
  - [ ] Enable DO support
  - [ ] Make arg & env functions of all other commands, mimic Install's
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
@@ -195,6 +196,8 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] website: Take uppy as a base maybe?
  - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] website: On the githubs  
+ - [x] New command: `frey compile` that's prefixed to any chain, so you can trust your updates are present in residu, and have its configuration available too (ssh user for instance)
+ - [x] Merge chain & commands
  - [x] A project's package.json should refer to a frey version, which should be used, vs the global one.
  - [x] Ansible must run from configBase
  - [-] If you do a `frey install` you must trust that at least the Ansible files are re-compiled
