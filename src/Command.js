@@ -92,14 +92,13 @@ class Command extends Base {
     return this._exe(scriptArgs, cmdOpts, cb)
   }
 
-  _exe (cmdArgs, cmdOpts, cb) {
-    if (!(typeof cmdOpts !== 'undefined' && cmdOpts !== null)) { cmdOpts = {} }
-    if (!(cmdOpts.env != null)) { cmdOpts.env = {} }
-    if (!(cmdOpts.verbose != null)) { cmdOpts.verbose = true }
-    if (!(cmdOpts.stdin != null)) { cmdOpts.stdin = 'ignore' }
-    if (!(cmdOpts.stdout != null)) { cmdOpts.stdout = 'pipe' }
-    if (!(cmdOpts.stderr != null)) { cmdOpts.stderr = 'pipe' }
-    if (!(cmdOpts.limitSamples != null)) { cmdOpts.limitSamples = 3 }
+  _exe (cmdArgs, cmdOpts = {}, cb) {
+    if (cmdOpts.env === undefined) { cmdOpts.env = {} }
+    if (cmdOpts.verbose === undefined) { cmdOpts.verbose = true }
+    if (cmdOpts.stdin === undefined) { cmdOpts.stdin = 'ignore' }
+    if (cmdOpts.stdout === undefined) { cmdOpts.stdout = 'pipe' }
+    if (cmdOpts.stderr === undefined) { cmdOpts.stderr = 'pipe' }
+    if (cmdOpts.limitSamples === undefined) { cmdOpts.limitSamples = 3 }
 
     const opts = {
       cwd: this.dir,
@@ -168,7 +167,7 @@ class Command extends Base {
     })
   }
 
-  _toEnvFormat (obj, prefix) {
+  _toEnvFormat (obj, prefix = undefined) {
     if (!(typeof obj !== 'undefined' && obj !== null)) {
       return {}
     }

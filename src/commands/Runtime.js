@@ -40,7 +40,7 @@ class Runtime extends Command {
     // be in the same order as the original. Hence, use the last/longest/closest
     // path that has Git.
     return async.reject(paths, fs.stat, results => {
-      if (!(((typeof results !== 'undefined' && results !== null) ? results.length : undefined) != null)) {
+      if (typeof results === 'undefined' || !results.length) {
         return cb(undefined)
       }
 

@@ -136,7 +136,7 @@ const liftOff = new LiftOff({
 liftOff.launch({
   cwd: argv.recipeDir
 }, env => {
-  if (!(env.configBase != null)) {
+  if (env.configBase === undefined) {
     const msg = 'Could not find a Freyfile.toml in current directory or upwards, or in recipe directory.'
     throw new Error(msg)
   }
@@ -151,7 +151,7 @@ liftOff.launch({
       // yargs.showHelp()
       console.error('')
       console.error(`--> Exiting with error: ${err.message}`)
-      if ((err.details != null)) {
+      if (err.details === undefined) {
         console.error('--> Details:')
         console.error('')
         console.error(err.details)

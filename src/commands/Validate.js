@@ -4,7 +4,7 @@ import Command from '../Command'
 
 class Validate extends Command {
   main (cargo, cb) {
-    if (!(this.runtime.paths.recipeGit != null)) {
+    if (!this.runtime.paths.recipeGit) {
       const msg = 'Frey requires recipe (and state) to be under Git, and residu to be ignored.'
       return cb(new Error(msg))
     }
