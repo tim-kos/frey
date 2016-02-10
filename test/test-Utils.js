@@ -3,7 +3,7 @@ import { expect } from 'chai'
 // import depurar from 'depurar'; const debug = depurar('frey')
 // debug utils
 
-describe('utils', () => {
+describe('Utils', () => {
   describe('render', () => {
     it('should handle strings', done => {
       const result = utils.render('Hi my name is {{{name}}}.', {name: 'kevin'})
