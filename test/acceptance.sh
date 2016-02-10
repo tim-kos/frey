@@ -94,6 +94,11 @@ for scenario in $(echo prepare ${scenarios}); do
           -r 's@[0-9a-f\-]{32,40}@{uuid}@g' \
         "${curFile}"
       fi
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_TIMESTAMPS' |wc -l)" -gt 0 ]; then
+        "${cmdSed}" -i \
+          -r 's@[0-9]{10}@{uuid}@g' \
+        "${curFile}"
+      fi
       if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_REMOTE_EXEC' |wc -l)" -gt 0 ]; then
         egrep -v 'remote-exec\): [ a-zA-Z]' "${curFile}" > "${__sysTmpDir}/frey-filtered.txt"
         mv "${__sysTmpDir}/frey-filtered.txt" "${curFile}"
