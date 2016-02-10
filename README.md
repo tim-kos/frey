@@ -11,6 +11,8 @@
 Frey let's you launch web infrastructure with a single command. It uses
 Ansible & Hashicorp's Terraform to to the heavy lifting.
 
+![](https://upload.wikimedia.org/wikipedia/commons/3/38/Freyr_by_Johannes_Gehrts.jpg)
+
 ## Design goals
 
  - Frey should be ridiculously convenient, and hence offer auto-installation of requirements for instance

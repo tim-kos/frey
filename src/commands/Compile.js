@@ -109,8 +109,8 @@ class Compile extends Command {
         return fs.writeFile(this.runtime.paths.ansibleCfg, encoded, callback)
       },
       (callback) => {
-        if (!config.install || !config.install.playbook) {
-          debug('No install playbook instructions found in merged toml')
+        if (!config.install || !config.install.playbooks) {
+          debug('No install playbooks found in merged toml')
           fs.unlink(this.runtime.paths.playbookFile, err => {
             if (err) {
                // That's not fatal
