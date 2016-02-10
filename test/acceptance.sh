@@ -94,9 +94,22 @@ for scenario in $(echo prepare ${scenarios}); do
           -r 's@[0-9a-f\-]{32,40}@{uuid}@g' \
         "${curFile}"
       fi
-      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_TIMESTAMPS' |wc -l)" -gt 0 ]; then
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_BIGINTS' |wc -l)" -gt 0 ]; then
+        # Such as: 3811298194
         "${cmdSed}" -i \
-          -r 's@[0-9]{10}@{uuid}@g' \
+          -r 's@[0-9]{7,64}@{bigint}@g' \
+        "${curFile}"
+      fi
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_LONGTIMES' |wc -l)" -gt 0 ]; then
+        # Such as: 2016-02-10 15:38:44.420094
+        "${cmdSed}" -i \
+          -r 's@[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{6}@{longtime}@g' \
+        "${curFile}"
+      fi
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_DURATIONS' |wc -l)" -gt 0 ]; then
+        # Such as: 0:00:00.001991
+        "${cmdSed}" -i \
+          -r 's@[0-9]{1,2}:[0-9]{2}:[0-9]{2}.[0-9]{6}@{duration}@g' \
         "${curFile}"
       fi
       if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_REMOTE_EXEC' |wc -l)" -gt 0 ]; then

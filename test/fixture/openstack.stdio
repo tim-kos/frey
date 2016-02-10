@@ -1,5 +1,8 @@
 FREY:STDIO_REPLACE_IPS
 FREY:STDIO_REPLACE_UUIDS
+FREY:STDIO_REPLACE_BIGINTS
+FREY:STDIO_REPLACE_LONGTIMES
+FREY:STDIO_REPLACE_DURATIONS
 FREY:STDIO_REPLACE_REMOTE_EXEC
 (maybe) Destroying..
 --> Frey version '0.3.0'
@@ -52,7 +55,7 @@ Path: {root}/test/scenario/openstack/Frey-residu-terraform.plan
     network.0.port:             "" => "<computed>"
     network.0.uuid:             "" => "${openstack_networking_network_v2.freytest.id}"
     security_groups.#:          "" => "1"
-    security_groups.1569786384: "" => "freytest"
+    security_groups.{bigint}: "" => "freytest"
     volume.#:                   "" => "<computed>"
 
 + openstack_compute_keypair_v2.freytest
@@ -63,20 +66,20 @@ Path: {root}/test/scenario/openstack/Frey-residu-terraform.plan
     description:                   "" => "freytest"
     name:                          "" => "freytest"
     rule.#:                        "0" => "2"
-    rule.2180185248.cidr:          "" => "{ip}/0"
-    rule.2180185248.from_group_id: "" => ""
-    rule.2180185248.from_port:     "" => "-1"
-    rule.2180185248.id:            "" => "<computed>"
-    rule.2180185248.ip_protocol:   "" => "icmp"
-    rule.2180185248.self:          "" => "0"
-    rule.2180185248.to_port:       "" => "-1"
-    rule.836640770.cidr:           "" => "{ip}/0"
-    rule.836640770.from_group_id:  "" => ""
-    rule.836640770.from_port:      "" => "22"
-    rule.836640770.id:             "" => "<computed>"
-    rule.836640770.ip_protocol:    "" => "tcp"
-    rule.836640770.self:           "" => "0"
-    rule.836640770.to_port:        "" => "22"
+    rule.{bigint}.cidr:          "" => "{ip}/0"
+    rule.{bigint}.from_group_id: "" => ""
+    rule.{bigint}.from_port:     "" => "-1"
+    rule.{bigint}.id:            "" => "<computed>"
+    rule.{bigint}.ip_protocol:   "" => "icmp"
+    rule.{bigint}.self:          "" => "0"
+    rule.{bigint}.to_port:       "" => "-1"
+    rule.{bigint}.cidr:           "" => "{ip}/0"
+    rule.{bigint}.from_group_id:  "" => ""
+    rule.{bigint}.from_port:      "" => "22"
+    rule.{bigint}.id:             "" => "<computed>"
+    rule.{bigint}.ip_protocol:    "" => "tcp"
+    rule.{bigint}.self:           "" => "0"
+    rule.{bigint}.to_port:        "" => "22"
 
 + openstack_networking_network_v2.freytest
     admin_state_up: "" => "true"
@@ -97,8 +100,8 @@ Path: {root}/test/scenario/openstack/Frey-residu-terraform.plan
 + openstack_networking_subnet_v2.freytest
     cidr:                       "" => "{ip}/24"
     dns_nameservers.#:          "" => "2"
-    dns_nameservers.3811298194: "" => "{ip}"
-    dns_nameservers.3817307869: "" => "{ip}"
+    dns_nameservers.{bigint}: "" => "{ip}"
+    dns_nameservers.{bigint}: "" => "{ip}"
     enable_dhcp:                "" => "<computed>"
     gateway_ip:                 "" => "<computed>"
     ip_version:                 "" => "4"
@@ -123,26 +126,26 @@ openstack_compute_secgroup_v2.freytest: Creating...
   description:                   "" => "freytest"
   name:                          "" => "freytest"
   rule.#:                        "0" => "2"
-  rule.2180185248.cidr:          "" => "{ip}/0"
-  rule.2180185248.from_group_id: "" => ""
-  rule.2180185248.from_port:     "" => "-1"
-  rule.2180185248.id:            "" => "<computed>"
-  rule.2180185248.ip_protocol:   "" => "icmp"
-  rule.2180185248.self:          "" => "0"
-  rule.2180185248.to_port:       "" => "-1"
-  rule.836640770.cidr:           "" => "{ip}/0"
-  rule.836640770.from_group_id:  "" => ""
-  rule.836640770.from_port:      "" => "22"
-  rule.836640770.id:             "" => "<computed>"
-  rule.836640770.ip_protocol:    "" => "tcp"
-  rule.836640770.self:           "" => "0"
-  rule.836640770.to_port:        "" => "22"
+  rule.{bigint}.cidr:          "" => "{ip}/0"
+  rule.{bigint}.from_group_id: "" => ""
+  rule.{bigint}.from_port:     "" => "-1"
+  rule.{bigint}.id:            "" => "<computed>"
+  rule.{bigint}.ip_protocol:   "" => "icmp"
+  rule.{bigint}.self:          "" => "0"
+  rule.{bigint}.to_port:       "" => "-1"
+  rule.{bigint}.cidr:           "" => "{ip}/0"
+  rule.{bigint}.from_group_id:  "" => ""
+  rule.{bigint}.from_port:      "" => "22"
+  rule.{bigint}.id:             "" => "<computed>"
+  rule.{bigint}.ip_protocol:    "" => "tcp"
+  rule.{bigint}.self:           "" => "0"
+  rule.{bigint}.to_port:        "" => "22"
 openstack_compute_secgroup_v2.freytest: Creation complete
 openstack_networking_subnet_v2.freytest: Creating...
   cidr:                       "" => "{ip}/24"
   dns_nameservers.#:          "" => "2"
-  dns_nameservers.3811298194: "" => "{ip}"
-  dns_nameservers.3817307869: "" => "{ip}"
+  dns_nameservers.{bigint}: "" => "{ip}"
+  dns_nameservers.{bigint}: "" => "{ip}"
   enable_dhcp:                "" => "<computed>"
   gateway_ip:                 "" => "<computed>"
   ip_version:                 "" => "4"
@@ -186,7 +189,7 @@ openstack_compute_instance_v2.freytest_app: Creating...
   network.0.port:             "" => "<computed>"
   network.0.uuid:             "" => "{uuid}"
   security_groups.#:          "" => "1"
-  security_groups.1569786384: "" => "freytest"
+  security_groups.{bigint}: "" => "freytest"
   volume.#:                   "" => "<computed>"
 openstack_compute_instance_v2.freytest_app: Provisioning with 'remote-exec'...
 openstack_compute_instance_v2.freytest_app (remote-exec): /home/ubuntu
@@ -213,16 +216,11 @@ PLAY [Install app servers] *****************************************************
 TASK [setup] *******************************************************************
 ok: [{ip}]
 
-TASK [Update apt cache] ********************************************************
-ok: [{ip}] => {"cache_update_time": 1455117193, "cache_updated": true, "changed": false}
-
-TASK [Common | Add APT sources] ************************************************
-changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse", "state": "present"}
-changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse", "state": "present"}
-changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "state": "present"}
+TASK [Execute arbitrary command] ***********************************************
+changed: [{ip}] => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/home/ubuntu", "stdout_lines": ["/home/ubuntu"], "warnings": []}
 
 PLAY RECAP *********************************************************************
-{ip} : ok=3    changed=1    unreachable=0    failed=0   
+{ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 Done
 Finished

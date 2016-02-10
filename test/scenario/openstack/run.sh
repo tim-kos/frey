@@ -15,7 +15,9 @@ __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 echo "FREY:STDIO_REPLACE_IPS"
 echo "FREY:STDIO_REPLACE_UUIDS"
-echo "FREY:STDIO_REPLACE_TIMESTAMPS"
+echo "FREY:STDIO_REPLACE_BIGINTS"
+echo "FREY:STDIO_REPLACE_LONGTIMES"
+echo "FREY:STDIO_REPLACE_DURATIONS"
 echo "FREY:STDIO_REPLACE_REMOTE_EXEC" # (remote-exec): Connecting to remote host via SSH...
 
 rm -f terraform.plan
