@@ -15,8 +15,8 @@ class Compile extends Command {
     this.boot = [
       '_findTomlFiles',
       '_readTomlFiles',
-      '_mergeToml',
-      '_splitToml'
+      '_mergeToOneConfig',
+      '_writeSnippets'
     ]
   }
 
@@ -46,22 +46,23 @@ class Compile extends Command {
     })
   }
 
-  _mergeToml (tomlContents, cb) {
+  _mergeToOneConfig (tomlContents, cb) {
     let config = {}
-    for (let i = 0, tom; i < tomlContents.length; i++) {
-      tom = tomlContents[i]
+    tomlContents.forEach(function (tom) {
       config = _.extend(config, tom)
-    }
+    })
 
     return cb(null, config)
   }
 
-  _splitToml (config, cb) {
+  _writeSnippets (config = {}, cb) {
     const filesWritten = []
+
+    if (config.install === undefined) { config.install = {} }
 
     return async.series([
       (callback) => {
-        if (!(config.infra != null)) {
+        if (config.infra === undefined) {
           debug('No infra instructions found in merged toml')
           fs.unlink(this.runtime.paths.infraFile, err => {
             if (err) {
@@ -81,8 +82,7 @@ class Compile extends Command {
         return fs.writeFile(this.runtime.paths.infraFile, encoded, callback)
       },
       (callback) => {
-        let ref
-        if (!((((ref = config.install) != null) ? ref.config : undefined) != null)) {
+        if (config.install.config === undefined) {
           debug('No config instructions found in merged toml')
           fs.unlink(this.runtime.paths.ansibleCfg, err => {
             if (err) {
@@ -108,8 +108,7 @@ class Compile extends Command {
         return fs.writeFile(this.runtime.paths.ansibleCfg, encoded, callback)
       },
       (callback) => {
-        let ref
-        if (!((((ref = config.install) != null) ? ref.playbooks : undefined) != null)) {
+        if (config.install.playbook === undefined) {
           debug('No install playbook instructions found in merged toml')
           fs.unlink(this.runtime.paths.playbookFile, err => {
             if (err) {
@@ -134,8 +133,7 @@ class Compile extends Command {
       }
 
       return cb(null, config)
-    }
-    )
+    })
   }
 
   main (config, cb) {
