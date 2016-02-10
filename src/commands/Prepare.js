@@ -4,8 +4,8 @@ import mkdirp from 'mkdirp'
 import semver from 'semver'
 import fs from 'fs'
 import async from 'async'
+import utils from '../utils'
 import depurar from 'depurar'; const debug = depurar('frey')
-import Mustache from 'mustache'
 
 class Prepare extends Command {
   constructor (name, options, runtime) {
@@ -92,7 +92,7 @@ class Prepare extends Command {
         return cb(null)
       }
 
-      const cmd = this._transform(props.cmdInstall, props)
+      const cmd = utils.render(props.cmdInstall, props)
       return this._cmdYesNo(cmd, (err) => {
         if (err) {
           return cb(new Error(`Failed to install '${props.name}'. ${err}`))
@@ -111,7 +111,7 @@ class Prepare extends Command {
   }
 
   _satisfy (props, cb) {
-    let cmd = this._transform(props.cmdVersion, props)
+    let cmd = utils.render(props.cmdVersion, props)
 
     return this._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
       if (err) {
@@ -137,11 +137,6 @@ class Prepare extends Command {
 
       return cb(true)
     })
-  }
-
-  _transform (cmd, props) {
-    cmd = Mustache.render(cmd, props)
-    return cmd
   }
 }
 

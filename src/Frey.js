@@ -12,7 +12,7 @@ import path from 'path'
 import mkdirp from 'mkdirp'
 import chalk from 'chalk'
 import Base from './Base'
-import Mustache from 'mustache'
+import utils from 'utils'
 import osHomedir from 'os-homedir'
 import commands from './commands'
 import pkgConfig from '../package.json'
@@ -50,10 +50,7 @@ class Frey extends Base {
     for (let k1 in options) {
       let val = options[k1]
       if (val === `${val}`) {
-        options[k1] = Mustache.render(val, options)
-        if (options[k1].indexOf('{{{') > -1) {
-          return nextCb(new Error(`Unable to render vars in '${k1}' '${options[k1]}'`))
-        }
+        options[k1] = utils.render(val, options)
       }
     }
 

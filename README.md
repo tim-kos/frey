@@ -177,7 +177,6 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] Tools should be saved under version number only. This way different versions of frey can use their own tested tools, while also still being able to share between same frey installs
  - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
  - [ ] Put `_gatherTerraformArgs` in a central place (command? terraform?). No: abstract both Terraform and Ansible
- - [ ] Put `_transform` in a central place (utils?)
  - [ ] - role: ":frey:/consul/v1.0.0"
  - [ ] Enable DO support
  - [ ] Make arg & env functions of all other commands, mimic Install's
@@ -196,6 +195,7 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] website: Take uppy as a base maybe?
  - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] website: On the githubs  
+ - [x] Put `_transform` in a central place (utils?)
  - [x] New command: `frey compile` that's prefixed to any chain, so you can trust your updates are present in residu, and have its configuration available too (ssh user for instance)
  - [x] Merge chain & commands
  - [x] A project's package.json should refer to a frey version, which should be used, vs the global one.
