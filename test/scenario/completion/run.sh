@@ -14,5 +14,6 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 
 node "${__root}/lib/cli.js" completion
+# babel-node "${__root}/lib/cli.js" completion
 
 exit 0

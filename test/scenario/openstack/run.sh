@@ -41,6 +41,7 @@ if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
 node "${__root}/lib/cli.js" compile \
+# babel-node "${__root}/lib/cli.js" compile \
   --sshkeys-dir "${__dir}" \
   --no-color \
   --verbose \

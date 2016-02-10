@@ -18,6 +18,7 @@ mkdir -p "${__sysTmpDir}/frey-gitless"
 cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
 
 node "${__root}/lib/cli.js" validate \
+# babel-node "${__root}/src/cli.js" validate \
   --verbose \
   --force-yes \
   --sshkeysDir "${__sysTmpDir}/frey-gitless/" \

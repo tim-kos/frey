@@ -32,6 +32,7 @@ destroy
 trap destroy EXIT
 
 node "${__root}/lib/cli.js" \
+# babel-node "${__root}/lib/cli.js" \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \
