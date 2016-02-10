@@ -6,12 +6,11 @@ describe('Frey', () => {
     it('should transform the cwd variable', done => {
       const frey = new Frey()
 
-      const options =
-        {recipeDir: '{{{cwd}}}/frey/production',
+      const options = {recipeDir: '{{{cwd}}}/frey/production',
         toolsDir: '{{{home}}}/.frey/tools',
         sshkeysDir: '{{{home}}}/.ssh',
         rootDir: '/opt/frey'
-        }
+      }
 
       return frey._normalize(options, (err, options) => {
         expect(err).to.equal(null)
@@ -24,13 +23,13 @@ describe('Frey', () => {
     return it('should transform the basename function', done => {
       const frey = new Frey()
 
-      const options =
-        {app: './tusd|basename',
+      const options = {
+        app: './tusd|basename',
         recipeDir: '{{{cwd}}}/frey/production',
         toolsDir: '{{{home}}}/.frey/tools',
         sshkeysDir: '{{{home}}}/.ssh',
         rootDir: '/opt/frey'
-        }
+      }
 
       return frey._normalize(options, (err, options) => {
         expect(err).to.equal(null)
@@ -77,10 +76,11 @@ describe('Frey', () => {
       done => {
         const frey = new Frey()
 
-        const options =
-          {_: ['docbuild']}
+        const options = {
+          _: ['docbuild']
+        }
 
-        ; return frey._composeChain(options, (err, options) => {
+        return frey._composeChain(options, (err, options) => {
           expect(err).to.equal(null)
           expect(options.filteredChain).to.deep.equal([
             'runtime',
@@ -95,10 +95,11 @@ describe('Frey', () => {
     it('should return all links for prepare', done => {
       const frey = new Frey()
 
-      const options =
-        {_: ['prepare']}
+      const options = {
+        _: ['prepare']
+      }
 
-      ; return frey._composeChain(options, (err, options) => {
+      return frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch',
@@ -111,10 +112,10 @@ describe('Frey', () => {
     it('should return one link for bail', done => {
       const frey = new Frey()
 
-      const options =
-        {_: ['deploy'],
+      const options = {
+        _: ['deploy'],
         bail: true
-        }
+      }
 
       return frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
