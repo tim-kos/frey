@@ -49,31 +49,35 @@ class Runtime extends Command {
   }
 
   main (bootOptions, cb) {
-    this.runtime.os = {platform: os.platform(),
-    hostname: os.hostname(),
-    arch: `${os.arch()}`.replace('x64', 'amd64')
+    this.runtime.os = {
+      platform: os.platform(),
+      hostname: os.hostname(),
+      arch: `${os.arch()}`.replace('x64', 'amd64')
     }
 
-    this.runtime.versions = {ansible: '1.9.2',
-    terraform: '0.6.6',
-    terraformInventory: '0.6-pre',
-    pip: '7.1.2'
+    this.runtime.versions = {
+      ansible: '1.9.2',
+      terraform: '0.6.6',
+      terraformInventory: '0.6-pre',
+      pip: '7.1.2'
     }
 
-    this.runtime.paths = {recipeGit: this.bootCargo._findClosestRecipeGit,
-    ansibleCfg: `${this.options.recipeDir}/Frey-residu-ansible.cfg`,
-    planFile: `${this.options.recipeDir}/Frey-residu-terraform.plan`,
-    infraFile: `${this.options.recipeDir}/Frey-residu-infra.tf.json`,
-    playbookFile: `${this.options.recipeDir}/Frey-residu-install.yml`,
-    stateFile: `${this.options.recipeDir}/Frey-state-terraform.tfstate`,
-    pythonLib: `${this.options.toolsDir}/pip/lib/python2.7/site-packages`
+    this.runtime.paths = {
+      recipeGit: this.bootCargo._findClosestRecipeGit,
+      ansibleCfg: `${this.options.recipeDir}/Frey-residu-ansible.cfg`,
+      planFile: `${this.options.recipeDir}/Frey-residu-terraform.plan`,
+      infraFile: `${this.options.recipeDir}/Frey-residu-infra.tf.json`,
+      playbookFile: `${this.options.recipeDir}/Frey-residu-install.yml`,
+      stateFile: `${this.options.recipeDir}/Frey-state-terraform.tfstate`,
+      pythonLib: `${this.options.toolsDir}/pip/lib/python2.7/site-packages`
     }
 
-    this.runtime.ssh = {email: `${this.options.user}@${this.options.app}.freyproject.io`,
-    keypair_name: `${this.options.app}`,
-    keyprv_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pem`,
-    keypub_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pub`,
-    user: 'ubuntu'
+    this.runtime.ssh = {
+      email: `${this.options.user}@${this.options.app}.freyproject.io`,
+      keypair_name: `${this.options.app}`,
+      keyprv_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pem`,
+      keypub_file: `${this.options.sshkeysDir}/frey-${this.options.app}.pub`,
+      user: 'ubuntu'
     }
       // keypub_body: $(echo "$(cat "${ keypub_file: " 2>/dev/null)") || true
       // keypub_fingerprint: "$(ssh-keygen -lf ${@runtime.ssh_keypub_file} | awk '{print $2}')"
