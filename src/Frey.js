@@ -36,11 +36,11 @@ class Frey extends Base {
   }
 
   _defaults (options = {}, nextCb) {
-    if (!(options._ != null)) { options._ = [] }
-    if (!(options._[0] != null)) { options._[0] = 'prepare' }
-    if (!(options.tmp != null)) { options.tmp = os.tmpdir() }
-    if (!(options.home != null)) { options.home = osHomedir() }
-    if (!(options.user != null)) { options.user = process.env.USER }
+    if (options._ === undefined) { options._ = [] }
+    if (options._[0] === undefined) { options._[0] = 'prepare' }
+    if (options.tmp === undefined) { options.tmp = os.tmpdir() }
+    if (options.home === undefined) { options.home = osHomedir() }
+    if (options.user === undefined) { options.user = process.env.USER }
 
     return nextCb(null, options)
   }
