@@ -13,14 +13,14 @@
     "lint": "eslint .",
     "changes": "git log --pretty=format:\"- %s%n%b\" --since=\"${TAG:-$(git show -s --format=%ad `git rev-list --tags --max-count=1`)}\"",
     "mocha:coverage": "npm run mocha && istanbul report text-summary lcov && (cat coverage/lcov.info | coveralls || true)",
-    "mocha": "npm run build && mocha --compilers js:babel-register --grep=\"${GREP}\" --recursive test${MOCHA_TRAILER}",
+    "mocha": "mocha --compilers js:babel-register --grep=\"${GREP}\" --recursive test${MOCHA_TRAILER}",
     "prepublish": "npm run build && npm run test",
     "release:major": "env SEMANTIC=major npm release",
     "release:minor": "env SEMANTIC=minor npm release",
     "release:patch": "env SEMANTIC=patch npm release",
     "release": "npm version ${SEMANTIC:-patch} -m \"Release %s\" && git push --tags && npm publish",
-    "test:full": "npm run mocha:coverage && npm run acceptance",
-    "test": "npm run lint && npm run mocha"
+    "test:full": "npm run lint && npm run build && npm run mocha:coverage && npm run acceptance",
+    "test": "npm run lint && npm run build && npm run mocha"
   },
   "files": [
     "lib"

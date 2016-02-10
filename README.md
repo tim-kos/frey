@@ -170,9 +170,6 @@ Frey is intended to service many use-cases and we'll work on removing some of th
 
 ## Todo
 
- - [ ] Upgrade Terraform 
- - [ ] Upgrade Terraform-inventory 
- - [ ] Upgrade Ansible 
  - [ ] Would be cool to signify chained via ▾ in cli.js ▽
  - [ ] All config should come from Freyfile (think ssh). env only used for secrets. argv only for cwd
  - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
@@ -198,6 +195,9 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] website: Take uppy as a base maybe?
  - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] website: On the githubs  
+ - [x] Upgrade Terraform 
+ - [x] Upgrade Terraform-inventory 
+ - [x] Upgrade Ansible 
  - [x] Replace mustache with lodash templating
  - [x] Put `_transform` in a central place (utils?)
  - [x] New command: `frey compile` that's prefixed to any chain, so you can trust your updates are present in residu, and have its configuration available too (ssh user for instance)
