@@ -101,11 +101,11 @@ class Command extends Base {
     if (!(cmdOpts.stderr != null)) { cmdOpts.stderr = 'pipe' }
     if (!(cmdOpts.limitSamples != null)) { cmdOpts.limitSamples = 3 }
 
-    const opts =
-      {cwd: this.dir,
+    const opts = {
+      cwd: this.dir,
       env: this._buildChildEnv(cmdOpts.env),
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
-      }
+    }
 
     debug({
       // opts: opts

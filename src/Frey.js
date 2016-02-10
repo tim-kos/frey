@@ -35,8 +35,7 @@ class Frey extends Base {
     return nextCb(null, _.clone(this.options))
   }
 
-  _defaults (options, nextCb) {
-    if (!(typeof options !== 'undefined' && options !== null)) { options = {} }
+  _defaults (options = {}, nextCb) {
     if (!(options._ != null)) { options._ = [] }
     if (!(options._[0] != null)) { options._[0] = 'prepare' }
     if (!(options.tmp != null)) { options.tmp = os.tmpdir() }
