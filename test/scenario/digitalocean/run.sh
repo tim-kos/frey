@@ -29,7 +29,7 @@ function destroy() {
   echo "(maybe) Destroying.."
   TF_VAR_FREY_DO_TOKEN="${FREY_DO_TOKEN}" \
   TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="${__dir}/frey-digitalocean.pub" \
-  ~/.frey/tools/terraform destroy \
+  ${HOME}/.frey/tools/terraform/0.6.11/terraform destroy \
     -no-color \
     -state=Frey-state-terraform.tfstate \
     -force \

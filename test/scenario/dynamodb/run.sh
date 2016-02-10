@@ -20,7 +20,7 @@ function destroy() {
   echo "(maybe) Destroying.."
   TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
   TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
-  ~/.frey/tools/terraform destroy \
+  ${HOME}/.frey/tools/terraform/0.6.11/terraform destroy \
     -no-color \
     -target=aws_dynamodb_table.basic-dynamodb-table \
     -state=Frey-state-terraform.tfstate \

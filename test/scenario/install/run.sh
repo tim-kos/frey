@@ -13,8 +13,8 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
-# PYTHONPATH="${HOME}/.frey/tools/pip/lib/python2.7/site-packages" \
-#   "${HOME}/.frey/tools/pip/bin/ansible" \
+# PYTHONPATH="${HOME}/.frey/tools/ansible/2.0.0.2/pip/lib/python2.7/site-packages" \
+#   "${HOME}/.frey/tools/ansible/2.0.0.2/pip/bin/ansible" \
 #   --help 2>&1
 #
 # exit

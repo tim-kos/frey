@@ -30,7 +30,7 @@ function destroy() {
   TF_VAR_FREY__RUNTIME__SSH__USER="ubuntu" \
   TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="${__dir}/frey-openstack.pub" \
   TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE="${__dir}/frey-openstack.pem" \
-  ~/.frey/tools/terraform destroy \
+  ${HOME}/.frey/tools/terraform/0.6.11/terraform destroy \
     -no-color \
     -state=Frey-state-terraform.tfstate \
     -force \
