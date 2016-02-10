@@ -4,7 +4,7 @@ import mkdirp from 'mkdirp'
 import semver from 'semver'
 import fs from 'fs'
 import async from 'async'
-import utils from '../utils'
+import utils from '../Utils'
 import depurar from 'depurar'; const debug = depurar('frey')
 
 class Prepare extends Command {

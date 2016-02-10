@@ -48,6 +48,9 @@ class Compile extends Command {
 
   _mergeToOneConfig (tomlContents, cb) {
     let config = {}
+
+    debug(tomlContents)
+
     tomlContents.forEach(function (tom) {
       config = _.extend(config, tom)
     })
@@ -58,11 +61,9 @@ class Compile extends Command {
   _writeSnippets (config = {}, cb) {
     const filesWritten = []
 
-    if (config.install === undefined) { config.install = {} }
-
     return async.series([
       (callback) => {
-        if (config.infra === undefined) {
+        if (!config.infra) {
           debug('No infra instructions found in merged toml')
           fs.unlink(this.runtime.paths.infraFile, err => {
             if (err) {
@@ -82,7 +83,7 @@ class Compile extends Command {
         return fs.writeFile(this.runtime.paths.infraFile, encoded, callback)
       },
       (callback) => {
-        if (config.install.config === undefined) {
+        if (!config.install || !config.install.config) {
           debug('No config instructions found in merged toml')
           fs.unlink(this.runtime.paths.ansibleCfg, err => {
             if (err) {
@@ -108,7 +109,7 @@ class Compile extends Command {
         return fs.writeFile(this.runtime.paths.ansibleCfg, encoded, callback)
       },
       (callback) => {
-        if (config.install.playbook === undefined) {
+        if (!config.install || !config.install.playbook) {
           debug('No install playbook instructions found in merged toml')
           fs.unlink(this.runtime.paths.playbookFile, err => {
             if (err) {

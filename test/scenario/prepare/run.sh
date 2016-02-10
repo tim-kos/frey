@@ -26,8 +26,10 @@ echo "FREY:STDIO_SKIP_COMPARE"
 
 rm -f "${__sysTmpDir}/frey-prepare"* || true
 
-node "${__root}/lib/cli.js" prepare \
-# babel-node "${__root}/lib/cli.js" prepare \
+pwd
+
+# node "${__root}/lib/cli.js" prepare \
+babel-node "${__root}/src/cli.js" prepare \
   --force-yes \
   --sshkeys-dir "${__sysTmpDir}" \
   --verbose \

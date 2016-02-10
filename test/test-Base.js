@@ -3,26 +3,26 @@ import { expect } from 'chai'
 // import depurar from 'depurar'; const debug = depurar('frey')
 
 describe('Base', () => {
-  return describe('run', () => {
-    return it('should run a bootchain', done => {
+  describe('run', () => {
+    it('should run a bootchain', done => {
       const output = []
       const base = new Base()
       base._a = function (cargo, cb) {
         output.push(`function _a called with ${cargo}`)
         cargo = 'output:a'
-        return cb(null, cargo)
+        cb(null, cargo)
       }
 
       base._b = function (cargo, cb) {
         output.push(`function _b called with ${cargo}`)
         cargo = 'output:b'
-        return cb(null, cargo)
+        cb(null, cargo)
       }
 
       base.main = function (cargo, cb) {
         output.push(`function main called with ${cargo}`)
         cargo = 'output:main'
-        return cb(null, cargo)
+        cb(null, cargo)
       }
 
       base.boot = [
@@ -30,7 +30,7 @@ describe('Base', () => {
         '_b'
       ]
 
-      return base.run((err, result) => {
+      base.run((err, result) => {
         expect(err).to.equal(null)
         expect(output).to.deep.equal([
           'function _a called with [object Object]',
@@ -42,7 +42,7 @@ describe('Base', () => {
           _b: 'output:b'
         })
 
-        return done()
+        done()
       })
     })
   })

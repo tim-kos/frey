@@ -47,7 +47,6 @@
     "liftoff": "2.2.0",
     "lodash": "4.2.1",
     "mkdirp": "0.5.1",
-    "mustache": "2.2.1",
     "os-homedir": "1.0.1",
     "rc": "1.1.6",
     "semver": "5.1.0",

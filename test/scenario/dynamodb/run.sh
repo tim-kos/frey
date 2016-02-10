@@ -31,8 +31,8 @@ function destroy() {
 destroy
 trap destroy EXIT
 
-node "${__root}/lib/cli.js" \
-# babel-node "${__root}/lib/cli.js" \
+#node "${__root}/lib/cli.js" \
+babel-node "${__root}/src/cli.js" \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \

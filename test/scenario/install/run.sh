@@ -26,7 +26,7 @@ rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true
 
 node "${__root}/lib/cli.js" compile \
-# babel-node "${__root}/lib/cli.js" compile \
+# babel-node "${__root}/src/cli.js" compile \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \
@@ -35,7 +35,7 @@ node "${__root}/lib/cli.js" compile \
 || false
 
 node "${__root}/lib/cli.js" install \
-# babel-node "${__root}/lib/cli.js" install \
+# babel-node "${__root}/src/cli.js" install \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \

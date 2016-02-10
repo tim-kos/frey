@@ -195,6 +195,7 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] website: Take uppy as a base maybe?
  - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] website: On the githubs  
+ - [x] Replace mustache with lodash templating
  - [x] Put `_transform` in a central place (utils?)
  - [x] New command: `frey compile` that's prefixed to any chain, so you can trust your updates are present in residu, and have its configuration available too (ssh user for instance)
  - [x] Merge chain & commands

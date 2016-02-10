@@ -41,7 +41,7 @@ destroy
 trap destroy EXIT
 
 node "${__root}/lib/cli.js" install \
-# babel-node "${__root}/lib/cli.js" install \
+# babel-node "${__root}/src/cli.js" install \
   --sshkeys-dir "." \
   --no-color \
   --verbose \

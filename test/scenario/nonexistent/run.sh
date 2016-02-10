@@ -12,4 +12,4 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 node "${__root}/lib/cli.js" nonexistent
-# babel-node "${__root}/lib/cli.js" nonexistent
+# babel-node "${__root}/src/cli.js" nonexistent

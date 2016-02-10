@@ -1,9 +1,8 @@
 'use strict'
-// import Depurar from 'depurar'
-// var debug = Depurar('frey')
 // var info = Depurar('frey')
 // import util from 'util'
 // import fs from 'fs'
+import depurar from 'depurar'; const debug = depurar('frey')
 import inflection from 'inflection'
 import async from 'async'
 import os from 'os'
@@ -12,7 +11,7 @@ import path from 'path'
 import mkdirp from 'mkdirp'
 import chalk from 'chalk'
 import Base from './Base'
-import utils from './utils'
+import utils from './Utils'
 import osHomedir from 'os-homedir'
 import commands from './commands'
 import pkgConfig from '../package.json'
@@ -47,35 +46,29 @@ class Frey extends Base {
 
   _normalize (options, nextCb) {
     // Render interdependent arguments
-    for (let k1 in options) {
-      let val = options[k1]
-      if (val === `${val}`) {
-        options[k1] = utils.render(val, options)
-      }
-    }
+    options = utils.render(options, options)
 
-    // Apply simple functions
-    for (let k2 in options) {
-      let val = options[k2]
+    // Apply simple functions. Not perfect, but let's start engineering when the
+    // use-case arises:
+    _.forOwn(options, (val, key) => {
       if (`${val}`.match(/\|basename$/)) {
         val = val.replace(/\|basename$/, '')
         val = path.basename(val)
-        options[k2] = val
+        options[key] = val
       }
-    }
+    })
 
     // Resolve to absolute paths
     const iterable = [ 'sshkeysDir', 'recipeDir', 'toolsDir' ]
-    for (let i = 0, k3; i < iterable.length; i++) {
-      k3 = iterable[i]
-      if (!(options[k3] != null)) {
-        throw new Error(`options.${k3} was found empty`)
+    iterable.forEach((dirName) => {
+      if (!options[dirName]) {
+        throw new Error(`options.${dirName} was found empty`)
       }
 
-      options[k3] = path.resolve(options.recipeDir, options[k3])
-    }
+      options[dirName] = path.resolve(options.recipeDir, options[dirName])
+    })
 
-    if (!(options.tags != null)) {
+    if (options.tags === undefined) {
       options.tags = ''
     }
 
@@ -96,6 +89,10 @@ class Frey extends Base {
     const cmd = options._[0]
     const chain = _.filter(commands, { 'chained': true })
     const indexStart = _.findIndex(chain, {name: cmd})
+
+    debug({
+      options: options
+    })
 
     if (indexStart < 0) {
       // This command is not part of the chain
