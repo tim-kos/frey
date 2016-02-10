@@ -6,10 +6,10 @@ FREY:STDIO_REPLACE_REMOTE_EXEC
 --> Will run: [ 'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
-Found 'terraform' with version '0.6.6'
-Found 'terraformInventory' with version '0.6.0-pre'
+Found 'terraform' with version '0.6.11'
+Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
-Found 'ansible' with version '1.9.2'
+Found 'ansible' with version '2.0.0'
 --> {hostname} - compile
 --> {hostname} - refresh
 --> {hostname} - validate
@@ -33,45 +33,50 @@ Path: {root}/test/scenario/openstack/Frey-residu-terraform.plan
     pool:        "" => "public"
 
 + openstack_compute_instance_v2.freytest_app
-    access_ip_v4:          "" => "<computed>"
-    access_ip_v6:          "" => "<computed>"
-    flavor_id:             "" => "<computed>"
-    flavor_name:           "" => "m1.small"
-    floating_ip:           "" => "${openstack_compute_floatingip_v2.freytest_app.address}"
-    image_id:              "" => "<computed>"
-    image_name:            "" => "ubuntu14.04-LTS"
-    key_pair:              "" => "freytest"
-    name:                  "" => "freytest_app"
-    network.#:             "" => "1"
-    network.0.fixed_ip_v4: "" => "<computed>"
-    network.0.fixed_ip_v6: "" => "<computed>"
-    network.0.mac:         "" => "<computed>"
-    network.0.name:        "" => "<computed>"
-    network.0.port:        "" => "<computed>"
-    network.0.uuid:        "" => "${openstack_networking_network_v2.freytest.id}"
-    security_groups.#:     "" => "1"
-    security_groups.0:     "" => "freytest"
+    access_ip_v4:               "" => "<computed>"
+    access_ip_v6:               "" => "<computed>"
+    flavor_id:                  "" => "<computed>"
+    flavor_name:                "" => "m1.small"
+    floating_ip:                "" => "${openstack_compute_floatingip_v2.freytest_app.address}"
+    image_id:                   "" => "<computed>"
+    image_name:                 "" => "ubuntu14.04-LTS"
+    key_pair:                   "" => "freytest"
+    name:                       "" => "freytest_app"
+    network.#:                  "" => "1"
+    network.0.access_network:   "" => "0"
+    network.0.fixed_ip_v4:      "" => "<computed>"
+    network.0.fixed_ip_v6:      "" => "<computed>"
+    network.0.floating_ip:      "" => "<computed>"
+    network.0.mac:              "" => "<computed>"
+    network.0.name:             "" => "<computed>"
+    network.0.port:             "" => "<computed>"
+    network.0.uuid:             "" => "${openstack_networking_network_v2.freytest.id}"
+    security_groups.#:          "" => "1"
+    security_groups.1569786384: "" => "freytest"
+    volume.#:                   "" => "<computed>"
 
 + openstack_compute_keypair_v2.freytest
     name:       "" => "freytest"
     public_key: "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe33HmuH6x/JLVJAkPg9EYHCdFoILCMJefBzIIWJ0BKlTfZPHHndFhyKFA7PStMiwntkd1XcqP5kL2VyJXHB6gMNHcqQ4XBEK8hDdESK3r1Gp4YP2RzqO5KEaQzjw0zrEr8dWm8kzAjhlkqq89sAFA+FC833wdW5NCGT+aQWKhdcJVhl89ppfPgJVXpeQ5ZuGWvOdxJM3h1V0GL8I+0NFb7MuOEneGezth1VIOL+eJJeAMzBWcXO6cAWZG31JkCuNpOG9vDhjYPim+tsozTdRg6g7R0Fmikxw3c3PFEOVKSmDXbOKLVTaXCYvDR0wOM+cLFOzSPl7Dt4aAMBT2h1xL {user}@openstack.freyproject.io\n"
 
 + openstack_compute_secgroup_v2.freytest
-    description:        "" => "freytest"
-    name:               "" => "freytest"
-    rule.#:             "0" => "2"
-    rule.0.cidr:        "" => "{ip}/0"
-    rule.0.from_port:   "" => "-1"
-    rule.0.id:          "" => "<computed>"
-    rule.0.ip_protocol: "" => "icmp"
-    rule.0.self:        "" => "0"
-    rule.0.to_port:     "" => "-1"
-    rule.1.cidr:        "" => "{ip}/0"
-    rule.1.from_port:   "" => "22"
-    rule.1.id:          "" => "<computed>"
-    rule.1.ip_protocol: "" => "tcp"
-    rule.1.self:        "" => "0"
-    rule.1.to_port:     "" => "22"
+    description:                   "" => "freytest"
+    name:                          "" => "freytest"
+    rule.#:                        "0" => "2"
+    rule.2180185248.cidr:          "" => "{ip}/0"
+    rule.2180185248.from_group_id: "" => ""
+    rule.2180185248.from_port:     "" => "-1"
+    rule.2180185248.id:            "" => "<computed>"
+    rule.2180185248.ip_protocol:   "" => "icmp"
+    rule.2180185248.self:          "" => "0"
+    rule.2180185248.to_port:       "" => "-1"
+    rule.836640770.cidr:           "" => "{ip}/0"
+    rule.836640770.from_group_id:  "" => ""
+    rule.836640770.from_port:      "" => "22"
+    rule.836640770.id:             "" => "<computed>"
+    rule.836640770.ip_protocol:    "" => "tcp"
+    rule.836640770.self:           "" => "0"
+    rule.836640770.to_port:        "" => "22"
 
 + openstack_networking_network_v2.freytest
     admin_state_up: "" => "true"
@@ -115,21 +120,23 @@ openstack_networking_network_v2.freytest: Creating...
   tenant_id:      "" => "<computed>"
 openstack_networking_network_v2.freytest: Creation complete
 openstack_compute_secgroup_v2.freytest: Creating...
-  description:        "" => "freytest"
-  name:               "" => "freytest"
-  rule.#:             "0" => "2"
-  rule.0.cidr:        "" => "{ip}/0"
-  rule.0.from_port:   "" => "-1"
-  rule.0.id:          "" => "<computed>"
-  rule.0.ip_protocol: "" => "icmp"
-  rule.0.self:        "" => "0"
-  rule.0.to_port:     "" => "-1"
-  rule.1.cidr:        "" => "{ip}/0"
-  rule.1.from_port:   "" => "22"
-  rule.1.id:          "" => "<computed>"
-  rule.1.ip_protocol: "" => "tcp"
-  rule.1.self:        "" => "0"
-  rule.1.to_port:     "" => "22"
+  description:                   "" => "freytest"
+  name:                          "" => "freytest"
+  rule.#:                        "0" => "2"
+  rule.2180185248.cidr:          "" => "{ip}/0"
+  rule.2180185248.from_group_id: "" => ""
+  rule.2180185248.from_port:     "" => "-1"
+  rule.2180185248.id:            "" => "<computed>"
+  rule.2180185248.ip_protocol:   "" => "icmp"
+  rule.2180185248.self:          "" => "0"
+  rule.2180185248.to_port:       "" => "-1"
+  rule.836640770.cidr:           "" => "{ip}/0"
+  rule.836640770.from_group_id:  "" => ""
+  rule.836640770.from_port:      "" => "22"
+  rule.836640770.id:             "" => "<computed>"
+  rule.836640770.ip_protocol:    "" => "tcp"
+  rule.836640770.self:           "" => "0"
+  rule.836640770.to_port:        "" => "22"
 openstack_compute_secgroup_v2.freytest: Creation complete
 openstack_networking_subnet_v2.freytest: Creating...
   cidr:                       "" => "{ip}/24"
@@ -160,24 +167,27 @@ openstack_compute_floatingip_v2.freytest_app: Creating...
   pool:        "" => "public"
 openstack_compute_floatingip_v2.freytest_app: Creation complete
 openstack_compute_instance_v2.freytest_app: Creating...
-  access_ip_v4:          "" => "<computed>"
-  access_ip_v6:          "" => "<computed>"
-  flavor_id:             "" => "<computed>"
-  flavor_name:           "" => "m1.small"
-  floating_ip:           "" => "{ip}"
-  image_id:              "" => "<computed>"
-  image_name:            "" => "ubuntu14.04-LTS"
-  key_pair:              "" => "freytest"
-  name:                  "" => "freytest_app"
-  network.#:             "" => "1"
-  network.0.fixed_ip_v4: "" => "<computed>"
-  network.0.fixed_ip_v6: "" => "<computed>"
-  network.0.mac:         "" => "<computed>"
-  network.0.name:        "" => "<computed>"
-  network.0.port:        "" => "<computed>"
-  network.0.uuid:        "" => "{uuid}"
-  security_groups.#:     "" => "1"
-  security_groups.0:     "" => "freytest"
+  access_ip_v4:               "" => "<computed>"
+  access_ip_v6:               "" => "<computed>"
+  flavor_id:                  "" => "<computed>"
+  flavor_name:                "" => "m1.small"
+  floating_ip:                "" => "{ip}"
+  image_id:                   "" => "<computed>"
+  image_name:                 "" => "ubuntu14.04-LTS"
+  key_pair:                   "" => "freytest"
+  name:                       "" => "freytest_app"
+  network.#:                  "" => "1"
+  network.0.access_network:   "" => "0"
+  network.0.fixed_ip_v4:      "" => "<computed>"
+  network.0.fixed_ip_v6:      "" => "<computed>"
+  network.0.floating_ip:      "" => "<computed>"
+  network.0.mac:              "" => "<computed>"
+  network.0.name:             "" => "<computed>"
+  network.0.port:             "" => "<computed>"
+  network.0.uuid:             "" => "{uuid}"
+  security_groups.#:          "" => "1"
+  security_groups.1569786384: "" => "freytest"
+  volume.#:                   "" => "<computed>"
 openstack_compute_instance_v2.freytest_app: Provisioning with 'remote-exec'...
 openstack_compute_instance_v2.freytest_app (remote-exec): /home/ubuntu
 openstack_compute_instance_v2.freytest_app: Creation complete
@@ -196,18 +206,19 @@ Outputs:
   public_address = {ip}
 --> Saved state to '{root}/test/scenario/openstack/Frey-state-terraform.tfstate'
 --> {hostname} - install
+Using {root}/test/scenario/openstack/Frey-residu-ansible.cfg as config file
 
-PLAY [Install app servers] **************************************************** 
+PLAY [Install app servers] *****************************************************
 
-GATHERING FACTS *************************************************************** 
+TASK [setup] *******************************************************************
 ok: [{ip}]
 
-TASK: [Common | Add APT sources] ********************************************** 
+TASK [Common | Add APT sources] ************************************************
 changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse", "state": "present"}
 changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse", "state": "present"}
 changed: [{ip}] => (item=deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse) => {"changed": true, "item": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "repo": "deb http://us.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse", "state": "present"}
 
-PLAY RECAP ******************************************************************** 
+PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 Done

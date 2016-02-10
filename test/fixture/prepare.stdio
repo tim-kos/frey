@@ -1,14 +1,15 @@
 FREY:STDIO_SKIP_COMPARE
+{root}/test/scenario/prepare
 --> Frey version '0.3.0'
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-prepare.pem'
 Creating public key '{tmpdir}/frey-prepare.pub'
-Found 'terraform' with version '0.6.6'
-Found 'terraformInventory' with version '0.6.0-pre'
+Found 'terraform' with version '0.6.11'
+Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
-Found 'ansible' with version '1.9.2'
+Found 'ansible' with version '2.0.0'
 Done
 Running help on all required tools
   --version             show program's version number and exit

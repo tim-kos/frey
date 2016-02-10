@@ -5,10 +5,10 @@
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-dynamodb.pem'
 Creating public key '{tmpdir}/frey-dynamodb.pub'
-Found 'terraform' with version '0.6.6'
-Found 'terraformInventory' with version '0.6.0-pre'
+Found 'terraform' with version '0.6.11'
+Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
-Found 'ansible' with version '1.9.2'
+Found 'ansible' with version '2.0.0'
 --> {hostname} - compile
 --> {hostname} - refresh
 --> {hostname} - validate
@@ -47,6 +47,8 @@ Path: {root}/test/scenario/dynamodb/Frey-residu-terraform.plan
     name:                                                  "" => "GameScores"
     range_key:                                             "" => "GameTitle"
     read_capacity:                                         "" => "20"
+    stream_enabled:                                        "" => "<computed>"
+    stream_view_type:                                      "" => "<computed>"
     write_capacity:                                        "" => "20"
 Plan: 1 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/dynamodb/Frey-residu-terraform.plan'
@@ -75,6 +77,8 @@ aws_dynamodb_table.basic-dynamodb-table: Creating...
   name:                                                  "" => "GameScores"
   range_key:                                             "" => "GameTitle"
   read_capacity:                                         "" => "20"
+  stream_enabled:                                        "" => "<computed>"
+  stream_view_type:                                      "" => "<computed>"
   write_capacity:                                        "" => "20"
 aws_dynamodb_table.basic-dynamodb-table: Creation complete
 
