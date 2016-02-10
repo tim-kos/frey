@@ -40,8 +40,8 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
-node "${__root}/lib/cli.js" compile \
 # babel-node "${__root}/src/cli.js" compile \
+node "${__root}/lib/cli.js" compile \
   --sshkeys-dir "${__dir}" \
   --no-color \
   --verbose \
@@ -52,6 +52,7 @@ node "${__root}/lib/cli.js" compile \
 
 # If you want to test just the install (don't forget to disable destroys):
 #
+# # babel-node "${__root}/src/cli.js" install \
 # node "${__root}/lib/cli.js" install \
 #   --sshkeys-dir "${__dir}" \
 #   --no-color \

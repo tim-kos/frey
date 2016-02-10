@@ -2,7 +2,7 @@
 // var info = Depurar('frey')
 // import util from 'util'
 // import fs from 'fs'
-import depurar from 'depurar'; const debug = depurar('frey')
+// import depurar from 'depurar'; const debug = depurar('frey')
 import inflection from 'inflection'
 import async from 'async'
 import os from 'os'
@@ -89,10 +89,6 @@ class Frey extends Base {
     const cmd = options._[0]
     const chain = _.filter(commands, { 'chained': true })
     const indexStart = _.findIndex(chain, {name: cmd})
-
-    debug({
-      options: options
-    })
 
     if (indexStart < 0) {
       // This command is not part of the chain
