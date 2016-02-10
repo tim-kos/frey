@@ -25,17 +25,19 @@ describe('Utils', () => {
       expect(result).to.deep.equal(['kevin', '32'])
       done()
     })
-    it('should handle objects recursively', done => {
-      const options = {
-        filename: 'terraform-{{{version}}}',
+    it('should handle objects recursively with flattening', done => {
+      const properties = {
+        filename: 'terraform-{{{self__version}}}',
         arch: 'amd64',
-        version: '0.1.1-{{{arch}}}'
+        os: '{{{options__runtime__os}}}',
+        version: '0.1.1-{{{self__arch}}}'
       }
-      const result = utils.render(options, options)
+      const result = utils.render(properties, {self: properties, options: {runtime: {os: 'osx'}}})
       expect(result).to.deep.equal({
-        version: '0.1.1-amd64',
+        filename: 'terraform-0.1.1-amd64',
         arch: 'amd64',
-        filename: 'terraform-0.1.1-amd64'
+        os: 'osx',
+        version: '0.1.1-amd64'
       })
       done()
     })

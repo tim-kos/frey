@@ -1,59 +1,62 @@
 'use strict'
 import depurar from 'depurar'; const debug = depurar('frey')
 import _ from 'lodash'
+import flatten from 'flat'
 
 class Utils {
-  render (str, data, opts = {}) {
+  render (subject, data, opts = {}) {
     if (opts.failhard === undefined) { opts.failhard = true }
 
-    if (_.isArray(str)) {
-      str.forEach((val, key) => {
-        str[key] = this.render(val, data, opts)
+    const flattened = flatten(data, {delimiter: '__'})
+
+    if (_.isArray(subject)) {
+      subject.forEach((val, key) => {
+        subject[key] = this.render(val, flattened, opts)
       })
-      return str
+      return subject
     }
 
-    if (_.isObject(str)) {
+    if (_.isObject(subject)) {
       // It's possible we're doing recursive resolving here, for instance when
       // render(options, options) is used. So in this case, we keep rendering, until
       // the string is no longer changing
       let change = true
       while (change) {
         change = false
-        _.forOwn(str, (val, key) => {
-          let tmp = this.render(val, data, { failhard: false })
-          if (tmp !== str[key]) {
-            str[key] = tmp
+        _.forOwn(subject, (val, key) => {
+          let tmp = this.render(val, flattened, { failhard: false })
+          if (tmp !== subject[key]) {
+            subject[key] = tmp
             change = true
           }
         })
       }
-      _.forOwn(str, (val, key) => {
+      _.forOwn(subject, (val, key) => {
         if (`${val}`.indexOf('{{{') > -1) {
-          debug(data)
+          debug(flattened)
           throw new Error(`Unable to render vars in '${val}'. `)
         }
       })
-      return str
+      return subject
     }
 
-    if (!_.isString(str)) {
-      return str
+    if (!_.isString(subject)) {
+      return subject
     }
 
     // Use custom template delimiters.
-    _.templateSettings.interpolate = /{{{([\s\S]+?)}}}/g
-    var compiled = _.template(str)
+    _.templateSettings.interpolate = /{{{([^}]+)}}}/g
+    var compiled = _.template(subject)
     try {
-      str = compiled(data)
+      subject = compiled(flattened)
     } catch (e) {
       if (opts.failhard === true) {
-        debug(data)
-        throw new Error(`Unable to render vars in '${str}'. ${e}`)
+        debug(flattened)
+        throw new Error(`Unable to render vars in '${subject}'. ${e}`)
       }
     }
 
-    return str
+    return subject
   }
 }
 
