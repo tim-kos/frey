@@ -2,52 +2,10 @@
 import Command from '../Command'
 // import mkdirp from 'mkdirp'
 // import semver from 'semver'
-import async from 'async'
-import fs from 'fs'
 // import depurar from 'depurar'; const debug = depurar('frey')
 import os from 'os'
 
 class Runtime extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
-    this.boot = [
-      '_findClosestRecipeGit'
-    ]
-  }
-
-  _findClosestRecipeGit (cargo, cb) {
-    return this._findClosestGit(this.options.recipeDir, filepath => {
-      return cb(null, filepath)
-    })
-  }
-
-  _findClosestGit (filepath, cb) {
-    const parts = filepath.split('/')
-    let paths = []
-    let rem = ''
-
-    for (let i = 0, part; i < parts.length; i++) {
-      part = parts[i]
-      if (!part) {
-        continue
-      }
-
-      rem = `${rem}/${part}`
-      paths.push(`${rem}/.git`)
-    }
-
-    // This operation is performed in parallel, but the results array will
-    // be in the same order as the original. Hence, use the last/longest/closest
-    // path that has Git.
-    return async.reject(paths, fs.stat, results => {
-      if (typeof results === 'undefined' || !results.length) {
-        return cb(undefined)
-      }
-
-      return cb(results.pop())
-    })
-  }
-
   main (bootOptions, cb) {
     this.runtime.os = {
       platform: os.platform(),
