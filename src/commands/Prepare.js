@@ -23,8 +23,10 @@ class Prepare extends Command {
       return cb(new Error(`Unsupported dependency type: '${props.type}'`))
     }
 
+    const rendered = utils.render(props, props)
+
     func = func.bind(this)
-    return func(props, cb)
+    return func(rendered, cb)
   }
 
   _makePrivkey (props, cb) {
@@ -92,8 +94,7 @@ class Prepare extends Command {
         return cb(null)
       }
 
-      const cmd = utils.render(props.cmdInstall, props)
-      return this._cmdYesNo(cmd, (err) => {
+      return this._cmdYesNo(props.cmdInstall, (err) => {
         if (err) {
           return cb(new Error(`Failed to install '${props.name}'. ${err}`))
         }
@@ -110,28 +111,26 @@ class Prepare extends Command {
     })
   }
 
-  _satisfy (props, cb) {
-    let cmd = utils.render(props.cmdVersion, props)
-
-    return this._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
+  _satisfy (appProps, cb) {
+    this._exeScript(appProps.cmdVersion, {verbose: false, limitSamples: false}, (err, stdout) => {
       if (err) {
         // We don't want to bail out if version command does not exist yet
         // Or maybe --version returns non-zero exit code, which is common
         debug({
-          msg: `Continuing after failed command ${cmd}. ${err}`,
-          exe: props.exe,
+          msg: `Continuing after failed command ${appProps.cmd}. ${err}`,
+          exe: appProps.exe,
           foundVersion: foundVersion,
           err: err,
           stdout: stdout
         })
       }
 
-      const foundVersion = props.versionTransformer(stdout)
+      const foundVersion = appProps.versionTransformer(stdout)
 
-      this._out(`Found '${props.name}' with version '${foundVersion}'\n`)
+      this._out(`Found '${appProps.name}' with version '${foundVersion}'\n`)
 
-      if (!stdout || !semver.satisfies(foundVersion, props.range)) {
-        this._out(`'${props.name}' needs to be installed or upgraded. \n`)
+      if (!stdout || !semver.satisfies(foundVersion, appProps.range)) {
+        this._out(`'${appProps.name}' needs to be installed or upgraded. \n`)
         return cb(false)
       }
 

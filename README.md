@@ -183,6 +183,7 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] Enable DO support
  - [ ] Make arg & env functions of all other commands, mimic Install's
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
+ - [ ] Use flatten in utils.render. Then we can replace `{{{self.version}}}` as well as `{{{options.foobar}}}`
  - [ ] Vagrant support
  - [ ] Port install
  - [ ] Port upload

@@ -21,7 +21,7 @@ class Utils {
       while (change) {
         change = false
         _.forOwn(str, (val, key) => {
-          let tmp = this.render(val, data, {failhard: false})
+          let tmp = this.render(val, data, { failhard: false })
           if (tmp !== str[key]) {
             str[key] = tmp
             change = true
