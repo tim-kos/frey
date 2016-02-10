@@ -71,8 +71,6 @@ class Command extends Base {
       childEnv[`TF_VAR_${key}`] = val
     }
 
-    childEnv.PYTHONPATH = this.runtime.paths.pythonLib
-
     if ((typeof extra !== 'undefined' && extra !== null)) {
       childEnv = _.extend(childEnv, extra)
     }

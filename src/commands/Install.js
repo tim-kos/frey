@@ -1,7 +1,7 @@
 'use strict'
 import Command from '../Command'
 import chalk from 'chalk'
-// import _ from 'lodash'
+import _ from 'lodash'
 // import depurar from 'depurar'; const debug = depurar('frey')
 
 class Install extends Command {
@@ -59,27 +59,21 @@ class Install extends Command {
   }
 
   main (cargo, cb) {
-    const ansiblePlaybookExe = ((() => {
-      const result = []
-      const iterable = this.runtime.deps
-      for (let i = 0, dep; i < iterable.length; i++) {
-        dep = iterable[i]
-        if (dep.name === 'ansible') {
-          result.push(dep.exePlaybook)
-        }
-      }
-      return result
-    })())[0]
+    const appProps = _.find(this.runtime.deps, {name: 'ansible'})
+    const ansiblePlaybookExe = appProps.exePlaybook
     let cmd = [
       ansiblePlaybookExe
     ]
     cmd = cmd.concat(this.bootCargo._gatherArgs)
+    cmd = cmd.join(' ')
 
     const opts = {
       env: this.bootCargo._gatherEnv
     }
 
-    this._exe(cmd, opts, (err, stdout) => {
+    // debug({cmd: cmd, opts: opts})
+
+    this._exeScript(cmd, opts, (err, stdout) => {
       if (err) {
         return cb(err)
       }

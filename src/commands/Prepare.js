@@ -4,7 +4,6 @@ import mkdirp from 'mkdirp'
 import semver from 'semver'
 import fs from 'fs'
 import async from 'async'
-import utils from '../Utils'
 import depurar from 'depurar'; const debug = depurar('frey')
 
 class Prepare extends Command {
@@ -23,10 +22,8 @@ class Prepare extends Command {
       return cb(new Error(`Unsupported dependency type: '${props.type}'`))
     }
 
-    const rendered = utils.render(props, props)
-
     func = func.bind(this)
-    return func(rendered, cb)
+    return func(props, cb)
   }
 
   _makePrivkey (props, cb) {
