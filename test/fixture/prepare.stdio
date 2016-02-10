@@ -1,5 +1,4 @@
 FREY:STDIO_SKIP_COMPARE
-{root}/test/scenario/prepare
 --> Frey version '0.3.0'
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
