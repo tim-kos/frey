@@ -151,7 +151,7 @@ liftOff.launch({
       // yargs.showHelp()
       console.error('')
       console.error(`--> Exiting with error: ${err.message}`)
-      if (err.details === undefined) {
+      if (err.details) {
         console.error('--> Details:')
         console.error('')
         console.error(err.details)
