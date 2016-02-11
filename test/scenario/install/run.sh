@@ -19,6 +19,9 @@ __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 #
 # exit
 
+echo WIP
+exit 0
+
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true
 
