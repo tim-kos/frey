@@ -61,7 +61,7 @@ class Command extends Base {
     })
   }
 
-  _buildChildEnv (extra) {
+  _buildChildEnv (extra = {}) {
     let childEnv = {}
 
     childEnv = _.extend(childEnv, process.env, this._toEnvFormat(this.runtime, 'runtime'), this._toEnvFormat(this.options, 'options'))
@@ -71,9 +71,7 @@ class Command extends Base {
       childEnv[`TF_VAR_${key}`] = val
     }
 
-    if ((typeof extra !== 'undefined' && extra !== null)) {
-      childEnv = _.extend(childEnv, extra)
-    }
+    childEnv = _.extend(childEnv, extra)
 
     return childEnv
   }
