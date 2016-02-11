@@ -6,7 +6,7 @@ import async from 'async'
 import fs from 'fs'
 import _ from 'lodash'
 import INI from 'ini'
-const YAML = require('js-yaml')
+import YAML from 'js-yaml'
 import TOML from 'toml'
 
 class Compile extends Command {
@@ -63,7 +63,9 @@ class Compile extends Command {
 
     return async.series([
       (callback) => {
-        if (!config.infra) {
+        const val = _.get(config, 'infra')
+
+        if (!val) {
           debug('No infra instructions found in merged toml')
           fs.unlink(this.runtime.paths.infraFile, err => {
             if (err) {
@@ -74,16 +76,20 @@ class Compile extends Command {
           return
         }
 
-        const encoded = JSON.stringify(config.infra, null, '  ')
+        const encoded = JSON.stringify(val, null, '  ')
         if (!encoded) {
+          debug(val)
           return callback(new Error('Unable to convert recipe to Terraform infra JSON'))
         }
 
         filesWritten.push(this.runtime.paths.infraFile)
+        debug('Writing %s', this.runtime.paths.infraFile)
         return fs.writeFile(this.runtime.paths.infraFile, encoded, callback)
       },
       (callback) => {
-        if (!config.install || !config.install.config) {
+        const val = _.get(config, 'install.config')
+
+        if (!val) {
           debug('No config instructions found in merged toml')
           fs.unlink(this.runtime.paths.ansibleCfg, err => {
             if (err) {
@@ -94,8 +100,9 @@ class Compile extends Command {
           return
         }
 
-        let encoded = INI.encode(config.install.config)
+        let encoded = INI.encode(val)
         if (!encoded) {
+          debug(val)
           return callback(new Error('Unable to convert recipe to ansibleCfg INI'))
         }
 
@@ -106,10 +113,13 @@ class Compile extends Command {
         encoded = encoded.replace(/\"/g, '')
 
         filesWritten.push(this.runtime.paths.ansibleCfg)
+        debug('Writing %s', this.runtime.paths.ansibleCfg)
         return fs.writeFile(this.runtime.paths.ansibleCfg, encoded, callback)
       },
       (callback) => {
-        if (!config.install || !config.install.playbooks) {
+        const val = _.get(config, 'install.playbooks')
+
+        if (!val) {
           debug('No install playbooks found in merged toml')
           fs.unlink(this.runtime.paths.playbookFile, err => {
             if (err) {
@@ -120,12 +130,14 @@ class Compile extends Command {
           return
         }
 
-        const encoded = YAML.safeDump(config.install.playbooks)
+        const encoded = YAML.safeDump(val)
         if (!encoded) {
+          debug(val)
           return callback(new Error('Unable to convert recipe to Ansible playbook YAML'))
         }
 
         filesWritten.push(this.runtime.paths.playbookFile)
+        debug('Writing %s', this.runtime.paths.playbookFile)
         return fs.writeFile(this.runtime.paths.playbookFile, encoded, callback)
       }
     ], err => {

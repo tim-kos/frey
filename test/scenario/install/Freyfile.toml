@@ -1,14 +1,17 @@
-[install.config]
-  [install.config.defaults]
+[frey]
+  connection = "local"
 
-  [install.config.ssh_connection]
-    ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
+[install.config.defaults]
+  # https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
+
+[install.config.ssh_connection]
+  ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
 
 [[install.playbooks]]
-  hosts = "infra-tusd-server"
-  name = "Install infra-tusd-server"
+  hosts = "{{ variable_host | default('infra-tusd-server')}}"
+  name = "Local stuff"
+  become = "False"
 
-  [[install.playbooks.tasks]]
-    action = "template src=templates/sources.list dest=/etc/apt/sources.list"
-    name = "Common | Add US APT Mirrors"
-    register = "apt_sources"
+[[install.playbooks.tasks]]
+  name = "Execute arbitrary command"
+  command = "pwd"

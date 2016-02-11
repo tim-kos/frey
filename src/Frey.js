@@ -31,7 +31,7 @@ class Frey extends Base {
   }
 
   _injectOptions (options, nextCb) {
-    return nextCb(null, _.clone(this.options))
+    nextCb(null, _.clone(this.options))
   }
 
   _defaults (options = {}, nextCb) {
@@ -41,7 +41,7 @@ class Frey extends Base {
     if (options.home === undefined) { options.home = osHomedir() }
     if (options.user === undefined) { options.user = process.env.USER }
 
-    return nextCb(null, options)
+    nextCb(null, options)
   }
 
   _normalize (options, nextCb) {
@@ -72,7 +72,7 @@ class Frey extends Base {
       options.tags = ''
     }
 
-    return nextCb(null, options)
+    nextCb(null, options)
   }
 
   _setup (options, nextCb) {
@@ -117,7 +117,7 @@ class Frey extends Base {
 
     options.filteredChain.unshift('runtime')
 
-    return nextCb(null, options)
+    nextCb(null, options)
   }
 
   main (bootOptions, cb) {
@@ -126,7 +126,7 @@ class Frey extends Base {
     this._out('--> Frey version %s\n', pkgConfig.version)
     this._out('--> Will run: %o\n', this.options.filteredChain)
 
-    return async.eachSeries(this.options.filteredChain, this._runOne.bind(this), cb)
+    async.eachSeries(this.options.filteredChain, this._runOne.bind(this), cb)
   }
 
   _runOne (command, cb) {
@@ -141,7 +141,7 @@ class Frey extends Base {
     this._out(chalk.green(`${command}`))
     this._out(chalk.green('\n'))
 
-    return func((err, result) => {
+    func((err, result) => {
       const append = {}
       append[command] = result
       this.runtime = _.extend(this.runtime, append)

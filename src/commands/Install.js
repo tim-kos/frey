@@ -30,7 +30,16 @@ class Install extends Command {
 
     args.push(`--user=${this.runtime.ssh.user}`)
     args.push(`--private-key=${this.runtime.ssh.keyprv_file}`)
-    args.push(`--inventory-file=${terraformInvExe}`)
+
+    const connection = _.get(this.runtime, 'compile.frey.connection')
+    if (connection !== undefined) {
+      args.push(`--connection=${connection}`)
+      args.push(`--extra-vars="variable_host=${connection}"`)
+      args.push(`--inventory-file="${connection},"`)
+    } else {
+      args.push(`--inventory-file=${terraformInvExe}`)
+    }
+
     args.push('--sudo')
     args.push(`${this.runtime.paths.playbookFile}`)
 

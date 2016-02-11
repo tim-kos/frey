@@ -14,13 +14,13 @@ __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
 # PYTHONPATH="${HOME}/.frey/tools/ansible/2.0.0.2/pip/lib/python2.7/site-packages" \
-#   "${HOME}/.frey/tools/ansible/2.0.0.2/pip/bin/ansible" \
-#   --help 2>&1
+#   "${HOME}/.frey/tools/ansible/2.0.0.2/pip/bin/ansible-playbook" \
+#   --help
 #
 # exit
 
-echo WIP
-exit 0
+# echo WIP
+# exit 0
 
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true

@@ -181,6 +181,8 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
  - [ ] Vagrant support
  - [ ] Deprecate a generic `Command._buildChildEnv` in favor of more specific Ansible/Terraform env building
+ - [ ] Fix that `this.runtime.Runtime` is thing now. Remove `Runtime` alltogehter?
+ - [ ] Project vs Config vs Options. No more recipe
  - [ ] Port install
  - [ ] Port upload
  - [ ] Port remote
