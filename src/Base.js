@@ -30,19 +30,15 @@ class Base {
     // Create an array of wrapper methods that can store results
     // in bootCargo, before executing the callback
     const methods = []
-    const iterable = this.boot
-    for (let i = 0, method; i < iterable.length; i++) {
-      method = iterable[i];
-      (method => {
-        return methods.push((cargo, cb) => {
-          const f = this[method].bind(this)
-          return f(cargo, (err, cargo) => {
-            this.bootCargo[method] = cargo
-            return cb(err, cargo)
-          })
+    this.boot.forEach(method => {
+      return methods.push((cargo, cb) => {
+        const f = this[method].bind(this)
+        return f(cargo, (err, cargo) => {
+          this.bootCargo[method] = cargo
+          return cb(err, cargo)
         })
-      })(method)
-    }
+      })
+    })
 
     // Prefix a fake method so all methods can have the same signature
     methods.unshift(async.constant({}))

@@ -88,6 +88,7 @@ describe('Frey', () => {
           expect(options.filteredChain).to.deep.equal([
             'runtime',
             'prepare',
+            'compile',
             'docbuild'
           ])
           done()
@@ -125,6 +126,7 @@ describe('Frey', () => {
         expect(options.filteredChain).to.deep.equal([
           'runtime',
           'prepare',
+          'compile',
           'deploy'
         ])
         done()
@@ -144,6 +146,7 @@ describe('Frey', () => {
         expect(options.filteredChain).to.deep.equal([
           'runtime',
           'prepare',
+          'compile',
           'refresh',
           'validate',
           'plan'

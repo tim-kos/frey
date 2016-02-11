@@ -115,7 +115,7 @@ class Command extends Base {
 
     if (bash.stdout) {
       bash.stdout.on('data', (data) => {
-        if ((typeof data !== 'undefined' && data !== null)) {
+        if (data) {
           lastStdout.push(`${data}`)
           if (cmdOpts.limitSamples) {
             lastStdout = _.takeRight(lastStdout, cmdOpts.limitSamples)
@@ -130,7 +130,7 @@ class Command extends Base {
 
     if (bash.stderr) {
       bash.stderr.on('data', (data) => {
-        if ((typeof data !== 'undefined' && data !== null)) {
+        if (data) {
           lastStderr.push(`${data}`)
           if (cmdOpts.limitSamples) {
             lastStderr = _.takeRight(lastStderr, cmdOpts.limitSamples)
@@ -164,7 +164,7 @@ class Command extends Base {
   }
 
   _toEnvFormat (obj, prefix = undefined) {
-    if (!(typeof obj !== 'undefined' && obj !== null)) {
+    if (!obj) {
       return {}
     }
 
@@ -178,7 +178,7 @@ class Command extends Base {
       const parts = []
       parts.push('FREY')
 
-      if ((typeof prefix !== 'undefined' && prefix !== null)) {
+      if (prefix) {
         parts.push(inflection.underscore(prefix).toUpperCase())
       }
 

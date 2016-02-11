@@ -191,11 +191,11 @@ Frey is intended to service many use-cases and we'll work on removing some of th
  - [ ] More tests!
  - [ ] How to implement different roles? Db/www/etc?
  - [ ] Empty out and remove `Base` class?
- - [ ] Get rid of `iterable`. Can be replaced by `_.find` often
  - [ ] website: Console window like http://lebab.io/ ?
  - [ ] website: Take uppy as a base maybe?
  - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
  - [ ] website: On the githubs  
+ - [x] Get rid of `iterable`. Can be replaced by `_.find` often
  - [x] Use flatten in utils.render. Then we can replace `{{{self.version}}}` as well as `{{{options.foobar}}}`
  - [x] Tools should be saved under version number only. This way different versions of frey can use their own tested tools, while also still being able to share between same frey installs
  - [x] Upgrade Terraform 

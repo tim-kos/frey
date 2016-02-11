@@ -59,8 +59,8 @@ class Frey extends Base {
     })
 
     // Resolve to absolute paths
-    const iterable = [ 'sshkeysDir', 'recipeDir', 'toolsDir' ]
-    iterable.forEach((dirName) => {
+    const dirNames = [ 'sshkeysDir', 'recipeDir', 'toolsDir' ]
+    dirNames.forEach((dirName) => {
       if (!options[dirName]) {
         throw new Error(`options.${dirName} was found empty`)
       }
@@ -107,7 +107,11 @@ class Frey extends Base {
       options.filteredChain = _.map(sliced, 'name')
     }
 
-    if (options.filteredChain.indexOf('prepare') < 0) {
+    if (options.filteredChain.indexOf('compile') < 0 && (indexStart === -1 || indexStart > _.findIndex(chain, {name: 'compile'}))) {
+      options.filteredChain.unshift('compile')
+    }
+
+    if (options.filteredChain.indexOf('prepare') < 0 && (indexStart === -1 || indexStart > _.findIndex(chain, {name: 'prepare'}))) {
       options.filteredChain.unshift('prepare')
     }
 

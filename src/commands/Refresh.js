@@ -2,6 +2,7 @@
 import Command from '../Command'
 import depurar from 'depurar'; const debug = depurar('frey')
 import chalk from 'chalk'
+import _ from 'lodash'
 
 class Refresh extends Command {
   constructor (name, options, runtime) {
@@ -26,17 +27,8 @@ class Refresh extends Command {
   }
 
   main (cargo, cb) {
-    const terraformExe = ((() => {
-      const result = []
-      const iterable = this.runtime.deps
-      for (let i = 0, dep; i < iterable.length; i++) {
-        dep = iterable[i]
-        if (dep.name === 'terraform') {
-          result.push(dep.exe)
-        }
-      }
-      return result
-    })())[0]
+    const appProps = _.find(this.runtime.deps, {name: 'terraform'})
+    const terraformExe = appProps.exe
     let cmd = [
       terraformExe,
       'refresh'

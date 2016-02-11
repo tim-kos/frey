@@ -14,18 +14,9 @@ class Install extends Command {
   }
 
   _gatherArgs (cargo, cb) {
+    const appProps = _.find(this.runtime.deps, {name: 'terraformInventory'})
+    const terraformInvExe = appProps.exe
     const args = []
-    const terraformInvExe = ((() => {
-      const result = []
-      const iterable = this.runtime.deps
-      for (let i = 0, dep; i < iterable.length; i++) {
-        dep = iterable[i]
-        if (dep.name === 'terraformInventory') {
-          result.push(dep.exe)
-        }
-      }
-      return result
-    })())[0]
 
     if (this.options.tags) {
       args.push(`--tags=${this.options.tags}`)
@@ -34,7 +25,8 @@ class Install extends Command {
     if (this.options.verbose) {
       args.push('-v')
     }
-      // args.push "-vvvv"
+
+    // args.push "-vvvv"
 
     args.push(`--user=${this.runtime.ssh.user}`)
     args.push(`--private-key=${this.runtime.ssh.keyprv_file}`)
@@ -60,7 +52,7 @@ class Install extends Command {
 
   main (cargo, cb) {
     const appProps = _.find(this.runtime.deps, {name: 'ansible'})
-    const ansiblePlaybookExe = appProps.exePlaybook
+    const ansiblePlaybookExe = appProps.cmdPlaybook
     let cmd = [
       ansiblePlaybookExe
     ]

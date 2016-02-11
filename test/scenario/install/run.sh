@@ -19,23 +19,11 @@ __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 #
 # exit
 
-echo WIP
-exit 0
-
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true
 
-# babel-node "${__root}/src/cli.js" compile \
-node "${__root}/lib/cli.js" compile \
-  --sshkeys-dir "${__sysTmpDir}" \
-  --no-color \
-  --verbose \
-  --force-yes \
-  --bail \
-|| false
-
-# babel-node "${__root}/src/cli.js" install \
-node "${__root}/lib/cli.js" install \
+# node "${__root}/lib/cli.js" install \
+babel-node "${__root}/src/cli.js" install \
   --sshkeys-dir "${__sysTmpDir}" \
   --no-color \
   --verbose \

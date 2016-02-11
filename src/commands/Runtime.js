@@ -150,8 +150,9 @@ class Runtime extends Command {
       range: `>= 2.0.0`,
       version: '2.0.0.2',
       dir: '{{{options__toolsDir}}}/ansible/{{{self__version}}}',
-      exe: `env PYTHONPATH={{{self__dir}}}/pip/lib/python2.7/site-packages {{{self__dir}}}/pip/bin/ansible`,
-      exePlaybook: `env PYTHONPATH={{{self__dir}}}/pip/lib/python2.7/site-packages {{{self__dir}}}/pip/bin/ansible-playbook`,
+      exe: `{{{self__dir}}}/pip/bin/ansible`,
+      exePlaybook: `{{{self__dir}}}/pip/bin/ansible-playbook`,
+      cmdPlaybook: `env PYTHONPATH={{{self__dir}}}/pip/lib/python2.7/site-packages {{{self__exePlaybook}}} `,
       cmdVersion: 'env PYTHONPATH={{{self__dir}}}/pip/lib/python2.7/site-packages {{{self__exe}}} --version',
       versionTransformer (stdout) {
         let version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
