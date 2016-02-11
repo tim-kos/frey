@@ -1,3 +1,5 @@
+FREY:STDIO_REPLACE_LONGTIMES
+FREY:STDIO_REPLACE_DURATIONS
 --> Frey version '0.3.0'
 --> Will run: [ 'runtime', 'prepare', 'compile', 'install' ]
 --> {hostname} - runtime
@@ -18,7 +20,7 @@ TASK [setup] *******************************************************************
 ok: [local]
 
 TASK [Execute arbitrary command] ***********************************************
-changed: [local] => {"changed": true, "cmd": ["pwd"], "delta": "0:00:00.004821", "end": "2016-02-11 13:51:35.657508", "rc": 0, "start": "2016-02-11 13:51:35.652687", "stderr": "", "stdout": "{root}/test/scenario/install", "stdout_lines": ["{root}/test/scenario/install"], "warnings": []}
+changed: [local] => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "{root}/test/scenario/install", "stdout_lines": ["{root}/test/scenario/install"], "warnings": []}
 
 PLAY RECAP *********************************************************************
 local                      : ok=2    changed=1    unreachable=0    failed=0   
