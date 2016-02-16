@@ -64,6 +64,7 @@ for scenario in $(echo prepare ${scenarios}); do
         -e "s@${__node}@{node}@g" "${curFile}" \
         -e "s@${__root}@{root}@g" "${curFile}" \
         -e "s@${__sysTmpDir}@{tmpdir}@g" "${curFile}" \
+        -e "s@/tmp@{tmpdir}@g" "${curFile}" \
         -e "s@${HOME:-/home/travis}@{home}@g" "${curFile}" \
         -e "s@${USER:-travis}@{user}@g" "${curFile}" \
         -e "s@travis@{user}@g" "${curFile}" \
@@ -98,6 +99,12 @@ for scenario in $(echo prepare ${scenarios}); do
         # Such as: 3811298194
         "${cmdSed}" -i \
           -r 's@[0-9]{7,64}@{bigint}@g' \
+        "${curFile}"
+      fi
+      if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_DATETIMES' |wc -l)" -gt 0 ]; then
+        # Such as: 2016-02-10 15:38:44.420094
+        "${cmdSed}" -i \
+          -r 's@[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}@{datetime}@g' \
         "${curFile}"
       fi
       if [ "$(cat "${curFile}" |grep 'FREY:STDIO_REPLACE_LONGTIMES' |wc -l)" -gt 0 ]; then
