@@ -107,12 +107,12 @@ class Frey extends Base {
       options.filteredChain = _.map(sliced, 'name')
     }
 
-    if (options.filteredChain.indexOf('compile') < 0 && (indexStart === -1 || indexStart > _.findIndex(chain, {name: 'compile'}))) {
-      options.filteredChain.unshift('compile')
-    }
-
     if (options.filteredChain.indexOf('prepare') < 0 && (indexStart === -1 || indexStart > _.findIndex(chain, {name: 'prepare'}))) {
       options.filteredChain.unshift('prepare')
+    }
+
+    if (options.filteredChain.indexOf('compile') < 0 && (indexStart === -1 || indexStart > _.findIndex(chain, {name: 'compile'}))) {
+      options.filteredChain.unshift('compile')
     }
 
     options.filteredChain.unshift('runtime')

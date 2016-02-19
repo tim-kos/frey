@@ -1,6 +1,6 @@
 (maybe) Destroying..
 --> Frey version '0.3.1'
---> Will run: [ 'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
+--> Will run: [ 'runtime', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-dynamodb.pem'

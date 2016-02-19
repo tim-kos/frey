@@ -87,8 +87,8 @@ describe('Frey', () => {
           expect(err).to.equal(null)
           expect(options.filteredChain).to.deep.equal([
             'runtime',
-            'prepare',
             'compile',
+            'prepare',
             'docbuild'
           ])
           done()
@@ -106,7 +106,7 @@ describe('Frey', () => {
       frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
-          'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch',
+          'runtime', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
           'install', 'deploy', 'restart', 'show'
         ])
         done()
@@ -125,8 +125,8 @@ describe('Frey', () => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime',
-          'prepare',
           'compile',
+          'prepare',
           'deploy'
         ])
         done()
@@ -145,8 +145,8 @@ describe('Frey', () => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime',
-          'prepare',
           'compile',
+          'prepare',
           'refresh',
           'validate',
           'plan'

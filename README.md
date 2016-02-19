@@ -200,6 +200,7 @@ Unreleased and unplanned todos
 - [ ] Port remote
 - [ ] Port setup
 - [ ] Port show 
+- [x] Let compile go before prepare so we can use (ssh) config in prepare
 
 ### v0.3.1 (2016-02-19)
 

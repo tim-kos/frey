@@ -6,7 +6,7 @@ FREY:STDIO_REPLACE_DURATIONS
 FREY:STDIO_REPLACE_REMOTE_EXEC
 (maybe) Destroying..
 --> Frey version '0.3.1'
---> Will run: [ 'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
+--> Will run: [ 'runtime', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
 Found 'terraform' with version '0.6.11'
