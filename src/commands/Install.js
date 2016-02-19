@@ -31,7 +31,7 @@ class Install extends Command {
     args.push(`--user=${this.runtime.ssh.user}`)
     args.push(`--private-key=${this.runtime.ssh.keyprv_file}`)
 
-    const connection = _.get(this.runtime, 'compile.frey.connection')
+    const connection = this.cfg('frey.connection')
     if (connection !== undefined) {
       args.push(`--connection=${connection}`)
       args.push(`--extra-vars="variable_host=${connection}"`)
