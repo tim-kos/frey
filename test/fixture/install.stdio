@@ -1,6 +1,6 @@
 FREY:STDIO_REPLACE_LONGTIMES
 FREY:STDIO_REPLACE_DURATIONS
---> Frey version '0.3.0'
+--> Frey version '0.3.1'
 --> Will run: [ 'runtime', 'prepare', 'compile', 'install' ]
 --> {hostname} - runtime
 --> {hostname} - prepare

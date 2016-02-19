@@ -1,4 +1,4 @@
---> Frey version '0.3.0'
+--> Frey version '0.3.1'
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
@@ -11,7 +11,7 @@ Found 'ansible' with version '2.0.0'
 Done
 {tmpdir}/frey-sshkeygen.pem
 {tmpdir}/frey-sshkeygen.pub
---> Frey version '0.3.0'
+--> Frey version '0.3.1'
 --> Will run: [ 'runtime', 'prepare' ]
 --> {hostname} - runtime
 --> {hostname} - prepare

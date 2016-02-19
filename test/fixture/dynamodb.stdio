@@ -1,5 +1,5 @@
 (maybe) Destroying..
---> Frey version '0.3.0'
+--> Frey version '0.3.1'
 --> Will run: [ 'runtime', 'prepare', 'compile', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
 --> {hostname} - runtime
 --> {hostname} - prepare
