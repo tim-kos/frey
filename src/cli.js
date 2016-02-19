@@ -95,8 +95,7 @@ yargs
 for (let cmd of commands) {
   let description = `${cmd.description}`
   if (cmd.chained === true) {
-    // ▾
-    description += ' (chained)'
+    description = '▽ ' + description
   }
   yargs.command(cmd.name, description)
 }
