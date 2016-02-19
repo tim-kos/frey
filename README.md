@@ -155,8 +155,6 @@ frey completion >> ~/.bashrc
 source ~/.bashrc
 ```
 
-
-
 ## Limitations
 
 For now, we only support
