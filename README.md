@@ -168,9 +168,9 @@ Frey is intended to service many use-cases and we'll work on removing some of th
 
 ## Changelog
 
-### Todo
+### Ideabox
 
-Unreleased and unplanned ideas
+Unreleased and unplanned todos
 
 - [ ] Vagrant support
 - [ ] Dynamodb scenario can evolve to be a full run, passing all stages
