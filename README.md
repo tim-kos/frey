@@ -195,15 +195,15 @@ Unreleased and unplanned todos
 - [ ] Deprecate a generic `Command._buildChildEnv` in favor of more specific Ansible/Terraform env building
 - [ ] Fix that `this.runtime.Runtime` is thing now. Remove `Runtime` alltogehter?
 - [ ] Terminology: Project vs Config vs Options. No more recipe
-- [ ] Port install
-- [ ] Port upload
-- [ ] Port remote
-- [ ] Port setup
-- [ ] Port show 
+- [ ] Implement deploy
+- [ ] Implement remote
+- [ ] Implement restart
+- [ ] Implement show 
 - [x] Let compile go before prepare so we can use (ssh) config in prepare
 
 ### v0.3.1 (2016-02-19)
 
+- [x] Implement install
 - [x] Signify chained via ▽
 - [x] Use FREY_TARGETS or swap out terraformInventory, to target localhost on Travis and some Vagrant box on OSX with `install`
 - [x] Get rid of `iterable`. Can be replaced by `_.find` often
