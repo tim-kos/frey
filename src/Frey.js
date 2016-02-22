@@ -88,30 +88,30 @@ class Frey extends Base {
   _composeChain (options, nextCb) {
     const cmd = options._[0]
     const chain = _.filter(commands, { 'chained': true })
-    const indexStart = _.findIndex(chain, {name: cmd})
+    const startAt = _.findIndex(chain, {name: cmd})
 
-    if (indexStart < 0) {
+    if (startAt < 0) {
       // This command is not part of the chain
       options.filteredChain = [ cmd ]
     } else {
       let length = 0
       if (options.bail) {
-        length = indexStart + 1
+        length = startAt + 1
       } else if (options.bailAfter && _.findIndex(chain, {name: options.bailAfter}) > -1) {
         length = _.findIndex(chain, {name: options.bailAfter}) + 1
       } else {
         length = chain.length
       }
 
-      const sliced = chain.slice(indexStart, length)
+      const sliced = chain.slice(startAt, length)
       options.filteredChain = _.map(sliced, 'name')
     }
 
-    if (options.filteredChain.indexOf('prepare') < 0 && (indexStart === -1 || indexStart > _.findIndex(chain, {name: 'prepare'}))) {
+    if (options.filteredChain.indexOf('prepare') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'prepare'}))) {
       options.filteredChain.unshift('prepare')
     }
 
-    if (options.filteredChain.indexOf('compile') < 0 && (indexStart === -1 || indexStart > _.findIndex(chain, {name: 'compile'}))) {
+    if (options.filteredChain.indexOf('compile') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'compile'}))) {
       options.filteredChain.unshift('compile')
     }
 

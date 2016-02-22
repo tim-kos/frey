@@ -56,19 +56,19 @@ describe('Frey', () => {
   })
 
   describe('_composeChain', () => {
-    it('should not add prepare if the command was prepare', done => {
+    it('should not add compile if the command was compile', done => {
       const frey = new Frey()
 
       const options = {
-        _: ['prepare'],
-        bailAfter: 'prepare'
+        _: ['compile'],
+        bailAfter: 'compile'
       }
 
       frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
           'runtime',
-          'prepare'
+          'compile'
         ])
         done()
       })
