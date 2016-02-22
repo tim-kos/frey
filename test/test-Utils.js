@@ -10,9 +10,14 @@ describe('Utils', () => {
       expect(result).to.equal('Hi my name is kevin.')
       done()
     })
+    it('should handle period delimiter for nesting by default', done => {
+      const result = utils.render('Hi my name is {{{options.name}}}.', {options: {name: 'kevin'}})
+      expect(result).to.equal('Hi my name is kevin.')
+      done()
+    })
     it('should crash hard by default', done => {
       expect(utils.render.bind(utils, 'Hi {{{crash}}}', {name: 'kevin'}))
-        .to.throw('Unable to render vars in \'Hi {{{crash}}}\'. ReferenceError: crash is not defined')
+        .to.throw('Unable to render vars in \'Hi {{{crash}}}\'.')
       done()
     })
     it('should allow to prevent crashes', done => {
@@ -27,10 +32,10 @@ describe('Utils', () => {
     })
     it('should handle objects recursively with flattening', done => {
       const properties = {
-        filename: 'terraform-{{{self__version}}}',
+        filename: 'terraform-{{{self.version}}}',
         arch: 'amd64',
-        os: '{{{options__runtime__os}}}',
-        version: '0.1.1-{{{self__arch}}}'
+        os: '{{{options.runtime.os}}}',
+        version: '0.1.1-{{{self.arch}}}'
       }
       const result = utils.render(properties, {self: properties, options: {runtime: {os: 'osx'}}})
       expect(result).to.deep.equal({

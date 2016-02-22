@@ -6,8 +6,9 @@ import flatten from 'flat'
 class Utils {
   render (subject, data, opts = {}) {
     if (opts.failhard === undefined) { opts.failhard = true }
+    if (opts.delimiter === undefined) { opts.delimiter = '.' }
 
-    const flattened = flatten(data, {delimiter: '__'})
+    const flattened = flatten(data, {delimiter: opts.delimiter})
 
     if (_.isArray(subject)) {
       subject.forEach((val, key) => {
@@ -31,12 +32,6 @@ class Utils {
           }
         })
       }
-      _.forOwn(subject, (val, key) => {
-        if (`${val}`.indexOf('{{{') > -1) {
-          debug(flattened)
-          throw new Error(`Unable to render vars in '${val}'. `)
-        }
-      })
       return subject
     }
 
@@ -45,14 +40,18 @@ class Utils {
     }
 
     // Use custom template delimiters.
-    _.templateSettings.interpolate = /{{{([^}]+)}}}/g
-    var compiled = _.template(subject)
-    try {
-      subject = compiled(flattened)
-    } catch (e) {
+    subject = subject.replace(/\{\{\{([^\}]+)\}\}\}/g, (match, token) => {
+      if (match && flattened[token]) {
+        return flattened[token]
+      }
+
+      return '{{{' + token + '}}}'
+    })
+
+    if (`${subject}`.indexOf('{{{') > -1) {
       if (opts.failhard === true) {
         debug(flattened)
-        throw new Error(`Unable to render vars in '${subject}'. ${e}`)
+        throw new Error(`Unable to render vars in '${subject}'. `)
       }
     }
 

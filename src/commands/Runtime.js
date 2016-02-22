@@ -7,18 +7,18 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Runtime extends Command {
   main (bootOptions, cb) {
     this.runtime.paths = {
-      ansibleCfg: `{{{options__recipeDir}}}/Frey-residu-ansible.cfg`,
-      planFile: `{{{options__recipeDir}}}/Frey-residu-terraform.plan`,
-      infraFile: `{{{options__recipeDir}}}/Frey-residu-infra.tf.json`,
-      playbookFile: `{{{options__recipeDir}}}/Frey-residu-install.yml`,
-      stateFile: `{{{options__recipeDir}}}/Frey-state-terraform.tfstate`
+      ansibleCfg: `{{{options.recipeDir}}}/Frey-residu-ansible.cfg`,
+      planFile: `{{{options.recipeDir}}}/Frey-residu-terraform.plan`,
+      infraFile: `{{{options.recipeDir}}}/Frey-residu-infra.tf.json`,
+      playbookFile: `{{{options.recipeDir}}}/Frey-residu-install.yml`,
+      stateFile: `{{{options.recipeDir}}}/Frey-state-terraform.tfstate`
     }
 
     this.runtime.ssh = {
-      email: `{{{options__user}}}@{{{options__app}}}.freyproject.io`,
-      keypair_name: `{{{options__app}}}`,
-      keyprv_file: `{{{options__sshkeysDir}}}/frey-{{{options__app}}}.pem`,
-      keypub_file: `{{{options__sshkeysDir}}}/frey-{{{options__app}}}.pub`,
+      email: `{{{options.user}}}@{{{options.app}}}.freyproject.io`,
+      keypair_name: `{{{options.app}}}`,
+      keyprv_file: `{{{options.sshkeysDir}}}/frey-{{{options.app}}}.pem`,
+      keypub_file: `{{{options.sshkeysDir}}}/frey-{{{options.app}}}.pub`,
       user: 'ubuntu'
     }
 
@@ -27,19 +27,19 @@ class Runtime extends Command {
     this.runtime.deps.push({
       type: 'Dir',
       name: 'toolsDir',
-      dir: `{{{options__toolsDir}}}`
+      dir: `{{{options.toolsDir}}}`
     })
 
     this.runtime.deps.push({
       type: 'Dir',
       name: 'recipeDir',
-      dir: `{{{options__recipeDir}}}`
+      dir: `{{{options.recipeDir}}}`
     })
 
     this.runtime.deps.push({
       type: 'Dir',
       name: 'sshkeysDir',
-      dir: `{{{options__sshkeysDir}}}`
+      dir: `{{{options.sshkeysDir}}}`
     })
 
     this.runtime.deps.push({
@@ -78,27 +78,27 @@ class Runtime extends Command {
       type: 'App',
       name: 'terraform',
       version: '0.6.11',
-      range: `{{{self__version}}}`,
-      dir: `{{{options__toolsDir}}}/terraform/{{{self__version}}}`,
-      exe: `{{{self__dir}}}/terraform`,
+      range: `{{{self.version}}}`,
+      dir: `{{{options.toolsDir}}}/terraform/{{{self.version}}}`,
+      exe: `{{{self.dir}}}/terraform`,
       zip:
         `terraform` + `_` +
-        `{{{self__version}}}` + `_` +
-        '{{{os__platform}}}' + `_` +
-        `{{{os__arch}}}.zip`,
-      cmdVersion: '{{{self__exe}}} --version',
+        `{{{self.version}}}` + `_` +
+        '{{{os.platform}}}' + `_` +
+        `{{{os.arch}}}.zip`,
+      cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
         const version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         return version
       },
       cmdInstall:
-        `mkdir -p {{{self__dir}}}` + ' && ' +
-        `cd {{{self__dir}}}` + ' && ' +
+        `mkdir -p {{{self.dir}}}` + ' && ' +
+        `cd {{{self.dir}}}` + ' && ' +
         `curl -sSL '` +
-        `https://releases.hashicorp.com/terraform/{{{self__version}}}/` +
-        `{{{self__zip}}}'` +
-        `> '{{{self__zip}}}'` + ` && ` +
-        `unzip -o '{{{self__zip}}}'`
+        `https://releases.hashicorp.com/terraform/{{{self.version}}}/` +
+        `{{{self.zip}}}'` +
+        `> '{{{self.zip}}}'` + ` && ` +
+        `unzip -o '{{{self.zip}}}'`
     })
 
     this.runtime.deps.push({
@@ -106,28 +106,28 @@ class Runtime extends Command {
       name: 'terraformInventory',
       range: '0.6.0',
       version: '0.6',
-      dir: '{{{options__toolsDir}}}/terraform-inventory/{{{self__version}}}',
-      exe: `{{{self__dir}}}/terraform-inventory`,
+      dir: '{{{options.toolsDir}}}/terraform-inventory/{{{self.version}}}',
+      exe: `{{{self.dir}}}/terraform-inventory`,
       zip:
         `terraform-inventory` + `_` +
-        `{{{self__version}}}` + `_` +
-        '{{{os__platform}}}' + `_` +
-        `{{{os__arch}}}.zip`,
-      cmdVersion: '{{{self__exe}}} --version',
+        `{{{self.version}}}` + `_` +
+        '{{{os.platform}}}' + `_` +
+        `{{{os.arch}}}.zip`,
+      cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
         let version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         version = version.replace(/^(\d+\.\d+)/, '$1.0')
         return version
       },
       cmdInstall:
-        `mkdir -p {{{self__dir}}}` + ' && ' +
-        `cd {{{self__dir}}}` + ' && ' +
+        `mkdir -p {{{self.dir}}}` + ' && ' +
+        `cd {{{self.dir}}}` + ' && ' +
         `curl -sSL '` +
         `https://github.com/adammck/terraform-inventory/releases/download/` +
-        `v{{{self__version}}}/` +
-        `{{{self__zip}}}'` +
-        `> '{{{self__zip}}}'` + ` && ` +
-        `unzip -o '{{{self__zip}}}'`
+        `v{{{self.version}}}/` +
+        `{{{self.zip}}}'` +
+        `> '{{{self.zip}}}'` + ` && ` +
+        `unzip -o '{{{self.zip}}}'`
     })
 
     this.runtime.deps.push({
@@ -135,8 +135,8 @@ class Runtime extends Command {
       name: 'pip',
       exe: 'pip',
       version: '7.1.2',
-      range: `>= {{{self__version}}}`,
-      cmdVersion: '{{{self__exe}}} --version',
+      range: `>= {{{self.version}}}`,
+      cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
         const version = `${stdout}`.trim().split('\n')[0].split(/\s+/)[1].replace('v', '')
         return version
@@ -149,11 +149,11 @@ class Runtime extends Command {
       name: 'ansible',
       range: `>= 2.0.0`,
       version: '2.0.0.2',
-      dir: '{{{options__toolsDir}}}/ansible/{{{self__version}}}',
-      exe: `{{{self__dir}}}/pip/bin/ansible`,
-      exePlaybook: `{{{self__dir}}}/pip/bin/ansible-playbook`,
-      cmdPlaybook: `env PYTHONPATH={{{self__dir}}}/pip/lib/python2.7/site-packages {{{self__exePlaybook}}} `,
-      cmdVersion: 'env PYTHONPATH={{{self__dir}}}/pip/lib/python2.7/site-packages {{{self__exe}}} --version',
+      dir: '{{{options.toolsDir}}}/ansible/{{{self.version}}}',
+      exe: `{{{self.dir}}}/pip/bin/ansible`,
+      exePlaybook: `{{{self.dir}}}/pip/bin/ansible-playbook`,
+      cmdPlaybook: `env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exePlaybook}}} `,
+      cmdVersion: 'env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exe}}} --version',
       versionTransformer (stdout) {
         let version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         let parts = version.split('.').slice(0, 3)
@@ -161,15 +161,15 @@ class Runtime extends Command {
         return version
       },
       cmdInstall:
-        `mkdir -p {{{self__dir}}}` + ` && ` +
+        `mkdir -p {{{self.dir}}}` + ` && ` +
         `pip install` + ` ` +
         `--install-option='--prefix=pip'` + ` ` +
         `--ignore-installed` + ` ` +
         `--force-reinstall` + ` ` +
-        `--root '{{{self__dir}}}'` + ` ` +
+        `--root '{{{self.dir}}}'` + ` ` +
         `--upgrade` + ` ` +
         `--disable-pip-version-check` + ` ` +
-        `ansible=={{{self__version}}}`
+        `ansible=={{{self.version}}}`
     })
 
     // @todo, we require setting `self` on each of the deps
