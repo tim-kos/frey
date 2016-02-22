@@ -1,6 +1,7 @@
 --> Frey version '0.3.1'
 --> Will run: [ 'runtime', 'compile', 'prepare', 'validate' ]
 --> {hostname} - runtime
+--> {hostname} - compile
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-gitless/frey-frey-gitless.pem'
 Creating public key '{tmpdir}/frey-gitless/frey-frey-gitless.pub'
@@ -8,7 +9,6 @@ Found 'terraform' with version '0.6.11'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'ansible' with version '2.0.0'
---> {hostname} - compile
 --> {hostname} - validate
 
 --> Exiting with error: Frey requires recipe (and state) to be under Git, and residu to be ignored.

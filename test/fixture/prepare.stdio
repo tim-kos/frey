@@ -1,7 +1,8 @@
 FREY:STDIO_SKIP_COMPARE
 --> Frey version '0.3.1'
---> Will run: [ 'runtime', 'prepare' ]
+--> Will run: [ 'runtime', 'compile', 'prepare' ]
 --> {hostname} - runtime
+--> {hostname} - compile
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-prepare.pem'
 Creating public key '{tmpdir}/frey-prepare.pub'

@@ -3,6 +3,7 @@ FREY:STDIO_REPLACE_DURATIONS
 --> Frey version '0.3.1'
 --> Will run: [ 'runtime', 'compile', 'prepare', 'install' ]
 --> {hostname} - runtime
+--> {hostname} - compile
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-install.pem'
 Creating public key '{tmpdir}/frey-install.pub'
@@ -10,7 +11,6 @@ Found 'terraform' with version '0.6.11'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'ansible' with version '2.0.0'
---> {hostname} - compile
 --> {hostname} - install
 Using {root}/test/scenario/install/Frey-residu-ansible.cfg as config file
 

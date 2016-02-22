@@ -8,12 +8,12 @@ FREY:STDIO_REPLACE_REMOTE_EXEC
 --> Frey version '0.3.1'
 --> Will run: [ 'runtime', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
 --> {hostname} - runtime
+--> {hostname} - compile
 --> {hostname} - prepare
 Found 'terraform' with version '0.6.11'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'ansible' with version '2.0.0'
---> {hostname} - compile
 --> {hostname} - refresh
 --> {hostname} - validate
 --> {hostname} - plan
