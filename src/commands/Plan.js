@@ -21,14 +21,14 @@ class Plan extends Command {
     }
 
     terraformArgs.push('-refresh=false')
-    terraformArgs.push(`-out=${this.runtime.paths.planFile}`)
-    terraformArgs.push(`-state=${this.runtime.paths.stateFile}`)
+    terraformArgs.push(`-out=${this.runtime.compile.global.paths.planFile}`)
+    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }
 
   main (cargo, cb) {
-    const appProps = _.find(this.runtime.deps, {name: 'terraform'})
+    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
     const terraformExe = appProps.exe
 
     let cmd = [
@@ -42,7 +42,7 @@ class Plan extends Command {
         return cb(err)
       }
 
-      this._out(`--> Saved plan as '${this.runtime.paths.planFile}'\n`)
+      this._out(`--> Saved plan as '${this.runtime.compile.global.paths.planFile}'\n`)
 
       if (stdout.match(/No changes/)) {
         return cb(null)

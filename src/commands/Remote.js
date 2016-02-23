@@ -21,13 +21,13 @@ class Remote extends Command {
       terraformArgs.push('-no-color')
     }
 
-    terraformArgs.push(`-state=${this.runtime.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }
 
   _gatherHost (cargo, cb) {
-    const appProps = _.find(this.runtime.deps, {name: 'terraform'})
+    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
     const terraformExe = appProps.exe
     let cmd = [
       terraformExe,
@@ -51,8 +51,8 @@ class Remote extends Command {
 
     debug({cargo: cargo})
     args.push(`${this.bootCargo._gatherHost}`)
-    args.push('-i', `${this.runtime.ssh.keyprv_file}`)
-    args.push('-l', `${this.runtime.ssh.user}`)
+    args.push('-i', `${this.runtime.compile.global.ssh.keyprv_file}`)
+    args.push('-l', `${this.runtime.compile.global.ssh.user}`)
     args.push('-o', 'UserKnownHostsFile=/dev/null')
     args.push('-o', 'CheckHostIP=no')
     args.push('-o', 'StrictHostKeyChecking=no')

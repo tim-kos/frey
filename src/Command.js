@@ -71,7 +71,21 @@ class Command extends Base {
   _buildChildEnv (extra = {}) {
     let childEnv = {}
 
-    childEnv = _.extend(childEnv, process.env, this._toEnvFormat(this.runtime, 'runtime'), this._toEnvFormat(this.options, 'options'))
+    childEnv = _.extend(
+      childEnv,
+      process.env,
+      this._toEnvFormat(this.runtime, 'runtime'),
+      this._toEnvFormat(this.options, 'options')
+    )
+
+    childEnv['TF_VAR_FREY_OPENSTACK_TENANT_NAME'] = process.env.FREY_OPENSTACK_TENANT_NAME
+    childEnv['TF_VAR_FREY_OPENSTACK_EXTERNAL_GATEWAY'] = process.env.FREY_OPENSTACK_EXTERNAL_GATEWAY
+    childEnv['TF_VAR_FREY_OPENSTACK_PROJECT_NAME'] = process.env.FREY_OPENSTACK_PROJECT_NAME
+    childEnv['TF_VAR_FREY_OPENSTACK_PASSWORD'] = process.env.FREY_OPENSTACK_PASSWORD
+    childEnv['TF_VAR_FREY_OPENSTACK_AUTH_URL'] = process.env.FREY_OPENSTACK_AUTH_URL
+    childEnv['TF_VAR_FREY__RUNTIME__SSH__USER'] = this.runtime.compile.global.ssh.user
+    childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE'] = this.runtime.compile.global.ssh.keypub_file
+    childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE'] = this.runtime.compile.global.ssh.keyprv_file
 
     for (const key in childEnv) {
       const val = childEnv[key]

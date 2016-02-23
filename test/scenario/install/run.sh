@@ -28,9 +28,9 @@ echo "ACCPTST:STDIO_REPLACE_DURATIONS"
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true
 
-# node "${__root}/lib/cli.js" install \
-babel-node "${__root}/src/cli.js" install \
-  --sshkeys-dir "${__sysTmpDir}" \
+# babel-node "${__root}/src/cli.js" install \
+node "${__root}/lib/cli.js" install \
+  --config "global.ssh.keysdir=${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \

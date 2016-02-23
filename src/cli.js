@@ -26,17 +26,10 @@ yargs
       type: 'string',
       describe: "Name of application for which we're creating infrastructure"
     },
-    sshkeysDir: {
-      default: '{{{home}}}/.ssh',
+    config: {
       nargs: 1,
       type: 'string',
-      describe: 'Directory that contains SSH keys. This needs to be ignored by Git'
-    },
-    toolsDir: {
-      default: '{{{home}}}/.frey/tools',
-      nargs: 1,
-      type: 'string',
-      describe: 'Directory that contains the tools. This needs to be ignored by Git'
+      describe: 'Configuration keys to overwrite such as: global.ssh.keysdir={{{os.home}}}/.ssh'
     },
     'force-yes': {
       default: false,

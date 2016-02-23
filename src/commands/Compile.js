@@ -1,5 +1,7 @@
 'use strict'
 import Command from '../Command'
+import utils from '../Utils'
+import path from 'path'
 import depurar from 'depurar'; const debug = depurar('frey')
 import glob from 'glob'
 import async from 'async'
@@ -8,10 +10,18 @@ import _ from 'lodash'
 import INI from 'ini'
 import YAML from 'js-yaml'
 import TOML from 'toml'
+import {unflatten} from 'flat'
 
 class Compile extends Command {
   constructor (name, options, runtime) {
     super(name, options, runtime)
+    this.paths = {
+      ansibleCfg: options.recipeDir + '/Frey-residu-ansible.cfg',
+      planFile: options.recipeDir + '/Frey-residu-terraform.plan',
+      infraFile: options.recipeDir + '/Frey-residu-infra.tf.json',
+      playbookFile: options.recipeDir + '/Frey-residu-install.yml',
+      stateFile: options.recipeDir + '/Frey-state-terraform.tfstate'
+    }
     this.boot = [
       '_findTomlFiles',
       '_readTomlFiles',
@@ -49,8 +59,6 @@ class Compile extends Command {
   _mergeToOneConfig (tomlContents, cb) {
     let config = {}
 
-    debug(tomlContents)
-
     tomlContents.forEach(function (tom) {
       config = _.extend(config, tom)
     })
@@ -67,7 +75,7 @@ class Compile extends Command {
 
         if (!val) {
           debug('No infra instructions found in merged toml')
-          fs.unlink(this.runtime.paths.infraFile, err => {
+          fs.unlink(this.paths.infraFile, err => {
             if (err) {
                // That's not fatal
             }
@@ -78,20 +86,20 @@ class Compile extends Command {
 
         const encoded = JSON.stringify(val, null, '  ')
         if (!encoded) {
-          debug(val)
+          debug({val: val})
           return callback(new Error('Unable to convert recipe to Terraform infra JSON'))
         }
 
-        filesWritten.push(this.runtime.paths.infraFile)
-        debug('Writing %s', this.runtime.paths.infraFile)
-        return fs.writeFile(this.runtime.paths.infraFile, encoded, callback)
+        filesWritten.push(this.paths.infraFile)
+        debug('Writing %s', this.paths.infraFile)
+        return fs.writeFile(this.paths.infraFile, encoded, callback)
       },
       (callback) => {
         const val = _.get(config, 'install.config')
 
         if (!val) {
           debug('No config instructions found in merged toml')
-          fs.unlink(this.runtime.paths.ansibleCfg, err => {
+          fs.unlink(this.paths.ansibleCfg, err => {
             if (err) {
               // That's not fatal
             }
@@ -102,7 +110,7 @@ class Compile extends Command {
 
         let encoded = INI.encode(val)
         if (!encoded) {
-          debug(val)
+          debug({val: val})
           return callback(new Error('Unable to convert recipe to ansibleCfg INI'))
         }
 
@@ -112,16 +120,16 @@ class Compile extends Command {
         // this point, the replace has to be limited in scope:
         encoded = encoded.replace(/\"/g, '')
 
-        filesWritten.push(this.runtime.paths.ansibleCfg)
-        debug('Writing %s', this.runtime.paths.ansibleCfg)
-        return fs.writeFile(this.runtime.paths.ansibleCfg, encoded, callback)
+        filesWritten.push(this.paths.ansibleCfg)
+        debug('Writing %s', this.paths.ansibleCfg)
+        return fs.writeFile(this.paths.ansibleCfg, encoded, callback)
       },
       (callback) => {
         const val = _.get(config, 'install.playbooks')
 
         if (!val) {
           debug('No install playbooks found in merged toml')
-          fs.unlink(this.runtime.paths.playbookFile, err => {
+          fs.unlink(this.paths.playbookFile, err => {
             if (err) {
                // That's not fatal
             }
@@ -132,13 +140,13 @@ class Compile extends Command {
 
         const encoded = YAML.safeDump(val)
         if (!encoded) {
-          debug(val)
+          debug({val: val})
           return callback(new Error('Unable to convert recipe to Ansible playbook YAML'))
         }
 
-        filesWritten.push(this.runtime.paths.playbookFile)
-        debug('Writing %s', this.runtime.paths.playbookFile)
-        return fs.writeFile(this.runtime.paths.playbookFile, encoded, callback)
+        filesWritten.push(this.paths.playbookFile)
+        debug('Writing %s', this.paths.playbookFile)
+        return fs.writeFile(this.paths.playbookFile, encoded, callback)
       }
     ], err => {
       if (err) {
@@ -149,7 +157,74 @@ class Compile extends Command {
     })
   }
 
-  main (config, cb) {
+  main (projectConfig, cb) {
+    // Defaults
+    const defaults = {
+      global: {
+        paths: this.paths,
+        toolsdir: '{{{os.home}}}/.frey/tools',
+        recipedir: '{{{os.cwd}}}',
+        ssh: {
+          keysdir: '{{{os.home}}}/.ssh',
+          email: `{{{options.user}}}@{{{options.app}}}.freyproject.io`,
+          keypair_name: `{{{options.app}}}`,
+          keyprv_file: `{{{self.keysdir}}}/frey-{{{options.app}}}.pem`,
+          keypub_file: `{{{self.keysdir}}}/frey-{{{options.app}}}.pub`,
+          user: 'ubuntu'
+        }
+      }
+    }
+
+    // Take --config cli options
+    let flatCliConfig = {}
+    let cliConfig = {}
+    if (this.options.config) {
+      if (!_.isArray(this.options.config)) {
+        this.options.config = [ this.options.config ]
+      }
+      this.options.config.forEach(item => {
+        let parts = item.split('=')
+        let key = parts.shift()
+        let value = parts.join('=')
+        flatCliConfig[key] = value
+      })
+
+      cliConfig = unflatten(flatCliConfig, {delimiter: '.'})
+    }
+
+    // @todo Add environment config?
+    // let envConfig = {}
+    // envConfig = unflatten(process.env, {delimiter: '_'})
+    // envConfig[frey]
+    // process.env
+
+    // Left is more important
+    let config = _.defaultsDeep({}, cliConfig, projectConfig, defaults)
+
+    config = utils.render(config, {
+      os: {
+        tmp: this.options.tmp,
+        home: this.options.home,
+        cwd: this.options.cwd,
+        user: this.options.user,
+        hostname: this.options.hostname,
+        arch: this.options.arch,
+        platform: this.options.platform
+      },
+      options: this.options
+    })
+
+    // Resolve to absolute paths
+    config.global.recipedir = path.resolve(config.global.recipedir)
+    config.global.toolsdir = path.resolve(config.global.recipedir, config.global.toolsdir)
+    config.global.ssh.keysdir = path.resolve(config.global.ssh.keysdir)
+
+    debug({
+      config: config,
+      cliConfig: cliConfig,
+      flatCliConfig: flatCliConfig
+    })
+
     return cb(null, config)
   }
 }

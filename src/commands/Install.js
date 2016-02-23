@@ -14,7 +14,7 @@ class Install extends Command {
   }
 
   _gatherArgs (cargo, cb) {
-    const appProps = _.find(this.runtime.deps, {name: 'terraformInventory'})
+    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraformInventory'})
     const terraformInvExe = appProps.exe
     const args = []
 
@@ -28,10 +28,10 @@ class Install extends Command {
 
     // args.push "-vvvv"
 
-    args.push(`--user=${this.runtime.ssh.user}`)
-    args.push(`--private-key=${this.runtime.ssh.keyprv_file}`)
+    args.push(`--user=${this.runtime.compile.global.ssh.user}`)
+    args.push(`--private-key=${this.runtime.compile.global.ssh.keyprv_file}`)
 
-    const connection = this.cfg('frey.connection')
+    const connection = this.cfg('global.connection')
     if (connection !== undefined) {
       args.push(`--connection=${connection}`)
       args.push(`--extra-vars="variable_host=${connection}"`)
@@ -41,7 +41,7 @@ class Install extends Command {
     }
 
     args.push('--sudo')
-    args.push(`${this.runtime.paths.playbookFile}`)
+    args.push(`${this.runtime.compile.global.paths.playbookFile}`)
 
     return cb(null, args)
   }
@@ -53,14 +53,14 @@ class Install extends Command {
       env.ANSIBLE_NOCOLOR = 'true'
     }
 
-    env.ANSIBLE_CONFIG = this.runtime.paths.ansibleCfg
-    env.TF_STATE = this.runtime.paths.stateFile
+    env.ANSIBLE_CONFIG = this.runtime.compile.global.paths.ansibleCfg
+    env.TF_STATE = this.runtime.compile.global.paths.stateFile
 
     return cb(null, env)
   }
 
   main (cargo, cb) {
-    const appProps = _.find(this.runtime.deps, {name: 'ansible'})
+    const appProps = _.find(this.runtime.prepare.deps, {name: 'ansible'})
     const ansiblePlaybookExe = appProps.cmdPlaybook
     let cmd = [
       ansiblePlaybookExe

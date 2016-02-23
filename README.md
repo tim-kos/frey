@@ -188,17 +188,21 @@ Unreleased and unplanned todos
 
 ### v0.3.2 (Unreleased)
 
-- [ ] All config should come from Freyfile (think ssh). env only used for secrets. argv only for cwd
+- [ ] Make `destroy` a feature of Frey so we don't have to rely on ENV vars in openstack `run.sh` destroy
+- [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
+- [ ] Strip Frey, move 'options' to Init. Remove options from constructors
+- [ ] DRY up render (Prepare & Compile could share one implementation)
+- [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Abstract both Terraform and Ansible as App classes
 - [ ] - role: ":frey:/consul/v1.0.0"
-- [ ] Make arg & env functions of all other commands, mimic Install's
-- [ ] Deprecate a generic `Command._buildChildEnv` in favor of more specific Ansible/Terraform env building
-- [ ] Fix that `this.runtime.Runtime` is thing now. Remove `Runtime` alltogehter?
-- [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Implement deploy
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [-] Deprecate a generic `Command._buildChildEnv` in favor of more specific Ansible/Terraform env building
+- [-] Make arg & env functions of all other commands, mimic Install's
+- [x] All config should come from Freyfile (think ssh). env only used for secrets. argv only for cwd
+- [x] Fix that `this.runtime.Runtime` is thing now. Remove `Runtime` alltogehter?
 - [x] Let compile go before prepare so we can use (ssh) config in prepare
 
 ### v0.3.1 (2016-02-19)

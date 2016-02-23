@@ -33,7 +33,7 @@ trap destroy EXIT
 
 #node "${__root}/lib/cli.js" \
 babel-node "${__root}/src/cli.js" \
-  --sshkeys-dir "${__sysTmpDir}" \
+  --config "global.ssh.keysdir=${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \

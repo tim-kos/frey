@@ -21,13 +21,13 @@ class Refresh extends Command {
     debug('Loaded config:')
     debug(this.runtime.compile)
 
-    terraformArgs.push(`-state=${this.runtime.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }
 
   main (cargo, cb) {
-    const appProps = _.find(this.runtime.deps, {name: 'terraform'})
+    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
     const terraformExe = appProps.exe
     let cmd = [
       terraformExe,

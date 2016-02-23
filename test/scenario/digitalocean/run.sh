@@ -42,7 +42,7 @@ trap destroy EXIT
 
 # babel-node "${__root}/src/cli.js" install \
 node "${__root}/lib/cli.js" install \
-  --sshkeys-dir "." \
+  --config "global.ssh.keysdir=." \
   --no-color \
   --verbose \
   --force-yes \

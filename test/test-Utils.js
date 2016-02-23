@@ -10,14 +10,14 @@ describe('Utils', () => {
       expect(result).to.equal('Hi my name is kevin.')
       done()
     })
-    it('should handle period delimiter for nesting by default', done => {
-      const result = utils.render('Hi my name is {{{options.name}}}.', {options: {name: 'kevin'}})
+    it('should handle self in nesting', done => {
+      const result = utils.render('Hi my name is {{{options.name}}}.', {options: {name: 'kevin', surname: 'kevin'}})
       expect(result).to.equal('Hi my name is kevin.')
       done()
     })
     it('should crash hard by default', done => {
       expect(utils.render.bind(utils, 'Hi {{{crash}}}', {name: 'kevin'}))
-        .to.throw('Unable to render vars in \'Hi {{{crash}}}\'.')
+        .to.throw('Unable to render vars in \'"Hi {{{crash}}}"\'.')
       done()
     })
     it('should allow to prevent crashes', done => {
@@ -37,7 +37,7 @@ describe('Utils', () => {
         os: '{{{options.runtime.os}}}',
         version: '0.1.1-{{{self.arch}}}'
       }
-      const result = utils.render(properties, {self: properties, options: {runtime: {os: 'osx'}}})
+      const result = utils.render(properties, {options: {runtime: {os: 'osx'}}})
       expect(result).to.deep.equal({
         filename: 'terraform-0.1.1-amd64',
         arch: 'amd64',

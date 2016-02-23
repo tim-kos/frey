@@ -1,4 +1,4 @@
-[frey]
+[global]
   connection = "local"
 
 [install.config.defaults]

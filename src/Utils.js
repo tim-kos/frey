@@ -5,57 +5,57 @@ import flatten from 'flat'
 
 class Utils {
   render (subject, data, opts = {}) {
+    if (_.isFunction(subject)) {
+      return subject
+    }
     if (opts.failhard === undefined) { opts.failhard = true }
     if (opts.delimiter === undefined) { opts.delimiter = '.' }
 
-    const flattened = flatten(data, {delimiter: opts.delimiter})
+    const unflat = _.cloneDeep(data)
+    if (_.isArray(subject) || _.isObject(subject)) {
+      unflat.self = subject
+    }
+    const flattened = flatten(unflat, { delimiter: opts.delimiter })
 
+    let newSubject
     if (_.isArray(subject)) {
+      newSubject = []
       subject.forEach((val, key) => {
-        subject[key] = this.render(val, flattened, opts)
+        newSubject[key] = this.render(val, unflat, _.extend({}, opts, { failhard: false }))
       })
-      return subject
+    } else if (_.isObject(subject)) {
+      newSubject = {}
+      _.forOwn(subject, (val, key) => {
+        newSubject[key] = this.render(val, unflat, _.extend({}, opts, { failhard: false }))
+      })
+    } else if (_.isString(subject)) {
+      newSubject = subject.replace(/\{\{\{([^\}]+)\}\}\}/g, (match, token) => {
+        if (match && flattened[token]) {
+          return flattened[token]
+        }
+
+        return '{{{' + token + '}}}'
+      })
+    } else {
+      newSubject = _.cloneDeep(subject)
     }
 
-    if (_.isObject(subject)) {
+    if (!_.isEqual(subject, newSubject)) {
       // It's possible we're doing recursive resolving here, for instance when
       // render(options, options) is used. So in this case, we keep rendering, until
       // the string is no longer changing
-      let change = true
-      while (change) {
-        change = false
-        _.forOwn(subject, (val, key) => {
-          let tmp = this.render(val, flattened, { failhard: false })
-          if (tmp !== subject[key]) {
-            subject[key] = tmp
-            change = true
-          }
-        })
-      }
-      return subject
+      newSubject = this.render(newSubject, unflat, _.extend({}, opts, { failhard: false }))
     }
 
-    if (!_.isString(subject)) {
-      return subject
-    }
-
-    // Use custom template delimiters.
-    subject = subject.replace(/\{\{\{([^\}]+)\}\}\}/g, (match, token) => {
-      if (match && flattened[token]) {
-        return flattened[token]
-      }
-
-      return '{{{' + token + '}}}'
-    })
-
-    if (`${subject}`.indexOf('{{{') > -1) {
-      if (opts.failhard === true) {
+    if (opts.failhard === true) {
+      const js = JSON.stringify(newSubject)
+      if (`${js}`.indexOf('{{{') > -1) {
         debug(flattened)
-        throw new Error(`Unable to render vars in '${subject}'. `)
+        throw new Error(`Unable to render vars in '${js}'. `)
       }
     }
 
-    return subject
+    return newSubject
   }
 }
 

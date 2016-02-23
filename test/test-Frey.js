@@ -3,25 +3,6 @@ import { expect } from 'chai'
 
 describe('Frey', () => {
   describe('_normalize', () => {
-    it('should transform the toolsDir variable', done => {
-      const frey = new Frey()
-
-      const options = {
-        recipeDir: '/Users/kvz/code/uppy-server',
-        home: '/Users/kvz',
-        toolsDir: '{{{home}}}/.frey/tools',
-        sshkeysDir: '{{{home}}}/.ssh',
-        rootDir: '/opt/frey'
-      }
-
-      frey._normalize(options, (err, options) => {
-        expect(err).to.equal(null)
-        expect(options.toolsDir).to.equal('/Users/kvz/.frey/tools')
-        expect(options.rootDir).to.match(/^\/opt\/frey$/)
-        return done()
-      })
-    })
-
     it('should transform the basename function', done => {
       const frey = new Frey()
 
@@ -29,8 +10,8 @@ describe('Frey', () => {
         recipeDir: '/Users/kvz/code/uppy-server',
         home: '/Users/kvz',
         app: './tusd|basename',
-        toolsDir: '{{{home}}}/.frey/tools',
-        sshkeysDir: '{{{home}}}/.ssh',
+        toolsDir: '{{{os.home}}}/.frey/tools',
+        sshkeysDir: '{{{os.home}}}/.ssh',
         rootDir: '/opt/frey'
       }
 
@@ -67,7 +48,7 @@ describe('Frey', () => {
       frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
-          'runtime',
+          'init',
           'compile'
         ])
         done()
@@ -86,7 +67,7 @@ describe('Frey', () => {
         frey._composeChain(options, (err, options) => {
           expect(err).to.equal(null)
           expect(options.filteredChain).to.deep.equal([
-            'runtime',
+            'init',
             'compile',
             'prepare',
             'docbuild'
@@ -106,7 +87,7 @@ describe('Frey', () => {
       frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
-          'runtime', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
+          'init', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
           'install', 'deploy', 'restart', 'show'
         ])
         done()
@@ -124,7 +105,7 @@ describe('Frey', () => {
       frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
-          'runtime',
+          'init',
           'compile',
           'prepare',
           'deploy'
@@ -144,7 +125,7 @@ describe('Frey', () => {
       frey._composeChain(options, (err, options) => {
         expect(err).to.equal(null)
         expect(options.filteredChain).to.deep.equal([
-          'runtime',
+          'init',
           'compile',
           'prepare',
           'refresh',

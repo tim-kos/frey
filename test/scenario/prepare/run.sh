@@ -29,7 +29,7 @@ rm -f "${__sysTmpDir}/frey-prepare"* || true
 # node "${__root}/lib/cli.js" prepare \
 babel-node "${__root}/src/cli.js" prepare \
   --force-yes \
-  --sshkeys-dir "${__sysTmpDir}" \
+  --config "global.ssh.keysdir=${__sysTmpDir}" \
   --verbose \
   --recipe-dir "." \
   --bail

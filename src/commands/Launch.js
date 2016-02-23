@@ -19,13 +19,13 @@ class Launch extends Command {
     }
 
     terraformArgs.push(`-parallelism=${this.options.terraformParallelism}`)
-    terraformArgs.push(`-state=${this.runtime.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }
 
   main (cargo, cb) {
-    const appProps = _.find(this.runtime.deps, {name: 'terraform'})
+    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
     const terraformExe = appProps.exe
     let cmd = [
       terraformExe,
@@ -38,7 +38,7 @@ class Launch extends Command {
         return cb(err)
       }
 
-      this._out(`--> Saved state to '${this.runtime.paths.stateFile}'\n`)
+      this._out(`--> Saved state to '${this.runtime.compile.global.paths.stateFile}'\n`)
 
       return cb(null)
     })
