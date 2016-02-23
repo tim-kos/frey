@@ -10,8 +10,6 @@ describe('Frey', () => {
         recipeDir: '/Users/kvz/code/uppy-server',
         home: '/Users/kvz',
         app: './tusd|basename',
-        toolsDir: '{{{os.home}}}/.frey/tools',
-        sshkeysDir: '{{{os.home}}}/.ssh',
         rootDir: '/opt/frey'
       }
 
