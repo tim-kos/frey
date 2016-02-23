@@ -190,7 +190,8 @@ Unreleased and unplanned todos
 
 - [ ] Make `destroy` a feature of Frey so we don't have to rely on ENV vars in openstack `run.sh` destroy
 - [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
-- [ ] Strip Frey, move 'options' to Init. Remove options from constructors
+- [ ] Strip Frey, move 'options.os' to Init (cliargs stay?). Remove options from constructors
+- [ ] Move `terraform-parallelism` to config
 - [ ] DRY up render (Prepare & Compile could share one implementation)
 - [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Abstract both Terraform and Ansible as App classes
