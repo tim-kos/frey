@@ -13,8 +13,8 @@ __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 
-echo "FREY:STDIO_REPLACE_LONGTIMES"
-echo "FREY:STDIO_REPLACE_DURATIONS"
+echo "ACCPTST:STDIO_REPLACE_LONGTIMES"
+echo "ACCPTST:STDIO_REPLACE_DURATIONS"
 
 # PYTHONPATH="${HOME}/.frey/tools/ansible/2.0.0.2/pip/lib/python2.7/site-packages" \
 #   "${HOME}/.frey/tools/ansible/2.0.0.2/pip/bin/ansible-playbook" \

@@ -22,7 +22,7 @@ __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 # Yet, that's the only way to have equal install output.
 # That's why we only care about the exit code in this test, and
 # specify:
-echo "FREY:STDIO_SKIP_COMPARE"
+echo "ACCPTST:STDIO_SKIP_COMPARE"
 
 rm -f "${__sysTmpDir}/frey-prepare"* || true
 
