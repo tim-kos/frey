@@ -12,5 +12,6 @@ module.exports = [
   { chained: true, name: 'show', description: 'Displays active platform' },
   { chained: false, name: 'docbuild', description: 'Build docs' },
   { chained: false, name: 'restore', description: 'Restore latest state backup' },
+  { chained: false, name: 'destroy', description: 'Destroy all that is in state' },
   { chained: false, name: 'remote', description: 'Execute a remote command - or opens console' }
 ]

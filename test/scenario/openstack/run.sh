@@ -25,19 +25,12 @@ rm -f "${__sysTmpDir}/frey-openstack"* || true
 
 function destroy() {
   echo "(maybe) Destroying.."
-  TF_VAR_FREY_OPENSTACK_TENANT_NAME="${FREY_OPENSTACK_TENANT_NAME}" \
-  TF_VAR_FREY_OPENSTACK_EXTERNAL_GATEWAY="${FREY_OPENSTACK_EXTERNAL_GATEWAY}" \
-  TF_VAR_FREY_OPENSTACK_PROJECT_NAME="${FREY_OPENSTACK_PROJECT_NAME}" \
-  TF_VAR_FREY_OPENSTACK_PASSWORD="${FREY_OPENSTACK_PASSWORD}" \
-  TF_VAR_FREY_OPENSTACK_AUTH_URL="${FREY_OPENSTACK_AUTH_URL}" \
-  TF_VAR_FREY__RUNTIME__SSH__USER="ubuntu" \
-  TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="${__dir}/frey-openstack.pub" \
-  TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE="${__dir}/frey-openstack.pem" \
-  ${HOME}/.frey/tools/terraform/0.6.11/terraform destroy \
-    -no-color \
-    -state=Frey-state-terraform.tfstate \
-    -force \
-  . > /dev/null 2>&1 || true
+
+  # babel-node "${__root}/src/cli.js" destroy \
+  node "${__root}/lib/cli.js" destroy \
+    --force-yes \
+    --terraform-parallelism=1 \
+  > /dev/null 2>&1 || true
 }
 
 if true; then destroy; fi

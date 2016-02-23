@@ -188,7 +188,6 @@ Unreleased and unplanned todos
 
 ### v0.3.2 (Unreleased)
 
-- [ ] Make `destroy` a feature of Frey so we don't have to rely on ENV vars in openstack `run.sh` destroy
 - [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
 - [ ] Strip Frey, move 'options.os' to Init (cliargs stay?). Remove options from constructors
 - [ ] Move `terraform-parallelism` to config
@@ -200,6 +199,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Make `destroy` a feature of Frey so we don't have to rely on ENV vars in openstack `run.sh` destroy
 - [-] Deprecate a generic `Command._buildChildEnv` in favor of more specific Ansible/Terraform env building
 - [-] Make arg & env functions of all other commands, mimic Install's
 - [x] All config should come from Freyfile (think ssh). env only used for secrets. argv only for cwd

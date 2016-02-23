@@ -18,21 +18,21 @@ rm -f "${__sysTmpDir}/frey-dynamodb"* || true
 
 function destroy() {
   echo "(maybe) Destroying.."
-  TF_VAR_FREY_AWS_ACCESS_KEY="${FREY_AWS_ACCESS_KEY}" \
-  TF_VAR_FREY_AWS_SECRET_KEY="${FREY_AWS_SECRET_KEY}" \
-  ${HOME}/.frey/tools/terraform/0.6.11/terraform destroy \
-    -no-color \
-    -target=aws_dynamodb_table.basic-dynamodb-table \
-    -state=Frey-state-terraform.tfstate \
-    -force \
-  . > /dev/null 2>&1 || true
+  # babel-node "${__root}/src/cli.js" destroy \
+  node "${__root}/lib/cli.js" destroy \
+    --force-yes \
+    --terraform-parallelism=1 \
+  > /dev/null 2>&1 || true
+
+  # @todo: Do we really need a target when destroying?
+  # -target=aws_dynamodb_table.basic-dynamodb-table \
 }
 
-destroy
-trap destroy EXIT
+if true; then destroy; fi
+if true; then trap destroy EXIT; fi
 
-#node "${__root}/lib/cli.js" \
-babel-node "${__root}/src/cli.js" \
+# babel-node "${__root}/src/cli.js" \
+node "${__root}/lib/cli.js" \
   --config "global.ssh.keysdir=${__sysTmpDir}" \
   --no-color \
   --verbose \

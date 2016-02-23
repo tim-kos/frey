@@ -27,18 +27,15 @@ exit 1
 
 function destroy() {
   echo "(maybe) Destroying.."
-  TF_VAR_FREY_DO_TOKEN="${FREY_DO_TOKEN}" \
-  TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE="${__dir}/frey-digitalocean.pub" \
-  ${HOME}/.frey/tools/terraform/0.6.11/terraform destroy \
-    -no-color \
-    -state=Frey-state-terraform.tfstate \
-    -force \
-  . #> /dev/null 2>&1 || true
-    # -target=digitalocean_droplet.freytest-web \
+  # babel-node "${__root}/src/cli.js" destroy \
+  node "${__root}/lib/cli.js" destroy \
+    --force-yes \
+    --terraform-parallelism=1 \
+  > /dev/null 2>&1 || true
 }
 
-destroy
-trap destroy EXIT
+if true; then destroy; fi
+if true; then trap destroy EXIT; fi
 
 # babel-node "${__root}/src/cli.js" install \
 node "${__root}/lib/cli.js" install \
