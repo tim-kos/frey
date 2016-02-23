@@ -15,6 +15,7 @@ Commands:
   show        ▽ Displays active platform
   docbuild    Build docs
   restore     Restore latest state backup
+  destroy     Destroy all that is in state
   remote      Execute a remote command - or opens console
 
 Options:
