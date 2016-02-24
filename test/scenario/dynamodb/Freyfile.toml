@@ -1,3 +1,6 @@
+[global.terraform]
+  parallelism = 1
+
 [infra]
   [infra.provider]
     [infra.provider.aws]

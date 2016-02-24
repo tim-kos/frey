@@ -21,7 +21,7 @@ function destroy() {
   # babel-node "${__root}/src/cli.js" destroy \
   node "${__root}/lib/cli.js" destroy \
     --force-yes \
-    --terraform-parallelism=1 \
+    --cfg-var="global.terraform.parallelism=1" \
   > /dev/null 2>&1 || true
 
   # @todo: Do we really need a target when destroying?

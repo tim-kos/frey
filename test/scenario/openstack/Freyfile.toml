@@ -1,3 +1,6 @@
+[global.terraform]
+  parallelism = 1
+
 [infra.variable.FREY_OPENSTACK_TENANT_NAME]
 [infra.variable.FREY_OPENSTACK_PROJECT_NAME]
 [infra.variable.FREY_OPENSTACK_PASSWORD]

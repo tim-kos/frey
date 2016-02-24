@@ -189,7 +189,6 @@ Unreleased and unplanned todos
 ### v0.3.2 (Unreleased)
 
 - [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
-- [ ] Move `terraform-parallelism` to global config
 - [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Abstract both Terraform and Ansible as App classes
 - [ ] - role: ":frey:/consul/v1.0.0"
@@ -197,6 +196,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Move `terraform-parallelism` to global config
 - [x] DRY up render (Prepare & Compile could share one implementation)
 - [x] Strip Frey, move 'options.os' to Init (cliargs stay?). Remove options from constructors
 - [x] Make `destroy` a feature of Frey so we don't have to rely on ENV vars in openstack `run.sh` destroy

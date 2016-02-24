@@ -143,6 +143,9 @@ class Compile extends Command {
     // Defaults
     const defaults = {
       global: {
+        terraform: {
+          parallelism: '{{{init.os.cores}}}'
+        },
         toolsdir: '{{{init.os.home}}}/.frey/tools',
         ssh: {
           keysdir: '{{{init.os.home}}}/.ssh',
