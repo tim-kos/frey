@@ -18,6 +18,7 @@ Unreleased and unplanned todos
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
 - [ ] Command's exe functions should mostly be in a util class
 - [ ] Enable DO support
+- [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
 
 ### v0.3.2 (Unreleased)
 
