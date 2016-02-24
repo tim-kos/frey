@@ -124,9 +124,9 @@ class Compile extends Command {
   }
 
   _writeTerraformFile (cargo, cb) {
-    const val = _.get(this.bootCargo._renderConfig, 'infra')
+    const cfgBlock = _.get(this.bootCargo._renderConfig, 'infra')
 
-    if (!val) {
+    if (!cfgBlock) {
       debug('No infra instructions found in merged toml')
       fs.unlink(this.runtime.init.paths.infraFile, err => {
         if (err) {
@@ -137,9 +137,9 @@ class Compile extends Command {
       return
     }
 
-    const encoded = JSON.stringify(val, null, '  ')
+    const encoded = JSON.stringify(cfgBlock, null, '  ')
     if (!encoded) {
-      debug({val: val})
+      debug({cfgBlock: cfgBlock})
       return cb(new Error('Unable to convert project to Terraform infra JSON'))
     }
 
@@ -148,9 +148,9 @@ class Compile extends Command {
   }
 
   _writeAnsibleCfg (cargo, cb) {
-    const val = _.get(this.bootCargo._renderConfig, 'install.config')
+    const cfgBlock = _.get(this.bootCargo._renderConfig, 'install.config')
 
-    if (!val) {
+    if (!cfgBlock) {
       debug('No config instructions found in merged toml')
       fs.unlink(this.runtime.init.paths.ansibleCfg, err => {
         if (err) {
@@ -161,9 +161,9 @@ class Compile extends Command {
       return
     }
 
-    let encoded = INI.encode(val)
+    let encoded = INI.encode(cfgBlock)
     if (!encoded) {
-      debug({val: val})
+      debug({cfgBlock: cfgBlock})
       return cb(new Error('Unable to convert project to ansibleCfg INI'))
     }
 
@@ -178,9 +178,9 @@ class Compile extends Command {
   }
 
   _writeAnsiblePlaybook (cargo, cb) {
-    const val = _.get(this.bootCargo._renderConfig, 'install.playbooks')
+    const cfgBlock = _.get(this.bootCargo._renderConfig, 'install.playbooks')
 
-    if (!val) {
+    if (!cfgBlock) {
       debug('No install playbooks found in merged toml')
       fs.unlink(this.runtime.init.paths.playbookFile, err => {
         if (err) {
@@ -191,9 +191,9 @@ class Compile extends Command {
       return
     }
 
-    const encoded = YAML.safeDump(val)
+    const encoded = YAML.safeDump(cfgBlock)
     if (!encoded) {
-      debug({val: val})
+      debug({cfgBlock: cfgBlock})
       return cb(new Error('Unable to convert project to Ansible playbook YAML'))
     }
 
