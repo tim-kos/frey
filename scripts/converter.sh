@@ -47,7 +47,7 @@ echo "" >> "${tomlFile}"
 if [ -n "${ansCfgFile}" ]; then
   echo "Appending '${tomlFile}'"
   cat "${ansCfgFile}" \
-    |sed 's@\[@[install.config.@g' \
+    |sed 's@\[@[install.settings.@g' \
   >> "${tomlFile}"
   echo "" >> "${tomlFile}"
 fi

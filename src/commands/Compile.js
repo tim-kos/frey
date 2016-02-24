@@ -126,7 +126,8 @@ class Compile extends Command {
   }
 
   _writeTerraformFile (cargo, cb) {
-    const cfgBlock = _.get(this.bootCargo._renderConfig, 'infra')
+    const cfgBlock = _.cloneDeep(_.get(this.bootCargo._renderConfig, 'infra'), 'settings')
+    delete cfgBlock.settings
 
     // Automatically add all FREY_* environment variables to Terraform config
     _.forOwn(this.runtime.init.env, (val, key) => {
