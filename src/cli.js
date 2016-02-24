@@ -36,12 +36,6 @@ yargs
       boolean: true,
       describe: 'Answer yes to all questions (dangerous!)'
     },
-    'terraform-parallelism': {
-      default: 10,
-      nargs: 1,
-      type: 'number',
-      describe: 'Limit the number of concurrent operations. Useful for consistent test output'
-    },
     tags: {
       nargs: 1,
       type: 'string',

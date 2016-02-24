@@ -189,7 +189,7 @@ Unreleased and unplanned todos
 
 ### v0.3.2 (Unreleased)
 
-- [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
+- [ ] Make it so that any `FREY_` env var, is added as a terraform `var` and made available in env
 - [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Abstract both Terraform and Ansible as App classes
 - [ ] - role: ":frey:/consul/v1.0.0"
@@ -197,6 +197,9 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [ ] Rename ansibleCfg to settings (terraform parallelism is also a setting)
+- [ ] Remove other config ambiguity, then Rename Compile to Config
+- [x] Add test scenario for compile
 - [x] Move `terraform-parallelism` to global config
 - [x] DRY up render (Prepare & Compile could share one implementation)
 - [x] Strip Frey, move 'options.os' to Init (cliargs stay?). Remove options from constructors

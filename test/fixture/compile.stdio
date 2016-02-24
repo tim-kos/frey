@@ -1,0 +1,45 @@
+ACCPTST:STDIO_SKIP_COMPARE
+--> Frey version '0.3.1'
+--> Will run: [ 'init', 'compile' ]
+--> {hostname} - init
+--> {hostname} - compile
+Done
+--> Freyfile.toml
+[global]
+  connection = "local"
+
+[global.terraform]
+  parallelism = 1
+
+[infra.provider.aws]
+  access_key = "${var.FREY_AWS_ACCESS_KEY}"
+  region     = "us-east-1"
+
+[install.config.ssh_connection]
+  ssh_args = "-o Hostname={{{config.global.connection}}}host -o ControlMaster=auto -o ControlPersist=60s"
+
+[[install.playbooks.tasks]]
+  name = "Execute arbitrary command"
+  command = "pwd"
+
+--> Frey-residu-ansible.cfg
+[ssh_connection]
+ssh_args=-o Hostname=localhost -o ControlMaster=auto -o ControlPersist=60s
+
+
+--> Frey-residu-infra.tf.json
+{
+  "provider": {
+    "aws": {
+      "region": "eu-west-1",
+      "access_key": "${var.FREY_AWS_ACCESS_KEY}"
+    }
+  }
+}
+
+--> Frey-residu-install.yml
+tasks:
+  - name: Execute arbitrary command
+    command: pwd
+
+
