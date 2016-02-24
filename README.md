@@ -190,7 +190,6 @@ Unreleased and unplanned todos
 
 - [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
 - [ ] Move `terraform-parallelism` to config
-- [ ] DRY up render (Prepare & Compile could share one implementation)
 - [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Abstract both Terraform and Ansible as App classes
 - [ ] - role: ":frey:/consul/v1.0.0"
@@ -198,6 +197,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] DRY up render (Prepare & Compile could share one implementation)
 - [x] Strip Frey, move 'options.os' to Init (cliargs stay?). Remove options from constructors
 - [x] Make `destroy` a feature of Frey so we don't have to rely on ENV vars in openstack `run.sh` destroy
 - [-] Deprecate a generic `Command._buildChildEnv` in favor of more specific Ansible/Terraform env building
