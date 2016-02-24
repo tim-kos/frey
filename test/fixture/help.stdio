@@ -19,19 +19,19 @@ Commands:
   remote      Execute a remote command - or opens console
 
 Options:
-  --projectdir             Directory that contains the Freyfile.toml. Frey will traverse upwards if empty.  [string]
-  --app                    Name of application for which we're creating infrastructure  [string] [default: "{{{projectdir}}}|basename"]
-  --cfg-var                Configuration keys to overwrite such as: global.ssh.keysdir={{{os.home}}}/.ssh  [string]
-  --force-yes              Answer yes to all questions (dangerous!)  [boolean] [default: false]
-  --tags                   A list of tags to execute in isolation  [string]
-  --sleep                  Wait x seconds between showing infra plan, and executing it  [default: 5]
-  --bail                   Do not follow the chain of commands, run a one-off command  [boolean]
-  --bail-after             After running this command, abort the chain  [string]
-  --no-color               Color support is detected, this forces colors off  [boolean]
-  --verbose, -v            Show debug info  [count]
-  --unsafe                 Allow execution, even though your Git working directory is unclean  [boolean]
-  --help                   Show help  [boolean]
-  --version                Show version number  [boolean]
+  --projectdir   Directory that contains the Freyfile.toml. Frey will traverse upwards if empty.  [string]
+  --app          Name of application for which we're creating infrastructure  [string] [default: "{{{projectdir}}}|basename"]
+  --cfg-var      Configuration keys to overwrite such as: global.ssh.keysdir={{{os.home}}}/.ssh  [string]
+  --force-yes    Answer yes to all questions (dangerous!)  [boolean] [default: false]
+  --tags         A list of tags to execute in isolation  [string]
+  --sleep        Wait x seconds between showing infra plan, and executing it  [default: 5]
+  --bail         Do not follow the chain of commands, run a one-off command  [boolean]
+  --bail-after   After running this command, abort the chain  [string]
+  --no-color     Color support is detected, this forces colors off  [boolean]
+  --verbose, -v  Show debug info  [count]
+  --unsafe       Allow execution, even though your Git working directory is unclean  [boolean]
+  --help         Show help  [boolean]
+  --version      Show version number  [boolean]
 
 Examples:
   frey backup -d ./envs/production  backup platform described in ./envs/production
