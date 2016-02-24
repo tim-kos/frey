@@ -126,6 +126,13 @@ class Compile extends Command {
   _writeTerraformFile (cargo, cb) {
     const cfgBlock = _.get(this.bootCargo._renderConfig, 'infra')
 
+    // Automatically add all FREY_* environment variables to Terraform config
+    _.forOwn(this.runtime.init.env, (val, key) => {
+      if (_.startsWith(key, 'FREY_')) {
+        _.set(cfgBlock, 'variable.' + key + '.type', 'string')
+      }
+    })
+
     if (!cfgBlock) {
       debug('No infra instructions found in merged toml')
       fs.unlink(this.runtime.init.paths.infraFile, err => {

@@ -12,12 +12,6 @@
     [infra.output.arn]
       value = "${aws_dynamodb_table.basic-dynamodb-table.arn}"
 
-  [infra.variable]
-    [infra.variable.FREY_AWS_ACCESS_KEY]
-      description = "FREY_AWS_ACCESS_KEY"
-    [infra.variable.FREY_AWS_SECRET_KEY]
-      description = "FREY_AWS_SECRET_KEY"
-
   [infra.resource]
     [infra.resource.aws_dynamodb_table]
       [infra.resource.aws_dynamodb_table.basic-dynamodb-table]

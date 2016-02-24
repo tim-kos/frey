@@ -63,27 +63,21 @@ class Command extends Base {
     let childEnv = {}
 
     childEnv = _.extend(
-      childEnv,
+      {},
       this.runtime.init.env,
-      this._toEnvFormat(this.runtime, 'runtime'),
-      this._toEnvFormat(this.options, 'options')
+      extra
     )
 
-    childEnv['TF_VAR_FREY_OPENSTACK_TENANT_NAME'] = this.runtime.init.env.FREY_OPENSTACK_TENANT_NAME
-    childEnv['TF_VAR_FREY_OPENSTACK_EXTERNAL_GATEWAY'] = this.runtime.init.env.FREY_OPENSTACK_EXTERNAL_GATEWAY
-    childEnv['TF_VAR_FREY_OPENSTACK_PROJECT_NAME'] = this.runtime.init.env.FREY_OPENSTACK_PROJECT_NAME
-    childEnv['TF_VAR_FREY_OPENSTACK_PASSWORD'] = this.runtime.init.env.FREY_OPENSTACK_PASSWORD
-    childEnv['TF_VAR_FREY_OPENSTACK_AUTH_URL'] = this.runtime.init.env.FREY_OPENSTACK_AUTH_URL
+    // Automatically add all FREY_* environment variables to Terraform environment
+    _.forOwn(this.runtime.init.env, (val, key) => {
+      if (_.startsWith(key, 'FREY_')) {
+        childEnv['TF_VAR_' + key] = val
+      }
+    })
+
     childEnv['TF_VAR_FREY__RUNTIME__SSH__USER'] = this.runtime.compile.global.ssh.user
     childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE'] = this.runtime.compile.global.ssh.keypub_file
     childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE'] = this.runtime.compile.global.ssh.keyprv_file
-
-    for (const key in childEnv) {
-      const val = childEnv[key]
-      childEnv[`TF_VAR_${key}`] = val
-    }
-
-    childEnv = _.extend(childEnv, extra)
 
     return childEnv
   }

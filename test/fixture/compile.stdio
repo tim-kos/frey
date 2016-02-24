@@ -34,6 +34,11 @@ ssh_args=-o Hostname=localhost -o ControlMaster=auto -o ControlPersist=60s
       "region": "eu-west-1",
       "access_key": "${var.FREY_AWS_ACCESS_KEY}"
     }
+  },
+  "variable": {
+    "FREY_SHOULD_BE_AS_VAR_IN_TERRAFORM": {
+      "type": "string"
+    }
   }
 }
 

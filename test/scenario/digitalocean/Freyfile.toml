@@ -1,4 +1,3 @@
-[infra.variable.FREY_DO_TOKEN]
 [infra.variable.FREY__RUNTIME__SSH__KEYPUB_FILE]
 
 [infra.provider.digitalocean]

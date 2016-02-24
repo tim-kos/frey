@@ -27,6 +27,10 @@ echo "ACCPTST:STDIO_SKIP_COMPARE"
 rm -f "${__sysTmpDir}/frey-prepare"* || true
 
 # node "${__root}/lib/cli.js" prepare \
+env -i \
+PATH=${PATH} \
+USER=${USER} \
+FREY_SHOULD_BE_AS_VAR_IN_TERRAFORM=now \
 babel-node "${__root}/src/cli.js" compile \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --cfg-var "infra.provider.aws.region=eu-west-1" \
@@ -43,6 +47,7 @@ for file in $(ls Frey-residu-*); do
   cat "${file}"
   echo ""
   echo ""
+  rm -f "${file}" 2>&1 > /dev/null
 done
 
 exit 0
