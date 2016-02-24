@@ -11,10 +11,9 @@
   hosts = "{{ variable_host | default('infra-tusd-server')}}"
   name = "Local stuff"
   become = "False"
-
-[[install.playbooks.tasks]]
-  name = "Execute arbitrary command"
-  command = "pwd"
+  roles = [
+    "{{{init.paths.rolesDir}}}/pwd/v1.0.0",
+  ]
 
 [[install.playbooks.tasks]]
   name = "Showcase we can access FREY_ environment variables"

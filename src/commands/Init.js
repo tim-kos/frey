@@ -72,7 +72,8 @@ class Init extends Command {
       planFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-terraform.plan',
       infraFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-infra.tf.json',
       playbookFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-install.yml',
-      stateFile: this.bootCargo._cliargs.projectdir + '/Frey-state-terraform.tfstate'
+      stateFile: this.bootCargo._cliargs.projectdir + '/Frey-state-terraform.tfstate',
+      rolesDir: path.resolve(__dirname, '../../roles')
     })
   }
 

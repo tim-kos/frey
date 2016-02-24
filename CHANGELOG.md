@@ -23,12 +23,13 @@ Unreleased and unplanned todos
 
 ### v0.3.2 (Unreleased)
 
-- [ ] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
+- [ ] Consider putting `paths` in `config`, and giving them simpler names like `roles`
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
 - [x] Terminology: Project vs Config vs Options. No more recipe
 - [x] Rename Launch to Infra
 - [x] Remove config ambiguity and rename Compile to Config

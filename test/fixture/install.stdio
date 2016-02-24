@@ -19,7 +19,7 @@ PLAY [Local stuff] *************************************************************
 TASK [setup] *******************************************************************
 ok: [local]
 
-TASK [Execute arbitrary command] ***********************************************
+TASK [{root}/roles/pwd/v1.0.0 : Execute arbitrary command] *******
 changed: [local] => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "{root}/test/scenario/install", "stdout_lines": ["{root}/test/scenario/install"], "warnings": []}
 
 TASK [Showcase we can access FREY_ environment variables] **********************
