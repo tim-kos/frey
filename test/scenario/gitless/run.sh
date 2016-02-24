@@ -21,6 +21,6 @@ cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
 node "${__root}/lib/cli.js" validate \
   --verbose \
   --force-yes \
-  --config "global.ssh.keysdir=${__sysTmpDir}/frey-gitless" \
+  --cfg-var "global.ssh.keysdir=${__sysTmpDir}/frey-gitless" \
   --recipeDir "${__sysTmpDir}/frey-gitless/" \
   --bail

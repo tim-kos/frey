@@ -39,7 +39,7 @@ if true; then trap destroy EXIT; fi
 
 # babel-node "${__root}/src/cli.js" install \
 node "${__root}/lib/cli.js" install \
-  --config "global.ssh.keysdir=." \
+  --cfg-var "global.ssh.keysdir=." \
   --no-color \
   --verbose \
   --force-yes \

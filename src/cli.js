@@ -26,7 +26,7 @@ yargs
       type: 'string',
       describe: "Name of application for which we're creating infrastructure"
     },
-    config: {
+    'cfg-var': {
       nargs: 1,
       type: 'string',
       describe: 'Configuration keys to overwrite such as: global.ssh.keysdir={{{os.home}}}/.ssh'

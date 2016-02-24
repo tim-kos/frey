@@ -17,7 +17,7 @@ __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
 rm -f "${__sysTmpDir}/frey-sshkeygen."* || true
 # babel-node "${__root}/src/cli.js" \
 node "${__root}/lib/cli.js" \
-  --config "global.ssh.keysdir=${__sysTmpDir}" \
+  --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --bail-after prepare
 
 ls "${__sysTmpDir}/frey-sshkeygen."* || true
@@ -25,7 +25,7 @@ ls "${__sysTmpDir}/frey-sshkeygen."* || true
 rm -f "${__sysTmpDir}/frey-sshkeygen.pub" || true
 # babel-node "${__root}/src/cli.js" \
 node "${__root}/lib/cli.js" \
-  --config "global.ssh.keysdir=${__sysTmpDir}" \
+  --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --bail-after prepare
 
 ls "${__sysTmpDir}/frey-sshkeygen."* || true

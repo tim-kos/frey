@@ -166,14 +166,14 @@ class Compile extends Command {
       }
     }
 
-    // Take --config cli options
+    // Take --cfg-var cli options
     let flatCliConfig = {}
     let cliConfig = {}
-    if (this.runtime.init.cliargs.config) {
-      if (!_.isArray(this.runtime.init.cliargs.config)) {
-        this.runtime.init.cliargs.config = [ this.runtime.init.cliargs.config ]
+    if (this.runtime.init.cliargs.cfgVar) {
+      if (!_.isArray(this.runtime.init.cliargs.cfgVar)) {
+        this.runtime.init.cliargs.cfgVar = [ this.runtime.init.cliargs.cfgVar ]
       }
-      this.runtime.init.cliargs.config.forEach(item => {
+      this.runtime.init.cliargs.cfgVar.forEach(item => {
         let parts = item.split('=')
         let key = parts.shift()
         let value = parts.join('=')

@@ -189,7 +189,7 @@ Unreleased and unplanned todos
 ### v0.3.2 (Unreleased)
 
 - [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
-- [ ] Move `terraform-parallelism` to config
+- [ ] Move `terraform-parallelism` to global config
 - [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Abstract both Terraform and Ansible as App classes
 - [ ] - role: ":frey:/consul/v1.0.0"

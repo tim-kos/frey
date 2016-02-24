@@ -30,7 +30,7 @@ rm -f "${__sysTmpDir}/frey-install"* || true
 
 # babel-node "${__root}/src/cli.js" install \
 node "${__root}/lib/cli.js" install \
-  --config "global.ssh.keysdir=${__sysTmpDir}" \
+  --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \
