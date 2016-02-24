@@ -155,7 +155,6 @@ class Compile extends Command {
     const defaults = {
       global: {
         toolsdir: '{{{init.os.home}}}/.frey/tools',
-        recipedir: '{{{init.os.cwd}}}',
         ssh: {
           keysdir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
@@ -196,7 +195,7 @@ class Compile extends Command {
     config = utils.render(config, this.runtime)
 
     // Resolve to absolute paths
-    config.global.toolsdir = path.resolve(config.global.recipedir, config.global.toolsdir)
+    config.global.toolsdir = path.resolve(this.runtime.init.cliargs.recipeDir, config.global.toolsdir)
     config.global.ssh.keysdir = path.resolve(config.global.ssh.keysdir)
 
     return cb(null, config)

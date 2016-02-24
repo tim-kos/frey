@@ -10,18 +10,41 @@ class Init extends Command {
   constructor (name, runtime) {
     super(name, runtime)
     this.boot = [
-      '_cliargs',
       '_env',
       '_os',
+      '_cliargs',
       '_paths'
     ]
+  }
+
+  _env (cargo, cb) {
+    return cb(null, process.env)
+  }
+
+  _os (cargo, cb) {
+    const osdata = {
+      tmp: os.tmpdir(),
+      cwd: process.cwd(),
+      home: osHomedir(),
+      user: this.bootCargo._env.USER,
+      platform: os.platform(),
+      hostname: os.hostname(),
+      arch: `${os.arch()}`.replace('x64', 'amd64')
+    }
+    return cb(null, osdata)
   }
 
   _cliargs (cargo, cb) {
     let cliargs = this.runtime.frey.cliargs
 
     // Defaults
-    if (cliargs.tags === undefined) { cliargs.tags = '' }
+    if (cliargs.tags === undefined) {
+      cliargs.tags = ''
+    }
+
+    if (cliargs.recipeDir === undefined) {
+      cliargs.recipeDir = this.bootCargo._os.cwd
+    }
 
     // Render interdependent arguments
     cliargs = utils.render(cliargs, cliargs)
@@ -40,22 +63,6 @@ class Init extends Command {
     cliargs.recipeDir = path.resolve(cliargs.recipeDir)
 
     return cb(null, cliargs)
-  }
-
-  _env (cargo, cb) {
-    return cb(null, process.env)
-  }
-
-  _os (cargo, cb) {
-    const osdata = {}
-    osdata.tmp = os.tmpdir()
-    osdata.cwd = process.cwd()
-    osdata.home = osHomedir()
-    osdata.user = this.bootCargo._env.USER
-    osdata.platform = os.platform()
-    osdata.hostname = os.hostname()
-    osdata.arch = `${os.arch()}`.replace('x64', 'amd64')
-    return cb(null, osdata)
   }
 
   _paths (cargo, cb) {
