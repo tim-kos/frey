@@ -13,7 +13,7 @@ import commands from './commands'
 import pkgConfig from '../package.json'
 
 class Frey extends Base {
-  constructor (cliargs) {
+  constructor (cliargs = {}) {
     super()
 
     if (cliargs._ === undefined) { cliargs._ = [] }

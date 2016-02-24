@@ -199,12 +199,6 @@ class Compile extends Command {
     config.global.toolsdir = path.resolve(config.global.recipedir, config.global.toolsdir)
     config.global.ssh.keysdir = path.resolve(config.global.ssh.keysdir)
 
-    debug({
-      config: config,
-      cliConfig: cliConfig,
-      flatCliConfig: flatCliConfig
-    })
-
     return cb(null, config)
   }
 }
