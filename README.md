@@ -184,6 +184,7 @@ Unreleased and unplanned todos
 - [ ] website: On the githubs
 - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
+- [ ] Command's exe functions should mostly be in a util class
 - [ ] Enable DO support
 
 ### v0.3.2 (Unreleased)

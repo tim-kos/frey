@@ -23,7 +23,7 @@ class Init extends Command {
 
   _os (cargo, cb) {
     const osdata = {
-      cores: os.cpus(),
+      cores: os.cpus().length,
       tmp: os.tmpdir(),
       cwd: process.cwd(),
       home: osHomedir(),
