@@ -189,7 +189,6 @@ Unreleased and unplanned todos
 ### v0.3.2 (Unreleased)
 
 - [ ] Allow ENV to change config, that's then written to residu(? unsafe?)
-- [ ] Strip Frey, move 'options.os' to Init (cliargs stay?). Remove options from constructors
 - [ ] Move `terraform-parallelism` to config
 - [ ] DRY up render (Prepare & Compile could share one implementation)
 - [ ] Terminology: Project vs Config vs Options. No more recipe
@@ -199,6 +198,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Strip Frey, move 'options.os' to Init (cliargs stay?). Remove options from constructors
 - [x] Make `destroy` a feature of Frey so we don't have to rely on ENV vars in openstack `run.sh` destroy
 - [-] Deprecate a generic `Command._buildChildEnv` in favor of more specific Ansible/Terraform env building
 - [-] Make arg & env functions of all other commands, mimic Install's

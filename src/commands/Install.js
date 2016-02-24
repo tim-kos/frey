@@ -5,8 +5,8 @@ import _ from 'lodash'
 // import depurar from 'depurar'; const debug = depurar('frey')
 
 class Install extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
       '_gatherArgs',
       '_gatherEnv'
@@ -18,11 +18,11 @@ class Install extends Command {
     const terraformInvExe = appProps.exe
     const args = []
 
-    if (this.options.tags) {
-      args.push(`--tags=${this.options.tags}`)
+    if (this.runtime.init.cliargs.tags) {
+      args.push(`--tags=${this.runtime.init.cliargs.tags}`)
     }
 
-    if (this.options.verbose) {
+    if (this.runtime.init.cliargs.verbose) {
       args.push('-v')
     }
 
@@ -41,7 +41,7 @@ class Install extends Command {
     }
 
     args.push('--sudo')
-    args.push(`${this.runtime.compile.global.paths.playbookFile}`)
+    args.push(`${this.runtime.init.paths.playbookFile}`)
 
     return cb(null, args)
   }
@@ -53,8 +53,8 @@ class Install extends Command {
       env.ANSIBLE_NOCOLOR = 'true'
     }
 
-    env.ANSIBLE_CONFIG = this.runtime.compile.global.paths.ansibleCfg
-    env.TF_STATE = this.runtime.compile.global.paths.stateFile
+    env.ANSIBLE_CONFIG = this.runtime.init.paths.ansibleCfg
+    env.TF_STATE = this.runtime.init.paths.stateFile
 
     return cb(null, env)
   }

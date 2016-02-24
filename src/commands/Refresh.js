@@ -5,8 +5,8 @@ import chalk from 'chalk'
 import _ from 'lodash'
 
 class Refresh extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
       '_gatherTerraformArgs'
     ]
@@ -21,7 +21,7 @@ class Refresh extends Command {
     debug('Loaded config:')
     debug(this.runtime.compile)
 
-    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }

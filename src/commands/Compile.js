@@ -13,15 +13,8 @@ import TOML from 'toml'
 import {unflatten} from 'flat'
 
 class Compile extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
-    this.paths = {
-      ansibleCfg: options.recipeDir + '/Frey-residu-ansible.cfg',
-      planFile: options.recipeDir + '/Frey-residu-terraform.plan',
-      infraFile: options.recipeDir + '/Frey-residu-infra.tf.json',
-      playbookFile: options.recipeDir + '/Frey-residu-install.yml',
-      stateFile: options.recipeDir + '/Frey-state-terraform.tfstate'
-    }
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
       '_findTomlFiles',
       '_readTomlFiles',
@@ -32,7 +25,7 @@ class Compile extends Command {
 
   _findTomlFiles (cargo, cb) {
     let tomlFiles = []
-    const pattern = `${this.options.recipeDir}/*.toml`
+    const pattern = `${this.runtime.init.cliargs.recipeDir}/*.toml`
     debug(`Reading from '${pattern}'`)
     return glob(pattern, (err, files) => {
       if (err) {
@@ -75,7 +68,7 @@ class Compile extends Command {
 
         if (!val) {
           debug('No infra instructions found in merged toml')
-          fs.unlink(this.paths.infraFile, err => {
+          fs.unlink(this.runtime.init.paths.infraFile, err => {
             if (err) {
                // That's not fatal
             }
@@ -90,16 +83,16 @@ class Compile extends Command {
           return callback(new Error('Unable to convert recipe to Terraform infra JSON'))
         }
 
-        filesWritten.push(this.paths.infraFile)
-        debug('Writing %s', this.paths.infraFile)
-        return fs.writeFile(this.paths.infraFile, encoded, callback)
+        filesWritten.push(this.runtime.init.paths.infraFile)
+        debug('Writing %s', this.runtime.init.paths.infraFile)
+        return fs.writeFile(this.runtime.init.paths.infraFile, encoded, callback)
       },
       (callback) => {
         const val = _.get(config, 'install.config')
 
         if (!val) {
           debug('No config instructions found in merged toml')
-          fs.unlink(this.paths.ansibleCfg, err => {
+          fs.unlink(this.runtime.init.paths.ansibleCfg, err => {
             if (err) {
               // That's not fatal
             }
@@ -120,16 +113,16 @@ class Compile extends Command {
         // this point, the replace has to be limited in scope:
         encoded = encoded.replace(/\"/g, '')
 
-        filesWritten.push(this.paths.ansibleCfg)
-        debug('Writing %s', this.paths.ansibleCfg)
-        return fs.writeFile(this.paths.ansibleCfg, encoded, callback)
+        filesWritten.push(this.runtime.init.paths.ansibleCfg)
+        debug('Writing %s', this.runtime.init.paths.ansibleCfg)
+        return fs.writeFile(this.runtime.init.paths.ansibleCfg, encoded, callback)
       },
       (callback) => {
         const val = _.get(config, 'install.playbooks')
 
         if (!val) {
           debug('No install playbooks found in merged toml')
-          fs.unlink(this.paths.playbookFile, err => {
+          fs.unlink(this.runtime.init.paths.playbookFile, err => {
             if (err) {
                // That's not fatal
             }
@@ -144,9 +137,9 @@ class Compile extends Command {
           return callback(new Error('Unable to convert recipe to Ansible playbook YAML'))
         }
 
-        filesWritten.push(this.paths.playbookFile)
-        debug('Writing %s', this.paths.playbookFile)
-        return fs.writeFile(this.paths.playbookFile, encoded, callback)
+        filesWritten.push(this.runtime.init.paths.playbookFile)
+        debug('Writing %s', this.runtime.init.paths.playbookFile)
+        return fs.writeFile(this.runtime.init.paths.playbookFile, encoded, callback)
       }
     ], err => {
       if (err) {
@@ -161,15 +154,14 @@ class Compile extends Command {
     // Defaults
     const defaults = {
       global: {
-        paths: this.paths,
-        toolsdir: '{{{os.home}}}/.frey/tools',
-        recipedir: '{{{os.cwd}}}',
+        toolsdir: '{{{init.os.home}}}/.frey/tools',
+        recipedir: '{{{init.os.cwd}}}',
         ssh: {
-          keysdir: '{{{os.home}}}/.ssh',
-          email: `{{{options.user}}}@{{{options.app}}}.freyproject.io`,
-          keypair_name: `{{{options.app}}}`,
-          keyprv_file: `{{{self.keysdir}}}/frey-{{{options.app}}}.pem`,
-          keypub_file: `{{{self.keysdir}}}/frey-{{{options.app}}}.pub`,
+          keysdir: '{{{init.os.home}}}/.ssh',
+          email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
+          keypair_name: `{{{init.cliargs.app}}}`,
+          keyprv_file: `{{{self.keysdir}}}/frey-{{{init.cliargs.app}}}.pem`,
+          keypub_file: `{{{self.keysdir}}}/frey-{{{init.cliargs.app}}}.pub`,
           user: 'ubuntu'
         }
       }
@@ -178,11 +170,11 @@ class Compile extends Command {
     // Take --config cli options
     let flatCliConfig = {}
     let cliConfig = {}
-    if (this.options.config) {
-      if (!_.isArray(this.options.config)) {
-        this.options.config = [ this.options.config ]
+    if (this.runtime.init.cliargs.config) {
+      if (!_.isArray(this.runtime.init.cliargs.config)) {
+        this.runtime.init.cliargs.config = [ this.runtime.init.cliargs.config ]
       }
-      this.options.config.forEach(item => {
+      this.runtime.init.cliargs.config.forEach(item => {
         let parts = item.split('=')
         let key = parts.shift()
         let value = parts.join('=')
@@ -194,28 +186,16 @@ class Compile extends Command {
 
     // @todo Add environment config?
     // let envConfig = {}
-    // envConfig = unflatten(process.env, {delimiter: '_'})
+    // envConfig = unflatten(this.runtime.init.env, {delimiter: '_'})
     // envConfig[frey]
-    // process.env
+    // this.runtime.init.env
 
     // Left is more important
     let config = _.defaultsDeep({}, cliConfig, projectConfig, defaults)
 
-    config = utils.render(config, {
-      os: {
-        tmp: this.options.tmp,
-        home: this.options.home,
-        cwd: this.options.cwd,
-        user: this.options.user,
-        hostname: this.options.hostname,
-        arch: this.options.arch,
-        platform: this.options.platform
-      },
-      options: this.options
-    })
+    config = utils.render(config, this.runtime)
 
     // Resolve to absolute paths
-    config.global.recipedir = path.resolve(config.global.recipedir)
     config.global.toolsdir = path.resolve(config.global.recipedir, config.global.toolsdir)
     config.global.ssh.keysdir = path.resolve(config.global.ssh.keysdir)
 

@@ -6,15 +6,15 @@ import fs from 'fs'
 // import depurar from 'depurar'; const debug = depurar('frey')
 
 class Validate extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
       '_findClosestRecipeGit'
     ]
   }
 
   _findClosestRecipeGit (cargo, cb) {
-    return this._findClosestGit(this.options.recipeDir, filepath => {
+    return this._findClosestGit(this.runtime.init.cliargs.recipeDir, filepath => {
       return cb(null, filepath)
     })
   }

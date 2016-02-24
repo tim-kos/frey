@@ -5,8 +5,8 @@ import chalk from 'chalk'
 import _ from 'lodash'
 
 class Launch extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
       '_gatherTerraformArgs'
     ]
@@ -18,8 +18,8 @@ class Launch extends Command {
       terraformArgs.push('-no-color')
     }
 
-    terraformArgs.push(`-parallelism=${this.options.terraformParallelism}`)
-    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
+    terraformArgs.push(`-parallelism=${this.runtime.init.cliargs.terraformParallelism}`)
+    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }
@@ -38,7 +38,7 @@ class Launch extends Command {
         return cb(err)
       }
 
-      this._out(`--> Saved state to '${this.runtime.compile.global.paths.stateFile}'\n`)
+      this._out(`--> Saved state to '${this.runtime.init.paths.stateFile}'\n`)
 
       return cb(null)
     })

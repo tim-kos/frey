@@ -1,36 +1,80 @@
 'use strict'
 import Command from '../Command'
+import utils from '../Utils'
+import osHomedir from 'os-homedir'
+import os from 'os'
+import path from 'path'
+import _ from 'lodash'
 
 class Init extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
-      '_paths',
-      '_options',
-      '_os'
+      '_cliargs',
+      '_env',
+      '_os',
+      '_paths'
     ]
+  }
+
+  _cliargs (cargo, cb) {
+    let cliargs = this.runtime.frey.cliargs
+
+    // Defaults
+    if (cliargs.tags === undefined) { cliargs.tags = '' }
+
+    // Render interdependent arguments
+    cliargs = utils.render(cliargs, cliargs)
+
+    // Apply simple functions. Not perfect, but let's start engineering when the
+    // use-case arises:
+    _.forOwn(cliargs, (val, key) => {
+      if (`${val}`.match(/\|basename$/)) {
+        val = val.replace(/\|basename$/, '')
+        val = path.basename(val)
+        cliargs[key] = val
+      }
+    })
+
+    // turn into absolute path
+    cliargs.recipeDir = path.resolve(cliargs.recipeDir)
+
+    return cb(null, cliargs)
+  }
+
+  _env (cargo, cb) {
+    return cb(null, process.env)
+  }
+
+  _os (cargo, cb) {
+    const osdata = {}
+    osdata.tmp = os.tmpdir()
+    osdata.cwd = process.cwd()
+    osdata.home = osHomedir()
+    osdata.user = this.bootCargo._env.USER
+    osdata.platform = os.platform()
+    osdata.hostname = os.hostname()
+    osdata.arch = `${os.arch()}`.replace('x64', 'amd64')
+    return cb(null, osdata)
   }
 
   _paths (cargo, cb) {
     return cb(null, {
-      ansibleCfg: this.options.recipeDir + '/Frey-residu-ansible.cfg',
-      planFile: this.options.recipeDir + '/Frey-residu-terraform.plan',
-      infraFile: this.options.recipeDir + '/Frey-residu-infra.tf.json',
-      playbookFile: this.options.recipeDir + '/Frey-residu-install.yml',
-      stateFile: this.options.recipeDir + '/Frey-state-terraform.tfstate'
+      ansibleCfg: this.bootCargo._cliargs.recipeDir + '/Frey-residu-ansible.cfg',
+      planFile: this.bootCargo._cliargs.recipeDir + '/Frey-residu-terraform.plan',
+      infraFile: this.bootCargo._cliargs.recipeDir + '/Frey-residu-infra.tf.json',
+      playbookFile: this.bootCargo._cliargs.recipeDir + '/Frey-residu-install.yml',
+      stateFile: this.bootCargo._cliargs.recipeDir + '/Frey-state-terraform.tfstate'
     })
   }
 
-  _options (cargo, cb) {
-    return cb(null)
-  }
-
-  _os (cargo, cb) {
-    return cb(null)
-  }
-
   main (cargo, cb) {
-    return cb(null, this.bootCargo)
+    return cb(null, {
+      cliargs: this.bootCargo._cliargs,
+      env: this.bootCargo._env,
+      os: this.bootCargo._os,
+      paths: this.bootCargo._paths
+    })
   }
 }
 

@@ -10,12 +10,10 @@ import yesno from 'yesno'
 import Base from './Base'
 
 class Command extends Base {
-  constructor (name, options, runtime) {
+  constructor (name, runtime) {
     super()
     this.name = name
-    this.options = options
     this.runtime = runtime
-    this.dir = this.options.recipeDir
   }
 
   cfg (path, val) {
@@ -47,7 +45,7 @@ class Command extends Base {
 
   promptYesNo (question, cb) {
     question = `--> ${question}`
-    if (this.options.forceYes) {
+    if (this.runtime.init.cliargs.forceYes) {
       this._out(`${question}\n`)
       this._out("<-- Answering Yes as '--force-yes' applies\n")
       return cb(true)
@@ -57,7 +55,7 @@ class Command extends Base {
   }
 
   main (bootOptions, cb) {
-    const runScript = `${this.options.recipeDir}/${this.name}.sh`
+    const runScript = `${this.runtime.init.cliargs.recipeDir}/${this.name}.sh`
     debug(`Checking for existance of '${runScript}'`)
     return fs.stat(runScript, (err, stat) => {
       if (!err) {
@@ -73,16 +71,16 @@ class Command extends Base {
 
     childEnv = _.extend(
       childEnv,
-      process.env,
+      this.runtime.init.env,
       this._toEnvFormat(this.runtime, 'runtime'),
       this._toEnvFormat(this.options, 'options')
     )
 
-    childEnv['TF_VAR_FREY_OPENSTACK_TENANT_NAME'] = process.env.FREY_OPENSTACK_TENANT_NAME
-    childEnv['TF_VAR_FREY_OPENSTACK_EXTERNAL_GATEWAY'] = process.env.FREY_OPENSTACK_EXTERNAL_GATEWAY
-    childEnv['TF_VAR_FREY_OPENSTACK_PROJECT_NAME'] = process.env.FREY_OPENSTACK_PROJECT_NAME
-    childEnv['TF_VAR_FREY_OPENSTACK_PASSWORD'] = process.env.FREY_OPENSTACK_PASSWORD
-    childEnv['TF_VAR_FREY_OPENSTACK_AUTH_URL'] = process.env.FREY_OPENSTACK_AUTH_URL
+    childEnv['TF_VAR_FREY_OPENSTACK_TENANT_NAME'] = this.runtime.init.env.FREY_OPENSTACK_TENANT_NAME
+    childEnv['TF_VAR_FREY_OPENSTACK_EXTERNAL_GATEWAY'] = this.runtime.init.env.FREY_OPENSTACK_EXTERNAL_GATEWAY
+    childEnv['TF_VAR_FREY_OPENSTACK_PROJECT_NAME'] = this.runtime.init.env.FREY_OPENSTACK_PROJECT_NAME
+    childEnv['TF_VAR_FREY_OPENSTACK_PASSWORD'] = this.runtime.init.env.FREY_OPENSTACK_PASSWORD
+    childEnv['TF_VAR_FREY_OPENSTACK_AUTH_URL'] = this.runtime.init.env.FREY_OPENSTACK_AUTH_URL
     childEnv['TF_VAR_FREY__RUNTIME__SSH__USER'] = this.runtime.compile.global.ssh.user
     childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE'] = this.runtime.compile.global.ssh.keypub_file
     childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE'] = this.runtime.compile.global.ssh.keyprv_file
@@ -117,8 +115,10 @@ class Command extends Base {
     if (cmdOpts.stderr === undefined) { cmdOpts.stderr = 'pipe' }
     if (cmdOpts.limitSamples === undefined) { cmdOpts.limitSamples = 3 }
 
+    let dir = this.dir || this.runtime.init.cliargs.recipeDir
+
     const opts = {
-      cwd: this.dir,
+      cwd: dir,
       env: this._buildChildEnv(cmdOpts.env),
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
     }

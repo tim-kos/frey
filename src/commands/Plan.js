@@ -7,8 +7,8 @@ import _ from 'lodash'
 // import async from 'async'
 
 class Plan extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
       '_gatherTerraformArgs'
     ]
@@ -21,8 +21,8 @@ class Plan extends Command {
     }
 
     terraformArgs.push('-refresh=false')
-    terraformArgs.push(`-out=${this.runtime.compile.global.paths.planFile}`)
-    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
+    terraformArgs.push(`-out=${this.runtime.init.paths.planFile}`)
+    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }
@@ -42,7 +42,7 @@ class Plan extends Command {
         return cb(err)
       }
 
-      this._out(`--> Saved plan as '${this.runtime.compile.global.paths.planFile}'\n`)
+      this._out(`--> Saved plan as '${this.runtime.init.paths.planFile}'\n`)
 
       if (stdout.match(/No changes/)) {
         return cb(null)

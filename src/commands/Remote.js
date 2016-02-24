@@ -5,8 +5,8 @@ import depurar from 'depurar'; const debug = depurar('frey')
 import _ from 'lodash'
 
 class Remote extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
+  constructor (name, runtime) {
+    super(name, runtime)
     this.boot = [
       '_gatherTerraformArgs',
       '_gatherHost',
@@ -21,7 +21,7 @@ class Remote extends Command {
       terraformArgs.push('-no-color')
     }
 
-    terraformArgs.push(`-state=${this.runtime.compile.global.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
 
     return cb(null, terraformArgs)
   }
@@ -56,7 +56,7 @@ class Remote extends Command {
     args.push('-o', 'UserKnownHostsFile=/dev/null')
     args.push('-o', 'CheckHostIP=no')
     args.push('-o', 'StrictHostKeyChecking=no')
-    if (this.options.verbose) {
+    if (this.runtime.init.cliargs.verbose) {
       args.push('-vvvv')
     }
 

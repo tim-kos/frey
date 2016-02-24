@@ -8,9 +8,9 @@ import async from 'async'
 import depurar from 'depurar'; const debug = depurar('frey')
 
 class Prepare extends Command {
-  constructor (name, options, runtime) {
-    super(name, options, runtime)
-    this.dir = this.options.recipeDir
+  constructor (name, runtime) {
+    super(name, runtime)
+    this.dir = this.runtime.init.cliargs.recipeDir
   }
 
   main (cargo, cb) {
@@ -25,7 +25,7 @@ class Prepare extends Command {
     deps.push({
       type: 'Dir',
       name: 'recipeDir',
-      dir: `{{{options.recipeDir}}}`
+      dir: `{{{init.cliargs.recipeDir}}}`
     })
 
     deps.push({
@@ -76,8 +76,8 @@ class Prepare extends Command {
       zip:
         `terraform` + `_` +
         `{{{self.version}}}` + `_` +
-        '{{{os.platform}}}' + `_` +
-        `{{{os.arch}}}.zip`,
+        '{{{init.os.platform}}}' + `_` +
+        `{{{init.os.arch}}}.zip`,
       cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
         const version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
@@ -103,8 +103,8 @@ class Prepare extends Command {
       zip:
         `terraform-inventory` + `_` +
         `{{{self.version}}}` + `_` +
-        '{{{os.platform}}}' + `_` +
-        `{{{os.arch}}}.zip`,
+        '{{{init.os.platform}}}' + `_` +
+        `{{{init.os.arch}}}.zip`,
       cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
         let version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
@@ -164,25 +164,7 @@ class Prepare extends Command {
         `ansible=={{{self.version}}}`
     })
 
-    debug({
-      compile: this.runtime.compile
-    })
-
-    deps = utils.render(deps, {
-      os: {
-        tmp: this.options.tmp,
-        home: this.options.home,
-        cwd: this.options.cwd,
-        user: this.options.user,
-        hostname: this.options.hostname,
-        arch: this.options.arch,
-        platform: this.options.platform
-      },
-      options: this.options,
-      compile: this.runtime.compile
-    })
-
-    // runtime: this.runtime.compile,
+    deps = utils.render(deps, this.runtime)
 
     return async.eachSeries(deps, this._make.bind(this), (err) => {
       if (err) {
