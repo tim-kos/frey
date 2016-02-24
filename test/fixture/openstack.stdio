@@ -6,7 +6,7 @@ ACCPTST:STDIO_REPLACE_DURATIONS
 ACCPTST:STDIO_REPLACE_REMOTE_EXEC
 (maybe) Destroying..
 --> Frey version '0.3.1'
---> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
+--> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install' ]
 --> {hostname} - init
 --> {hostname} - config
 --> {hostname} - prepare
@@ -111,7 +111,7 @@ Path: {root}/test/scenario/openstack/Frey-residu-terraform.plan
 Plan: 8 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/openstack/Frey-residu-terraform.plan'
 --> {hostname} - backup
---> {hostname} - launch
+--> {hostname} - infra
 openstack_compute_keypair_v2.freytest: Creating...
   name:       "" => "freytest"
   public_key: "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe33HmuH6x/JLVJAkPg9EYHCdFoILCMJefBzIIWJ0BKlTfZPHHndFhyKFA7PStMiwntkd1XcqP5kL2VyJXHB6gMNHcqQ4XBEK8hDdESK3r1Gp4YP2RzqO5KEaQzjw0zrEr8dWm8kzAjhlkqq89sAFA+FC833wdW5NCGT+aQWKhdcJVhl89ppfPgJVXpeQ5ZuGWvOdxJM3h1V0GL8I+0NFb7MuOEneGezth1VIOL+eJJeAMzBWcXO6cAWZG31JkCuNpOG9vDhjYPim+tsozTdRg6g7R0Fmikxw3c3PFEOVKSmDXbOKLVTaXCYvDR0wOM+cLFOzSPl7Dt4aAMBT2h1xL {user}@openstack.freyproject.io\n"

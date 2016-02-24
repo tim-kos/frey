@@ -23,13 +23,13 @@ Unreleased and unplanned todos
 
 ### v0.3.2 (Unreleased)
 
-- [ ] Rename Launch to infra? Install also has install in Freyfile
 - [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] - role: ":frey:/consul/v1.0.0"
 - [ ] Implement deploy
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Rename Launch to Infra
 - [x] Remove config ambiguity and rename Compile to Config
 - [x] Catch toml parsing errors in a nicer way (forget a quote, see what happens)
 - [x] Deprecate `FREY__RUNTIME` in favor of `{{{}}}`

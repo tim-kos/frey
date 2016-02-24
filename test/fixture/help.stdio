@@ -8,7 +8,7 @@ Commands:
   validate    ▽ Checks your projects
   plan        ▽ Shows infra changes and saves in an executable plan
   backup      ▽ Backs up server state
-  launch      ▽ Launches virtual machines at a provider
+  infra       ▽ Launches virtual machines at a provider
   install     ▽ Runs Ansible to install software packages & configuration templates
   deploy      ▽ Upload your own application(s)
   restart     ▽ Restart your own application(s) and its dependencies
@@ -37,3 +37,4 @@ Examples:
   frey backup -d ./envs/production  backup platform described in ./envs/production
 
 Copyright 2016 Transloadit
+

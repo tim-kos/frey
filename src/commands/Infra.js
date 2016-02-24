@@ -4,7 +4,7 @@ import Command from '../Command'
 import chalk from 'chalk'
 import _ from 'lodash'
 
-class Launch extends Command {
+class Infra extends Command {
   constructor (name, runtime) {
     super(name, runtime)
     this.boot = [
@@ -45,4 +45,4 @@ class Launch extends Command {
   }
 }
 
-module.exports = Launch
+module.exports = Infra

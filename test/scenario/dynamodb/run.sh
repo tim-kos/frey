@@ -39,7 +39,7 @@ if true; then trap destroy EXIT; fi
   --no-color \
   --verbose \
   --force-yes \
-  --bail-after launch \
+  --bail-after infra \
 || false
 
 echo "Finished"

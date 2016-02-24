@@ -1,6 +1,6 @@
 (maybe) Destroying..
 --> Frey version '0.3.1'
---> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch' ]
+--> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra' ]
 --> {hostname} - init
 --> {hostname} - config
 --> {hostname} - prepare
@@ -54,7 +54,7 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/dynamodb/Frey-residu-terraform.plan'
 --> {hostname} - backup
 I am a rad custom backup script performing some nice backup action!
---> {hostname} - launch
+--> {hostname} - infra
 aws_dynamodb_table.basic-dynamodb-table: Creating...
   arn:                                                   "" => "<computed>"
   attribute.#:                                           "" => "3"
