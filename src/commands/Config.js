@@ -135,7 +135,7 @@ class Config extends Command {
 
     // Resolve to absolute paths
     config.global.toolsdir = path.resolve(this.runtime.init.cliargs.projectdir, config.global.toolsdir)
-    config.global.ssh.keysdir = path.resolve(config.global.ssh.keysdir)
+    config.global.ssh.keysdir = path.resolve(this.runtime.init.cliargs.projectdir, config.global.ssh.keysdir)
 
     return cb(null, config)
   }
