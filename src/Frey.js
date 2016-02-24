@@ -61,8 +61,8 @@ class Frey extends Base {
       filteredChain.unshift('prepare')
     }
 
-    if (filteredChain.indexOf('compile') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'compile'}))) {
-      filteredChain.unshift('compile')
+    if (filteredChain.indexOf('config') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'config'}))) {
+      filteredChain.unshift('config')
     }
 
     filteredChain.unshift('init')

@@ -51,8 +51,8 @@ class Remote extends Command {
 
     debug({cargo: cargo})
     args.push(`${this.bootCargo._gatherHost}`)
-    args.push('-i', `${this.runtime.compile.global.ssh.keyprv_file}`)
-    args.push('-l', `${this.runtime.compile.global.ssh.user}`)
+    args.push('-i', `${this.runtime.config.global.ssh.keyprv_file}`)
+    args.push('-l', `${this.runtime.config.global.ssh.user}`)
     args.push('-o', 'UserKnownHostsFile=/dev/null')
     args.push('-o', 'CheckHostIP=no')
     args.push('-o', 'StrictHostKeyChecking=no')

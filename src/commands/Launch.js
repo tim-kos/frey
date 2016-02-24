@@ -18,7 +18,7 @@ class Launch extends Command {
       terraformArgs.push('-no-color')
     }
 
-    terraformArgs.push(`-parallelism=${this.runtime.compile.infra.settings.parallelism}`)
+    terraformArgs.push(`-parallelism=${this.runtime.config.infra.settings.parallelism}`)
     terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
 
     return cb(null, terraformArgs)

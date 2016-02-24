@@ -2,8 +2,8 @@ Usage: frey <command> [options]
 
 Commands:
   completion  Install CLI auto completion
-  compile     ▽ Compiles configuration and loads it
-  prepare     ▽ Install dependencies like Terraform
+  config      ▽ Loads, merges, renders, writes configuration
+  prepare     ▽ Installs dependencies like Terraform
   refresh     ▽ Refreshes current infra state and saves to terraform.tfstate
   validate    ▽ Checks your projects
   plan        ▽ Shows infra changes and saves in an executable plan

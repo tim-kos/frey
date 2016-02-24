@@ -6,9 +6,9 @@ ACCPTST:STDIO_REPLACE_DURATIONS
 ACCPTST:STDIO_REPLACE_REMOTE_EXEC
 (maybe) Destroying..
 --> Frey version '0.3.1'
---> Will run: [ 'init', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
+--> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch', 'install' ]
 --> {hostname} - init
---> {hostname} - compile
+--> {hostname} - config
 --> {hostname} - prepare
 Found 'terraform' with version '0.6.11'
 Found 'terraformInventory' with version '0.6.0'

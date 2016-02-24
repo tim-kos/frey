@@ -19,18 +19,18 @@ Unreleased and unplanned todos
 - [ ] Command's exe functions should mostly be in a util class
 - [ ] Enable DO support
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
+- [ ] Abstract both Terraform and Ansible as App classes
 
 ### v0.3.2 (Unreleased)
 
 - [ ] Rename Launch to infra? Install also has install in Freyfile
-- [ ] Remove other config ambiguity, then Rename Compile to Config
 - [ ] Terminology: Project vs Config vs Options. No more recipe
-- [ ] Abstract both Terraform and Ansible as App classes
 - [ ] - role: ":frey:/consul/v1.0.0"
 - [ ] Implement deploy
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Remove config ambiguity and rename Compile to Config
 - [x] Catch toml parsing errors in a nicer way (forget a quote, see what happens)
 - [x] Deprecate `FREY__RUNTIME` in favor of `{{{}}}`
 - [x] Rename ansibleCfg to settings (terraform parallelism is also a setting)

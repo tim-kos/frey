@@ -1,6 +1,6 @@
 module.exports = [
-  { chained: true, name: 'compile', description: 'Compiles configuration and loads it' },
-  { chained: true, name: 'prepare', description: 'Install dependencies like Terraform' },
+  { chained: true, name: 'config', description: 'Loads, merges, renders, writes configuration' },
+  { chained: true, name: 'prepare', description: 'Installs dependencies like Terraform' },
   { chained: true, name: 'refresh', description: 'Refreshes current infra state and saves to terraform.tfstate' },
   { chained: true, name: 'validate', description: 'Checks your projects' },
   { chained: true, name: 'plan', description: 'Shows infra changes and saves in an executable plan' },

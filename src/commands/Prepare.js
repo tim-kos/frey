@@ -19,7 +19,7 @@ class Prepare extends Command {
     deps.push({
       type: 'Dir',
       name: 'toolsdir',
-      dir: `{{{compile.global.toolsdir}}}`
+      dir: `{{{config.global.toolsdir}}}`
     })
 
     deps.push({
@@ -31,39 +31,39 @@ class Prepare extends Command {
     deps.push({
       type: 'Dir',
       name: 'ssh.keysdir',
-      dir: `{{{compile.global.ssh.keysdir}}}`
+      dir: `{{{config.global.ssh.keysdir}}}`
     })
 
     deps.push({
       type: 'Privkey',
-      privkey: '{{{compile.global.ssh.keyprv_file}}}',
-      pubkey: '{{{compile.global.ssh.keypub_file}}}',
-      email: '{{{compile.global.ssh.email}}}'
+      privkey: '{{{config.global.ssh.keyprv_file}}}',
+      pubkey: '{{{config.global.ssh.keypub_file}}}',
+      email: '{{{config.global.ssh.email}}}'
     })
 
     deps.push({
       type: 'Pubkey',
-      privkey: '{{{compile.global.ssh.keyprv_file}}}',
-      pubkey: '{{{compile.global.ssh.keypub_file}}}',
-      email: '{{{compile.global.ssh.email}}}'
+      privkey: '{{{config.global.ssh.keyprv_file}}}',
+      pubkey: '{{{config.global.ssh.keypub_file}}}',
+      email: '{{{config.global.ssh.email}}}'
     })
 
     deps.push({
       type: 'Privkey',
-      privkey: '{{{compile.global.ssh.keyprv_file}}}',
-      pubkey: '{{{compile.global.ssh.keypub_file}}}'
+      privkey: '{{{config.global.ssh.keyprv_file}}}',
+      pubkey: '{{{config.global.ssh.keypub_file}}}'
     })
 
     deps.push({
       type: 'Permission',
       mode: 0o400,
-      file: '{{{compile.global.ssh.keypub_file}}}'
+      file: '{{{config.global.ssh.keypub_file}}}'
     })
 
     deps.push({
       type: 'Permission',
       mode: 0o400,
-      file: '{{{compile.global.ssh.keyprv_file}}}'
+      file: '{{{config.global.ssh.keyprv_file}}}'
     })
 
     deps.push({
@@ -71,7 +71,7 @@ class Prepare extends Command {
       name: 'terraform',
       version: '0.6.11',
       range: `{{{self.version}}}`,
-      dir: `{{{compile.global.toolsdir}}}/terraform/{{{self.version}}}`,
+      dir: `{{{config.global.toolsdir}}}/terraform/{{{self.version}}}`,
       exe: `{{{self.dir}}}/terraform`,
       zip:
         `terraform` + `_` +
@@ -98,7 +98,7 @@ class Prepare extends Command {
       name: 'terraformInventory',
       range: '0.6.0',
       version: '0.6',
-      dir: '{{{compile.global.toolsdir}}}/terraform-inventory/{{{self.version}}}',
+      dir: '{{{config.global.toolsdir}}}/terraform-inventory/{{{self.version}}}',
       exe: `{{{self.dir}}}/terraform-inventory`,
       zip:
         `terraform-inventory` + `_` +
@@ -141,7 +141,7 @@ class Prepare extends Command {
       name: 'ansible',
       range: `>= 2.0.0`,
       version: '2.0.0.2',
-      dir: '{{{compile.global.toolsdir}}}/ansible/{{{self.version}}}',
+      dir: '{{{config.global.toolsdir}}}/ansible/{{{self.version}}}',
       exe: `{{{self.dir}}}/pip/bin/ansible`,
       exePlaybook: `{{{self.dir}}}/pip/bin/ansible-playbook`,
       cmdPlaybook: `env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exePlaybook}}} `,
@@ -223,7 +223,7 @@ class Prepare extends Command {
   _makePubkeyFingerprint (props, cb) {
     const cmd = `ssh-keygen -lf '${props.pubkey}' | awk '{print $2}'`
     return this._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
-      this.runtime.compile.global.ssh.keypub_fingerprint = `${stdout}`.trim()
+      this.runtime.config.global.ssh.keypub_fingerprint = `${stdout}`.trim()
       return cb(err)
     })
   }

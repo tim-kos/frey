@@ -12,7 +12,7 @@ import YAML from 'js-yaml'
 import TOML from 'toml'
 import {unflatten} from 'flat'
 
-class Compile extends Command {
+class Config extends Command {
   constructor (name, runtime) {
     super(name, runtime)
     this.boot = [
@@ -231,4 +231,4 @@ class Compile extends Command {
   }
 }
 
-module.exports = Compile
+module.exports = Config

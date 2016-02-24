@@ -39,7 +39,7 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
-"${__node}" "${__root}/${__codelib}/cli.js" compile \
+"${__node}" "${__root}/${__codelib}/cli.js" config \
   --cfg-var "global.ssh.keysdir=${__dir}" \
   --no-color \
   --verbose \

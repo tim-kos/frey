@@ -1,7 +1,7 @@
 --> Frey version '0.3.1'
---> Will run: [ 'init', 'compile', 'prepare', 'validate' ]
+--> Will run: [ 'init', 'config', 'prepare', 'validate' ]
 --> {hostname} - init
---> {hostname} - compile
+--> {hostname} - config
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-gitless/frey-frey-gitless.pem'
 Creating public key '{tmpdir}/frey-gitless/frey-frey-gitless.pub'

@@ -26,15 +26,15 @@ class Install extends Command {
       args.push('-v')
     }
 
-    const connection = _.get(this.runtime, 'compile.global.connection')
+    const connection = _.get(this.runtime, 'config.global.connection')
     if (connection !== undefined) {
       args.push(`--connection=${connection}`)
       args.push(`--extra-vars="variable_host=${connection}"`)
       args.push(`--inventory-file="${connection},"`)
     } else {
-      args.push(`--user=${this.runtime.compile.global.ssh.user}`)
+      args.push(`--user=${this.runtime.config.global.ssh.user}`)
       args.push(`--inventory-file=${terraformInvExe}`)
-      args.push(`--private-key=${this.runtime.compile.global.ssh.keyprv_file}`)
+      args.push(`--private-key=${this.runtime.config.global.ssh.keyprv_file}`)
     }
 
     // args.push('--sudo')

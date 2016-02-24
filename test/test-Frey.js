@@ -3,19 +3,19 @@ import { expect } from 'chai'
 
 describe('Frey', () => {
   describe('_composeChain', () => {
-    it('should not add compile if the command was compile', done => {
+    it('should not add config if the command was config', done => {
       const frey = new Frey()
 
       const options = {
-        _: ['compile'],
-        bailAfter: 'compile'
+        _: ['config'],
+        bailAfter: 'config'
       }
 
       frey._composeChain(options, (err, filteredChain) => {
         expect(err).to.equal(null)
         expect(filteredChain).to.deep.equal([
           'init',
-          'compile'
+          'config'
         ])
         done()
       })
@@ -32,7 +32,7 @@ describe('Frey', () => {
         expect(err).to.equal(null)
         expect(filteredChain).to.deep.equal([
           'init',
-          'compile',
+          'config',
           'prepare',
           'docbuild'
         ])
@@ -50,7 +50,7 @@ describe('Frey', () => {
       frey._composeChain(options, (err, filteredChain) => {
         expect(err).to.equal(null)
         expect(filteredChain).to.deep.equal([
-          'init', 'compile', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
+          'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'launch',
           'install', 'deploy', 'restart', 'show'
         ])
         done()
@@ -69,7 +69,7 @@ describe('Frey', () => {
         expect(err).to.equal(null)
         expect(filteredChain).to.deep.equal([
           'init',
-          'compile',
+          'config',
           'prepare',
           'deploy'
         ])
@@ -89,7 +89,7 @@ describe('Frey', () => {
         expect(err).to.equal(null)
         expect(filteredChain).to.deep.equal([
           'init',
-          'compile',
+          'config',
           'prepare',
           'refresh',
           'validate',
