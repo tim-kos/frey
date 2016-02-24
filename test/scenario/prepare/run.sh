@@ -16,6 +16,10 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
+__node="node"; __codelib="lib"
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  __node="babel-node"; __codelib="src"
+fi
 
 # We don't want to enforce PIP versions since that's affects the
 # user's global state.
@@ -26,8 +30,7 @@ echo "ACCPTST:STDIO_SKIP_COMPARE"
 
 rm -f "${__sysTmpDir}/frey-prepare"* || true
 
-# babel-node "${__root}/src/cli.js" prepare \
-node "${__root}/lib/cli.js" prepare \
+"${__node}" "${__root}/${__codelib}/cli.js" prepare \
   --force-yes \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --verbose \
