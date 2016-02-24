@@ -24,7 +24,6 @@ Unreleased and unplanned todos
 
 - [ ] Rename Launch to infra? Install also has install in Freyfile
 - [ ] Remove other config ambiguity, then Rename Compile to Config
-- [ ] Deprecate `FREY__RUNTIME` in favor of `{{{}}}`
 - [ ] Terminology: Project vs Config vs Options. No more recipe
 - [ ] Abstract both Terraform and Ansible as App classes
 - [ ] Catch toml parsing errors in a nicer way (forget a quote, see what happens)
@@ -33,6 +32,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Deprecate `FREY__RUNTIME` in favor of `{{{}}}`
 - [x] Rename ansibleCfg to settings (terraform parallelism is also a setting)
 - [x] Make it so that any `FREY_` env var, is added as a ansible var and made available in env
 - [x] Make it so that any `FREY_` env var, is added as a terraform `var` and made available in env

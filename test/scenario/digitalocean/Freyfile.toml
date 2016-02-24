@@ -1,5 +1,3 @@
-[infra.variable.FREY__RUNTIME__SSH__KEYPUB_FILE]
-
 [infra.provider.digitalocean]
   token = "${var.FREY_DO_TOKEN}"
 
@@ -12,7 +10,7 @@
 
 [infra.resource.digitalocean_ssh_key.freytest-sshkey]
   name       = "Frey test"
-  public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
+  public_key = "${file('{{{config.global.ssh.keypub_file}}})'}"
 
 
 [install.settings]

@@ -1,10 +1,6 @@
 [infra.settings]
   parallelism = 1
 
-[infra.variable.FREY__RUNTIME__SSH__KEYPUB_FILE]
-[infra.variable.FREY__RUNTIME__SSH__KEYPRV_FILE]
-[infra.variable.FREY__RUNTIME__SSH__USER]
-
 [infra.output.public_address]
   value = "${openstack_compute_instance_v2.freytest_app.access_ip_v4}"
 
@@ -18,7 +14,7 @@
 # keypair
 [infra.resource.openstack_compute_keypair_v2.freytest]
   name       = "freytest"
-  public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
+  public_key = "${file('{{{config.global.ssh.keypub_file}}}')}"
 
 # network
 [infra.resource.openstack_networking_network_v2.freytest]
@@ -89,8 +85,8 @@
     ]
 
     [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec.connection]
-      key_file = "${var.FREY__RUNTIME__SSH__KEYPRV_FILE}"
-      user     = "${var.FREY__RUNTIME__SSH__USER}"
+      key_file = "{{{config.global.ssh.keyprv_file}}}"
+      user     = "{{{config.global.ssh.user}}}"
 
 
 [install.settings.defaults]

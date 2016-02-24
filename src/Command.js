@@ -75,10 +75,6 @@ class Command extends Base {
       }
     })
 
-    childEnv['TF_VAR_FREY__RUNTIME__SSH__USER'] = this.runtime.compile.global.ssh.user
-    childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPUB_FILE'] = this.runtime.compile.global.ssh.keypub_file
-    childEnv['TF_VAR_FREY__RUNTIME__SSH__KEYPRV_FILE'] = this.runtime.compile.global.ssh.keyprv_file
-
     return childEnv
   }
 
