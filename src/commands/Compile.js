@@ -48,7 +48,22 @@ class Compile extends Command {
         return cb(err)
       }
 
-      tomlParsedItems.push(TOML.parse(`${buf}`))
+      let parsed = {}
+      let error
+      try {
+        parsed = TOML.parse(`${buf}`)
+      } catch (e) {
+        error = e
+      }
+
+      if (!parsed || error) {
+        let msg = `Could not parse Freyfile TOML starting with: \n\n'` + _.truncate(buf) + `'\n\n`
+        msg += error
+        msg += '\n\nHint: Did you not surround your strings with double-quotes?'
+        return cb(new Error(msg))
+      }
+
+      tomlParsedItems.push(parsed)
       return cb(null, tomlParsedItems)
     })
   }
