@@ -127,7 +127,7 @@ class Prepare extends Command {
       name: 'pip',
       exe: 'pip',
       version: '7.1.2',
-      range: `>= 6.0.0`,
+      range: `>= {{{self.version}}}`,
       cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
         const version = `${stdout}`.trim().split('\n')[0].split(/\s+/)[1].replace('v', '')
