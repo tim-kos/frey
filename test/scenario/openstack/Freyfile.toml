@@ -14,7 +14,7 @@
 # keypair
 [infra.resource.openstack_compute_keypair_v2.freytest]
   name       = "freytest"
-  public_key = "${file('{{{config.global.ssh.keypub_file}}}')}"
+  public_key = "${file(\"{{{config.global.ssh.keypub_file}}}\")}"
 
 # network
 [infra.resource.openstack_networking_network_v2.freytest]
