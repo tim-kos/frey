@@ -31,3 +31,5 @@ rm -f "${__sysTmpDir}/frey-sshkeygen.pub" || true
   --bail-after prepare
 
 ls "${__sysTmpDir}/frey-sshkeygen."* || true
+
+rm -f Frey-residu* 2>&1 > /dev/null || true

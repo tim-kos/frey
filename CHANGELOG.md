@@ -23,12 +23,13 @@ Unreleased and unplanned todos
 
 ### v0.3.2 (Unreleased)
 
-- [ ] Terminology: Project vs Config vs Options. No more recipe
-- [ ] - role: ":frey:/consul/v1.0.0"
+- [ ] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
+- [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Terminology: Project vs Config vs Options. No more recipe
 - [x] Rename Launch to Infra
 - [x] Remove config ambiguity and rename Compile to Config
 - [x] Catch toml parsing errors in a nicer way (forget a quote, see what happens)

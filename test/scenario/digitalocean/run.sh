@@ -47,4 +47,5 @@ if true; then trap destroy EXIT; fi
   --force-yes \
 || false
 
+rm -f Frey-residu* 2>&1 > /dev/null || true
 echo "Finished"

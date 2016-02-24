@@ -45,4 +45,6 @@ echo "Running help on all required tools"
 
 echo "All tools were able to execute"
 
+rm -f Frey-residu* 2>&1 > /dev/null || true
+
 exit 0

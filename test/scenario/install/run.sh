@@ -46,4 +46,6 @@ FREY_SHOULD_BE_AS_VAR_IN_ANSIBLE=now \
   --bail \
 || false
 
+rm -f Frey-residu* 2>&1 > /dev/null || true
+
 echo "Finished"

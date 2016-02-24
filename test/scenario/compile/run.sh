@@ -52,7 +52,7 @@ for file in $(ls Frey-residu-*); do
   cat "${file}"
   echo ""
   echo ""
-  rm -f "${file}" 2>&1 > /dev/null
 done
 
+rm -f Frey-residu* 2>&1 > /dev/null || true
 exit 0

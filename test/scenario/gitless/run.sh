@@ -27,3 +27,5 @@ cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}/frey-gitless" \
   --projectdir "${__sysTmpDir}/frey-gitless/" \
   --bail
+
+rm -f Frey-residu* 2>&1 > /dev/null || true
