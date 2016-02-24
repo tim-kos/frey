@@ -68,7 +68,7 @@ class Init extends Command {
 
   _paths (cargo, cb) {
     return cb(null, {
-      ansibleCfg: this.bootCargo._cliargs.projectdir + '/Frey-residu-ansible.cfg',
+      ansibleSettingsFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-ansible.cfg',
       planFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-terraform.plan',
       infraFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-infra.tf.json',
       playbookFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-install.yml',

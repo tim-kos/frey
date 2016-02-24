@@ -66,10 +66,12 @@ class Compile extends Command {
   _applyDefaults (cargo, cb) {
     // Defaults
     const defaults = {
-      global: {
-        terraform: {
+      infra: {
+        settings: {
           parallelism: '{{{init.os.cores}}}'
-        },
+        }
+      },
+      global: {
         toolsdir: '{{{init.os.home}}}/.frey/tools',
         ssh: {
           keysdir: '{{{init.os.home}}}/.ssh',
@@ -155,11 +157,11 @@ class Compile extends Command {
   }
 
   _writeAnsibleCfg (cargo, cb) {
-    const cfgBlock = _.get(this.bootCargo._renderConfig, 'install.config')
+    const cfgBlock = _.get(this.bootCargo._renderConfig, 'install.settings')
 
     if (!cfgBlock) {
       debug('No config instructions found in merged toml')
-      fs.unlink(this.runtime.init.paths.ansibleCfg, err => {
+      fs.unlink(this.runtime.init.paths.ansibleSettingsFile, err => {
         if (err) {
           // That's not fatal
         }
@@ -171,7 +173,7 @@ class Compile extends Command {
     let encoded = INI.encode(cfgBlock)
     if (!encoded) {
       debug({cfgBlock: cfgBlock})
-      return cb(new Error('Unable to convert project to ansibleCfg INI'))
+      return cb(new Error('Unable to convert project to ansibleSettingsFile INI'))
     }
 
     // Ansible strips over a quoted `ssh_args="-o x=y -o w=z"`, as it uses exec to call
@@ -180,8 +182,8 @@ class Compile extends Command {
     // this point, the replace has to be limited in scope:
     encoded = encoded.replace(/\"/g, '')
 
-    debug('Writing %s', this.runtime.init.paths.ansibleCfg)
-    return fs.writeFile(this.runtime.init.paths.ansibleCfg, encoded, cb)
+    debug('Writing %s', this.runtime.init.paths.ansibleSettingsFile)
+    return fs.writeFile(this.runtime.init.paths.ansibleSettingsFile, encoded, cb)
   }
 
   _writeAnsiblePlaybook (cargo, cb) {

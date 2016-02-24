@@ -79,9 +79,9 @@ Reading '{root}/test/scenario/converter/Freyfile.toml'
       description = "The region of AWS, for AMI lookups."
 
 
-[install.config.defaults]
+[install.settings.defaults]
 
-[install.config.ssh_connection]
+[install.settings.ssh_connection]
 ssh_args = -o ControlMaster=auto -o ControlPersist=60s
 
 [[install.playbooks]]

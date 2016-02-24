@@ -21,7 +21,7 @@ Unreleased and unplanned todos
 
 ### v0.3.2 (Unreleased)
 
-- [ ] Rename ansibleCfg to settings (terraform parallelism is also a setting)
+- [ ] Rename Launch to infra? Install also has install in Freyfile
 - [ ] Remove other config ambiguity, then Rename Compile to Config
 - [ ] Deprecate `FREY__RUNTIME` in favor of `{{{}}}`
 - [ ] Terminology: Project vs Config vs Options. No more recipe
@@ -32,6 +32,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show 
+- [x] Rename ansibleCfg to settings (terraform parallelism is also a setting)
 - [x] Make it so that any `FREY_` env var, is added as a ansible var and made available in env
 - [x] Make it so that any `FREY_` env var, is added as a terraform `var` and made available in env
 - [x] Add test scenario for compile

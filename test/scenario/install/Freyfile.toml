@@ -1,10 +1,10 @@
 [global]
   connection = "local"
 
-[install.config.defaults]
+[install.settings.defaults]
   # https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
 
-[install.config.ssh_connection]
+[install.settings.ssh_connection]
   ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
 
 [[install.playbooks]]

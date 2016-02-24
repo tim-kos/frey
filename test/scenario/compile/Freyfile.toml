@@ -1,14 +1,14 @@
 [global]
   connection = "local"
 
-[global.terraform]
+[infra.settings]
   parallelism = 1
 
 [infra.provider.aws]
   access_key = "${var.FREY_AWS_ACCESS_KEY}"
   region     = "us-east-1"
 
-[install.config.ssh_connection]
+[install.settings.ssh_connection]
   ssh_args = "-o Hostname={{{config.global.connection}}}host -o ControlMaster=auto -o ControlPersist=60s"
 
 [[install.playbooks.tasks]]

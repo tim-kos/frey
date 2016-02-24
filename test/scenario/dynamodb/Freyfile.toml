@@ -1,4 +1,4 @@
-[global.terraform]
+[infra.settings]
   parallelism = 1
 
 [infra]

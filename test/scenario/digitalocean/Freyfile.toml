@@ -15,10 +15,10 @@
   public_key = "${file(var.FREY__RUNTIME__SSH__KEYPUB_FILE)}"
 
 
-[install.config]
-  [install.config.defaults]
+[install.settings]
+  [install.settings.defaults]
 
-  [install.config.ssh_connection]
+  [install.settings.ssh_connection]
     ssh_args = "-vvvv -o User=root -o ControlMaster=auto -o ControlPersist=60s"
 
 

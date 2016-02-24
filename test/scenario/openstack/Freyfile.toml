@@ -1,4 +1,4 @@
-[global.terraform]
+[infra.settings]
   parallelism = 1
 
 [infra.variable.FREY__RUNTIME__SSH__KEYPUB_FILE]
@@ -93,12 +93,12 @@
       user     = "${var.FREY__RUNTIME__SSH__USER}"
 
 
-[install.config.defaults]
+[install.settings.defaults]
   # https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
   remote_user       = "root"
   host_key_checking = "False"
 
-[install.config.ssh_connection]
+[install.settings.ssh_connection]
   ssh_args = "-oControlMaster=auto -oControlPersist=60s -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no"
 
 [[install.playbooks]]

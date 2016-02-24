@@ -33,7 +33,7 @@ function destroy() {
   echo "(maybe) Destroying.."
   "${__node}" "${__root}/lib/cli.js" destroy \
     --force-yes \
-    --cfg-var="global.terraform.parallelism=1" \
+    --cfg-var="infra.settings.parallelism=1" \
   > /dev/null 2>&1 || true
 }
 

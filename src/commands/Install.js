@@ -51,7 +51,7 @@ class Install extends Command {
       env.ANSIBLE_NOCOLOR = 'true'
     }
 
-    env.ANSIBLE_CONFIG = this.runtime.init.paths.ansibleCfg
+    env.ANSIBLE_CONFIG = this.runtime.init.paths.ansibleSettingsFile
     env.TF_STATE = this.runtime.init.paths.stateFile
 
     return cb(null, env)
