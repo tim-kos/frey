@@ -12,9 +12,9 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
-__node="node"
+__node="node"; __codelib="lib"
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-  __node="babel-node"
+  __node="babel-node"; __codelib="src"
 fi
 
 
@@ -38,7 +38,7 @@ PATH=${PATH} \
 USER=${USER} \
 HOME=${HOME} \
 FREY_SHOULD_BE_AS_VAR_IN_ANSIBLE=now \
-"${__node}" "${__root}/src/cli.js" install \
+"${__node}" "${__root}/${__codelib}/cli.js" install \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --no-color \
   --verbose \

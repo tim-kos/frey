@@ -16,9 +16,9 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
-__node="node"
+__node="node"; __codelib="lib"
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-  __node="babel-node"
+  __node="babel-node"; __codelib="src"
 fi
 
 # We don't want to enforce PIP versions since that's affects the
@@ -36,7 +36,7 @@ PATH=${PATH} \
 USER=${USER} \
 HOME=${HOME} \
 FREY_SHOULD_BE_AS_VAR_IN_TERRAFORM=now \
-"${__node}" "${__root}/src/cli.js" compile \
+"${__node}" "${__root}/${__codelib}/cli.js" compile \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --cfg-var "infra.provider.aws.region=eu-west-1" \
   --verbose \

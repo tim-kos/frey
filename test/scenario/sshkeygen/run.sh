@@ -12,21 +12,21 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
-__node="node"
+__node="node"; __codelib="lib"
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-  __node="babel-node"
+  __node="babel-node"; __codelib="src"
 fi
 
 
 rm -f "${__sysTmpDir}/frey-sshkeygen."* || true
-"${__node}" "${__root}/lib/cli.js" \
+"${__node}" "${__root}/${__codelib}/cli.js" \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --bail-after prepare
 
 ls "${__sysTmpDir}/frey-sshkeygen."* || true
 
 rm -f "${__sysTmpDir}/frey-sshkeygen.pub" || true
-"${__node}" "${__root}/lib/cli.js" \
+"${__node}" "${__root}/${__codelib}/cli.js" \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --bail-after prepare
 
