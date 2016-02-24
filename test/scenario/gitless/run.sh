@@ -22,5 +22,5 @@ node "${__root}/lib/cli.js" validate \
   --verbose \
   --force-yes \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}/frey-gitless" \
-  --recipeDir "${__sysTmpDir}/frey-gitless/" \
+  --projectdir "${__sysTmpDir}/frey-gitless/" \
   --bail

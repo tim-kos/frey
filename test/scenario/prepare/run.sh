@@ -31,7 +31,7 @@ node "${__root}/lib/cli.js" prepare \
   --force-yes \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --verbose \
-  --recipe-dir "." \
+  --projectdir "." \
   --bail
 
 echo "Running help on all required tools"

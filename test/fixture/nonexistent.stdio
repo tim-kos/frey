@@ -5,7 +5,7 @@ Commands:
   compile     ▽ Compiles configuration and loads it
   prepare     ▽ Install dependencies like Terraform
   refresh     ▽ Refreshes current infra state and saves to terraform.tfstate
-  validate    ▽ Checks your recipes
+  validate    ▽ Checks your projects
   plan        ▽ Shows infra changes and saves in an executable plan
   backup      ▽ Backs up server state
   launch      ▽ Launches virtual machines at a provider
@@ -19,9 +19,9 @@ Commands:
   remote      Execute a remote command - or opens console
 
 Options:
-  --recipeDir              Directory that contains the Freyfile.toml. Frey will traverse upwards if empty.  [string]
-  --app                    Name of application for which we're creating infrastructure  [string] [default: "{{{recipeDir}}}|basename"]
-  --cfg-var                 Configuration keys to overwrite such as: global.ssh.keysdir={{{os.home}}}/.ssh  [string]
+  --projectdir             Directory that contains the Freyfile.toml. Frey will traverse upwards if empty.  [string]
+  --app                    Name of application for which we're creating infrastructure  [string] [default: "{{{projectdir}}}|basename"]
+  --cfg-var                Configuration keys to overwrite such as: global.ssh.keysdir={{{os.home}}}/.ssh  [string]
   --force-yes              Answer yes to all questions (dangerous!)  [boolean] [default: false]
   --terraform-parallelism  Limit the number of concurrent operations. Useful for consistent test output  [default: 10]
   --tags                   A list of tags to execute in isolation  [string]

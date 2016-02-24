@@ -47,7 +47,7 @@ dissolve Frey as well.
 
 Frey has some opinionated and magical parts, but less so than Otto.
 
-You can define all of this in a single `Freyfile`. A Frefile is a recipe written in [TOML](https://github.com/toml-lang/toml).
+You can define all of this in a single `Freyfile`. A Freyfile is a project written in [TOML](https://github.com/toml-lang/toml).
 
 Alternatively you can point Frey to your existing
 Terraform `.tf` and Ansible `.yml` for creating web infrastructure.
@@ -70,7 +70,7 @@ All infra description is supposed to be saved in `./frey/*`, but this can be con
 
 There needs to be a `./.git` dir preset relative from your current directory.
 
-Keeping infra recipes together with the app is convenient and allows both to move
+Keeping infra projects together with the app is convenient and allows both to move
 at the same pace. If you revert to 2 years ago, you can also inspect the matching infra
 from that time.
 
@@ -116,14 +116,14 @@ facts     : "Show Ansible facts"
 
 ### Dedicated infra repository
 
-If you think it's better to keep the infra recipes outside of your own app code
+If you think it's better to keep the infra projects outside of your own app code
 for security reasons or similar, we recommend that alongside your `app` repo, you create an
-`infra-app` repo, where you'll keep Frey's recipes in. We recommend you then keep the recipes
-in the root, and run Frey with `--recipe-dir .`:
+`infra-app` repo, where you'll keep Frey's projects in. We recommend you then keep the projects
+in the root, and run Frey with `--projectdir .`:
 
 ```bash
 cd ~/code/infra-myapp
-frey --recipe-dir .
+frey --projectdir .
 ```
 
 ### Multiple setups in one repository
@@ -132,10 +132,10 @@ Also possible, via:
 
 ```bash
 cd ~/code/infra-myapp
-frey --recipe-dir ./envs/production
+frey --projectdir ./envs/production
 ```
 
-## Recipes
+## Projects
 
 Frey uses Terraform and Ansible to do the heavy lifting.
 
@@ -225,7 +225,7 @@ Unreleased and unplanned todos
 - [x] Ansible must run from configBase
 - [-] If you do a `frey install` you must trust that at least the Ansible files are re-compiled
 - [-] Re-introduce `init` for local prepare. Such as converting Freyfile to residu. Should be prefixed to chain of commands. Then a single install can benefit from it (remove the `refresh` from that acceptance test) and validation can be ran against it/them
-- [x] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default recipe dir
+- [x] Frey should traverse cwd upwards until it finds a Freyfile, and use that as default project dir
 - [x] Switch to local npm install if available via LiftOff
 - [x] Consider storing residu files in ~/.frey/tmp/
 - [x] Default appname should be basename of dirname of Freyfile, not pwd
@@ -250,7 +250,7 @@ Unreleased and unplanned todos
 - [x] Implement a bailAfter, use it for DynamoDB scenario
 - [x] Amazon free tier dynamodb Travis tests 
 - [x] Runtime can be a command module, which can be prefixed to the runChain. Prepare can also be prepended to all. Afterwards, scenarios won't need to be ordered
-- [x] `./Freyfile.toml` ? This means recipeDir defaults to `.`, and .git check should traverse upwards 'indefinitely'
+- [x] `./Freyfile.toml` ? This means projectdir defaults to `.`, and .git check should traverse upwards 'indefinitely'
 - [x] Move validation to Validate class
 - [x] Port Prepare SSH Keys
 - [x] Port refresh

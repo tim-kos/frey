@@ -9,12 +9,12 @@ class Validate extends Command {
   constructor (name, runtime) {
     super(name, runtime)
     this.boot = [
-      '_findClosestRecipeGit'
+      '_findClosestProjectGit'
     ]
   }
 
-  _findClosestRecipeGit (cargo, cb) {
-    return this._findClosestGit(this.runtime.init.cliargs.recipeDir, filepath => {
+  _findClosestProjectGit (cargo, cb) {
+    return this._findClosestGit(this.runtime.init.cliargs.projectdir, filepath => {
       return cb(null, filepath)
     })
   }
@@ -47,8 +47,8 @@ class Validate extends Command {
   }
 
   main (cargo, cb) {
-    if (!this.bootCargo._findClosestRecipeGit) {
-      const msg = 'Frey requires recipe (and state) to be under Git, and residu to be ignored.'
+    if (!this.bootCargo._findClosestProjectGit) {
+      const msg = 'Frey requires project (and state) to be under Git, and residu to be ignored.'
       return cb(new Error(msg))
     }
 

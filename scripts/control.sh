@@ -289,7 +289,7 @@ if [ "${cmd}" = "install" ]; then
       --sudo \
     "${__playbookFile}"
 
-  # inParallel "remote" "bash -c \"source ~/recipe/env/config.sh && sudo -E bash ~/recipe/install.sh\""
+  # inParallel "remote" "bash -c \"source ~/project/env/config.sh && sudo -E bash ~/project/install.sh\""
 fi
 
 if [ "${cmd}" = "upload" ]; then

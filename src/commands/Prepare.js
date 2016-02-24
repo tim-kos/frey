@@ -10,7 +10,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Prepare extends Command {
   constructor (name, runtime) {
     super(name, runtime)
-    this.dir = this.runtime.init.cliargs.recipeDir
+    this.dir = this.runtime.init.cliargs.projectdir
   }
 
   main (cargo, cb) {
@@ -24,8 +24,8 @@ class Prepare extends Command {
 
     deps.push({
       type: 'Dir',
-      name: 'recipeDir',
-      dir: `{{{init.cliargs.recipeDir}}}`
+      name: 'projectdir',
+      dir: `{{{init.cliargs.projectdir}}}`
     })
 
     deps.push({

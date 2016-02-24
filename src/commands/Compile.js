@@ -25,7 +25,7 @@ class Compile extends Command {
 
   _findTomlFiles (cargo, cb) {
     let tomlFiles = []
-    const pattern = `${this.runtime.init.cliargs.recipeDir}/*.toml`
+    const pattern = `${this.runtime.init.cliargs.projectdir}/*.toml`
     debug(`Reading from '${pattern}'`)
     return glob(pattern, (err, files) => {
       if (err) {
@@ -80,7 +80,7 @@ class Compile extends Command {
         const encoded = JSON.stringify(val, null, '  ')
         if (!encoded) {
           debug({val: val})
-          return callback(new Error('Unable to convert recipe to Terraform infra JSON'))
+          return callback(new Error('Unable to convert project to Terraform infra JSON'))
         }
 
         filesWritten.push(this.runtime.init.paths.infraFile)
@@ -104,7 +104,7 @@ class Compile extends Command {
         let encoded = INI.encode(val)
         if (!encoded) {
           debug({val: val})
-          return callback(new Error('Unable to convert recipe to ansibleCfg INI'))
+          return callback(new Error('Unable to convert project to ansibleCfg INI'))
         }
 
         // Ansible strips over a quoted `ssh_args="-o x=y -o w=z"`, as it uses exec to call
@@ -134,7 +134,7 @@ class Compile extends Command {
         const encoded = YAML.safeDump(val)
         if (!encoded) {
           debug({val: val})
-          return callback(new Error('Unable to convert recipe to Ansible playbook YAML'))
+          return callback(new Error('Unable to convert project to Ansible playbook YAML'))
         }
 
         filesWritten.push(this.runtime.init.paths.playbookFile)
@@ -195,7 +195,7 @@ class Compile extends Command {
     config = utils.render(config, this.runtime)
 
     // Resolve to absolute paths
-    config.global.toolsdir = path.resolve(this.runtime.init.cliargs.recipeDir, config.global.toolsdir)
+    config.global.toolsdir = path.resolve(this.runtime.init.cliargs.projectdir, config.global.toolsdir)
     config.global.ssh.keysdir = path.resolve(config.global.ssh.keysdir)
 
     return cb(null, config)

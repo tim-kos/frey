@@ -42,8 +42,8 @@ class Init extends Command {
       cliargs.tags = ''
     }
 
-    if (cliargs.recipeDir === undefined) {
-      cliargs.recipeDir = this.bootCargo._os.cwd
+    if (cliargs.projectdir === undefined) {
+      cliargs.projectdir = this.bootCargo._os.cwd
     }
 
     // Render interdependent arguments
@@ -60,18 +60,18 @@ class Init extends Command {
     })
 
     // turn into absolute path
-    cliargs.recipeDir = path.resolve(cliargs.recipeDir)
+    cliargs.projectdir = path.resolve(cliargs.projectdir)
 
     return cb(null, cliargs)
   }
 
   _paths (cargo, cb) {
     return cb(null, {
-      ansibleCfg: this.bootCargo._cliargs.recipeDir + '/Frey-residu-ansible.cfg',
-      planFile: this.bootCargo._cliargs.recipeDir + '/Frey-residu-terraform.plan',
-      infraFile: this.bootCargo._cliargs.recipeDir + '/Frey-residu-infra.tf.json',
-      playbookFile: this.bootCargo._cliargs.recipeDir + '/Frey-residu-install.yml',
-      stateFile: this.bootCargo._cliargs.recipeDir + '/Frey-state-terraform.tfstate'
+      ansibleCfg: this.bootCargo._cliargs.projectdir + '/Frey-residu-ansible.cfg',
+      planFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-terraform.plan',
+      infraFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-infra.tf.json',
+      playbookFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-install.yml',
+      stateFile: this.bootCargo._cliargs.projectdir + '/Frey-state-terraform.tfstate'
     })
   }
 
