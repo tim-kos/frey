@@ -8,7 +8,6 @@ Unreleased and unplanned todos
 - [ ] Dynamodb scenario can evolve to be a full run, passing all stages
 - [ ] Indent stdout/err
 - [ ] More tests!
-- [ ] How to implement different roles? Db/www/etc?
 - [ ] Empty out and remove `Base` class?
 - [ ] website: Console window like http://lebab.io/ ?
 - [ ] website: Take uppy as a base maybe?
@@ -19,17 +18,18 @@ Unreleased and unplanned todos
 - [ ] Command's exe functions should mostly be in a util class
 - [ ] Enable DO support
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
-- [ ] Abstract both Terraform and Ansible as App classes
+- [ ] Abstract both Terraform and Ansible into App classes
 
 ### v0.3.2 (Unreleased)
 
-- [ ] Consider putting `paths` in `config`, and giving them simpler names like `roles`
+- [ ] How to implement different roles? Db/www/etc?
+- [ ] Consider putting `paths` in `config`, and giving them simpler names like `roles`, and add `tooldir` to it
 - [ ] Add safety prompts for destructive Launches, and Destroy
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
 - [ ] Implement remote
 - [ ] Implement restart
-- [ ] Implement show 
+- [ ] Implement show / inspect
 - [x] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
 - [x] Terminology: Project vs Config vs Options. No more recipe
 - [x] Rename Launch to Infra
