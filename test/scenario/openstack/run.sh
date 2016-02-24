@@ -48,6 +48,8 @@ if true; then trap destroy EXIT; fi
   --bailAfter install \
 || false
 
+rm -f Frey-residu* 2>&1 > /dev/null || true
+
 # If you want to test just the install (don't forget to disable destroys):
 #
 # "${__node}" "${__root}/${__codelib}/cli.js" install \
