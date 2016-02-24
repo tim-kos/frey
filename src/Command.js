@@ -16,13 +16,6 @@ class Command extends Base {
     this.runtime = runtime
   }
 
-  cfg (path, val) {
-    if (val === undefined) {
-      return _.get(this.runtime, 'compile.' + path)
-    }
-    throw new Error('Saving config is not supported (ever?)')
-  }
-
   _cmdYesNo (cmd, cb) {
     return this.promptYesNo(`May I run '${cmd}' for you? [yes|No]`, (ok) => {
       if (!ok) {

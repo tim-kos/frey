@@ -31,7 +31,7 @@ class Install extends Command {
     args.push(`--user=${this.runtime.compile.global.ssh.user}`)
     args.push(`--private-key=${this.runtime.compile.global.ssh.keyprv_file}`)
 
-    const connection = this.cfg('global.connection')
+    const connection = _.get(this.runtime, 'compile.global.connection')
     if (connection !== undefined) {
       args.push(`--connection=${connection}`)
       args.push(`--extra-vars="variable_host=${connection}"`)
