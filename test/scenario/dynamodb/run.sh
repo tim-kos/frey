@@ -12,14 +12,17 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
+__node="node"
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  __node="babel-node"
+fi
 
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-dynamodb"* || true
 
 function destroy() {
   echo "(maybe) Destroying.."
-  # babel-node "${__root}/src/cli.js" destroy \
-  node "${__root}/lib/cli.js" destroy \
+  "${__node}" "${__root}/lib/cli.js" destroy \
     --force-yes \
     --cfg-var="global.terraform.parallelism=1" \
   > /dev/null 2>&1 || true
@@ -31,8 +34,7 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
-# babel-node "${__root}/src/cli.js" \
-node "${__root}/lib/cli.js" \
+"${__node}" "${__root}/lib/cli.js" \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --no-color \
   --verbose \

@@ -16,6 +16,10 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 __sysTmpDir="${TMPDIR:-/tmp}"
 __sysTmpDir="${__sysTmpDir%/}" # <-- remove trailing slash on macosx
+__node="node"
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+  __node="babel-node"
+fi
 
 # We don't want to enforce PIP versions since that's affects the
 # user's global state.
@@ -30,8 +34,9 @@ rm -f "${__sysTmpDir}/frey-prepare"* || true
 env -i \
 PATH=${PATH} \
 USER=${USER} \
+HOME=${HOME} \
 FREY_SHOULD_BE_AS_VAR_IN_TERRAFORM=now \
-babel-node "${__root}/src/cli.js" compile \
+"${__node}" "${__root}/src/cli.js" compile \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --cfg-var "infra.provider.aws.region=eu-west-1" \
   --verbose \
