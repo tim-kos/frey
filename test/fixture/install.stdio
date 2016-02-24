@@ -22,8 +22,11 @@ ok: [local]
 TASK [Execute arbitrary command] ***********************************************
 changed: [local] => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "{root}/test/scenario/install", "stdout_lines": ["{root}/test/scenario/install"], "warnings": []}
 
+TASK [Showcase we can access FREY_ environment variables] **********************
+changed: [local] => {"changed": true, "cmd": ["echo", "now"], "delta": "{duration}", "end": "{longtime}", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "now", "stdout_lines": ["now"], "warnings": []}
+
 PLAY RECAP *********************************************************************
-local                      : ok=2    changed=1    unreachable=0    failed=0   
+local                      : ok=3    changed=2    unreachable=0    failed=0   
 
 Done
 Finished
