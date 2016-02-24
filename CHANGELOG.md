@@ -24,6 +24,7 @@ Unreleased and unplanned todos
 ### v0.3.2 (Unreleased)
 
 - [ ] Consider putting `paths` in `config`, and giving them simpler names like `roles`
+- [ ] Add safety prompts for destructive Launches, and Destroy
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
 - [ ] Implement remote
