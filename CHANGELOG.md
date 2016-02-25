@@ -1,6 +1,6 @@
-## Changelog
+# Changelog
 
-### Ideabox
+## Ideabox
 
 Unreleased and unplanned todos
 
@@ -21,7 +21,7 @@ Unreleased and unplanned todos
 - [ ] Abstract both Terraform and Ansible into App classes
 - [ ] Remote state in S3 feature
 
-### v0.3.2 (Unreleased)
+## v0.3.3 (Unreleased)
 
 - [ ] How to implement different roles? Db/www/etc?
 - [ ] Research if ssh private keys can be saved in environment keys. Then we can add Travis goodness
@@ -32,6 +32,10 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show / inspect
+
+## v0.3.2 (2016-02-25)
+
+- [ ] Release v0.3.2
 - [x] Put most `paths` in `config`, and give them  more consistent names
 - [x] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
 - [x] Terminology: Project vs Config vs Options. No more recipe
@@ -53,7 +57,7 @@ Unreleased and unplanned todos
 - [x] Fix that `this.runtime.Runtime` is thing now. Remove `Runtime` alltogehter?
 - [x] Let compile go before prepare so we can use (ssh) config in prepare
 
-### v0.3.1 (2016-02-19)
+## v0.3.1 (2016-02-19)
 
 - [x] Implement install
 - [x] Signify chained via ▽
