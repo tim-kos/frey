@@ -19,11 +19,14 @@ Unreleased and unplanned todos
 - [ ] Enable DO support
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
 - [ ] Abstract both Terraform and Ansible into App classes
+- [ ] Remote state in S3 feature
 
 ### v0.3.2 (Unreleased)
 
 - [ ] How to implement different roles? Db/www/etc?
 - [ ] Consider putting `paths` in `config`, and giving them simpler names like `roles`, and add `tooldir` to it
+- [ ] Research if ssh private keys can be saved in environment keys. Then we can add Travis goodness
+- [ ] Add multi-projectfile example
 - [ ] Add safety prompts for destructive Launches, and Destroy
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
