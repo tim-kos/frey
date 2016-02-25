@@ -5,7 +5,7 @@ describe('Command', () => {
   describe('_toEnvFormat', () => {
     it('should transform periods', done => {
       const command = new Command('prepare',
-        {projectdir: '{{{init.os.cwd}}}/frey/production',
+        {project_dir: '{{{init.os.cwd}}}/frey/production',
         toolsDir: '{{{init.os.home}}}/.frey/tools'
       })
 

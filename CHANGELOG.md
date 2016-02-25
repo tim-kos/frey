@@ -24,7 +24,6 @@ Unreleased and unplanned todos
 ### v0.3.2 (Unreleased)
 
 - [ ] How to implement different roles? Db/www/etc?
-- [ ] Consider putting `paths` in `config`, and giving them simpler names like `roles`, and add `tooldir` to it
 - [ ] Research if ssh private keys can be saved in environment keys. Then we can add Travis goodness
 - [ ] Add multi-projectfile example
 - [ ] Add safety prompts for destructive Launches, and Destroy
@@ -33,6 +32,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show / inspect
+- [x] Put most `paths` in `config`, and give them  more consistent names
 - [x] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
 - [x] Terminology: Project vs Config vs Options. No more recipe
 - [x] Rename Launch to Infra

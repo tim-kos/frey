@@ -21,7 +21,7 @@ class Destroy extends Command {
     debug('Loaded config:')
     debug(this.runtime.config)
 
-    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
     terraformArgs.push(`-force`)
 
     return cb(null, terraformArgs)

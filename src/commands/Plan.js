@@ -21,8 +21,8 @@ class Plan extends Command {
     }
 
     terraformArgs.push('-refresh=false')
-    terraformArgs.push(`-out=${this.runtime.init.paths.planFile}`)
-    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
+    terraformArgs.push(`-out=${this.runtime.config.global.infra_plan_file}`)
+    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
 
     return cb(null, terraformArgs)
   }
@@ -42,7 +42,7 @@ class Plan extends Command {
         return cb(err)
       }
 
-      this._out(`--> Saved plan as '${this.runtime.init.paths.planFile}'\n`)
+      this._out(`--> Saved plan as '${this.runtime.config.global.infra_plan_file}'\n`)
 
       if (stdout.match(/No changes/)) {
         return cb(null)

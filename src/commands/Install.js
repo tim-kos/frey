@@ -39,7 +39,7 @@ class Install extends Command {
 
     // args.push('--sudo')
 
-    args.push(`${this.runtime.init.paths.playbookFile}`)
+    args.push(`${this.runtime.config.global.install_file}`)
 
     return cb(null, args)
   }
@@ -51,8 +51,8 @@ class Install extends Command {
       env.ANSIBLE_NOCOLOR = 'true'
     }
 
-    env.ANSIBLE_CONFIG = this.runtime.init.paths.ansibleSettingsFile
-    env.TF_STATE = this.runtime.init.paths.stateFile
+    env.ANSIBLE_CONFIG = this.runtime.config.global.ansible_settings_file
+    env.TF_STATE = this.runtime.config.global.infra_state_file
 
     return cb(null, env)
   }

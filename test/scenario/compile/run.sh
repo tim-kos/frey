@@ -40,7 +40,7 @@ FREY_SHOULD_BE_AS_VAR_IN_TERRAFORM=now \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --cfg-var "infra.provider.aws.region=eu-west-1" \
   --verbose \
-  --projectdir "." \
+  --project_dir "." \
   --bail
 
 file=Freyfile.toml

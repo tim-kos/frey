@@ -10,7 +10,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Prepare extends Command {
   constructor (name, runtime) {
     super(name, runtime)
-    this.dir = this.runtime.init.cliargs.projectdir
+    this.dir = this.runtime.init.cliargs.project_dir
   }
 
   main (cargo, cb) {
@@ -18,14 +18,14 @@ class Prepare extends Command {
 
     deps.push({
       type: 'Dir',
-      name: 'toolsdir',
-      dir: `{{{config.global.toolsdir}}}`
+      name: 'tools_dir',
+      dir: `{{{config.global.tools_dir}}}`
     })
 
     deps.push({
       type: 'Dir',
-      name: 'projectdir',
-      dir: `{{{init.cliargs.projectdir}}}`
+      name: 'project_dir',
+      dir: `{{{init.cliargs.project_dir}}}`
     })
 
     deps.push({
@@ -71,7 +71,7 @@ class Prepare extends Command {
       name: 'terraform',
       version: '0.6.11',
       range: `{{{self.version}}}`,
-      dir: `{{{config.global.toolsdir}}}/terraform/{{{self.version}}}`,
+      dir: `{{{config.global.tools_dir}}}/terraform/{{{self.version}}}`,
       exe: `{{{self.dir}}}/terraform`,
       zip:
         `terraform` + `_` +
@@ -98,7 +98,7 @@ class Prepare extends Command {
       name: 'terraformInventory',
       range: '0.6.0',
       version: '0.6',
-      dir: '{{{config.global.toolsdir}}}/terraform-inventory/{{{self.version}}}',
+      dir: '{{{config.global.tools_dir}}}/terraform-inventory/{{{self.version}}}',
       exe: `{{{self.dir}}}/terraform-inventory`,
       zip:
         `terraform-inventory` + `_` +
@@ -141,7 +141,7 @@ class Prepare extends Command {
       name: 'ansible',
       range: `>= 2.0.0`,
       version: '2.0.0.2',
-      dir: '{{{config.global.toolsdir}}}/ansible/{{{self.version}}}',
+      dir: '{{{config.global.tools_dir}}}/ansible/{{{self.version}}}',
       exe: `{{{self.dir}}}/pip/bin/ansible`,
       exePlaybook: `{{{self.dir}}}/pip/bin/ansible-playbook`,
       cmdPlaybook: `env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exePlaybook}}} `,

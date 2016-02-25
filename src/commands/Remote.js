@@ -21,7 +21,7 @@ class Remote extends Command {
       terraformArgs.push('-no-color')
     }
 
-    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
 
     return cb(null, terraformArgs)
   }

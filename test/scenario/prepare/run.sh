@@ -34,7 +34,7 @@ rm -f "${__sysTmpDir}/frey-prepare"* || true
   --force-yes \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
   --verbose \
-  --projectdir "." \
+  --project_dir "." \
   --bail
 
 echo "Running help on all required tools"

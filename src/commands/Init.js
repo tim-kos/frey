@@ -43,8 +43,8 @@ class Init extends Command {
       cliargs.tags = ''
     }
 
-    if (cliargs.projectdir === undefined) {
-      cliargs.projectdir = this.bootCargo._os.cwd
+    if (cliargs.project_dir === undefined) {
+      cliargs.project_dir = this.bootCargo._os.cwd
     }
 
     // Render interdependent arguments
@@ -61,19 +61,14 @@ class Init extends Command {
     })
 
     // turn into absolute path
-    cliargs.projectdir = path.resolve(cliargs.projectdir)
+    cliargs.project_dir = path.resolve(cliargs.project_dir)
 
     return cb(null, cliargs)
   }
 
   _paths (cargo, cb) {
     return cb(null, {
-      ansibleSettingsFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-ansible.cfg',
-      planFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-terraform.plan',
-      infraFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-infra.tf.json',
-      playbookFile: this.bootCargo._cliargs.projectdir + '/Frey-residu-install.yml',
-      stateFile: this.bootCargo._cliargs.projectdir + '/Frey-state-terraform.tfstate',
-      rolesDir: path.resolve(__dirname, '../../roles')
+      roles_dir: path.resolve(__dirname, '../../roles')
     })
   }
 

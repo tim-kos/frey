@@ -19,7 +19,7 @@ class Infra extends Command {
     }
 
     terraformArgs.push(`-parallelism=${this.runtime.config.infra.settings.parallelism}`)
-    terraformArgs.push(`-state=${this.runtime.init.paths.stateFile}`)
+    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
 
     return cb(null, terraformArgs)
   }
@@ -38,7 +38,7 @@ class Infra extends Command {
         return cb(err)
       }
 
-      this._out(`--> Saved state to '${this.runtime.init.paths.stateFile}'\n`)
+      this._out(`--> Saved state to '${this.runtime.config.global.infra_state_file}'\n`)
 
       return cb(null)
     })

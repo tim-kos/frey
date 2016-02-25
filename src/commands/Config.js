@@ -29,7 +29,7 @@ class Config extends Command {
 
   _findTomlFiles (cargo, cb) {
     let tomlFiles = []
-    const pattern = `${this.runtime.init.cliargs.projectdir}/*.toml`
+    const pattern = `${this.runtime.init.cliargs.project_dir}/*.toml`
     debug(`Reading from '${pattern}'`)
     return glob(pattern, (err, files) => {
       if (err) {
@@ -87,7 +87,12 @@ class Config extends Command {
         }
       },
       global: {
-        toolsdir: '{{{init.os.home}}}/.frey/tools',
+        tools_dir: '{{{init.os.home}}}/.frey/tools',
+        ansible_settings_file: '{{{init.cliargs.project_dir}}}/Frey-residu-ansible.cfg',
+        infra_plan_file: '{{{init.cliargs.project_dir}}}/Frey-residu-terraform.plan',
+        infra_file: '{{{init.cliargs.project_dir}}}/Frey-residu-infra.tf.json',
+        install_file: '{{{init.cliargs.project_dir}}}/Frey-residu-install.yml',
+        infra_state_file: '{{{init.cliargs.project_dir}}}/Frey-state-terraform.tfstate',
         ssh: {
           keysdir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
@@ -134,8 +139,14 @@ class Config extends Command {
     config = utils.render(config, {config: config}, {failhard: true})
 
     // Resolve to absolute paths
-    config.global.toolsdir = path.resolve(this.runtime.init.cliargs.projectdir, config.global.toolsdir)
-    config.global.ssh.keysdir = path.resolve(this.runtime.init.cliargs.projectdir, config.global.ssh.keysdir)
+    config.global.tools_dir = path.resolve(this.runtime.init.cliargs.project_dir, config.global.tools_dir)
+    config.global.ansible_settings_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.ansible_settings_file)
+    config.global.infra_plan_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.infra_plan_file)
+    config.global.infra_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.infra_file)
+    config.global.install_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.install_file)
+    config.global.infra_state_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.infra_state_file)
+
+    config.global.ssh.keysdir = path.resolve(this.runtime.init.cliargs.project_dir, config.global.ssh.keysdir)
 
     return cb(null, config)
   }
@@ -153,7 +164,7 @@ class Config extends Command {
 
     if (!cfgBlock) {
       debug('No infra instructions found in merged toml')
-      fs.unlink(this.runtime.init.paths.infraFile, err => {
+      fs.unlink(this.bootCargo._renderConfig.global.infra_file, err => {
         if (err) {
            // That's not fatal
         }
@@ -168,8 +179,8 @@ class Config extends Command {
       return cb(new Error('Unable to convert project to Terraform infra JSON'))
     }
 
-    debug('Writing %s', this.runtime.init.paths.infraFile)
-    return fs.writeFile(this.runtime.init.paths.infraFile, encoded, cb)
+    debug('Writing %s', this.bootCargo._renderConfig.global.infra_file)
+    return fs.writeFile(this.bootCargo._renderConfig.global.infra_file, encoded, cb)
   }
 
   _writeAnsibleCfg (cargo, cb) {
@@ -177,7 +188,7 @@ class Config extends Command {
 
     if (!cfgBlock) {
       debug('No config instructions found in merged toml')
-      fs.unlink(this.runtime.init.paths.ansibleSettingsFile, err => {
+      fs.unlink(this.bootCargo._renderConfig.global.ansible_settings_file, err => {
         if (err) {
           // That's not fatal
         }
@@ -198,8 +209,8 @@ class Config extends Command {
     // this point, the replace has to be limited in scope:
     encoded = encoded.replace(/\"/g, '')
 
-    debug('Writing %s', this.runtime.init.paths.ansibleSettingsFile)
-    return fs.writeFile(this.runtime.init.paths.ansibleSettingsFile, encoded, cb)
+    debug('Writing %s', this.bootCargo._renderConfig.global.ansible_settings_file)
+    return fs.writeFile(this.bootCargo._renderConfig.global.ansible_settings_file, encoded, cb)
   }
 
   _writeAnsiblePlaybook (cargo, cb) {
@@ -207,7 +218,7 @@ class Config extends Command {
 
     if (!cfgBlock) {
       debug('No install playbooks found in merged toml')
-      fs.unlink(this.runtime.init.paths.playbookFile, err => {
+      fs.unlink(this.bootCargo._renderConfig.global.install_file, err => {
         if (err) {
            // That's not fatal
         }
@@ -222,8 +233,8 @@ class Config extends Command {
       return cb(new Error('Unable to convert project to Ansible playbook YAML'))
     }
 
-    debug('Writing %s', this.runtime.init.paths.playbookFile)
-    return fs.writeFile(this.runtime.init.paths.playbookFile, encoded, cb)
+    debug('Writing %s', this.bootCargo._renderConfig.global.install_file)
+    return fs.writeFile(this.bootCargo._renderConfig.global.install_file, encoded, cb)
   }
 
   main (cargo, cb) {
