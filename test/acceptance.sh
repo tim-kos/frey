@@ -94,7 +94,7 @@ for scenario in $(echo prepare ${scenarios}); do
         # Ansible uses HRs made of '*****' padding, the count of whichs depends on variables
         # this combats output mismatch because of it
         "${cmdSed}" -i \
-          -r 's@[\*]{3,80}@*****@g' \
+          -r 's@[\*]{3,80}@@g' \
         "${curFile}"
       fi
       if [ "$(cat "${curFile}" |grep 'ACCPTST:STDIO_REPLACE_UUIDS' |wc -l)" -gt 0 ]; then
