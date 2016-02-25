@@ -90,6 +90,13 @@ for scenario in $(echo prepare ${scenarios}); do
           -r 's@\{ip\}\s+@{ip} @g' \
         "${curFile}"
       fi
+      if [ "$(cat "${curFile}" |grep 'ACCPTST:STDIO_REPLACE_ASTERISKHR' |wc -l)" -gt 0 ]; then
+        # Ansible uses HRs made of '*****' padding, the count of whichs depends on variables
+        # this combats output mismatch because of it
+        "${cmdSed}" -i \
+          -r 's@[\*]{3,80}@*****@g' \
+        "${curFile}"
+      fi
       if [ "$(cat "${curFile}" |grep 'ACCPTST:STDIO_REPLACE_UUIDS' |wc -l)" -gt 0 ]; then
         "${cmdSed}" -i \
           -r 's@[0-9a-f\-]{32,40}@{uuid}@g' \

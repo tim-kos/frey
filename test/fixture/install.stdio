@@ -1,5 +1,6 @@
 ACCPTST:STDIO_REPLACE_LONGTIMES
 ACCPTST:STDIO_REPLACE_DURATIONS
+ACCPTST:STDIO_REPLACE_ASTERISKHR
 --> Frey version '0.3.1'
 --> Will run: [ 'init', 'config', 'prepare', 'install' ]
 --> {hostname} - init
@@ -14,18 +15,18 @@ Found 'ansible' with version '2.0.0'
 --> {hostname} - install
 Using {root}/test/scenario/install/Frey-residu-ansible.cfg as config file
 
-PLAY [Local stuff] *************************************************************
+PLAY [Local stuff] *****
 
-TASK [setup] *******************************************************************
+TASK [setup] *****
 ok: [local]
 
-TASK [{root}/roles/pwd/v1.0.0 : Execute arbitrary command] *******
+TASK [{root}/roles/pwd/v1.0.0 : Execute arbitrary command] *****
 changed: [local] => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "{root}/test/scenario/install", "stdout_lines": ["{root}/test/scenario/install"], "warnings": []}
 
-TASK [Showcase we can access FREY_ environment variables] **********************
+TASK [Showcase we can access FREY_ environment variables] *****
 changed: [local] => {"changed": true, "cmd": ["echo", "now"], "delta": "{duration}", "end": "{longtime}", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "now", "stdout_lines": ["now"], "warnings": []}
 
-PLAY RECAP *********************************************************************
+PLAY RECAP *****
 local                      : ok=3    changed=2    unreachable=0    failed=0   
 
 Done
