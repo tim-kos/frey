@@ -6,14 +6,14 @@ set -o nounset
 # set -o xtrace
 
 project="${1:-tusd}"
-tfFile="${2:-/Users/kvz/code/infra-tusd/envs/production/infra.tf}"
+tfFile="$(realpath ${2:-/Users/kvz/code/infra-tusd/envs/production/infra.tf})"
 ansFile="${3:-}"
 ansCfgFile="${4:-}"
 tfDir="$(dirname "${tfFile}")"
 tfBase="$(basename "${tfFile}" .tf)"
 jsonFile="${tfDir}/${tfBase}.tf.json"
 csonFile="${tfDir}/${tfBase}.cson"
-tomlFile="${tfDir}/Freyfile.toml"
+tomlFile="${tfDir}/${tfBase}.toml"
 
 echo "Installing hcltool.."
 (which hcltool || sudo -HE pip install pyhcl==0.1.15) >/dev/null 2>&1
