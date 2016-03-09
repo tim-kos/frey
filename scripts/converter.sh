@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Requires realpath, which can be found in:
-#  - Ubuntu: sudo apt-get install coreutils
+#  - Ubuntu: sudo apt-get install realpath
 #  - OS X: brew install coreutils
 #
 # The other dependencies (pyhcl, remarshal) are auto-installed
