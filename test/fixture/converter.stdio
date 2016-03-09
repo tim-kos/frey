@@ -1,10 +1,10 @@
 Installing hcltool..
 Installing remarshal..
 Writing '{root}/test/scenario/converter/infra.tf.json'
-Writing '{root}/test/scenario/converter/Freyfile.toml'
-Appending '{root}/test/scenario/converter/Freyfile.toml'
-Appending '{root}/test/scenario/converter/Freyfile.toml'
-Reading '{root}/test/scenario/converter/Freyfile.toml'
+Writing '{root}/test/scenario/converter/infra.toml'
+Appending '{root}/test/scenario/converter/infra.toml'
+Appending '{root}/test/scenario/converter/infra.toml'
+Reading '{root}/test/scenario/converter/infra.toml'
 [infra]
   [infra.output]
     [infra.output.public_address]
