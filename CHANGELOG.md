@@ -33,9 +33,9 @@ Unreleased and unplanned todos
 - [ ] Implement restart
 - [ ] Implement show / inspect
 
-## v0.3.2 (2016-02-25)
+## v0.3.2 (2016-03-09)
 
-- [ ] Release v0.3.2
+- [x] Release v0.3.2
 - [x] Add support for multi-files-project
 - [x] Put most `paths` in `config`, and give them  more consistent names
 - [x] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
