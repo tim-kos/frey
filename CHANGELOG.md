@@ -33,6 +33,7 @@ Unreleased and unplanned todos
 - [ ] Implement restart
 - [ ] Implement show / inspect
 - [ ] Check for `git ignore Frey-residu-*`
+- [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
 
 ## v0.3.2 (2016-03-09)
 

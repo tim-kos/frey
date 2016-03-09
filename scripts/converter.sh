@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-
+#
+# Requires realpath, which can be found in:
+#  - Ubuntu: sudo apt-get install coreutils
+#  - OS X: brew install coreutils
+#
+# The other dependencies (pyhcl, remarshal) are auto-installed
+#
 set -o pipefail
 set -o errexit
 set -o nounset
