@@ -32,6 +32,7 @@ Unreleased and unplanned todos
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show / inspect
+- [ ] Check for `git ignore Frey-residu-*`
 
 ## v0.3.2 (2016-03-09)
 
