@@ -43,37 +43,57 @@ class Config extends Command {
 
   _readTomlFiles (tomlFiles, cb) {
     const tomlParsedItems = []
-    return async.map(tomlFiles, fs.readFile, (err, buf) => {
-      if (err) {
-        return cb(err)
-      }
+    let mainErr = null
 
-      let parsed = {}
-      let error
-      try {
-        parsed = TOML.parse(`${buf}`)
-      } catch (e) {
-        error = e
-      }
+    const q = async.queue((tomlFile, next) => {
+      fs.readFile(tomlFile, 'utf-8', (err, buf) => {
+        if (err) {
+          mainErr = err
+          return next()
+        }
 
-      if (!parsed || error) {
-        let msg = `Could not parse Freyfile TOML starting with: \n\n'` + _.truncate(buf) + `'\n\n`
-        msg += error
-        msg += '\n\nHint: Did you not surround your strings with double-quotes?'
-        return cb(new Error(msg))
-      }
+        let parsed = {}
+        let error
+        try {
+          parsed = TOML.parse(`${buf}`)
+        } catch (e) {
+          error = e
+        }
 
-      tomlParsedItems.push(parsed)
-      return cb(null, tomlParsedItems)
-    })
+        if (!parsed || error) {
+          let msg = `Could not parse TOML '${tomlFile}' starting with: \n\n'` + _.truncate(buf, {length: 1000}) + `'\n\n`
+          msg += error
+          msg += '\n\nHint: Did you not surround your strings with double-quotes?'
+          mainErr = new Error(msg)
+          return next()
+        }
+
+        // debug({
+        //   read: tomlFile,
+        //   buf: buf,
+        //   parsed: parsed
+        // })
+
+        tomlParsedItems.push(parsed)
+        return next()
+      })
+    }, 1)
+
+    q.drain = () => {
+      return cb(mainErr, tomlParsedItems)
+    }
+
+    q.push(tomlFiles)
   }
 
   _mergeToOneConfig (tomlParsedItems, cb) {
     let config = {}
 
     tomlParsedItems.forEach(function (parsedItem) {
-      config = _.extend(config, parsedItem)
+      config = _.merge(config, parsedItem)
     })
+
+    // debug(config)
 
     return cb(null, config)
   }

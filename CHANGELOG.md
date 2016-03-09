@@ -25,7 +25,7 @@ Unreleased and unplanned todos
 
 - [ ] How to implement different roles? Db/www/etc?
 - [ ] Research if ssh private keys can be saved in environment keys. Then we can add Travis goodness
-- [ ] Add multi-projectfile example
+- [ ] Add multi-files-project example
 - [ ] Add safety prompts for destructive Launches, and Destroy
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
@@ -36,6 +36,7 @@ Unreleased and unplanned todos
 ## v0.3.2 (2016-02-25)
 
 - [ ] Release v0.3.2
+- [x] Add support for multi-files-project
 - [x] Put most `paths` in `config`, and give them  more consistent names
 - [x] Add library support so you can do `- role: ":frey:/consul/v1.0.0"`
 - [x] Terminology: Project vs Config vs Options. No more recipe
