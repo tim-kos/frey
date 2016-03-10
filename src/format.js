@@ -48,19 +48,26 @@ var newLines = []
 var newLine = ''
 var infoParent = false
 lines.forEach(function (line, i) {
-  var infoNext = {}
+  // Scan Current Line, Parent, and Next
+  var infoNext = false
   var info = scanLine(line, data)
   if (lines[i + 1]) {
     infoNext = scanLine(lines[i + 1], data)
   }
-
   if (info.matchHeader) {
     infoParent = info
   }
 
-  if (infoParent && infoParent.parts[0] === 'infra') {
-    newLine = line
+  // Don't add empty headers
+  if (infoParent && info.matchHeader && infoNext && infoNext.matchHeader) {
+    return
+  }
 
+  newLine = line
+  if (infoParent && infoParent.parts[0] === 'infra') {
+    // Currently only process infra blocks
+
+    // Prettify single-line JSON strings with TOML ''' strings
     if (info.matchSingleLineJSON) {
       var getPath = infoParent.insideHeaderKey + '.' + info.matchKey[1]
       var val = _.get(data, getPath)
@@ -70,28 +77,25 @@ lines.forEach(function (line, i) {
       newLine = keyval
     }
 
-    // Don't add empty headers
-    if (infoParent && info.matchHeader && infoNext.matchHeader) {
-      return
+    // Replace FREY environment variables, unless it's a header
+    if (info.matchHeader) {
+      _.forOwn(process.env, function (val, key) {
+        if (key.substr(0, 5) !== 'FREY_') {
+          return
+        }
+
+        while (newLine.indexOf(val) > -1) {
+          newLine = newLine.replace(val, '${var.' + key + '}')
+        }
+      })
     }
-  } else {
-    newLine = line
   }
 
+  // Re-indent, unless getIndentLevel returned false
   var indentLevel = getIndentLevel(info, infoParent)
   if (indentLevel !== false) {
     newLine = indentString(stripIndent(newLine), '  ', indentLevel)
   }
-
-  _.forOwn(process.env, function (val, key) {
-    if (key.substr(0, 5) !== 'FREY_') {
-      return
-    }
-
-    while (newLine.indexOf(val) > -1) {
-      newLine = newLine.replace(val, '${var.' + key + '}')
-    }
-  })
 
   newLines.push(newLine)
 })
