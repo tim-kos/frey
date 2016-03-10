@@ -19,16 +19,27 @@ tfDir="$(dirname "${tfFile}")"
 tfBase="$(basename "${tfFile}" .tf)"
 jsonFile="${tfDir}/${tfBase}.tf.json"
 csonFile="${tfDir}/${tfBase}.cson"
+tomlUnformattedFile="${tfDir}/${tfBase}.unformatted.toml"
 tomlFile="${tfDir}/${tfBase}.toml"
+stamp="$(date +%s)"
 
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(dirname "${__dir}")"
 
-
-echo "Installing hcltool.."
-(which hcltool || sudo -HE pip install pyhcl==0.2.0) >/dev/null 2>&1
+# @todo We unfortunately have to run two versions of hcltool due to
+# different bugs hurting both 0.1.5 and 0.2.0
+# https://github.com/virtuald/pyhcl/issues/7
+# When that is resolved, let's just have 1 version
+function cmdHcltool020 () {
+  env PYTHONPATH=/Users/kvz/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages \
+    /Users/kvz/.frey/tools/pyhcl/0.2.0/pip/bin/hcltool ${@}
+}
+function cmdHcltool015 () {
+  env PYTHONPATH=/Users/kvz/.frey/tools/pyhcl/0.1.5/pip/lib/python2.7/site-packages \
+    /Users/kvz/.frey/tools/pyhcl/0.1.5/pip/bin/hcltool ${@}
+}
 
 echo "Installing remarshal.."
 if !which remarshal 2>/dev/null; then
@@ -49,45 +60,40 @@ else
   cmdRemarshal="remarshal"
 fi
 
-echo "Writing '${jsonFile}'"
-hcltool "${tfFile}" "${jsonFile}"
+echo "Converting '${tfFile}' to '${jsonFile}'"
+(cmdHcltool020 "${tfFile}" "${jsonFile}" || cmdHcltool015 "${tfFile}" "${jsonFile}") 2> /dev/null
 
-echo "Writing '${tomlFile}'"
-${cmdRemarshal} -if json -of toml -wrap infra -i "${jsonFile}" > "${tomlFile}"
-echo "" >> "${tomlFile}"
+echo "Writing '${tomlUnformattedFile}'"
+${cmdRemarshal} -if json -of toml -wrap infra -i "${jsonFile}" > "${tomlUnformattedFile}"
+echo "" >> "${tomlUnformattedFile}"
 
 if [ -n "${ansCfgFile}" ]; then
-  echo "Appending '${tomlFile}'"
+  echo "Appending '${tomlUnformattedFile}'"
   cat "${ansCfgFile}" \
     |sed 's@\[@[install.settings.@g' \
-  >> "${tomlFile}"
-  echo "" >> "${tomlFile}"
+  >> "${tomlUnformattedFile}"
+  echo "" >> "${tomlUnformattedFile}"
 fi
 
 if [ -n "${ansFile}" ]; then
-  echo "Appending '${tomlFile}'"
+  echo "Appending '${tomlUnformattedFile}'"
   ${cmdRemarshal} -if yaml -of toml -wrap playbooks -i "${ansFile}" \
     |sed 's@\[playbooks@[install.playbooks@g' \
-  >> "${tomlFile}"
-  echo "" >> "${tomlFile}"
+  >> "${tomlUnformattedFile}"
+  echo "" >> "${tomlUnformattedFile}"
 fi
 
-echo "Formatting '${tomlFile}' to '/tmp/x.toml'"
-node ${__root}/src/format.js "${tomlFile}" > "/tmp/x.toml"
+echo "Formatting '${tomlUnformattedFile}' to '${tomlFile}'"
+node "${__root}/src/format.js" "${tomlUnformattedFile}" > "${tomlFile}"
 
-echo "Reading '/tmp/x.toml'"
-cat "/tmp/x.toml"
-
-# echo "Moving '/tmp/x.toml' to '${tomlFile}'"
-# mv "/tmp/x.toml" "${tomlFile}"
-# cat "${tomlFile}"
-
+echo "Archiving intermediate '${tomlUnformattedFile}' for debugging"
+mv "${tomlUnformattedFile}" "${tomlUnformattedFile}.bak-${stamp}"
 
 echo "Reading '${tomlFile}'"
 cat "${tomlFile}"
 
-# echo "Moving '${tfFile}'"
-# mv "${tfFile}" "${tfFile}.bak-$(date +%s)"
+echo "Archiving original '${tfFile}' for safety"
+mv "${tfFile}" "${tfFile}.bak-${stamp}"
 
-echo "Removing '${jsonFile}'"
-rm -f "${jsonFile}"
+echo "Archiving intermediate '${jsonFile}' for debugging"
+mv "${jsonFile}" "${jsonFile}.bak-${stamp}"

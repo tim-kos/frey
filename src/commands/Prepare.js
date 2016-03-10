@@ -138,6 +138,57 @@ class Prepare extends Command {
 
     deps.push({
       type: 'App',
+      name: 'pyhcl-0.1.5',
+      range: `0.1.5`,
+      version: '0.1.5',
+      dir: '{{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}',
+      exe: `{{{self.dir}}}/pip/bin/hcltool`,
+      cmdVersion: 'awk \'/^Version:/ {print $NF}\' {{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}/pip/lib/python2.7/site-packages/pyhcl-{{{self.version}}}-py2.7.egg-info/PKG-INFO || true',
+      versionTransformer (stdout) {
+        return stdout.trim()
+      },
+      cmdInstall:
+        `mkdir -p {{{self.dir}}}` + ` && ` +
+        `pip install` + ` ` +
+        `--install-option='--prefix=pip'` + ` ` +
+        `--ignore-installed` + ` ` +
+        `--force-reinstall` + ` ` +
+        `--root '{{{self.dir}}}'` + ` ` +
+        `--upgrade` + ` ` +
+        `--disable-pip-version-check` + ` ` +
+        `pyhcl=={{{self.version}}}`
+    })
+
+    // @todo We unfortunately have to run two versions of hcltool due to
+    // different bugs hurting both 0.1.5 and 0.2.0
+    // https://github.com/virtuald/pyhcl/issues/7
+    // When that is resolved, let's just have 1 version
+    deps.push({
+      type: 'App',
+      name: 'pyhcl-0.2.0',
+      range: `0.2.0`,
+      version: '0.2.0',
+      dir: '{{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}',
+      exe: `{{{self.dir}}}/pip/bin/hcltool`,
+      cmdHcltool: `env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exe}}} `,
+      cmdVersion: 'awk \'/^Version:/ {print $NF}\' {{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}/pip/lib/python2.7/site-packages/pyhcl-{{{self.version}}}-py2.7.egg-info/PKG-INFO || true',
+      versionTransformer (stdout) {
+        return stdout.trim()
+      },
+      cmdInstall:
+        `mkdir -p {{{self.dir}}}` + ` && ` +
+        `pip install` + ` ` +
+        `--install-option='--prefix=pip'` + ` ` +
+        `--ignore-installed` + ` ` +
+        `--force-reinstall` + ` ` +
+        `--root '{{{self.dir}}}'` + ` ` +
+        `--upgrade` + ` ` +
+        `--disable-pip-version-check` + ` ` +
+        `pyhcl=={{{self.version}}}`
+    })
+
+    deps.push({
+      type: 'App',
       name: 'ansible',
       range: `>= 2.0.0`,
       version: '2.0.0.2',
@@ -145,7 +196,7 @@ class Prepare extends Command {
       exe: `{{{self.dir}}}/pip/bin/ansible`,
       exePlaybook: `{{{self.dir}}}/pip/bin/ansible-playbook`,
       cmdPlaybook: `env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exePlaybook}}} `,
-      cmdVersion: 'env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exe}}} --version',
+      cmdVersion: 'env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exePlaybook}}} --version',
       versionTransformer (stdout) {
         let version = `${stdout}`.trim().split('\n')[0].split(/\s+/).pop().replace('v', '')
         let parts = version.split('.').slice(0, 3)

@@ -12,8 +12,12 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname $(dirname $(dirname "${__dir}")))" && pwd)"
 
 "${__root}/scripts/converter.sh" \
-  converterApp \
+  "converterApp" \
   "${__dir}/infra.tf" \
   "${__dir}/main.yml" \
   "${__dir}/ansible.cfg" \
 || false
+
+
+mv infra.tf.bak-* infra.tf
+rm -f *.bak-*

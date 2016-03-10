@@ -1,10 +1,11 @@
 #!/usr/bin/env node
+// Careful using console.log, STDOUT should be preserved for formatted toml
 var path = require('path')
 var fs = require('fs')
 var _ = require('lodash')
-var toml = require('toml')
+var TOML = require('toml')
 var filename = process.argv[2]
-var filepath = path.resolve(filename)
+var tomlFile = path.resolve(filename)
 var indentString = require('indent-string')
 var stripIndent = require('strip-indent')
 
@@ -18,7 +19,7 @@ function scanLine (line, data) {
   if (info.matchHeader) {
     info.insideHeaderKey = info.matchHeader[1]
     info.parts = info.insideHeaderKey.split('.')
-    info.nestingLevel = info.parts.length
+    info.depth = info.parts.length
   }
 
   return info
@@ -28,11 +29,17 @@ function getIndentLevel (info, infoParent) {
   var indentLevel = false
 
   if (infoParent && infoParent.parts[0] === 'infra') {
-    if (info.matchHeader) {
-      indentLevel = infoParent.nestingLevel - 4
-    } else {
-      indentLevel = infoParent.nestingLevel - 3
+    indentLevel = infoParent.depth - 2
+    if (infoParent.parts[1] === 'resource') {
+      indentLevel = indentLevel - 1
+    } else if (infoParent.parts[1] === 'variable') {
+      indentLevel = 1
     }
+
+    if (info.matchHeader) {
+      indentLevel = indentLevel - 1
+    }
+
     if (indentLevel < 0) {
       indentLevel = 0
     }
@@ -41,8 +48,22 @@ function getIndentLevel (info, infoParent) {
   return indentLevel
 }
 
-var buf = fs.readFileSync(filepath, 'utf-8')
-var data = toml.parse(buf)
+var buf = fs.readFileSync(tomlFile, 'utf-8')
+var data = {}
+var error
+try {
+  data = TOML.parse(`${buf}`)
+} catch (e) {
+  error = e
+}
+
+if (!data || error) {
+  var msg = `Could not parse TOML '${tomlFile}' starting with: \n\n'` + _.truncate(buf, {length: 1000}) + `'\n\n`
+  msg += error
+  msg += '\n\nHint: Did you not surround your strings with double-quotes?'
+  throw new Error(msg)
+}
+
 var lines = buf.split('\n')
 var newLines = []
 var newLine = ''
@@ -71,6 +92,10 @@ lines.forEach(function (line, i) {
     if (info.matchSingleLineJSON) {
       var getPath = infoParent.insideHeaderKey + '.' + info.matchKey[1]
       var val = _.get(data, getPath)
+      if (val === undefined) {
+        console.error(data)
+        throw new Error('Could not get value of ' + getPath + ' in above data.')
+      }
       var json = JSON.parse(val)
       var prettified = JSON.stringify(json, null, '  ')
       var keyval = info.matchKey[1] + " = '''" + prettified + "'''"
@@ -78,7 +103,7 @@ lines.forEach(function (line, i) {
     }
 
     // Replace FREY environment variables, unless it's a header
-    if (info.matchHeader) {
+    if (!info.matchHeader) {
       _.forOwn(process.env, function (val, key) {
         if (key.substr(0, 5) !== 'FREY_') {
           return

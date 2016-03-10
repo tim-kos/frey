@@ -59,9 +59,9 @@ class Install extends Command {
 
   main (cargo, cb) {
     const appProps = _.find(this.runtime.prepare.deps, {name: 'ansible'})
-    const ansiblePlaybookExe = appProps.cmdPlaybook
+    const ansiblePlaybookCmd = appProps.cmdPlaybook
     let cmd = [
-      ansiblePlaybookExe
+      ansiblePlaybookCmd
     ]
     cmd = cmd.concat(this.bootCargo._gatherArgs)
     cmd = cmd.join(' ')
