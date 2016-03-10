@@ -9,7 +9,7 @@ Unreleased and unplanned todos
 - [ ] Indent stdout/err
 - [ ] More tests!
 - [ ] Empty out and remove `Base` class?
-- [ ] website: Console window like http://lebab.io/ ?
+- [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
 - [ ] website: On the githubs
@@ -20,20 +20,23 @@ Unreleased and unplanned todos
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
 - [ ] Abstract both Terraform and Ansible into App classes
 - [ ] Remote state in S3 feature
+- [ ] Check for `git ignore Frey-residu-*`
+- [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
 
 ## v0.3.3 (Unreleased)
 
 - [ ] How to implement different roles? Db/www/etc?
 - [ ] Research if ssh private keys can be saved in environment keys. Then we can add Travis goodness
 - [ ] Add multi-files-project example
-- [ ] Add safety prompts for destructive Launches, and Destroy
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
 - [ ] Implement remote
 - [ ] Implement restart
 - [ ] Implement show / inspect
-- [ ] Check for `git ignore Frey-residu-*`
-- [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
+- [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
+- [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
+- [ ] Add safety prompts for destructive Launches, and Destroys. Research/Think about marking protected resources (like databases), and only allowing destructive changes via --force-yes, otherwise via prompt. All other changes should be automatic. Perhaps we could still apply the nondestructive changes? 
+- [x] Add basic toml formatter
 
 ## v0.3.2 (2016-03-09)
 

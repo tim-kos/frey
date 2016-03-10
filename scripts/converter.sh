@@ -21,8 +21,14 @@ jsonFile="${tfDir}/${tfBase}.tf.json"
 csonFile="${tfDir}/${tfBase}.cson"
 tomlFile="${tfDir}/${tfBase}.toml"
 
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+__file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
+__base="$(basename ${__file} .sh)"
+__root="$(dirname "${__dir}")"
+
+
 echo "Installing hcltool.."
-(which hcltool || sudo -HE pip install pyhcl==0.1.15) >/dev/null 2>&1
+(which hcltool || sudo -HE pip install pyhcl==0.2.0) >/dev/null 2>&1
 
 echo "Installing remarshal.."
 if !which remarshal 2>/dev/null; then
@@ -65,6 +71,17 @@ if [ -n "${ansFile}" ]; then
   >> "${tomlFile}"
   echo "" >> "${tomlFile}"
 fi
+
+echo "Formatting '${tomlFile}' to '/tmp/x.toml'"
+node ${__root}/src/format.js "${tomlFile}" > "/tmp/x.toml"
+
+echo "Reading '/tmp/x.toml'"
+cat "/tmp/x.toml"
+
+# echo "Moving '/tmp/x.toml' to '${tomlFile}'"
+# mv "/tmp/x.toml" "${tomlFile}"
+# cat "${tomlFile}"
+
 
 echo "Reading '${tomlFile}'"
 cat "${tomlFile}"
