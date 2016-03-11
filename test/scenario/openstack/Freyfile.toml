@@ -14,7 +14,7 @@
 # keypair
 [infra.resource.openstack_compute_keypair_v2.freytest]
   name       = "freytest"
-  public_key = "${file(\"{{{config.global.ssh.keypub_file}}}\")}"
+  public_key = "${file(\"{{{config.global.ssh.publickey_file}}}\")}"
 
 # network
 [infra.resource.openstack_networking_network_v2.freytest]
@@ -85,7 +85,7 @@
     ]
 
     [infra.resource.openstack_compute_instance_v2.freytest_app.provisioner.remote-exec.connection]
-      key_file = "{{{config.global.ssh.keyprv_file}}}"
+      key_file = "{{{config.global.ssh.privatekey_file}}}"
       user     = "{{{config.global.ssh.user}}}"
 
 

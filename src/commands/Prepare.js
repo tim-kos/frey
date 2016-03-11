@@ -30,40 +30,40 @@ class Prepare extends Command {
 
     deps.push({
       type: 'Dir',
-      name: 'ssh.keysdir',
-      dir: `{{{config.global.ssh.keysdir}}}`
+      name: 'ssh.key_dir',
+      dir: `{{{config.global.ssh.key_dir}}}`
     })
 
     deps.push({
       type: 'Privkey',
-      privkey: '{{{config.global.ssh.keyprv_file}}}',
-      pubkey: '{{{config.global.ssh.keypub_file}}}',
+      privkey: '{{{config.global.ssh.privatekey_file}}}',
+      pubkey: '{{{config.global.ssh.publickey_file}}}',
       email: '{{{config.global.ssh.email}}}'
     })
 
     deps.push({
       type: 'Pubkey',
-      privkey: '{{{config.global.ssh.keyprv_file}}}',
-      pubkey: '{{{config.global.ssh.keypub_file}}}',
+      privkey: '{{{config.global.ssh.privatekey_file}}}',
+      pubkey: '{{{config.global.ssh.publickey_file}}}',
       email: '{{{config.global.ssh.email}}}'
     })
 
     deps.push({
       type: 'Privkey',
-      privkey: '{{{config.global.ssh.keyprv_file}}}',
-      pubkey: '{{{config.global.ssh.keypub_file}}}'
+      privkey: '{{{config.global.ssh.privatekey_file}}}',
+      pubkey: '{{{config.global.ssh.publickey_file}}}'
     })
 
     deps.push({
       type: 'Permission',
       mode: 0o400,
-      file: '{{{config.global.ssh.keypub_file}}}'
+      file: '{{{config.global.ssh.publickey_file}}}'
     })
 
     deps.push({
       type: 'Permission',
       mode: 0o400,
-      file: '{{{config.global.ssh.keyprv_file}}}'
+      file: '{{{config.global.ssh.privatekey_file}}}'
     })
 
     deps.push({

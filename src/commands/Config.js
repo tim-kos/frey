@@ -114,11 +114,11 @@ class Config extends Command {
         install_file: '{{{init.cliargs.projectDir}}}/Frey-residu-install.yml',
         infra_state_file: '{{{init.cliargs.projectDir}}}/Frey-state-terraform.tfstate',
         ssh: {
-          keysdir: '{{{init.os.home}}}/.ssh',
+          key_dir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
           keypair_name: `{{{init.cliargs.app}}}`,
-          keyprv_file: `{{{self.keysdir}}}/frey-{{{init.cliargs.app}}}.pem`,
-          keypub_file: `{{{self.keysdir}}}/frey-{{{init.cliargs.app}}}.pub`,
+          privatekey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem`,
+          publickey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pub`,
           user: 'ubuntu'
         }
       }
@@ -166,7 +166,7 @@ class Config extends Command {
     config.global.install_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.install_file)
     config.global.infra_state_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_state_file)
 
-    config.global.ssh.keysdir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.keysdir)
+    config.global.ssh.key_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.key_dir)
 
     return cb(null, config)
   }

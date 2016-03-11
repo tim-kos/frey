@@ -25,7 +25,7 @@ cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
   --verbose \
   --force-yes \
   --no-color \
-  --cfg-var "global.ssh.keysdir=${__sysTmpDir}/frey-gitless" \
+  --cfg-var "global.ssh.key_dir=${__sysTmpDir}/frey-gitless" \
   --project-dir "${__sysTmpDir}/frey-gitless/" \
   --bail
 

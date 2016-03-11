@@ -35,7 +35,7 @@ if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
 "${__node}" "${__root}/${__codelib}/cli.js" \
-  --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
+  --cfg-var "global.ssh.key_dir=${__sysTmpDir}" \
   --no-color \
   --verbose \
   --force-yes \

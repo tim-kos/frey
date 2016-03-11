@@ -32,7 +32,7 @@ rm -f "${__sysTmpDir}/frey-prepare"* || true
 
 "${__node}" "${__root}/${__codelib}/cli.js" prepare \
   --force-yes \
-  --cfg-var "global.ssh.keysdir=${__sysTmpDir}" \
+  --cfg-var "global.ssh.key_dir=${__sysTmpDir}" \
   --verbose \
   --project-dir "." \
   --bail

@@ -30,7 +30,7 @@ yargs
     'cfg-var': {
       nargs: 1,
       type: 'string',
-      describe: 'Keys in your config to overwrite such as: --cfg-var="global.ssh.keysdir=/tmp" --cfg-var="infra.settings.parallelism=2"'
+      describe: 'Keys in your config to overwrite such as: --cfg-var="global.ssh.key_dir=/tmp" --cfg-var="infra.settings.parallelism=2"'
     },
     'force-yes': {
       default: false,

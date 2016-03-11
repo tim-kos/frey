@@ -10,7 +10,7 @@
 
 [infra.resource.digitalocean_ssh_key.freytest-sshkey]
   name       = "Frey test"
-  public_key = "${file(\"{{{config.global.ssh.keypub_file}}})\"}"
+  public_key = "${file(\"{{{config.global.ssh.publickey_file}}})\"}"
 
 
 [install.settings]

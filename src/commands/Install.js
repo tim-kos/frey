@@ -34,7 +34,7 @@ class Install extends Command {
     } else {
       args.push(`--user=${this.runtime.config.global.ssh.user}`)
       args.push(`--inventory-file=${terraformInvExe}`)
-      args.push(`--private-key=${this.runtime.config.global.ssh.keyprv_file}`)
+      args.push(`--private-key=${this.runtime.config.global.ssh.privatekey_file}`)
     }
 
     // args.push('--sudo')
