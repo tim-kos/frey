@@ -16,13 +16,13 @@ yargs
   .usage('Usage: frey <command> [options]')
   .example('frey backup -d ./envs/production', 'backup platform described in ./envs/production')
   .options({
-    project_dir: {
+    projectDir: {
       nargs: 1,
       type: 'string',
       describe: 'Directory that contains the Freyfile.toml. Frey will traverse upwards if empty. '
     },
     app: {
-      default: '{{{self.project_dir}}}|basename',
+      default: '{{{self.projectDir}}}|basename',
       nargs: 1,
       type: 'string',
       describe: "Name of application for which we're creating infrastructure"
@@ -121,7 +121,7 @@ const liftOff = new LiftOff({
 })
 
 liftOff.launch({
-  cwd: argv.project_dir
+  cwd: argv.projectDir
 }, env => {
   if (env.configBase === undefined) {
     const msg = 'Could not find a Freyfile.toml in current directory or upwards, or in project directory.'
@@ -129,7 +129,7 @@ liftOff.launch({
   }
 
   // Let LiftOff override the project dir
-  argv.project_dir = env.configBase
+  argv.projectDir = env.configBase
   const frey = new Frey(argv)
 
   // Bombs away

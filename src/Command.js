@@ -48,7 +48,7 @@ class Command extends Base {
   }
 
   main (bootOptions, cb) {
-    const runScript = `${this.runtime.init.cliargs.project_dir}/${this.name}.sh`
+    const runScript = `${this.runtime.init.cliargs.projectDir}/${this.name}.sh`
     debug(`Checking for existance of '${runScript}'`)
     return fs.stat(runScript, (err, stat) => {
       if (!err) {
@@ -98,7 +98,7 @@ class Command extends Base {
     if (cmdOpts.stderr === undefined) { cmdOpts.stderr = 'pipe' }
     if (cmdOpts.limitSamples === undefined) { cmdOpts.limitSamples = 3 }
 
-    let dir = this.dir || this.runtime.init.cliargs.project_dir
+    let dir = this.dir || this.runtime.init.cliargs.projectDir
 
     const opts = {
       cwd: dir,

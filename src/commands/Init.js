@@ -43,8 +43,8 @@ class Init extends Command {
       cliargs.tags = ''
     }
 
-    if (cliargs.project_dir === undefined) {
-      cliargs.project_dir = this.bootCargo._os.cwd
+    if (cliargs.projectDir === undefined) {
+      cliargs.projectDir = this.bootCargo._os.cwd
     }
 
     // Render interdependent arguments
@@ -61,7 +61,7 @@ class Init extends Command {
     })
 
     // turn into absolute path
-    cliargs.project_dir = path.resolve(cliargs.project_dir)
+    cliargs.projectDir = path.resolve(cliargs.projectDir)
 
     return cb(null, cliargs)
   }

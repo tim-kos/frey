@@ -14,7 +14,7 @@ class Validate extends Command {
   }
 
   _findClosestProjectGit (cargo, cb) {
-    return this._findClosestGit(this.runtime.init.cliargs.project_dir, filepath => {
+    return this._findClosestGit(this.runtime.init.cliargs.projectDir, filepath => {
       return cb(null, filepath)
     })
   }

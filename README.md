@@ -119,11 +119,11 @@ facts     : "Show Ansible facts"
 If you think it's better to keep the infra projects outside of your own app code
 for security reasons or similar, we recommend that alongside your `app` repo, you create an
 `infra-app` repo, where you'll keep Frey's projects in. We recommend you then keep the projects
-in the root, and run Frey with `--projectdir .`:
+in the root, and run Frey with `--project-dir .`:
 
 ```bash
 cd ~/code/infra-myapp
-frey --projectdir .
+frey --project-dir .
 ```
 
 ### Multiple setups in one repository
@@ -132,7 +132,7 @@ Also possible, via:
 
 ```bash
 cd ~/code/infra-myapp
-frey --projectdir ./envs/production
+frey --project-dir ./envs/production
 ```
 
 ## Projects

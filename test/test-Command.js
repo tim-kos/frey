@@ -4,8 +4,8 @@ import { expect } from 'chai'
 describe('Command', () => {
   describe('_toEnvFormat', () => {
     it('should transform periods', done => {
-      const command = new Command('prepare',
-        {project_dir: '{{{init.os.cwd}}}/frey/production',
+      const command = new Command('prepare', {
+        projectDir: '{{{init.os.cwd}}}/frey/production',
         toolsDir: '{{{init.os.home}}}/.frey/tools'
       })
 

@@ -29,7 +29,7 @@ class Config extends Command {
 
   _findTomlFiles (cargo, cb) {
     let tomlFiles = []
-    const pattern = `${this.runtime.init.cliargs.project_dir}/*.toml`
+    const pattern = `${this.runtime.init.cliargs.projectDir}/*.toml`
     debug(`Reading from '${pattern}'`)
     return glob(pattern, (err, files) => {
       if (err) {
@@ -108,11 +108,11 @@ class Config extends Command {
       },
       global: {
         tools_dir: '{{{init.os.home}}}/.frey/tools',
-        ansible_settings_file: '{{{init.cliargs.project_dir}}}/Frey-residu-ansible.cfg',
-        infra_plan_file: '{{{init.cliargs.project_dir}}}/Frey-residu-terraform.plan',
-        infra_file: '{{{init.cliargs.project_dir}}}/Frey-residu-infra.tf.json',
-        install_file: '{{{init.cliargs.project_dir}}}/Frey-residu-install.yml',
-        infra_state_file: '{{{init.cliargs.project_dir}}}/Frey-state-terraform.tfstate',
+        ansible_settings_file: '{{{init.cliargs.projectDir}}}/Frey-residu-ansible.cfg',
+        infra_plan_file: '{{{init.cliargs.projectDir}}}/Frey-residu-terraform.plan',
+        infra_file: '{{{init.cliargs.projectDir}}}/Frey-residu-infra.tf.json',
+        install_file: '{{{init.cliargs.projectDir}}}/Frey-residu-install.yml',
+        infra_state_file: '{{{init.cliargs.projectDir}}}/Frey-state-terraform.tfstate',
         ssh: {
           keysdir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
@@ -159,14 +159,14 @@ class Config extends Command {
     config = utils.render(config, {config: config}, {failhard: true})
 
     // Resolve to absolute paths
-    config.global.tools_dir = path.resolve(this.runtime.init.cliargs.project_dir, config.global.tools_dir)
-    config.global.ansible_settings_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.ansible_settings_file)
-    config.global.infra_plan_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.infra_plan_file)
-    config.global.infra_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.infra_file)
-    config.global.install_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.install_file)
-    config.global.infra_state_file = path.resolve(this.runtime.init.cliargs.project_dir, config.global.infra_state_file)
+    config.global.tools_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.tools_dir)
+    config.global.ansible_settings_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ansible_settings_file)
+    config.global.infra_plan_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_plan_file)
+    config.global.infra_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_file)
+    config.global.install_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.install_file)
+    config.global.infra_state_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_state_file)
 
-    config.global.ssh.keysdir = path.resolve(this.runtime.init.cliargs.project_dir, config.global.ssh.keysdir)
+    config.global.ssh.keysdir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.keysdir)
 
     return cb(null, config)
   }
