@@ -53,6 +53,28 @@ class Base {
     })
   }
 
+  _secureOutput (input) {
+    let result = _.clone(input)
+
+    if (_.isObject(result)) {
+      _.forOwn(result, (val, key) => {
+        result[key] = this._secureOutput(val)
+      })
+    } else if (_.isArray(result)) {
+      result.forEach((val, i) => {
+        result[i] = this._secureOutput(val)
+      })
+    } else if (_.isString(result)) {
+      _.forOwn(process.env, (val, key) => {
+        if (key.indexOf('SECRET') > -1 || key.indexOf('PASSWORD') > -1 || key.indexOf('TOKEN') > -1) {
+          result = _.replace(result, val, '********')
+        }
+      })
+    }
+
+    return result
+  }
+
   _out (...args) {
     let index = 0
     let str = args[0]
@@ -71,6 +93,8 @@ class Base {
 
       return ret
     })
+
+    str = this._secureOutput(str)
 
     return process.stdout.write(`${str}`)
   }

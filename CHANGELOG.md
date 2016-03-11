@@ -23,10 +23,9 @@ Unreleased and unplanned todos
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
 
-## v0.3.3 (Unreleased)
+## v0.3.4 (Unreleased)
 
 - [ ] How to implement different roles? Db/www/etc?
-- [ ] Research if ssh private keys can be saved in environment keys. Then we can add Travis goodness
 - [ ] Add multi-files-project example
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement deploy
@@ -36,6 +35,10 @@ Unreleased and unplanned todos
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Add safety prompts for destructive Launches, and Destroys. Research/Think about marking protected resources (like databases), and only allowing destructive changes via --force-yes, otherwise via prompt. All other changes should be automatic. Perhaps we could still apply the nondestructive changes? 
+
+## v0.3.3 (2016-03-11)
+
+- [x] Automatic SSH private key reconstruction via encrypted file and FREY_ENCRYPTION_SECRET
 - [x] Add basic toml formatter
 
 ## v0.3.2 (2016-03-09)

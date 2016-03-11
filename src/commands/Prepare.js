@@ -4,6 +4,7 @@ import mkdirp from 'mkdirp'
 import utils from '../Utils'
 import semver from 'semver'
 import fs from 'fs'
+import path from 'path'
 import async from 'async'
 import depurar from 'depurar'; const debug = depurar('frey')
 
@@ -30,7 +31,7 @@ class Prepare extends Command {
 
     deps.push({
       type: 'Dir',
-      name: 'ssh.key_dir',
+      name: 'global.ssh.key_dir',
       dir: `{{{config.global.ssh.key_dir}}}`
     })
 
@@ -38,6 +39,7 @@ class Prepare extends Command {
       type: 'Privkey',
       privkey: '{{{config.global.ssh.privatekey_file}}}',
       pubkey: '{{{config.global.ssh.publickey_file}}}',
+      privkeyEnc: '{{{config.global.ssh.privatekey_enc_file}}}',
       email: '{{{config.global.ssh.email}}}'
     })
 
@@ -49,9 +51,9 @@ class Prepare extends Command {
     })
 
     deps.push({
-      type: 'Privkey',
+      type: 'PrivkeyEnc',
       privkey: '{{{config.global.ssh.privatekey_file}}}',
-      pubkey: '{{{config.global.ssh.publickey_file}}}'
+      privkeyEnc: '{{{config.global.ssh.privatekey_enc_file}}}'
     })
 
     deps.push({
@@ -244,10 +246,61 @@ class Prepare extends Command {
         return cb(null)
       }
 
-      this._out(`Creating private key '${props.privkey}'\n`)
+      debug({props: props})
+
+      fs.stat(props.privkeyEnc, (err) => {
+        if (!err) {
+          // We have an encrypted version, let's try a reconstruct
+          if (!process.env.FREY_ENCRYPTION_SECRET) {
+            debug(`Wanted to reconstruct '${props.privkey}' from '${props.privkeyEnc}' but there is no FREY_ENCRYPTION_SECRET`)
+          } else {
+            process.on('exit', (code) => {
+              // From node docs: "You must only perform synchronous operations in this handler"
+              try {
+                this._out(`Cleaning up '${props.privkey}'\n`)
+                fs.unlinkSync(props.privkey)
+              } catch (e) {
+                this._out(`Was unable to clean up '${props.privkey}'\n`)
+              }
+            })
+
+            this._out(`Reconstructing private key '${props.privkey}' from '${props.privkeyEnc}'\n`)
+            const cmd = [
+              `openssl aes-256-cbc -k '${process.env.FREY_ENCRYPTION_SECRET}' -in '${props.privkeyEnc}' -out '${props.privkey}' -d`,
+              `(grep 'BEGIN RSA PRIVATE KEY' '${props.privkey}' || (rm -f '${props.privkey}'; false))`,
+              `chmod 400 '${props.privkey}'`
+            ].join(' && ')
+            return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+          }
+        }
+
+        this._out(`Creating private key '${props.privkey}'\n`)
+        const cmd = [
+          `ssh-keygen -b 2048 -t rsa -C '${props.email}' -f '${props.privkey}' -q -N ''`,
+          `rm -f '${props.privkey}.pub'`
+        ].join(' && ')
+        return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+      })
+    })
+  }
+
+  _makePrivkeyEnc (props, cb) {
+    if (!process.env.FREY_ENCRYPTION_SECRET) {
+      // Not needed
+      debug(`Skipping creation of '${props.privkeyEnc}', as there is no FREY_ENCRYPTION_SECRET`)
+      return cb(null)
+    }
+    return fs.stat(props.privkeyEnc, (err) => {
+      if (!err) {
+        // Already exists
+        debug(`Key '${props.privkeyEnc}' aready exists`)
+        return cb(null)
+      }
+
+      this._out(`Creating private encrypted key '${props.privkeyEnc}'\n`)
       const cmd = [
-        `ssh-keygen -b 2048 -t rsa -C '${props.email}' -f '${props.privkey}' -q -N ''`,
-        `rm -f '${props.privkey}.pub'`
+        `openssl aes-256-cbc -k '${process.env.FREY_ENCRYPTION_SECRET}' -in '${props.privkey}' -out '${props.privkeyEnc}'`,
+        `chmod 400 '${props.privkeyEnc}'`
       ].join(' && ')
       return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
     })

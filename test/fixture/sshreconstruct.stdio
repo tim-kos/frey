@@ -1,0 +1,16 @@
+--> Frey version '0.3.2'
+--> Will run: [ 'init', 'config', 'prepare' ]
+--> {hostname} - init
+--> {hostname} - config
+--> {hostname} - prepare
+Reconstructing private key '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem' from '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem.enc'
+-----BEGIN RSA PRIVATE KEY-----
+Creating public key '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pub'
+Found 'terraform' with version '0.6.12'
+Found 'terraformInventory' with version '0.6.0'
+Found 'pip' with version {{global_pip_version}}
+Found 'pyhcl-0.1.5' with version '0.1.5'
+Found 'pyhcl-0.2.0' with version '0.2.0'
+Found 'ansible' with version '2.0.0'
+Done
+Cleaning up '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem'

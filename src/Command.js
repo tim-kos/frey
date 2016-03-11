@@ -106,11 +106,11 @@ class Command extends Base {
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
     }
 
-    debug({
+    debug(this._secureOutput({
       // opts: opts
       cwd: opts.cwd,
       cmdArgs: cmdArgs
-    })
+    }))
 
     const cmd = cmdArgs.shift()
     const bash = spawn(cmd, cmdArgs, opts)

@@ -6,3 +6,5 @@ env.sh
 test/scenario/converter/infra.toml
 test/scenario/*/Frey-state*
 Frey-residu*
+
+test/scenario/sshreconstruct/frey-sshreconstruct.pub

@@ -118,6 +118,7 @@ class Config extends Command {
           email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
           keypair_name: `{{{init.cliargs.app}}}`,
           privatekey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem`,
+          privatekey_enc_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem.enc`,
           publickey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pub`,
           user: 'ubuntu'
         }
@@ -167,6 +168,9 @@ class Config extends Command {
     config.global.infra_state_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_state_file)
 
     config.global.ssh.key_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.key_dir)
+    config.global.ssh.privatekey_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.privatekey_file)
+    config.global.ssh.privatekey_enc_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.privatekey_enc_file)
+    config.global.ssh.publickey_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.publickey_file)
 
     return cb(null, config)
   }
