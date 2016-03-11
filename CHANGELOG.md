@@ -38,6 +38,7 @@ Unreleased and unplanned todos
 
 ## v0.3.3 (2016-03-11)
 
+- [x] Use internal cast5-cbc encryption vs shelling out to openssl
 - [x] Automatic SSH private key reconstruction via encrypted file and FREY_ENCRYPTION_SECRET
 - [x] Add basic toml formatter
 

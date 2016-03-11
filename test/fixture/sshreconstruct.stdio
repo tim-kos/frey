@@ -13,4 +13,4 @@ Found 'pyhcl-0.1.5' with version '0.1.5'
 Found 'pyhcl-0.2.0' with version '0.2.0'
 Found 'ansible' with version '2.0.0'
 Done
-Cleaning up '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem'
+Cleaning up '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem' after process exit with code '0' 

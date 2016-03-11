@@ -2,8 +2,35 @@
 import depurar from 'depurar'; const debug = depurar('frey')
 import _ from 'lodash'
 import flatten from 'flat'
+import crypto from 'crypto'
+import fs from 'fs'
 
 class Utils {
+  _cryptFile (fn, readFile, writeFile, cb) {
+    const readStream = fs.createReadStream(readFile)
+    const writeStream = fs.createWriteStream(writeFile)
+    readStream.pipe(fn).pipe(writeStream)
+
+    readStream.on('error', (err) => {
+      return cb(err)
+    })
+    writeStream.on('error', (err) => {
+      return cb(err)
+    })
+
+    writeStream.on('finish', () => {
+      return cb(null)
+    })
+  }
+
+  encryptFile (readFile, writeFile, password, cb) {
+    this._cryptFile(crypto.createCipher('cast5-cbc', password), readFile, writeFile, cb)
+  }
+
+  decryptFile (readFile, writeFile, password, cb) {
+    this._cryptFile(crypto.createDecipher('cast5-cbc', password), readFile, writeFile, cb)
+  }
+
   render (subject, data, opts = {}) {
     if (_.isFunction(subject)) {
       return subject

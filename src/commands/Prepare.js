@@ -4,7 +4,6 @@ import mkdirp from 'mkdirp'
 import utils from '../Utils'
 import semver from 'semver'
 import fs from 'fs'
-import path from 'path'
 import async from 'async'
 import depurar from 'depurar'; const debug = depurar('frey')
 
@@ -246,8 +245,6 @@ class Prepare extends Command {
         return cb(null)
       }
 
-      debug({props: props})
-
       fs.stat(props.privkeyEnc, (err) => {
         if (!err) {
           // We have an encrypted version, let's try a reconstruct
@@ -257,7 +254,7 @@ class Prepare extends Command {
             process.on('exit', (code) => {
               // From node docs: "You must only perform synchronous operations in this handler"
               try {
-                this._out(`Cleaning up '${props.privkey}'\n`)
+                this._out(`Cleaning up '${props.privkey}' after process exit with code '${code}' \n`)
                 fs.unlinkSync(props.privkey)
               } catch (e) {
                 this._out(`Was unable to clean up '${props.privkey}'\n`)
@@ -265,12 +262,16 @@ class Prepare extends Command {
             })
 
             this._out(`Reconstructing private key '${props.privkey}' from '${props.privkeyEnc}'\n`)
-            const cmd = [
-              `openssl aes-256-cbc -k '${process.env.FREY_ENCRYPTION_SECRET}' -in '${props.privkeyEnc}' -out '${props.privkey}' -d`,
-              `(grep 'BEGIN RSA PRIVATE KEY' '${props.privkey}' || (rm -f '${props.privkey}'; false))`,
-              `chmod 400 '${props.privkey}'`
-            ].join(' && ')
-            return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+            return utils.decryptFile(props.privkeyEnc, props.privkey, process.env.FREY_ENCRYPTION_SECRET, (err) => {
+              if (err) {
+                return cb(err)
+              }
+              const cmd = [
+                `(grep 'BEGIN RSA PRIVATE KEY' '${props.privkey}' || (rm -f '${props.privkey}'; false))`,
+                `chmod 400 '${props.privkey}'`
+              ].join(' && ')
+              return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+            })
           }
         }
 
@@ -298,11 +299,16 @@ class Prepare extends Command {
       }
 
       this._out(`Creating private encrypted key '${props.privkeyEnc}'\n`)
-      const cmd = [
-        `openssl aes-256-cbc -k '${process.env.FREY_ENCRYPTION_SECRET}' -in '${props.privkey}' -out '${props.privkeyEnc}'`,
-        `chmod 400 '${props.privkeyEnc}'`
-      ].join(' && ')
-      return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+      utils.encryptFile(props.privkey, props.privkeyEnc, process.env.FREY_ENCRYPTION_SECRET, (err) => {
+        if (err) {
+          return cb(err)
+        }
+
+        const cmd = [
+          `chmod 400 '${props.privkeyEnc}'`
+        ].join(' && ')
+        return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+      })
     })
   }
 
