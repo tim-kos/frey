@@ -10,9 +10,11 @@ ACCPTST:STDIO_REPLACE_REMOTE_EXEC
 --> {hostname} - init
 --> {hostname} - config
 --> {hostname} - prepare
-Found 'terraform' with version '0.6.11'
+Found 'terraform' with version '0.6.12'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
+Found 'pyhcl-0.1.5' with version '0.1.5'
+Found 'pyhcl-0.2.0' with version '0.2.0'
 Found 'ansible' with version '2.0.0'
 --> {hostname} - refresh
 --> {hostname} - validate
@@ -93,6 +95,7 @@ Path: {root}/test/scenario/openstack/Frey-residu-terraform.plan
 
 + openstack_networking_router_v2.freytest
     admin_state_up:   "" => "1"
+    distributed:      "" => "<computed>"
     external_gateway: "" => "{uuid}"
     name:             "" => "freytest"
     tenant_id:        "" => "<computed>"
@@ -155,6 +158,7 @@ openstack_networking_subnet_v2.freytest: Creating...
 openstack_networking_subnet_v2.freytest: Creation complete
 openstack_networking_router_v2.freytest: Creating...
   admin_state_up:   "" => "1"
+  distributed:      "" => "<computed>"
   external_gateway: "" => "{uuid}"
   name:             "" => "freytest"
   tenant_id:        "" => "<computed>"
