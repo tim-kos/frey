@@ -3,6 +3,7 @@
 import Frey from './Frey'
 // import depurar from 'depurar'; const debug = depurar('frey')
 import yargs from 'yargs'
+import chalk from 'chalk'
 const updateNotifier = require('update-notifier')
 import pkg from '../package.json'
 import LiftOff from 'liftoff'
@@ -71,7 +72,7 @@ yargs
     }
   })
   .command('completion', 'Install CLI auto completion')
-  .epilog('Copyright 2016 Transloadit')
+  .epilog('Copyright 2016 Kevin van Zonneveld')
   .help('help')
   .wrap(yargs.terminalWidth())
   .version(() => {
@@ -82,7 +83,7 @@ yargs
 for (let cmd of commands) {
   let description = `${cmd.description}`
   if (cmd.chained === true) {
-    description = '▽ ' + description
+    description = chalk.green('▽ ') + description
   }
   yargs.command(cmd.name, description)
 }

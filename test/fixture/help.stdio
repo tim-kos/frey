@@ -36,5 +36,5 @@ Options:
 Examples:
   frey backup -d ./envs/production  backup platform described in ./envs/production
 
-Copyright 2016 Transloadit
+Copyright 2016 Kevin van Zonneveld
 

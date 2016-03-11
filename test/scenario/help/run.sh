@@ -15,4 +15,4 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
   __node="babel-node"; __codelib="src"
 fi
 
-"${__node}" "${__root}/${__codelib}/cli.js" --help
+"${__node}" "${__root}/${__codelib}/cli.js" --help --no-color

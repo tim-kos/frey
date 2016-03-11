@@ -24,6 +24,7 @@ cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
 "${__node}" "${__root}/${__codelib}/cli.js" validate \
   --verbose \
   --force-yes \
+  --no-color \
   --cfg-var "global.ssh.keysdir=${__sysTmpDir}/frey-gitless" \
   --project_dir "${__sysTmpDir}/frey-gitless/" \
   --bail

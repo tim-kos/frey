@@ -16,7 +16,7 @@ Done
 Running help on all required tools
   --version             show program's version number and exit
 usage: terraform [--version] [--help] <command> [<args>]
-    version    Prints the Terraform version
+    version     Prints the Terraform version
   -version
     	print version information and exit
 All tools were able to execute
