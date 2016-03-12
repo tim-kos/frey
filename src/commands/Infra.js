@@ -21,6 +21,10 @@ class Infra extends Command {
       }
     })
 
+    // if (this.runtime.plan.change > 0 || this.runtime.plan.destroy > 0) {
+    //   // @todo add promptYesNo
+    // }
+
     terraform.exe((err, stdout) => {
       if (err) {
         return cb(err)
