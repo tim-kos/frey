@@ -29,7 +29,10 @@ class App {
   }
 
   _escape (str) {
-    return str.replace(/([^a-zA-Z0-9\-\.\/])/g, '\\$1')
+    if (!str.replace) {
+      throw new Error('You should pass _escape a string. But you passed: ' + str)
+    }
+    return str.replace(/([^a-zA-Z0-9\-\.\/\,\_])/g, '\\$1')
   }
 
   _objectToEnv (obj, opts = {}) {
@@ -54,12 +57,20 @@ class App {
     opts.equal = opts.equal || ''
     opts.quote = opts.quote || ''
     opts.dash = opts.dash || ''
+    opts.escape = opts.escape === true || opts.escape === undefined
+
+    let fn = (str) => {
+      return str
+    }
+    if (opts.escape) {
+      fn = this._escape
+    }
 
     const args = []
     _.forOwn(obj, (val, key) => {
       if (val === true) {
         // as is
-        args.push(this._escape(key))
+        args.push(fn(key))
       } else if (val === null) {
         // turned off, skip
         return
@@ -67,10 +78,10 @@ class App {
         // key/value pair
         args.push([
           opts.dash,
-          this._escape(key),
+          fn(key),
           opts.equal,
           opts.quote,
-          this._escape(val),
+          fn(val),
           opts.quote
         ].join(''))
       }

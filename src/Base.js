@@ -13,7 +13,8 @@ class Base {
   }
 
   main (bootOptions, cb) {
-    return debug('You should override this with main class logic. ')
+    debug('You should override this with main class logic. ')
+    return cb(null)
   }
 
   /**

@@ -2,12 +2,11 @@
 import Terraform from '../Terraform'
 import Command from '../Command'
 import _ from 'lodash'
-import depurar from 'depurar'; const debug = depurar('frey')
 
 class Plan extends Command {
   main (cargo, cb) {
-    if (!_.has(this.runtime.config, 'install')) {
-      debug(`Skipping as there are no install instructions`)
+    if (!_.has(this.runtime.config, 'infra')) {
+      this.info(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 

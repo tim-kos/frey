@@ -13,12 +13,12 @@ class Terraform extends App {
     const defaults = {
       args: {},
       env: terraformProps.env,
-      signatureOpts: { equal: '=', quote: '', dash: '-' },
+      signatureOpts: { equal: '=', quote: '', dash: '-', escape: false },
       exe: terraformProps.exe
     }
 
     if (!chalk.enabled) {
-      defaults.args['no-color'] = true
+      defaults.args['-no-color'] = true
     }
 
     defaults.args['parallelism'] = this.runtime.config.global.terraformcfg.parallelism

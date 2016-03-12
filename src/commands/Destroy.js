@@ -1,50 +1,41 @@
 'use strict'
+import Terraform from '../Terraform'
 import Command from '../Command'
-import depurar from 'depurar'; const debug = depurar('frey')
-import chalk from 'chalk'
 import _ from 'lodash'
-import Shell from '../Shell'
 
 class Destroy extends Command {
-  constructor (name, runtime) {
-    super(name, runtime)
-    this.shell = new Shell(runtime)
-    this.boot = [
-      '_gatherTerraformArgs'
-    ]
-  }
-
-  _gatherTerraformArgs (cargo, cb) {
-    const terraformArgs = []
-    if (!chalk.enabled) {
-      terraformArgs.push('-no-color')
+  main (cargo, cb) {
+    if (!_.has(this.runtime.config, 'infra')) {
+      this.info(`Skipping as there are no install instructions\n`)
+      return cb(null)
     }
 
-    debug('Loaded config:')
-    debug(this.runtime.config)
+    const terraform = new Terraform({
+      args: {
+        destroy: true,
+        '-force': true
+      },
+      runtime: this.runtime,
+      cmdOpts: {
+        verbose: true,
+        limitSamples: false
+      }
+    })
 
-    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
-    terraformArgs.push(`-force`)
-
-    return cb(null, terraformArgs)
-  }
-
-  main (cargo, cb) {
-    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
-    const terraformExe = appProps.exe
-    let cmd = [
-      terraformExe,
-      'destroy'
-    ]
-    cmd = cmd.concat(this.bootCargo._gatherTerraformArgs)
-    cmd = cmd.join(' ')
-
-    return this.shell._cmdYesNo(cmd, (err) => {
-      if (err) {
-        return cb(err)
+    return this.promptYesNo(`May I destroy your infrastructure? [yes|No]`, (ok) => {
+      if (!ok) {
+        return cb(new Error('Question declined. Aborting. '))
       }
 
-      return cb(null)
+      terraform.exe((err, stdout) => {
+        if (err) {
+          return cb(err)
+        }
+
+        this._out(`--> Saved new state to '${this.runtime.config.global.infra_state_file}'\n`)
+
+        return cb(null)
+      })
     })
   }
 }

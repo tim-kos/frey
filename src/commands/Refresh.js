@@ -6,8 +6,8 @@ import depurar from 'depurar'; const debug = depurar('frey')
 
 class Refresh extends Command {
   main (cargo, cb) {
-    if (!_.has(this.runtime.config, 'install')) {
-      debug(`Skipping as there are no install instructions`)
+    if (!_.has(this.runtime.config, 'infra')) {
+      this.info(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 
@@ -32,7 +32,7 @@ class Refresh extends Command {
         }
       }
 
-      debug('Saved state')
+      this._out(`--> Saved state to '${this.runtime.config.global.infra_state_file}'\n`)
       return cb(null)
     })
   }

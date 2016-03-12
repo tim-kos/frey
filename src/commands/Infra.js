@@ -2,12 +2,11 @@
 import Terraform from '../Terraform'
 import Command from '../Command'
 import _ from 'lodash'
-import depurar from 'depurar'; const debug = depurar('frey')
 
 class Infra extends Command {
   main (cargo, cb) {
-    if (!_.has(this.runtime.config, 'install')) {
-      debug(`Skipping as there are no install instructions`)
+    if (!_.has(this.runtime.config, 'infra')) {
+      this.info(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 
@@ -27,7 +26,7 @@ class Infra extends Command {
         return cb(err)
       }
 
-      this._out(`--> Saved state to '${this.runtime.config.global.infra_state_file}'\n`)
+      this._out(`--> Saved new state to '${this.runtime.config.global.infra_state_file}'\n`)
 
       return cb(null)
     })

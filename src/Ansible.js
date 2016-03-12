@@ -14,7 +14,7 @@ class Ansible extends App {
     const defaults = {
       args: {},
       env: ansibleProps.env,
-      signatureOpts: { equal: '=', quote: '', dash: '--' },
+      signatureOpts: { equal: '=', quote: '', dash: '--', escape: false },
       exe: ansibleProps.exePlaybook
     }
 
@@ -28,14 +28,14 @@ class Ansible extends App {
     }
 
     if (this.runtime.init.cliargs.verbose) {
-      defaults.args['verbose'] = true
+      defaults.args['--verbose'] = true
     }
 
     const connection = _.get(this.runtime, 'config.global.connection')
     if (connection !== undefined) {
-      defaults.args['inventory-file'] = false
-      defaults.args['user'] = false
-      defaults.args['private-key'] = false
+      defaults.args['inventory-file'] = null
+      defaults.args['user'] = null
+      defaults.args['private-key'] = null
       defaults.args['connection'] = connection
       defaults.args['extra-vars'] = `variable_host=${connection}`
       defaults.args['inventory-file'] = `${connection},`
