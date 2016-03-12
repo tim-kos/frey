@@ -1,13 +1,11 @@
 'use strict'
 import Command from '../Command'
-import Shell from '../Shell'
 // import Ansible from '../Ansible'
 // import depurar from 'depurar'; const debug = depurar('frey')
 
 class Show extends Command {
   constructor (name, runtime) {
     super(name, runtime)
-    this.shell = new Shell(runtime)
     this.boot = [
     ]
   }
@@ -25,6 +23,7 @@ class Show extends Command {
     // --user=ubuntu \
     // --inventory-file=/Users/kvz/.frey/tools/terraform-inventory/0.6/terraform-inventory \
     // --private-key=/Users/kvz/code/uppy-server/infra/ssh/frey-infra.pem
+    cb(null)
   }
 }
 
