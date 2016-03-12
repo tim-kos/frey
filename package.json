@@ -18,7 +18,7 @@
     "release:major": "env SEMANTIC=major npm run release",
     "release:minor": "env SEMANTIC=minor npm run release",
     "release:patch": "env SEMANTIC=patch npm run release",
-    "release": "npm version ${SEMANTIC:-patch} -m \"Release %s\" && npm run version:replace && git commit test/fixture/*.stdio -m 'Update version' && git push && git push --tags && npm publish",
+    "release": "npm version ${SEMANTIC:-patch} -m \"Release %s\" && npm run version:replace && git commit test/fixture/*.stdio -m 'Update version' && git push --tags && git push && npm publish",
     "test:full": "npm run lint && npm run build && npm run mocha:coverage && npm run acceptance",
     "test": "npm run lint && npm run build && npm run mocha",
     "version:current": "node -e 'console.log(require(\"./package.json\").version)'",
