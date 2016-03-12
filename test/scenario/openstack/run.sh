@@ -45,19 +45,7 @@ if true; then trap destroy EXIT; fi
   --verbose \
   --force-yes \
   --cfg-var="global.terraformcfg.parallelism=1" \
-  --bailAfter install \
 || false
-
-# If you want to test just the install (don't forget to disable destroys):
-#
-# "${__node}" "${__root}/${__codelib}/cli.js" install \
-#   --sshkeys-dir "${__dir}" \
-#   --no-color \
-#   --verbose \
-#   --force-yes \
-#   --cfg-var="global.terraformcfg.parallelism=1" \
-#   --bail \
-# || false
 
 rm -f Frey-residu* 2>&1 > /dev/null || true
 

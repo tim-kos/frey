@@ -5,7 +5,6 @@
 Unreleased and unplanned todos
 
 - [ ] Vagrant support
-- [ ] Dynamodb scenario can evolve to be a full run, passing all stages
 - [ ] Indent stdout/err
 - [ ] More tests!
 - [ ] Empty out and remove `Base` class?
@@ -30,13 +29,14 @@ Unreleased and unplanned todos
 - [ ] Add multi-files-project example
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Implement remote
-- [x] Implement setup
-- [x] Implement deploy
-- [x] Implement restart
 - [ ] Implement show / inspect
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Add safety prompts for destructive Launches, and Destroys. Research/Think about marking protected resources (like databases), and only allowing destructive changes via --force-yes, otherwise via prompt. All other changes should be automatic. Perhaps we could still apply the nondestructive changes? 
+- [x] Let openstack scenario complete full Frey run
+- [x] Implement setup
+- [x] Implement deploy
+- [x] Implement restart
 - [x] Name encoded files `.cast5` vs `.enc`
 
 ## v0.3.3 (2016-03-11)

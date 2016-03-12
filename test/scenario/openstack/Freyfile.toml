@@ -1,6 +1,14 @@
 [global.terraformcfg]
   parallelism = 1
 
+[global.ansiblecfg.defaults]
+  # https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
+  remote_user       = "root"
+  host_key_checking = "False"
+
+[global.ansiblecfg.ssh_connection]
+  ssh_args = "-oControlMaster=auto -oControlPersist=60s -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no"
+
 [infra.output.public_address]
   value = "${openstack_compute_instance_v2.freytest_app.access_ip_v4}"
 
@@ -89,18 +97,38 @@
       user     = "{{{config.global.ssh.user}}}"
 
 
-[global.ansiblecfg.defaults]
-  # https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
-  remote_user       = "root"
-  host_key_checking = "False"
-
-[global.ansiblecfg.ssh_connection]
-  ssh_args = "-oControlMaster=auto -oControlPersist=60s -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no"
-
 [[install.playbooks]]
   hosts = "freytest_app"
-  name  = "Install app servers"
+  name  = "install app servers"
 
 [[install.playbooks.tasks]]
-  name = "Execute arbitrary command"
-  command = "pwd"
+  name = "Execute install command"
+  command = "{{item}}"
+  with_items = [ "pwd", "echo install" ]
+
+[[setup.playbooks]]
+  hosts = "freytest_app"
+  name  = "setup app servers"
+
+[[setup.playbooks.tasks]]
+  name = "Execute setup command"
+  command = "{{item}}"
+  with_items = [ "pwd", "echo setup" ]
+
+[[deploy.playbooks]]
+  hosts = "freytest_app"
+  name  = "deploy app servers"
+
+[[deploy.playbooks.tasks]]
+  name = "Execute deploy command"
+  command = "{{item}}"
+  with_items = [ "pwd", "echo deploy" ]
+
+[[restart.playbooks]]
+  hosts = "freytest_app"
+  name  = "restart app servers"
+
+[[restart.playbooks.tasks]]
+  name = "Execute restart command"
+  command = "{{item}}"
+  with_items = [ "pwd", "echo restart" ]
