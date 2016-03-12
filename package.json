@@ -43,6 +43,7 @@
     "fakefile": "0.0.5",
     "flat": "2.0.0",
     "glob": "6.0.4",
+    "globby": "3.0.0",
     "grunt": "0.4.5",
     "indent-string": "2.1.0",
     "inflection": "1.8.0",
