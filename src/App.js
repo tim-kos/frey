@@ -69,10 +69,16 @@ class App {
     const args = []
     _.forOwn(obj, (val, key) => {
       if (val === true) {
-        // as is
+        // turn on a boolean flag
+        args.push([
+          opts.dash,
+          fn(key)
+        ].join(''))
+      } else if (val === undefined) {
+        // add the value as is
         args.push(fn(key))
       } else if (val === null) {
-        // turned off, skip
+        // turned off, don't add at all
         return
       } else {
         // key/value pair

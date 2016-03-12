@@ -13,7 +13,7 @@ class Refresh extends Command {
 
     const terraform = new Terraform({
       args: {
-        refresh: true
+        refresh: undefined
       },
       runtime: this.runtime,
       cmdOpts: {

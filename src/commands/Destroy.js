@@ -12,8 +12,8 @@ class Destroy extends Command {
 
     const terraform = new Terraform({
       args: {
-        destroy: true,
-        '-force': true
+        destroy: undefined,
+        force: true
       },
       runtime: this.runtime,
       cmdOpts: {

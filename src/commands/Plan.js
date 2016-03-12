@@ -12,7 +12,7 @@ class Plan extends Command {
 
     const terraform = new Terraform({
       args: {
-        plan: true,
+        plan: undefined,
         refresh: 'false',
         out: this.runtime.config.global.infra_plan_file
       },

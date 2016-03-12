@@ -12,7 +12,7 @@ class Infra extends Command {
 
     const terraform = new Terraform({
       args: {
-        apply: true
+        apply: undefined
       },
       runtime: this.runtime,
       cmdOpts: {

@@ -12,7 +12,9 @@ class Setup extends Command {
     }
 
     const opts = { args: {}, runtime: this.runtime }
-    opts.args[this.runtime.config.global.setup_file] = true
+
+    opts.args[this.runtime.config.global.setup_file] = undefined
+
     const ansible = new Ansible(opts)
     ansible.exe(cb)
   }
