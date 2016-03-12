@@ -8,3 +8,6 @@ test/scenario/*/Frey-state*
 Frey-residu*
 
 test/scenario/sshreconstruct/frey-sshreconstruct.pub
+
+test/scenario/converter/infra.tf.json
+test/scenario/converter/infra.unformatted.toml
