@@ -17,6 +17,7 @@ Unreleased and unplanned todos
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
 - [ ] Command's exe functions should mostly be in a util class
 - [ ] Enable DO support
+- [ ] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
 - [ ] Abstract both Terraform and Ansible into App classes
 - [ ] Remote state in S3 feature
