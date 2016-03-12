@@ -12,8 +12,8 @@ class Show extends Command {
     super(name, runtime)
     this.boot = [
       '_gatherHost',
-      'facts',
-      'output'
+      'output',
+      'facts'
     ]
   }
 
@@ -43,9 +43,33 @@ class Show extends Command {
     cb(null, _.get(this.runtime, 'config.install.playbooks.0.hosts'))
   }
 
+  output (cargo, cb) {
+    if (!_.has(this.runtime.config, 'infra')) {
+      debug(`Skipping output as there are no infra instructions`)
+      return cb(null)
+    }
+
+    const terraform = new Terraform({
+      cmdOpts: { verbose: false },
+      args: {
+        output: undefined,
+        state: this.runtime.config.global.infra_state_file,
+        parallelism: null
+      },
+      runtime: this.runtime
+    })
+
+    terraform.exe(cb)
+  }
+
   facts (cargo, cb) {
+    if (!_.has(this.runtime.config, 'install.playbooks')) {
+      debug(`Skipping facts as there are no install instructions`)
+      return cb(null)
+    }
+
     const ansibleProps = _.find(this.runtime.prepare.deps, { name: 'ansible' })
-    const opts = { exe: ansibleProps.exe, args: {}, runtime: this.runtime }
+    const opts = { exe: ansibleProps.exe, args: {}, runtime: this.runtime, cmdOpts: { verbose: false } }
 
     opts.args['module-name'] = 'setup'
     opts.args['tree'] = '/tmp/frey-facts'
@@ -66,27 +90,17 @@ class Show extends Command {
     })
   }
 
-  output (cargo, cb) {
-    const terraform = new Terraform({
-      args: {
-        output: undefined,
-        state: this.runtime.config.global.infra_state_file,
-        parallelism: null
-      },
-      runtime: this.runtime
-    })
-
-    terraform.exe(cb)
-  }
-
   main (cargo, cb) {
     const results = {
       output: this.bootCargo.output,
       facts: this.bootCargo.facts
     }
 
-    _.forOwn(results, (out) => {
-      this._out(`${out} \n`)
+    _.forOwn(results, (out, key) => {
+      if (out) {
+        this._out(`- [ ${key} ] -------------------------------- \n`)
+        this._out(`${out} \n`)
+      }
     })
 
     cb(null, results)

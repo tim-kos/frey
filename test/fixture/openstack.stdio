@@ -274,6 +274,12 @@ PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 --> {hostname} - show
+- [ output ] {uuid} 
+public_address = {ip}
+ 
+- [ facts ] {uuid} 
+ansible_facts.ansible_service_mgr = upstart
+ 
 Done
 Finished
 (maybe) Destroying..
