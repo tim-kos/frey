@@ -56,7 +56,6 @@ Path: {root}/test/scenario/dynamodb/Frey-residu-terraform.plan
 Plan: 1 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/dynamodb/Frey-residu-terraform.plan'
 --> {hostname} - backup
-I am a rad custom backup script performing some nice backup action!
 --> {hostname} - infra
 aws_dynamodb_table.basic-dynamodb-table: Creating...
   arn:                                                   "" => "<computed>"
