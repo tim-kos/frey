@@ -1,6 +1,6 @@
 (maybe) Destroying..
 --> Frey version '0.3.3'
---> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra' ]
+--> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install', 'setup', 'deploy', 'restart', 'show' ]
 --> {hostname} - init
 --> {hostname} - config
 --> {hostname} - prepare
@@ -99,6 +99,11 @@ Outputs:
 
   arn = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
 --> Saved state to '{root}/test/scenario/dynamodb/Frey-state-terraform.tfstate'
+--> {hostname} - install
+--> {hostname} - setup
+--> {hostname} - deploy
+--> {hostname} - restart
+--> {hostname} - show
 Done
 Finished
 (maybe) Destroying..

@@ -39,7 +39,6 @@ if true; then trap destroy EXIT; fi
   --no-color \
   --verbose \
   --force-yes \
-  --bail-after infra \
 || false
 
 rm -f Frey-residu* 2>&1 > /dev/null || true

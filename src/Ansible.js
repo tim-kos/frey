@@ -58,6 +58,10 @@ class Ansible extends Command {
   }
 
   main (cargo, cb) {
+    if (this.bootCargo._gatherArgs === false) {
+      return cb(null)
+    }
+
     const appProps = _.find(this.runtime.prepare.deps, {name: 'ansible'})
     const ansiblePlaybookCmd = appProps.cmdPlaybook
     let cmd = [
