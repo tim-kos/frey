@@ -104,12 +104,10 @@ class Config extends Command {
   _applyDefaults (cargo, cb) {
     // Defaults
     const defaults = {
-      infra: {
-        settings: {
-          parallelism: '{{{init.os.cores}}}'
-        }
-      },
       global: {
+        terraformcfg: {
+          parallelism: '{{{init.os.cores}}}'
+        },
         tools_dir: '{{{init.os.home}}}/.frey/tools',
         ansiblecfg_file: '{{{init.cliargs.projectDir}}}/Frey-residu-ansible.cfg',
         infra_plan_file: '{{{init.cliargs.projectDir}}}/Frey-residu-terraform.plan',

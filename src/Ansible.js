@@ -21,6 +21,10 @@ class Ansible extends Command {
     if (this.runtime.init.cliargs.tags) {
       args.push(`--tags=${this.runtime.init.cliargs.tags}`)
     }
+    // The --limit option tells Ansible to target only certain hosts.
+    // if (this.runtime.init.cliargs.limit) {
+    //   args.push(`--limit=${this.runtime.init.cliargs.limit}`)
+    // }
 
     if (this.runtime.init.cliargs.verbose) {
       args.push('-v')

@@ -9,9 +9,10 @@ Commands:
   plan        ▽ Shows infra changes and saves in an executable plan
   backup      ▽ Backs up server state
   infra       ▽ Launches virtual machines at a provider
-  install     ▽ Runs Ansible to install software packages & configuration templates
+  install     ▽ Runs Ansible to install software packages
+  setup       ▽ Runs Ansible to setup configuration templates & restart software packages
   deploy      ▽ Upload your own application(s)
-  restart     ▽ Restart your own application(s) and its dependencies
+  restart     ▽ Restart your own application
   show        ▽ Displays active platform
   docbuild    Build docs
   restore     Restore latest state backup
