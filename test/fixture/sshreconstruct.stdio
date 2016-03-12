@@ -3,7 +3,7 @@
 --> {hostname} - init
 --> {hostname} - config
 --> {hostname} - prepare
-Reconstructing private key '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem' from '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem.enc'
+Reconstructing private key '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem' from '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem.cast5'
 -----BEGIN RSA PRIVATE KEY-----
 Creating public key '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pub'
 Found 'terraform' with version '0.6.12'

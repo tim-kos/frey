@@ -118,7 +118,7 @@ class Config extends Command {
           email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
           keypair_name: `{{{init.cliargs.app}}}`,
           privatekey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem`,
-          privatekey_enc_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem.enc`,
+          privatekey_enc_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem.cast5`,
           publickey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pub`,
           user: 'ubuntu'
         }
