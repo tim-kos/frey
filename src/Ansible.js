@@ -28,7 +28,7 @@ class Ansible extends App {
     }
 
     if (this.runtime.init.cliargs.verbose) {
-      defaults.args['--verbose'] = true
+      defaults.args['verbose'] = true
     }
 
     const connection = _.get(this.runtime, 'config.global.connection')
@@ -37,7 +37,7 @@ class Ansible extends App {
       defaults.args['user'] = null
       defaults.args['private-key'] = null
       defaults.args['connection'] = connection
-      defaults.args['extra-vars'] = `variable_host=${connection}`
+      defaults.args['extra-vars'] = `"variable_host=${connection}"`
       defaults.args['inventory-file'] = `${connection},`
     }
 

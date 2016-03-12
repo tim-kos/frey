@@ -18,7 +18,7 @@ class Terraform extends App {
     }
 
     if (!chalk.enabled) {
-      defaults.args['-no-color'] = true
+      defaults.args['no-color'] = true
     }
 
     defaults.args['parallelism'] = this.runtime.config.global.terraformcfg.parallelism

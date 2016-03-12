@@ -10,16 +10,20 @@ class App {
     this.shell = new Shell(this.runtime)
   }
 
-  _exe (defaults, cb) {
+  _exe (inDefaults, cb) {
+    const defaults = _.cloneDeep(inDefaults)
+
     const exe = this.opts.exe || defaults.exe
     const signatureOpts = this.opts.signatureOpts || defaults.signatureOpts
-    const cmdOpts = this.opts.cmdOpts || defaults.cmdOpts
+    const cmdOpts = this.opts.cmdOpts || defaults.cmdOpts || {}
     const env = this._objectToEnv(_.defaults(this.opts.env, defaults.env))
     const args = this._objectToFlags(_.defaults(this.opts.args, defaults.args), signatureOpts)
 
+    cmdOpts.env = env
+
     const cmdArgs = [ exe ].concat(args)
     debug({cmdArgs: cmdArgs, env: env})
-    this.shell._exe(cmdArgs, { env: env, cmdOpts: cmdOpts }, (err, stdout) => {
+    this.shell._exe(cmdArgs, cmdOpts, (err, stdout) => {
       if (err) {
         return cb(err)
       }

@@ -91,9 +91,9 @@ class Shell extends Base {
     }
 
     debug(this._secureOutput({
-      // opts: opts
       cwd: opts.cwd,
-      cmdArgs: cmdArgs
+      cmdArgs: cmdArgs,
+      cmdOpts: cmdOpts
     }))
 
     const cmd = cmdArgs.shift()
