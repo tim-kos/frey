@@ -6,10 +6,12 @@ import semver from 'semver'
 import fs from 'fs'
 import async from 'async'
 import depurar from 'depurar'; const debug = depurar('frey')
+import Shell from '../Shell'
 
 class Prepare extends Command {
   constructor (name, runtime) {
     super(name, runtime)
+    this.shell = new Shell(runtime)
     this.dir = this.runtime.init.cliargs.projectDir
   }
 
@@ -196,6 +198,9 @@ class Prepare extends Command {
       dir: '{{{config.global.tools_dir}}}/ansible/{{{self.version}}}',
       exe: `{{{self.dir}}}/pip/bin/ansible`,
       exePlaybook: `{{{self.dir}}}/pip/bin/ansible-playbook`,
+      env: {
+        PYTHONPATH: '{{{parent.dir}}}/pip/lib/python2.7/site-packages'
+      },
       cmdPlaybook: `env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exePlaybook}}} `,
       cmdVersion: 'env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exePlaybook}}} --version',
       versionTransformer (stdout) {
@@ -270,7 +275,7 @@ class Prepare extends Command {
                 `(grep 'BEGIN RSA PRIVATE KEY' '${props.privkey}' || (rm -f '${props.privkey}'; false))`,
                 `chmod 400 '${props.privkey}'`
               ].join(' && ')
-              return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+              this.shell._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
             })
           }
         }
@@ -280,7 +285,7 @@ class Prepare extends Command {
           `ssh-keygen -b 2048 -t rsa -C '${props.email}' -f '${props.privkey}' -q -N ''`,
           `rm -f '${props.privkey}.pub'`
         ].join(' && ')
-        return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+        this.shell._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
       })
     })
   }
@@ -307,7 +312,7 @@ class Prepare extends Command {
         const cmd = [
           `chmod 400 '${props.privkeyEnc}'`
         ].join(' && ')
-        return this._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+        this.shell._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
       })
     })
   }
@@ -326,13 +331,13 @@ class Prepare extends Command {
         `echo ' ${props.email}' >> '${props.pubkey}'`
       ].join(' && ')
 
-      return this._exeScript(cmd, {verbose: true, limitSamples: false, stdin: 0}, cb)
+      this.shell._exeScript(cmd, {verbose: true, limitSamples: false, stdin: 0}, cb)
     })
   }
 
   _makePubkeyFingerprint (props, cb) {
     const cmd = `ssh-keygen -lf '${props.pubkey}' | awk '{print $2}'`
-    return this._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
+    this.shell._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
       this.runtime.config.global.ssh.keypub_fingerprint = `${stdout}`.trim()
       return cb(err)
     })
@@ -360,7 +365,7 @@ class Prepare extends Command {
         return cb(null)
       }
 
-      return this._cmdYesNo(props.cmdInstall, (err) => {
+      return this.shell._cmdYesNo(props.cmdInstall, (err) => {
         if (err) {
           return cb(new Error(`Failed to install '${props.name}'. ${err}`))
         }
@@ -378,7 +383,7 @@ class Prepare extends Command {
   }
 
   _satisfy (appProps, cb) {
-    this._exeScript(appProps.cmdVersion, {verbose: false, limitSamples: false}, (err, stdout) => {
+    this.shell._exeScript(appProps.cmdVersion, {verbose: false, limitSamples: false}, (err, stdout) => {
       if (err) {
         // We don't want to bail out if version command does not exist yet
         // Or maybe --version returns non-zero exit code, which is common

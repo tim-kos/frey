@@ -1,41 +1,28 @@
 'use strict'
+import Terraform from '../Terraform'
 import Command from '../Command'
-import depurar from 'depurar'; const debug = depurar('frey')
-import chalk from 'chalk'
 import _ from 'lodash'
+import depurar from 'depurar'; const debug = depurar('frey')
 
 class Refresh extends Command {
-  constructor (name, runtime) {
-    super(name, runtime)
-    this.boot = [
-      '_gatherTerraformArgs'
-    ]
-  }
-
-  _gatherTerraformArgs (cargo, cb) {
-    const terraformArgs = []
-    if (!chalk.enabled) {
-      terraformArgs.push('-no-color')
+  main (cargo, cb) {
+    if (!_.has(this.runtime.config, 'install')) {
+      debug(`Skipping as there are no install instructions`)
+      return cb(null)
     }
 
-    debug('Loaded config:')
-    debug(this.runtime.config)
+    const terraform = new Terraform({
+      args: {
+        refresh: true
+      },
+      runtime: this.runtime,
+      cmdOpts: {
+        verbose: false,
+        limitSamples: false
+      }
+    })
 
-    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
-
-    return cb(null, terraformArgs)
-  }
-
-  main (cargo, cb) {
-    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
-    const terraformExe = appProps.exe
-    let cmd = [
-      terraformExe,
-      'refresh'
-    ]
-    cmd = cmd.concat(this.bootCargo._gatherTerraformArgs)
-
-    return this._exe(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
+    terraform.exe((err, stdout) => {
       if (err) {
         if (`${err.details}`.match(/when there is existing state/)) {
           debug('Ignoring refresh error about missing statefile')
@@ -45,6 +32,7 @@ class Refresh extends Command {
         }
       }
 
+      debug('Saved state')
       return cb(null)
     })
   }

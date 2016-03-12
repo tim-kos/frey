@@ -41,6 +41,9 @@ class Utils {
     const unflat = _.cloneDeep(data)
     if (_.isArray(subject) || _.isObject(subject)) {
       unflat.self = subject
+      if (opts.parent) {
+        unflat.parent = opts.parent
+      }
     }
     const flattened = flatten(unflat, { delimiter: opts.delimiter })
 
@@ -48,12 +51,12 @@ class Utils {
     if (_.isArray(subject)) {
       newSubject = []
       subject.forEach((val, key) => {
-        newSubject[key] = this.render(val, unflat, _.extend({}, opts, { failhard: false }))
+        newSubject[key] = this.render(val, unflat, _.extend({}, opts, { failhard: false, parent: newSubject }))
       })
     } else if (_.isObject(subject)) {
       newSubject = {}
       _.forOwn(subject, (val, key) => {
-        newSubject[key] = this.render(val, unflat, _.extend({}, opts, { failhard: false }))
+        newSubject[key] = this.render(val, unflat, _.extend({}, opts, { failhard: false, parent: newSubject }))
       })
     } else if (_.isString(subject)) {
       newSubject = subject.replace(/\{\{\{([^\}]+)\}\}\}/g, (match, token) => {

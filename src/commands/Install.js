@@ -1,25 +1,20 @@
 'use strict'
 import Ansible from '../Ansible'
-import fs from 'fs'
+import Command from '../Command'
+import _ from 'lodash'
 import depurar from 'depurar'; const debug = depurar('frey')
 
-class Install extends Ansible {
-  _gatherArgs (cargo, cb) {
-    fs.stat(this.runtime.config.global.install_file, (err) => {
-      if (err) {
-        // Doesn't exist
-        debug(`Skipping as there are no install instructions`)
-        return cb(null, false)
-      }
+class Install extends Command {
+  main (cargo, cb) {
+    if (!_.has(this.runtime.config, 'install.playbooks')) {
+      debug(`Skipping as there are no install instructions`)
+      return cb(null)
+    }
 
-      super._gatherArgs(cargo, (err, args) => {
-        if (err) {
-          return cb(err)
-        }
-        args.push(`${this.runtime.config.global.install_file}`)
-        return cb(null, args)
-      })
-    })
+    const opts = { args: {}, runtime: this.runtime }
+    opts.args[this.runtime.config.global.install_file] = true
+    const ansible = new Ansible(opts)
+    ansible.exe(cb)
   }
 }
 

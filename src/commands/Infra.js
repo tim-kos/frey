@@ -1,39 +1,28 @@
 'use strict'
+import Terraform from '../Terraform'
 import Command from '../Command'
-// import depurar from 'depurar'; const debug = depurar('frey')
-import chalk from 'chalk'
 import _ from 'lodash'
+import depurar from 'depurar'; const debug = depurar('frey')
 
 class Infra extends Command {
-  constructor (name, runtime) {
-    super(name, runtime)
-    this.boot = [
-      '_gatherTerraformArgs'
-    ]
-  }
-
-  _gatherTerraformArgs (options, cb) {
-    const terraformArgs = []
-    if (!chalk.enabled) {
-      terraformArgs.push('-no-color')
+  main (cargo, cb) {
+    if (!_.has(this.runtime.config, 'install')) {
+      debug(`Skipping as there are no install instructions`)
+      return cb(null)
     }
 
-    terraformArgs.push(`-parallelism=${this.runtime.config.global.terraformcfg.parallelism}`)
-    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
+    const terraform = new Terraform({
+      args: {
+        apply: true
+      },
+      runtime: this.runtime,
+      cmdOpts: {
+        verbose: true,
+        limitSamples: false
+      }
+    })
 
-    return cb(null, terraformArgs)
-  }
-
-  main (cargo, cb) {
-    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
-    const terraformExe = appProps.exe
-    let cmd = [
-      terraformExe,
-      'apply'
-    ]
-    cmd = cmd.concat(this.bootCargo._gatherTerraformArgs)
-
-    return this._exe(cmd, {verbose: true, limitSamples: false}, (err, stdout) => {
+    terraform.exe((err, stdout) => {
       if (err) {
         return cb(err)
       }

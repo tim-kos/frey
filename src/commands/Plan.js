@@ -1,43 +1,26 @@
 'use strict'
+import Terraform from '../Terraform'
 import Command from '../Command'
-import chalk from 'chalk'
 import _ from 'lodash'
-// import depurar from 'depurar'; const debug = depurar('frey')
-// import fs from 'fs'
-// import async from 'async'
+import depurar from 'depurar'; const debug = depurar('frey')
 
 class Plan extends Command {
-  constructor (name, runtime) {
-    super(name, runtime)
-    this.boot = [
-      '_gatherTerraformArgs'
-    ]
-  }
-
-  _gatherTerraformArgs (options, cb) {
-    const terraformArgs = []
-    if (!chalk.enabled) {
-      terraformArgs.push('-no-color')
+  main (cargo, cb) {
+    if (!_.has(this.runtime.config, 'install')) {
+      debug(`Skipping as there are no install instructions`)
+      return cb(null)
     }
 
-    terraformArgs.push('-refresh=false')
-    terraformArgs.push(`-out=${this.runtime.config.global.infra_plan_file}`)
-    terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
+    const terraform = new Terraform({
+      args: {
+        plan: true,
+        refresh: 'false',
+        out: this.runtime.config.global.infra_plan_file
+      },
+      runtime: this.runtime
+    })
 
-    return cb(null, terraformArgs)
-  }
-
-  main (cargo, cb) {
-    const appProps = _.find(this.runtime.prepare.deps, {name: 'terraform'})
-    const terraformExe = appProps.exe
-
-    let cmd = [
-      terraformExe,
-      'plan'
-    ]
-    cmd = cmd.concat(this.bootCargo._gatherTerraformArgs)
-
-    this._exe(cmd, {}, (err, stdout) => {
+    terraform.exe((err, stdout) => {
       if (err) {
         return cb(err)
       }
@@ -48,15 +31,15 @@ class Plan extends Command {
         return cb(null)
       }
 
-      const m = stdout.match(/(\d+) to add, (\d+) to change, (\d+) to destroy/)
-      if (!m) {
+      const match = stdout.match(/(\d+) to add, (\d+) to change, (\d+) to destroy/)
+      if (!match) {
         return cb(new Error('Unable to parse add/change/destroy'))
       }
 
       return cb(null, {
-        add: m[1],
-        change: m[2],
-        destroy: m[3]
+        add: match[1],
+        change: match[2],
+        destroy: match[3]
       })
     })
   }

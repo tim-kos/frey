@@ -3,10 +3,12 @@ import Command from '../Command'
 import chalk from 'chalk'
 import depurar from 'depurar'; const debug = depurar('frey')
 import _ from 'lodash'
+import Shell from '../Shell'
 
 class Remote extends Command {
   constructor (name, runtime) {
     super(name, runtime)
+    this.shell = new Shell(runtime)
     this.boot = [
       '_gatherTerraformArgs',
       '_gatherHost',
@@ -36,7 +38,7 @@ class Remote extends Command {
     cmd = cmd.concat(this.bootCargo._gatherTerraformArgs)
     cmd = cmd.concat('public_address')
 
-    return this._exe(cmd, {}, (err, stdout) => {
+    return this.shell._exe(cmd, {}, (err, stdout) => {
       if (err) {
         return cb(err)
       }
@@ -90,7 +92,7 @@ class Remote extends Command {
       cmd: cmd
     })
 
-    return this._exe(cmd, opts, (err, stdout) => {
+    return this.shell._exe(cmd, opts, (err, stdout) => {
       if (err) {
         return cb(err)
       }

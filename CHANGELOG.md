@@ -18,7 +18,6 @@ Unreleased and unplanned todos
 - [ ] Enable DO support
 - [ ] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
-- [ ] Abstract both Terraform and Ansible into App classes
 - [ ] Remote state in S3 feature
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
@@ -32,6 +31,7 @@ Unreleased and unplanned todos
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Add safety prompts for destructive Launches, and Destroys. Research/Think about marking protected resources (like databases), and only allowing destructive changes via --force-yes, otherwise via prompt. All other changes should be automatic. Perhaps we could still apply the nondestructive changes? 
+- [x] Abstract both Terraform and Ansible into App classes
 - [x] Make dynamodb scnario a multi-files-project example
 - [x] Let openstack scenario complete full Frey run
 - [x] Implement setup
