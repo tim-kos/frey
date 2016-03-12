@@ -1,7 +1,16 @@
 'use strict'
-import Command from '../Command'
-// import depurar from 'depurar'; const debug = depurar('frey')
+import Ansible from '../Ansible'
 
-class Deploy extends Command {}
+class Deploy extends Ansible {
+  _gatherArgs (cargo, cb) {
+    super._gatherArgs(cargo, (err, args) => {
+      if (err) {
+        return cb(err)
+      }
+      args.push(`${this.runtime.config.global.deploy_file}`)
+      return cb(null, args)
+    })
+  }
+}
 
 module.exports = Deploy

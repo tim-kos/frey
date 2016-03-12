@@ -29,9 +29,10 @@ Unreleased and unplanned todos
 - [ ] How to implement different roles? Db/www/etc?
 - [ ] Add multi-files-project example
 - [ ] Implement commit: Safely commit state automatically
-- [ ] Implement deploy
 - [ ] Implement remote
-- [ ] Implement restart
+- [x] Implement setup
+- [x] Implement deploy
+- [x] Implement restart
 - [ ] Implement show / inspect
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html

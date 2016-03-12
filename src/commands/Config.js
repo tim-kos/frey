@@ -23,7 +23,10 @@ class Config extends Command {
       '_renderConfig',
       '_writeTerraformFile',
       '_writeAnsibleCfg',
-      '_writeAnsiblePlaybook'
+      '_writeAnsiblePlaybookInstall',
+      '_writeAnsiblePlaybookSetup',
+      '_writeAnsiblePlaybookDeploy',
+      '_writeAnsiblePlaybookRestart'
     ]
   }
 
@@ -108,11 +111,14 @@ class Config extends Command {
       },
       global: {
         tools_dir: '{{{init.os.home}}}/.frey/tools',
-        ansible_settings_file: '{{{init.cliargs.projectDir}}}/Frey-residu-ansible.cfg',
+        ansiblecfg_file: '{{{init.cliargs.projectDir}}}/Frey-residu-ansible.cfg',
         infra_plan_file: '{{{init.cliargs.projectDir}}}/Frey-residu-terraform.plan',
+        infra_state_file: '{{{init.cliargs.projectDir}}}/Frey-state-terraform.tfstate',
         infra_file: '{{{init.cliargs.projectDir}}}/Frey-residu-infra.tf.json',
         install_file: '{{{init.cliargs.projectDir}}}/Frey-residu-install.yml',
-        infra_state_file: '{{{init.cliargs.projectDir}}}/Frey-state-terraform.tfstate',
+        setup_file: '{{{init.cliargs.projectDir}}}/Frey-residu-setup.yml',
+        deploy_file: '{{{init.cliargs.projectDir}}}/Frey-residu-deploy.yml',
+        restart_file: '{{{init.cliargs.projectDir}}}/Frey-residu-restart.yml',
         ssh: {
           key_dir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
@@ -148,7 +154,8 @@ class Config extends Command {
     // envConfig[frey]
     // this.runtime.init.env
 
-    // Left is more important
+    // Merge all config inputs.
+    // Left is more important. So cli wins from > project config, wins from > defaults.
     let config = _.defaultsDeep({}, cliConfig, this.bootCargo._mergeToOneConfig, defaults)
 
     return cb(null, config)
@@ -161,11 +168,14 @@ class Config extends Command {
 
     // Resolve to absolute paths
     config.global.tools_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.tools_dir)
-    config.global.ansible_settings_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ansible_settings_file)
+    config.global.ansiblecfg_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ansiblecfg_file)
     config.global.infra_plan_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_plan_file)
     config.global.infra_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_file)
-    config.global.install_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.install_file)
     config.global.infra_state_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_state_file)
+    config.global.install_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.install_file)
+    config.global.setup_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.setup_file)
+    config.global.deploy_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.deploy_file)
+    config.global.restart_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.restart_file)
 
     config.global.ssh.key_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.key_dir)
     config.global.ssh.privatekey_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.privatekey_file)
@@ -176,8 +186,7 @@ class Config extends Command {
   }
 
   _writeTerraformFile (cargo, cb) {
-    const cfgBlock = _.cloneDeep(_.get(this.bootCargo._renderConfig, 'infra'), 'settings')
-    delete cfgBlock.settings
+    const cfgBlock = _.cloneDeep(_.get(this.bootCargo._renderConfig, 'infra'))
 
     // Automatically add all FREY_* environment variables to Terraform config
     _.forOwn(this.runtime.init.env, (val, key) => {
@@ -208,11 +217,11 @@ class Config extends Command {
   }
 
   _writeAnsibleCfg (cargo, cb) {
-    const cfgBlock = _.get(this.bootCargo._renderConfig, 'install.settings')
+    const cfgBlock = _.get(this.bootCargo._renderConfig, 'global.ansiblecfg')
 
     if (!cfgBlock) {
       debug('No config instructions found in merged toml')
-      fs.unlink(this.bootCargo._renderConfig.global.ansible_settings_file, err => {
+      fs.unlink(this.bootCargo._renderConfig.global.ansiblecfg_file, err => {
         if (err) {
           // That's not fatal
         }
@@ -224,7 +233,7 @@ class Config extends Command {
     let encoded = INI.encode(cfgBlock)
     if (!encoded) {
       debug({cfgBlock: cfgBlock})
-      return cb(new Error('Unable to convert project to ansibleSettingsFile INI'))
+      return cb(new Error('Unable to convert project to ansiblecfg INI'))
     }
 
     // Ansible strips over a quoted `ssh_args="-o x=y -o w=z"`, as it uses exec to call
@@ -233,16 +242,16 @@ class Config extends Command {
     // this point, the replace has to be limited in scope:
     encoded = encoded.replace(/\"/g, '')
 
-    debug('Writing %s', this.bootCargo._renderConfig.global.ansible_settings_file)
-    return fs.writeFile(this.bootCargo._renderConfig.global.ansible_settings_file, encoded, cb)
+    debug('Writing %s', this.bootCargo._renderConfig.global.ansiblecfg_file)
+    return fs.writeFile(this.bootCargo._renderConfig.global.ansiblecfg_file, encoded, cb)
   }
 
-  _writeAnsiblePlaybook (cargo, cb) {
-    const cfgBlock = _.get(this.bootCargo._renderConfig, 'install.playbooks')
+  _writeAnsiblePlaybook (command, cargo, cb) {
+    const cfgBlock = _.get(this.bootCargo._renderConfig, `${command}.playbooks`)
 
     if (!cfgBlock) {
-      debug('No install playbooks found in merged toml')
-      fs.unlink(this.bootCargo._renderConfig.global.install_file, err => {
+      debug(`No ${command} instructions found`)
+      fs.unlink(this.bootCargo._renderConfig.global[`${command}_file`], err => {
         if (err) {
            // That's not fatal
         }
@@ -257,8 +266,21 @@ class Config extends Command {
       return cb(new Error('Unable to convert project to Ansible playbook YAML'))
     }
 
-    debug('Writing %s', this.bootCargo._renderConfig.global.install_file)
-    return fs.writeFile(this.bootCargo._renderConfig.global.install_file, encoded, cb)
+    debug('Writing %s instructions at %s', command, this.bootCargo._renderConfig.global[`${command}_file`])
+    return fs.writeFile(this.bootCargo._renderConfig.global[`${command}_file`], encoded, cb)
+  }
+
+  _writeAnsiblePlaybookInstall (cargo, cb) {
+    return this._writeAnsiblePlaybook('install', cargo, cb)
+  }
+  _writeAnsiblePlaybookSetup (cargo, cb) {
+    return this._writeAnsiblePlaybook('setup', cargo, cb)
+  }
+  _writeAnsiblePlaybookDeploy (cargo, cb) {
+    return this._writeAnsiblePlaybook('deploy', cargo, cb)
+  }
+  _writeAnsiblePlaybookRestart (cargo, cb) {
+    return this._writeAnsiblePlaybook('restart', cargo, cb)
   }
 
   main (cargo, cb) {

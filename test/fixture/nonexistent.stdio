@@ -21,7 +21,7 @@ Commands:
 Options:
   --projectDir   Directory that contains the Freyfile.toml. Frey will traverse upwards if empty.  [string]
   --app          Name of application for which we're creating infrastructure  [string] [default: "{{{self.projectDir}}}|basename"]
-  --cfg-var      Keys in your config to overwrite such as: --cfg-var="global.ssh.key_dir={tmpdir}" --cfg-var="infra.settings.parallelism=2"  [string]
+  --cfg-var      Keys in your config to overwrite such as: --cfg-var="global.ssh.key_dir={tmpdir}" --cfg-var="global.terraformcfg.parallelism=2"  [string]
   --force-yes    Answer yes to all questions (dangerous!)  [boolean] [default: false]
   --tags         A list of tags to execute in isolation  [string]
   --sleep        Wait x seconds between showing infra plan, and executing it  [default: 5]

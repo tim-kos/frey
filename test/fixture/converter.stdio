@@ -71,9 +71,9 @@ Reading '{root}/test/scenario/converter/infra.toml'
   description = "The region of AWS, for AMI lookups."
 
 
-[install.settings.defaults]
+[global.ansiblecfg.defaults]
 
-[install.settings.ssh_connection]
+[global.ansiblecfg.ssh_connection]
 ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
 
 [[install.playbooks]]

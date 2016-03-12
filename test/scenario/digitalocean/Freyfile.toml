@@ -13,10 +13,10 @@
   public_key = "${file(\"{{{config.global.ssh.publickey_file}}})\"}"
 
 
-[install.settings]
-  [install.settings.defaults]
+[global.ansiblecfg]
+  [global.ansiblecfg.defaults]
 
-  [install.settings.ssh_connection]
+  [global.ansiblecfg.ssh_connection]
     ssh_args = "-vvvv -o User=root -o ControlMaster=auto -o ControlPersist=60s"
 
 

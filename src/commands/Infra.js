@@ -18,7 +18,7 @@ class Infra extends Command {
       terraformArgs.push('-no-color')
     }
 
-    terraformArgs.push(`-parallelism=${this.runtime.config.infra.settings.parallelism}`)
+    terraformArgs.push(`-parallelism=${this.runtime.config.global.terraformcfg.parallelism}`)
     terraformArgs.push(`-state=${this.runtime.config.global.infra_state_file}`)
 
     return cb(null, terraformArgs)

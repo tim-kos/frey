@@ -1,4 +1,4 @@
-[infra.settings]
+[global.terraformcfg]
   parallelism = 1
 
 [infra.output.public_address]
@@ -89,12 +89,12 @@
       user     = "{{{config.global.ssh.user}}}"
 
 
-[install.settings.defaults]
+[global.ansiblecfg.defaults]
   # https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
   remote_user       = "root"
   host_key_checking = "False"
 
-[install.settings.ssh_connection]
+[global.ansiblecfg.ssh_connection]
   ssh_args = "-oControlMaster=auto -oControlPersist=60s -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no"
 
 [[install.playbooks]]

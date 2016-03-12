@@ -51,7 +51,7 @@ describe('Frey', () => {
         expect(err).to.equal(null)
         expect(filteredChain).to.deep.equal([
           'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra',
-          'install', 'deploy', 'restart', 'show'
+          'install', 'setup', 'deploy', 'restart', 'show'
         ])
         done()
       })

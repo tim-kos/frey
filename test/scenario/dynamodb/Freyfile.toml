@@ -1,4 +1,4 @@
-[infra.settings]
+[global.terraformcfg]
   parallelism = 1
 
 [infra]

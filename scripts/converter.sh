@@ -70,7 +70,7 @@ echo "" >> "${tomlUnformattedFile}"
 if [ -n "${ansCfgFile}" ]; then
   echo "Appending '${tomlUnformattedFile}'"
   cat "${ansCfgFile}" \
-    |sed 's@\[@[install.settings.@g' \
+    |sed 's@\[@[global.ansiblecfg.@g' \
   >> "${tomlUnformattedFile}"
   echo "" >> "${tomlUnformattedFile}"
 fi

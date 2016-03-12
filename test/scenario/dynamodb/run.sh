@@ -24,7 +24,7 @@ function destroy() {
   echo "(maybe) Destroying.."
   "${__node}" "${__root}/${__codelib}/cli.js" destroy \
     --force-yes \
-    --cfg-var="infra.settings.parallelism=1" \
+    --cfg-var="global.terraformcfg.parallelism=1" \
   > /dev/null 2>&1 || true
 
   # @todo: Do we really need a target when destroying?

@@ -1,5 +1,5 @@
-[install.settings]
-  [install.settings.defaults]
+[global.ansiblecfg]
+  [global.ansiblecfg.defaults]
 
-  [install.settings.ssh_connection]
+  [global.ansiblecfg.ssh_connection]
     ssh_args = "-o ControlMaster=auto -o ControlPersist=60s"
