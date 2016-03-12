@@ -3,8 +3,6 @@ import depurar from 'depurar'; const debug = depurar('frey')
 import chalk from 'chalk'
 import { spawn } from 'child_process'
 import _ from 'lodash'
-import flatten from 'flat'
-import inflection from 'inflection'
 import fs from 'fs'
 import yesno from 'yesno'
 import Base from './Base'
@@ -165,35 +163,6 @@ class Command extends Base {
 
       return cb(null, lastStdout.join(''))
     })
-  }
-
-  _toEnvFormat (obj, prefix = undefined) {
-    if (!obj) {
-      return {}
-    }
-
-    const delimiter = '__'
-
-    const flat = flatten(obj, {delimiter: delimiter})
-
-    const environment = {}
-    for (const key in flat) {
-      const val = flat[key]
-      const parts = []
-      parts.push('FREY')
-
-      if (prefix) {
-        parts.push(inflection.underscore(prefix).toUpperCase())
-      }
-
-      parts.push(inflection.underscore(key).toUpperCase())
-
-      let envKey = parts.join(delimiter)
-      envKey = envKey.replace('.', '_')
-      environment[envKey] = val
-    }
-
-    return environment
   }
 }
 
