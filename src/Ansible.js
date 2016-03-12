@@ -21,7 +21,6 @@ class Ansible extends App {
     defaults.args['inventory-file'] = terraformInvProps.exe
     defaults.args['user'] = this.runtime.config.global.ssh.user
     defaults.args['private-key'] = this.runtime.config.global.ssh.privatekey_file
-    defaults.args['tags'] = this.runtime.init.cliargs.tags
 
     if (this.runtime.init.cliargs.tags) {
       defaults.args['tags'] = this.runtime.init.cliargs.tags
