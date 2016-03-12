@@ -37,7 +37,7 @@ class Ansible extends App {
       defaults.args['user'] = null
       defaults.args['private-key'] = null
       defaults.args['connection'] = connection
-      defaults.args['extra-vars'] = `"variable_host=${connection}"`
+      defaults.args['extra-vars'] = `variable_host=${connection}`
       defaults.args['inventory-file'] = `${connection},`
     }
 

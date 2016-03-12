@@ -2,8 +2,14 @@
 import Terraform from '../Terraform'
 import Command from '../Command'
 import _ from 'lodash'
+import Shell from '../Shell'
 
 class Destroy extends Command {
+  constructor (name, runtime) {
+    super(name, runtime)
+    this.shell = new Shell(runtime)
+  }
+
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
       this.info(`Skipping as there are no install instructions\n`)
@@ -22,7 +28,7 @@ class Destroy extends Command {
       }
     })
 
-    return this.promptYesNo(`May I destroy your infrastructure? [yes|No]`, (ok) => {
+    this.shell.promptYesNo(`May I destroy your infrastructure? [yes|No]`, (ok) => {
       if (!ok) {
         return cb(new Error('Question declined. Aborting. '))
       }

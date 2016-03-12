@@ -2,7 +2,6 @@
 import Terraform from '../Terraform'
 import Ssh from '../Ssh'
 import Command from '../Command'
-import depurar from 'depurar'; const debug = depurar('frey')
 
 class Remote extends Command {
   constructor (name, runtime) {

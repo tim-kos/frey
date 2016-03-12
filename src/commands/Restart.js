@@ -12,7 +12,9 @@ class Restart extends Command {
     }
 
     const opts = { args: {}, runtime: this.runtime }
-    opts.args[this.runtime.config.global.restart_file] = true
+
+    opts.args[this.runtime.config.global.restart_file] = undefined
+
     const ansible = new Ansible(opts)
     ansible.exe(cb)
   }
