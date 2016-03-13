@@ -14,8 +14,8 @@ class Show extends Command {
     super(name, runtime)
     this.boot = [
       '_createTmpDir',
-      '_gatherHost',
       'output',
+      'all_public_addresses',
       'facts'
     ]
     this.tmpDir = this.runtime.init.os.tmp + '/' + uuid.v4()
@@ -23,32 +23,6 @@ class Show extends Command {
 
   _createTmpDir (cargo, cb) {
     mkdirp(this.tmpDir, cb)
-  }
-
-  _gatherHost (cargo, cb) {
-    // @todo Ansible wants uppy-server here - not ec2.-etc
-    // const terraform = new Terraform({
-    //   args: {
-    //     output: undefined,
-    //     state: this.runtime.config.global.infra_state_file,
-    //     parallelism: null,
-    //     public_address: undefined
-    //   },
-    //   runtime: this.runtime
-    // })
-    //
-    // terraform.exe((err, stdout) => {
-    //   if (err) {
-    //     return cb(err)
-    //   }
-    //
-    //   const host = `${stdout}`.split('\n')[0].trim()
-    //   return cb(null, host)
-    // })
-    //
-
-    debug(this.runtime.config.install)
-    cb(null, _.get(this.runtime, 'config.install.playbooks.0.hosts'))
   }
 
   output (cargo, cb) {
@@ -70,6 +44,26 @@ class Show extends Command {
     terraform.exe(cb)
   }
 
+  all_public_addresses (cargo, cb) {
+    if (!_.has(this.runtime.config, 'infra')) {
+      debug(`Skipping all_public_addresses as there are no infra instructions`)
+      return cb(null)
+    }
+
+    const terraform = new Terraform({
+      cmdOpts: { verbose: false },
+      args: {
+        output: undefined,
+        state: this.runtime.config.global.infra_state_file,
+        parallelism: null,
+        public_addresses: undefined
+      },
+      runtime: this.runtime
+    })
+
+    terraform.exe(cb)
+  }
+
   facts (cargo, cb) {
     if (!_.has(this.runtime.config, 'install.playbooks')) {
       debug(`Skipping facts as there are no install instructions`)
@@ -81,7 +75,7 @@ class Show extends Command {
 
     opts.args['module-name'] = 'setup'
     opts.args['tree'] = this.tmpDir
-    opts.args[this.bootCargo._gatherHost] = undefined
+    opts.args['all'] = undefined
 
     const ansible = new Ansible(opts)
     ansible.exe((err, stdout) => {
@@ -90,7 +84,7 @@ class Show extends Command {
       }
 
       let out = ''
-      globby.sync(`${this.tmpDir}/*`).forEach((filepath, i) => {
+      globby.sync(`${this.tmpDir}/*`).forEach((filepath) => {
         const facts = JSON.parse(fs.readFileSync(filepath, 'utf-8'))
 
         out += _.get(facts, 'ansible_facts.ansible_fqdn')
@@ -106,6 +100,7 @@ class Show extends Command {
   main (cargo, cb) {
     const results = {
       output: this.bootCargo.output,
+      all_public_addresses: this.bootCargo.all_public_addresses,
       facts: this.bootCargo.facts
     }
 

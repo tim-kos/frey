@@ -17,7 +17,6 @@ Unreleased and unplanned todos
 - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
 - [ ] Command's exe functions should mostly be in a util class
-- [ ] Enable DO support
 - [ ] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
 - [ ] Remote state in S3 feature
@@ -26,7 +25,6 @@ Unreleased and unplanned todos
 
 ## v0.3.4 (Unreleased)
 
-- [ ] How to implement different roles? Db/www/etc?
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
@@ -34,6 +32,7 @@ Unreleased and unplanned todos
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] Allow `Remote` to connect to all SSH targets
+- [x] Add Digital Ocean support with scenario to showcase different roles: db/www
 - [x] Use extraction of `cast5` files as keys for testing by default
 - [x] Error handling for missing infra_state_file
 - [x] Ask confirmation when infra changes are destructive in nature
