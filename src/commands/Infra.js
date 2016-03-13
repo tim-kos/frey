@@ -13,7 +13,7 @@ class Infra extends Command {
 
   _confirm (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      this._out(`Skipping as there are no install instructions\n`)
+      this.info(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 
@@ -30,7 +30,7 @@ class Infra extends Command {
 
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      this._out(`Skipping as there are no install instructions\n`)
+      this.info(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 
