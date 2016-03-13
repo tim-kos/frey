@@ -142,14 +142,14 @@ digitalocean_droplet.freytest-web.1: Creating...
 digitalocean_droplet.freytest-web.1: Provisioning with 'remote-exec'...
 digitalocean_droplet.freytest-web.1 (remote-exec): /root
 digitalocean_droplet.freytest-web.1: Creation complete
-digitalocean_domain.domain-web.1: Creating...
-  ip_address: "" => "{ip}"
-  name:       "" => "web-1.freyexample.com"
-digitalocean_domain.domain-web.1: Creation complete
 digitalocean_domain.domain-web.0: Creating...
   ip_address: "" => "{ip}"
   name:       "" => "web-0.freyexample.com"
 digitalocean_domain.domain-web.0: Creation complete
+digitalocean_domain.domain-web.1: Creating...
+  ip_address: "" => "{ip}"
+  name:       "" => "web-1.freyexample.com"
+digitalocean_domain.domain-web.1: Creation complete
 
 Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
 
@@ -164,8 +164,8 @@ Outputs:
 
   public_address   = {ip}
   public_addresses = {ip}
-web-0.freyexample.com
-web-1.freyexample.com
+{ip}
+{ip}
 --> Saved new state to '{root}/test/scenario/digitalocean/Frey-state-terraform.tfstate'
 --> {hostname} - install
 Using {root}/test/scenario/digitalocean/Frey-residu-ansible.cfg as config file
@@ -203,18 +203,18 @@ PLAY RECAP *********************************************************************
 - [ output ] ------------------------------ 
 public_address = {ip}
 public_addresses = {ip}
-web-0.freyexample.com
-web-1.freyexample.com
+{ip}
+{ip}
  
 - [ public_addresses ] ------------------------------ 
 {ip}
-web-0.freyexample.com
-web-1.freyexample.com
+{ip}
+{ip}
  
 - [ facts ] ------------------------------ 
+web-0,ansible_facts.ansible_service_mgr = upstart
 web-1,ansible_facts.ansible_service_mgr = upstart
 db-0,ansible_facts.ansible_service_mgr = upstart
-web-0,ansible_facts.ansible_service_mgr = upstart
  
 Done
 Cleaning up '{root}/test/scenario/digitalocean/frey-digitalocean.pem' after process exit with code '0' 
