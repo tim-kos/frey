@@ -2,6 +2,7 @@
 import chalk from 'chalk'
 import _ from 'lodash'
 import App from './App'
+import fs from 'fs'
 
 class Ansible extends App {
   constructor (opts) {
@@ -38,6 +39,12 @@ class Ansible extends App {
       defaults.args['connection'] = connection
       defaults.args['extra-vars'] = `variable_host=${connection}`
       defaults.args['inventory-file'] = `${connection},`
+    } else {
+      fs.stat(this.runtime.config.global.infra_state_file, (err) => {
+        if (err) {
+          return cb(new Error(`Can't find infra_state_file '${this.runtime.config.global.infra_state_file}'. Did you provision infra yet? `))
+        }
+      })
     }
 
     if (!chalk.enalbed) {
