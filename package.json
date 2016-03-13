@@ -61,8 +61,7 @@
     "strip-indent": "1.0.1",
     "toml": "2.3.0",
     "update-notifier": "0.6.0",
-    "yargs": "3.32.0",
-    "yesno": "0.0.1"
+    "yargs": "3.32.0"
   },
   "devDependencies": {
     "babel-cli": "6.4.5",

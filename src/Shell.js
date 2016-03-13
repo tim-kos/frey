@@ -3,7 +3,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 import chalk from 'chalk'
 import { spawn } from 'child_process'
 import _ from 'lodash'
-import yesno from 'yesno'
+import inquirer from 'inquirer'
 import Base from './Base'
 
 class Shell extends Base {
@@ -12,35 +12,19 @@ class Shell extends Base {
     this.runtime = runtime
   }
 
-  _cmdYesNo (cmd, cb) {
-    return this.promptYesNo(`May I run '${cmd}' for you? [yes|No]`, (ok) => {
-      if (!ok) {
+  confirm (question, cb) {
+    if (this.runtime.init.cliargs.forceYes) {
+      this._out(`--> Skipping confirmation for '${question}' as '--force-yes' applies\n`)
+      return cb(null)
+    }
+
+    inquirer.prompt({ type: 'confirm', name: 'confirmation', message: question, default: false }, (answers) => {
+      if (_.get(answers, 'confirmation') !== true) {
         return cb(new Error('Question declined. Aborting. '))
       }
 
-      // cmd = [
-      //   cmd
-      // ]
-
-      return this._exeScript(cmd, {}, (err, stdout) => {
-        if (err) {
-          return cb(new Error(`Error while executing '${cmd}'. ${err}`))
-        }
-
-        return cb(null)
-      })
+      return cb(null)
     })
-  }
-
-  promptYesNo (question, cb) {
-    question = `--> ${question}`
-    if (this.runtime.init.cliargs.forceYes) {
-      this._out(`${question}\n`)
-      this._out("<-- Answering Yes as '--force-yes' applies\n")
-      return cb(true)
-    }
-
-    return yesno.ask(question, false, cb)
   }
 
   _buildChildEnv (extra = {}) {

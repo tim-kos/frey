@@ -32,10 +32,10 @@ Unreleased and unplanned todos
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Add safety prompts for destructive Launches, and Destroys. Research/Think about marking protected resources (like databases), and only allowing destructive changes via --force-yes, otherwise via prompt. All other changes should be automatic. Perhaps we could still apply the nondestructive changes? 
 - [ ] Write ansible instructions to a single file again, use tags to filter out at runtime
-- [ ] Replace promptYesNo with inquirer
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] Allow `Remote` to connect to all SSH targets
+- [x] Replace promptYesNo with inquirer
 - [x] How to handle multiple hosts in `Remote` as well as facts in `Show`?
 - [x] Write temporary facts to proper location vs hardcoded `/tmp/frey-facts` in `Show`
 - [x] Use inquirer to select which hosts to connect to

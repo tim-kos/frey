@@ -6,12 +6,10 @@ import semver from 'semver'
 import fs from 'fs'
 import async from 'async'
 import depurar from 'depurar'; const debug = depurar('frey')
-import Shell from '../Shell'
 
 class Prepare extends Command {
   constructor (name, runtime) {
     super(name, runtime)
-    this.shell = new Shell(runtime)
     this.dir = this.runtime.init.cliargs.projectDir
   }
 
@@ -365,18 +363,24 @@ class Prepare extends Command {
         return cb(null)
       }
 
-      return this.shell._cmdYesNo(props.cmdInstall, (err) => {
+      return this.shell.confirm(`May I run '${props.cmdInstall}' for you?`, (err) => {
         if (err) {
-          return cb(new Error(`Failed to install '${props.name}'. ${err}`))
+          return cb(err)
         }
 
-        return this._satisfy(props, satisfied => {
-          if (!satisfied) {
-            const msg = `Version of '${props.name}' still not satisfied after install`
-            return cb(new Error(msg))
+        this._exeScript(props.cmdInstall, {}, (err, stdout) => {
+          if (err) {
+            return cb(new Error(`Failed to install '${props.name}'. ${err}`))
           }
 
-          return cb(null)
+          return this._satisfy(props, satisfied => {
+            if (!satisfied) {
+              const msg = `Version of '${props.name}' still not satisfied after install`
+              return cb(new Error(msg))
+            }
+
+            return cb(null)
+          })
         })
       })
     })

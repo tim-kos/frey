@@ -22,7 +22,7 @@ class Infra extends Command {
     })
 
     // if (this.runtime.plan.change > 0 || this.runtime.plan.destroy > 0) {
-    //   // @todo add promptYesNo
+    //   // @todo add shell.confirm
     // }
 
     terraform.exe((err, stdout) => {
