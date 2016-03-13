@@ -27,7 +27,11 @@ class Plan extends Command {
       this._out(`--> Saved plan as '${this.runtime.config.global.infra_plan_file}'\n`)
 
       if (stdout.match(/No changes/)) {
-        return cb(null)
+        return cb(null, {
+          add: 0,
+          change: 0,
+          destroy: 0
+        })
       }
 
       const match = stdout.match(/(\d+) to add, (\d+) to change, (\d+) to destroy/)
