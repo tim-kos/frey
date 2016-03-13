@@ -3,6 +3,7 @@ import Terraform from '../Terraform'
 import Ssh from '../Ssh'
 import Command from '../Command'
 import inquirer from 'inquirer'
+import async from 'async'
 import _ from 'lodash'
 import depurar from 'depurar'; const debug = depurar('frey')
 
@@ -43,6 +44,11 @@ class Remote extends Command {
   }
 
   _selectHosts (cargo, cb) {
+    // Don't offer a choice if it's just one host
+    if (this.bootCargo._gatherHosts.length === 1) {
+      return cb(null, this.bootCargo._gatherHosts)
+    }
+
     // https://www.npmjs.com/package/inquirer
     const choices = []
     this.bootCargo._gatherHosts.forEach((hostname, i) => {
@@ -66,31 +72,43 @@ class Remote extends Command {
       choices: choices
     }
     inquirer.prompt(question, (answers) => {
+      debug({answers: answers})
       if (!_.has(answers, 'server.0')) {
         return cb(new Error('No server selected'))
       }
-      debug({answers: answers})
+      if (answers.server.indexOf('all') > -1) {
+        return cb(null, this.bootCargo._gatherHosts)
+      }
       cb(null, answers.server)
     })
   }
 
-  main (cargo, cb) {
+  _connect (host, cb) {
     const opts = { args: {}, runtime: this.runtime }
+    opts.args[host] = undefined
 
-    opts.args[this.bootCargo._selectHosts] = undefined
     // @todo command here for non-interactive/shell mode:
     // args.push "<cmd>"
 
-    // @todo Can we use async.parallel to connect to all hosts at once?!
-
     const ssh = new Ssh(opts)
-
     ssh.exe((err, stdout) => {
       if (err) {
         return cb(err)
       }
 
-      this._out(`--> Closed console to '${this.bootCargo._gatherHost}'\n`)
+      return cb(null)
+    })
+  }
+
+  main (cargo, cb) {
+    const hosts = _.cloneDeep(this.bootCargo._selectHosts)
+
+    async.map(hosts, this._connect.bind(this), (err, results) => {
+      if (err) {
+        return cb(err)
+      }
+
+      this._out(`--> Closed console to '${hosts.join(', ')}'\n`)
       return cb(null)
     })
   }

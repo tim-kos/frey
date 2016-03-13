@@ -23,7 +23,8 @@
   value = "${digitalocean_droplet.freytest-web.0.ipv4_address}"
 
 [infra.output.public_addresses]
-  value = "${join(\"\n\", concat(digitalocean_droplet.freytest-db.*.ipv4_address, digitalocean_domain.domain-web.*.name))}"
+  # value = "${join(\"\n\", concat(digitalocean_droplet.freytest-db.*.ipv4_address, digitalocean_domain.domain-web.*.name))}"
+  value = "${join(\"\n\", concat(digitalocean_droplet.freytest-db.*.ipv4_address, digitalocean_droplet.freytest-web.*.ipv4_address))}"
 
 [infra.resource.digitalocean_droplet.freytest-web]
   image    = "ubuntu-14-04-x64"

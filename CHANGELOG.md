@@ -31,7 +31,8 @@ Unreleased and unplanned todos
 - [ ] Write ansible instructions to a single file again, use tags to filter out at runtime
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
-- [ ] Allow `Remote` to connect to all SSH targets
+- [ ] For connecting to all hosts, we'd need to duplicate STDIN
+- [x] Allow `Remote` to connect to all SSH targets
 - [x] Add Digital Ocean support with scenario to showcase different roles: db/www
 - [x] Use extraction of `cast5` files as keys for testing by default
 - [x] Error handling for missing infra_state_file
