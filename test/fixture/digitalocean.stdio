@@ -200,18 +200,18 @@ PLAY RECAP *********************************************************************
 --> {hostname} - deploy
 --> {hostname} - restart
 --> {hostname} - show
-- [ output ] {uuid} 
+- [ output ] ------------------------------ 
 public_address = {ip}
 public_addresses = {ip}
 web-0.freyexample.com
 web-1.freyexample.com
  
-- [ all_public_addresses ] {uuid} 
+- [ public_addresses ] ------------------------------ 
 {ip}
 web-0.freyexample.com
 web-1.freyexample.com
  
-- [ facts ] {uuid} 
+- [ facts ] ------------------------------ 
 web-1,ansible_facts.ansible_service_mgr = upstart
 db-0,ansible_facts.ansible_service_mgr = upstart
 web-0,ansible_facts.ansible_service_mgr = upstart

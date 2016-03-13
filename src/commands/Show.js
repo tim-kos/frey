@@ -110,7 +110,7 @@ class Show extends Command {
 
     _.forOwn(results, (out, key) => {
       if (out) {
-        this._out(`- [ ${key} ] -------------------------------- \n`)
+        this._out(`- [ ${key} ] ------------------------------ \n`)
         this._out(`${out} \n`)
       }
     })

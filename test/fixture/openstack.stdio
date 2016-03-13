@@ -277,14 +277,14 @@ PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 --> {hostname} - show
-- [ output ] {uuid} 
+- [ output ] ------------------------------ 
 public_address = {ip}
 public_addresses = {ip}
  
-- [ all_public_addresses ] {uuid} 
+- [ public_addresses ] ------------------------------ 
 {ip}
  
-- [ facts ] {uuid} 
+- [ facts ] ------------------------------ 
 freytest-app,ansible_facts.ansible_service_mgr = upstart
  
 Done
