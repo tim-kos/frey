@@ -5,6 +5,7 @@
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-sshkeygen.pem'
 Creating public key '{tmpdir}/frey-sshkeygen.pub'
+Creating private encrypted key '{tmpdir}/frey-sshkeygen.pem.cast5'
 Found 'terraform' with version '0.6.12'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
@@ -13,6 +14,7 @@ Found 'pyhcl-0.2.0' with version '0.2.0'
 Found 'ansible' with version '2.0.0'
 Done
 {tmpdir}/frey-sshkeygen.pem
+{tmpdir}/frey-sshkeygen.pem.cast5
 {tmpdir}/frey-sshkeygen.pub
 --> Frey version '0.3.3'
 --> Will run: [ 'init', 'config', 'prepare' ]
@@ -28,4 +30,5 @@ Found 'pyhcl-0.2.0' with version '0.2.0'
 Found 'ansible' with version '2.0.0'
 Done
 {tmpdir}/frey-sshkeygen.pem
+{tmpdir}/frey-sshkeygen.pem.cast5
 {tmpdir}/frey-sshkeygen.pub

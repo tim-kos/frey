@@ -5,6 +5,7 @@
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-gitless/frey-frey-gitless.pem'
 Creating public key '{tmpdir}/frey-gitless/frey-frey-gitless.pub'
+Creating private encrypted key '{tmpdir}/frey-gitless/frey-frey-gitless.pem.cast5'
 Found 'terraform' with version '0.6.12'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}

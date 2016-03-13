@@ -34,6 +34,7 @@ Unreleased and unplanned todos
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] Allow `Remote` to connect to all SSH targets
+- [x] Use extraction of `cast5` files as keys for testing by default
 - [x] Error handling for missing infra_state_file
 - [x] Ask confirmation when infra changes are destructive in nature
 - [x] Make `Plan` mandatory to `Infra` so we can safely add `confirm`s based on changes

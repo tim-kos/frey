@@ -6,6 +6,7 @@
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-dynamodb.pem'
 Creating public key '{tmpdir}/frey-dynamodb.pub'
+Creating private encrypted key '{tmpdir}/frey-dynamodb.pem.cast5'
 Found 'terraform' with version '0.6.12'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
