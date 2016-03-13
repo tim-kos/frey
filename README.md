@@ -9,7 +9,7 @@
 <!-- /badges -->
 
 Frey let's you launch web infrastructure with a single command. It uses
-Ansible & Hashicorp's Terraform to to the heavy lifting.
+Ansible & Hashicorp's Terraform to do the heavy lifting.
 
 ![](https://upload.wikimedia.org/wikipedia/commons/3/38/Freyr_by_Johannes_Gehrts.jpg)
 
@@ -123,7 +123,7 @@ in the root, and run Frey with `--project-dir .`:
 
 ```bash
 cd ~/code/infra-myapp
-frey --project-dir .
+frey
 ```
 
 ### Multiple setups in one repository
@@ -132,7 +132,7 @@ Also possible, via:
 
 ```bash
 cd ~/code/infra-myapp
-frey --project-dir ./envs/production
+frey --project-dir ./infra/production
 ```
 
 ## Projects
@@ -157,7 +157,7 @@ source ~/.bashrc
 
 ## Limitations
 
-For now, we only support
+For now, Frey only supports
 
 - Only OSX as workstation
 - BASH, if you want to use autocompletion
