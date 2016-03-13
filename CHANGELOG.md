@@ -31,7 +31,7 @@ Unreleased and unplanned todos
 
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
-- [ ] For connecting to all hosts, we'd need to duplicate STDIN
+- [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'.
 - [x] Allow `Remote` to connect to all SSH targets
 - [x] Add Digital Ocean support with scenario to showcase different roles: db/www
 - [x] Use extraction of `cast5` files as keys for testing by default
