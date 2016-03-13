@@ -4,9 +4,33 @@ import Command from '../Command'
 import _ from 'lodash'
 
 class Infra extends Command {
+  constructor (name, runtime) {
+    super(name, runtime)
+    this.boot = [
+      '_confirm'
+    ]
+  }
+
+  _confirm (cargo, cb) {
+    if (!_.has(this.runtime.config, 'infra')) {
+      this._out(`Skipping as there are no install instructions\n`)
+      return cb(null)
+    }
+
+    if (!_.has(this.runtime, 'plan.change')) {
+      return cb(new Error('Unable to find infra plan. This is step is required to launch infra. '))
+    }
+
+    if (this.runtime.plan.change > 0 || this.runtime.plan.destroy > 0) {
+      return this.shell.confirm('This infra change is destructive in nature, may I proceed?', cb)
+    } else {
+      return cb(null)
+    }
+  }
+
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      this.info(`Skipping as there are no install instructions\n`)
+      this._out(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 
@@ -20,10 +44,6 @@ class Infra extends Command {
         limitSamples: false
       }
     })
-
-    // if (this.runtime.plan.change > 0 || this.runtime.plan.destroy > 0) {
-    //   // @todo add shell.confirm
-    // }
 
     terraform.exe((err, stdout) => {
       if (err) {

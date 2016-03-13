@@ -7,7 +7,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Refresh extends Command {
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      this.info(`Skipping as there are no install instructions\n`)
+      this._out(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 

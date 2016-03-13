@@ -30,11 +30,11 @@ Unreleased and unplanned todos
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
-- [ ] Add safety prompts for destructive Launches, and Destroys. Research/Think about marking protected resources (like databases), and only allowing destructive changes via --force-yes, otherwise via prompt. All other changes should be automatic. Perhaps we could still apply the nondestructive changes? 
 - [ ] Write ansible instructions to a single file again, use tags to filter out at runtime
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] Allow `Remote` to connect to all SSH targets
+- [x] Ask confirmation when infra changes are destructive in nature
 - [x] Make `Plan` mandatory to `Infra` so we can safely add `confirm`s based on changes
 - [x] Replace promptYesNo with inquirer
 - [x] How to handle multiple hosts in `Remote` as well as facts in `Show`?

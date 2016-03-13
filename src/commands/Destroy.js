@@ -14,12 +14,16 @@ class Destroy extends Command {
   }
 
   _confirm (cargo, cb) {
+    if (!_.has(this.runtime.config, 'infra')) {
+      this._out(`Skipping as there are no install instructions\n`)
+      return cb(null)
+    }
     this.shell.confirm('May I destroy your infrastructure?', cb)
   }
 
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      this.info(`Skipping as there are no install instructions\n`)
+      this._out(`Skipping as there are no install instructions\n`)
       return cb(null)
     }
 
