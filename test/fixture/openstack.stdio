@@ -213,7 +213,8 @@ State path: {root}/test/scenario/openstack/Frey-state-terraform.tfstate
 
 Outputs:
 
-  public_address = {ip}
+  public_address   = {ip}
+  public_addresses = {ip}
 --> Saved new state to '{root}/test/scenario/openstack/Frey-state-terraform.tfstate'
 --> {hostname} - install
 Using {root}/test/scenario/openstack/Frey-residu-ansible.cfg as config file
@@ -278,6 +279,10 @@ PLAY RECAP *********************************************************************
 --> {hostname} - show
 - [ output ] {uuid} 
 public_address = {ip}
+public_addresses = {ip}
+ 
+- [ all_public_addresses ] {uuid} 
+{ip}
  
 - [ facts ] {uuid} 
 freytest-app,ansible_facts.ansible_service_mgr = upstart

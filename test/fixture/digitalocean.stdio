@@ -94,32 +94,6 @@ digitalocean_ssh_key.freytest-sshkey: Creating...
   name:        "" => "Frey test"
   public_key:  "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyqYu9Afk0RMvxlDu3bVTNYOHeAX9zVCfuvdUE7osGXcOc8Ggn1kleaHXuHLwrfbsE0KZ6yUkRTh6JO3hhTSDeqw9RpNSGKt7YTLdfkM0LhybnPFed/efeGaKEQX0IMCVVL+su7fgT5ESWanR9ibrDqo0tHGWVLp6if7IBCIkmUiMrC6HbMUm3BclwAVlA3azS7Fk7y75urwlgVZbYkXcN30fwpA+PX61oj/UMN1eloabZiv+EeZhAJj1envrMKO6TAhVYL7Nw2qNYMYP5Hh5wRfSZqB5sLRvET9IXItQ5yUjyI7F2b8t5WmBBJMlv2wIYgKPlbqGpmfPBycz0cd09 {user}@digitalocean.freyproject.io\n"
 digitalocean_ssh_key.freytest-sshkey: Creation complete
-digitalocean_droplet.freytest-web.1: Creating...
-  image:                "" => "ubuntu-14-04-x64"
-  ipv4_address:         "" => "<computed>"
-  ipv4_address_private: "" => "<computed>"
-  ipv6_address:         "" => "<computed>"
-  ipv6_address_private: "" => "<computed>"
-  locked:               "" => "<computed>"
-  name:                 "" => "web-1"
-  region:               "" => "nyc2"
-  size:                 "" => "512mb"
-  ssh_keys.#:           "" => "1"
-  ssh_keys.0:           "" => "{bigint}"
-  status:               "" => "<computed>"
-digitalocean_droplet.freytest-web.0: Creating...
-  image:                "" => "ubuntu-14-04-x64"
-  ipv4_address:         "" => "<computed>"
-  ipv4_address_private: "" => "<computed>"
-  ipv6_address:         "" => "<computed>"
-  ipv6_address_private: "" => "<computed>"
-  locked:               "" => "<computed>"
-  name:                 "" => "web-0"
-  region:               "" => "nyc2"
-  size:                 "" => "512mb"
-  ssh_keys.#:           "" => "1"
-  ssh_keys.0:           "" => "{bigint}"
-  status:               "" => "<computed>"
 digitalocean_droplet.freytest-db: Creating...
   image:                "" => "ubuntu-14-04-x64"
   ipv4_address:         "" => "<computed>"
@@ -133,23 +107,49 @@ digitalocean_droplet.freytest-db: Creating...
   ssh_keys.#:           "" => "1"
   ssh_keys.0:           "" => "{bigint}"
   status:               "" => "<computed>"
-digitalocean_droplet.freytest-web.0: Provisioning with 'remote-exec'...
 digitalocean_droplet.freytest-db: Provisioning with 'remote-exec'...
-digitalocean_droplet.freytest-web.1: Provisioning with 'remote-exec'...
 digitalocean_droplet.freytest-db (remote-exec): /root
 digitalocean_droplet.freytest-db: Creation complete
+digitalocean_droplet.freytest-web.0: Creating...
+  image:                "" => "ubuntu-14-04-x64"
+  ipv4_address:         "" => "<computed>"
+  ipv4_address_private: "" => "<computed>"
+  ipv6_address:         "" => "<computed>"
+  ipv6_address_private: "" => "<computed>"
+  locked:               "" => "<computed>"
+  name:                 "" => "web-0"
+  region:               "" => "nyc2"
+  size:                 "" => "512mb"
+  ssh_keys.#:           "" => "1"
+  ssh_keys.0:           "" => "{bigint}"
+  status:               "" => "<computed>"
+digitalocean_droplet.freytest-web.0: Provisioning with 'remote-exec'...
 digitalocean_droplet.freytest-web.0 (remote-exec): /root
 digitalocean_droplet.freytest-web.0: Creation complete
+digitalocean_droplet.freytest-web.1: Creating...
+  image:                "" => "ubuntu-14-04-x64"
+  ipv4_address:         "" => "<computed>"
+  ipv4_address_private: "" => "<computed>"
+  ipv6_address:         "" => "<computed>"
+  ipv6_address_private: "" => "<computed>"
+  locked:               "" => "<computed>"
+  name:                 "" => "web-1"
+  region:               "" => "nyc2"
+  size:                 "" => "512mb"
+  ssh_keys.#:           "" => "1"
+  ssh_keys.0:           "" => "{bigint}"
+  status:               "" => "<computed>"
+digitalocean_droplet.freytest-web.1: Provisioning with 'remote-exec'...
 digitalocean_droplet.freytest-web.1 (remote-exec): /root
 digitalocean_droplet.freytest-web.1: Creation complete
-digitalocean_domain.domain-web.0: Creating...
-  ip_address: "" => "{ip}"
-  name:       "" => "web-0.freyexample.com"
 digitalocean_domain.domain-web.1: Creating...
   ip_address: "" => "{ip}"
   name:       "" => "web-1.freyexample.com"
-digitalocean_domain.domain-web.0: Creation complete
 digitalocean_domain.domain-web.1: Creation complete
+digitalocean_domain.domain-web.0: Creating...
+  ip_address: "" => "{ip}"
+  name:       "" => "web-0.freyexample.com"
+digitalocean_domain.domain-web.0: Creation complete
 
 Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
 
@@ -213,8 +213,8 @@ web-1.freyexample.com
  
 - [ facts ] {uuid} 
 web-1,ansible_facts.ansible_service_mgr = upstart
-web-0,ansible_facts.ansible_service_mgr = upstart
 db-0,ansible_facts.ansible_service_mgr = upstart
+web-0,ansible_facts.ansible_service_mgr = upstart
  
 Done
 Cleaning up '{root}/test/scenario/digitalocean/frey-digitalocean.pem' after process exit with code '0' 

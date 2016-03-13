@@ -12,6 +12,9 @@
 [infra.output.public_address]
   value = "${openstack_compute_instance_v2.freytest_app.access_ip_v4}"
 
+[infra.output.public_addresses]
+  value = "${openstack_compute_instance_v2.freytest_app.access_ip_v4}"
+
 # Openstack
 [infra.provider.openstack]
   tenant_name = "${var.FREY_OPENSTACK_TENANT_NAME}"

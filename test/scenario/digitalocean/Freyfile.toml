@@ -1,6 +1,9 @@
 [global.ssh]
   user = "root"
 
+[global.terraformcfg]
+  parallelism = 1
+
 [global.ansiblecfg.defaults]
   host_key_checking = "False"
 
@@ -29,6 +32,9 @@
   size     = "512mb"
   ssh_keys = [ "${digitalocean_ssh_key.freytest-sshkey.id}" ]
   count    = "${var.web_count}"
+
+  # This helps guarantee infra order - useful for acceptance tests:
+  depends_on = [ "digitalocean_droplet.freytest-db" ]
 
   [infra.resource.digitalocean_droplet.freytest-web.connection]
      key_file = "{{{config.global.ssh.privatekey_file}}}"
