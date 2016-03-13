@@ -105,9 +105,9 @@ Outputs:
 --> {hostname} - deploy
 --> {hostname} - restart
 --> {hostname} - show
-- [ output ] ------------------------------ 
+- [ output ] ------------------------------
 arn = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
- 
+
 Done
 Finished
 (maybe) Destroying..

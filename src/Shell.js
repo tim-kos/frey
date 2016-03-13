@@ -81,12 +81,12 @@ class Shell extends Base {
     }))
 
     const cmd = cmdArgs.shift()
-    const bash = spawn(cmd, cmdArgs, opts)
+    const child = spawn(cmd, cmdArgs, opts)
     let lastStderr = []
     let lastStdout = []
 
-    if (bash.stdout) {
-      bash.stdout.on('data', (data) => {
+    if (child.stdout) {
+      child.stdout.on('data', (data) => {
         if (data) {
           lastStdout.push(`${data}`)
           if (cmdOpts.limitSamples) {
@@ -100,8 +100,8 @@ class Shell extends Base {
       })
     }
 
-    if (bash.stderr) {
-      bash.stderr.on('data', (data) => {
+    if (child.stderr) {
+      child.stderr.on('data', (data) => {
         if (data) {
           lastStderr.push(`${data}`)
           if (cmdOpts.limitSamples) {
@@ -115,7 +115,7 @@ class Shell extends Base {
       })
     }
 
-    return bash.on('close', code => {
+    return child.on('close', code => {
       if (code !== 0) {
         const msg = `Script '${cmd} ${cmdArgs.join(' ')}' exited with code: '${code}'`
         const err = new Error(msg)

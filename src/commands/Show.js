@@ -93,7 +93,8 @@ class Show extends Command {
 
         out += _.get(facts, 'ansible_facts.ansible_fqdn')
         out += ','
-        out += 'ansible_facts.ansible_service_mgr = ' + _.get(facts, 'ansible_facts.ansible_service_mgr')
+        out += 'ansible_facts.ansible_service_mgr = '
+        out += _.get(facts, 'ansible_facts.ansible_service_mgr')
         out += '\n'
       })
 
@@ -110,8 +111,8 @@ class Show extends Command {
 
     _.forOwn(results, (out, key) => {
       if (out) {
-        this._out(`- [ ${key} ] ------------------------------ \n`)
-        this._out(`${out} \n`)
+        this._out(`- [ ${key} ] ------------------------------\n`)
+        this._out(`${out}\n`)
       }
     })
 

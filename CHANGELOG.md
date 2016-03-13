@@ -4,31 +4,31 @@
 
 Unreleased and unplanned todos
 
-- [ ] Vagrant support
+- [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
+- [ ] Check for `git ignore Frey-residu-*`
+- [ ] Command's exe functions should mostly be in a util class
+- [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
+- [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
+- [ ] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
+- [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
+- [ ] docs: Chain Generator
+- [ ] docs: Config Generator (config defaults written to a YAML, merged with descriptions already there)
+- [ ] Empty out and remove `Base` class?
+- [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
+- [ ] Implement commit: Safely commit state automatically
 - [ ] Indent stdout/err
 - [ ] More tests!
-- [ ] Empty out and remove `Base` class?
+- [ ] Remote state in S3 feature
+- [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
+- [ ] Vagrant support
 - [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
+- [ ] website: On the githubs
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
-- [ ] website: On the githubs
-- [ ] docs: Config Generator (config defaults written to a YAML, merged with descriptions already there)
-- [ ] docs: Chain Generator
-- [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
-- [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
-- [ ] Command's exe functions should mostly be in a util class
-- [ ] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
-- [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
-- [ ] Remote state in S3 feature
-- [ ] Check for `git ignore Frey-residu-*`
-- [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
+- [ ] Write ansible instructions to a single file again, use tags to filter out at runtime
 
 ## v0.3.4 (Unreleased)
 
-- [ ] Implement commit: Safely commit state automatically
-- [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
-- [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
-- [ ] Write ansible instructions to a single file again, use tags to filter out at runtime
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN
