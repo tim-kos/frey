@@ -15,7 +15,7 @@ class Show extends Command {
     this.boot = [
       '_createTmpDir',
       'output',
-      'all_public_addresses',
+      'public_addresses',
       'facts'
     ]
     this.tmpDir = this.runtime.init.os.tmp + '/' + uuid.v4()
@@ -44,9 +44,13 @@ class Show extends Command {
     terraform.exe(cb)
   }
 
-  all_public_addresses (cargo, cb) {
+  public_addresses (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      debug(`Skipping all_public_addresses as there are no infra instructions`)
+      debug(`Skipping public_addresses as there are no infra instructions`)
+      return cb(null)
+    }
+    if (!_.has(this.runtime.config, 'infra.output.public_addresses')) {
+      debug(`Skipping public_addresses as infra.output.public_addresses was not defined. `)
       return cb(null)
     }
 
@@ -100,7 +104,7 @@ class Show extends Command {
   main (cargo, cb) {
     const results = {
       output: this.bootCargo.output,
-      all_public_addresses: this.bootCargo.all_public_addresses,
+      public_addresses: this.bootCargo.public_addresses,
       facts: this.bootCargo.facts
     }
 
