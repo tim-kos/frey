@@ -14,6 +14,9 @@
   token = "${var.FREY_DO_TOKEN}"
 
 [infra.variable.web_count]
+  # We seem to not be able to guarantee the create order of multiple web hosts,
+  # so we override this with count = 1 in acceptance tests, so
+  # our fixtures match. But this is confirmed working and launches 2 web hosts normally
   default = 2
 
 [infra.variable.db_count]

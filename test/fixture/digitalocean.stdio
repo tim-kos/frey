@@ -34,13 +34,9 @@ plan.
 
 Path: {root}/test/scenario/digitalocean/Frey-residu-terraform.plan
 
-+ digitalocean_domain.domain-web.0
++ digitalocean_domain.domain-web
     ip_address: "" => "${element(digitalocean_droplet.freytest-web.*.ipv4_address, count.index)}"
     name:       "" => "web-0.freyexample.com"
-
-+ digitalocean_domain.domain-web.1
-    ip_address: "" => "${element(digitalocean_droplet.freytest-web.*.ipv4_address, count.index)}"
-    name:       "" => "web-1.freyexample.com"
 
 + digitalocean_droplet.freytest-db
     image:                "" => "ubuntu-14-04-x64"
@@ -55,7 +51,7 @@ Path: {root}/test/scenario/digitalocean/Frey-residu-terraform.plan
     ssh_keys.#:           "" => "<computed>"
     status:               "" => "<computed>"
 
-+ digitalocean_droplet.freytest-web.0
++ digitalocean_droplet.freytest-web
     image:                "" => "ubuntu-14-04-x64"
     ipv4_address:         "" => "<computed>"
     ipv4_address_private: "" => "<computed>"
@@ -68,24 +64,11 @@ Path: {root}/test/scenario/digitalocean/Frey-residu-terraform.plan
     ssh_keys.#:           "" => "<computed>"
     status:               "" => "<computed>"
 
-+ digitalocean_droplet.freytest-web.1
-    image:                "" => "ubuntu-14-04-x64"
-    ipv4_address:         "" => "<computed>"
-    ipv4_address_private: "" => "<computed>"
-    ipv6_address:         "" => "<computed>"
-    ipv6_address_private: "" => "<computed>"
-    locked:               "" => "<computed>"
-    name:                 "" => "web-1"
-    region:               "" => "nyc2"
-    size:                 "" => "512mb"
-    ssh_keys.#:           "" => "<computed>"
-    status:               "" => "<computed>"
-
 + digitalocean_ssh_key.freytest-sshkey
     fingerprint: "" => "<computed>"
     name:        "" => "Frey test"
     public_key:  "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyqYu9Afk0RMvxlDu3bVTNYOHeAX9zVCfuvdUE7osGXcOc8Ggn1kleaHXuHLwrfbsE0KZ6yUkRTh6JO3hhTSDeqw9RpNSGKt7YTLdfkM0LhybnPFed/efeGaKEQX0IMCVVL+su7fgT5ESWanR9ibrDqo0tHGWVLp6if7IBCIkmUiMrC6HbMUm3BclwAVlA3azS7Fk7y75urwlgVZbYkXcN30fwpA+PX61oj/UMN1eloabZiv+EeZhAJj1envrMKO6TAhVYL7Nw2qNYMYP5Hh5wRfSZqB5sLRvET9IXItQ5yUjyI7F2b8t5WmBBJMlv2wIYgKPlbqGpmfPBycz0cd09 {user}@digitalocean.freyproject.io\n"
-Plan: 6 to add, 0 to change, 0 to destroy.
+Plan: 4 to add, 0 to change, 0 to destroy.
 --> Saved plan as '{root}/test/scenario/digitalocean/Frey-residu-terraform.plan'
 --> {hostname} - backup
 --> {hostname} - infra
@@ -110,7 +93,7 @@ digitalocean_droplet.freytest-db: Creating...
 digitalocean_droplet.freytest-db: Provisioning with 'remote-exec'...
 digitalocean_droplet.freytest-db (remote-exec): /root
 digitalocean_droplet.freytest-db: Creation complete
-digitalocean_droplet.freytest-web.0: Creating...
+digitalocean_droplet.freytest-web: Creating...
   image:                "" => "ubuntu-14-04-x64"
   ipv4_address:         "" => "<computed>"
   ipv4_address_private: "" => "<computed>"
@@ -123,35 +106,15 @@ digitalocean_droplet.freytest-web.0: Creating...
   ssh_keys.#:           "" => "1"
   ssh_keys.0:           "" => "{bigint}"
   status:               "" => "<computed>"
-digitalocean_droplet.freytest-web.0: Provisioning with 'remote-exec'...
-digitalocean_droplet.freytest-web.0 (remote-exec): /root
-digitalocean_droplet.freytest-web.0: Creation complete
-digitalocean_droplet.freytest-web.1: Creating...
-  image:                "" => "ubuntu-14-04-x64"
-  ipv4_address:         "" => "<computed>"
-  ipv4_address_private: "" => "<computed>"
-  ipv6_address:         "" => "<computed>"
-  ipv6_address_private: "" => "<computed>"
-  locked:               "" => "<computed>"
-  name:                 "" => "web-1"
-  region:               "" => "nyc2"
-  size:                 "" => "512mb"
-  ssh_keys.#:           "" => "1"
-  ssh_keys.0:           "" => "{bigint}"
-  status:               "" => "<computed>"
-digitalocean_droplet.freytest-web.1: Provisioning with 'remote-exec'...
-digitalocean_droplet.freytest-web.1 (remote-exec): /root
-digitalocean_droplet.freytest-web.1: Creation complete
-digitalocean_domain.domain-web.1: Creating...
-  ip_address: "" => "{ip}"
-  name:       "" => "web-1.freyexample.com"
-digitalocean_domain.domain-web.1: Creation complete
-digitalocean_domain.domain-web.0: Creating...
+digitalocean_droplet.freytest-web: Provisioning with 'remote-exec'...
+digitalocean_droplet.freytest-web (remote-exec): /root
+digitalocean_droplet.freytest-web: Creation complete
+digitalocean_domain.domain-web: Creating...
   ip_address: "" => "{ip}"
   name:       "" => "web-0.freyexample.com"
-digitalocean_domain.domain-web.0: Creation complete
+digitalocean_domain.domain-web: Creation complete
 
-Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
 
 The state of your infrastructure has been saved to the path
 below. This state is required to modify and destroy your
@@ -165,7 +128,6 @@ Outputs:
   public_address   = {ip}
   public_addresses = {ip}
 {ip}
-{ip}
 --> Saved new state to '{root}/test/scenario/digitalocean/Frey-state-terraform.tfstate'
 --> {hostname} - install
 Using {root}/test/scenario/digitalocean/Frey-residu-ansible.cfg as config file
@@ -174,11 +136,8 @@ PLAY [Install freytest-web] ****************************************************
 
 TASK [setup] *******************************************************************
 ok: [{ip}]
-ok: [{ip}]
 
 TASK [Execute deploy command] **************************************************
-changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/root", "stdout_lines": ["/root"], "warnings": []}
-changed: [{ip}] => (item=echo web) => {"changed": true, "cmd": ["echo", "web"], "delta": "{duration}", "end": "{longtime}", "item": "echo web", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "web", "stdout_lines": ["web"], "warnings": []}
 changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/root", "stdout_lines": ["/root"], "warnings": []}
 changed: [{ip}] => (item=echo web) => {"changed": true, "cmd": ["echo", "web"], "delta": "{duration}", "end": "{longtime}", "item": "echo web", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "web", "stdout_lines": ["web"], "warnings": []}
 
@@ -194,7 +153,6 @@ changed: [{ip}] => (item=echo db) => {"changed": true, "cmd": ["echo", "db"], "d
 PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
-{ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 --> {hostname} - setup
 --> {hostname} - deploy
@@ -204,17 +162,14 @@ PLAY RECAP *********************************************************************
 public_address = {ip}
 public_addresses = {ip}
 {ip}
-{ip}
 
 - [ public_addresses ] ------------------------------
 {ip}
 {ip}
-{ip}
 
 - [ facts ] ------------------------------
-web-1,ansible_facts.ansible_service_mgr = upstart
-db-0,ansible_facts.ansible_service_mgr = upstart
 web-0,ansible_facts.ansible_service_mgr = upstart
+db-0,ansible_facts.ansible_service_mgr = upstart
 
 Done
 Cleaning up '{root}/test/scenario/digitalocean/frey-digitalocean.pem' after process exit with code '0' 

@@ -38,8 +38,10 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
+# We seem to not be able to guarantee the create order of multiple web hosts, so override with count = 1 in tests
 "${__node}" "${__root}/${__codelib}/cli.js" \
   --cfg-var "global.ssh.key_dir=." \
+  --cfg-var "infra.variable.web_count.default=1" \
   --no-color \
   --verbose \
   --force-yes \
