@@ -5,16 +5,24 @@ import globby from 'globby'
 import Terraform from '../Terraform'
 import Ansible from '../Ansible'
 import _ from 'lodash'
+import uuid from 'node-uuid'
+import mkdirp from 'mkdirp'
 import depurar from 'depurar'; const debug = depurar('frey')
 
 class Show extends Command {
   constructor (name, runtime) {
     super(name, runtime)
     this.boot = [
+      '_createTmpDir',
       '_gatherHost',
       'output',
       'facts'
     ]
+    this.tmpDir = this.runtime.init.os.tmp + '/' + uuid.v4()
+  }
+
+  _createTmpDir (cargo, cb) {
+    mkdirp(this.tmpDir, cb)
   }
 
   _gatherHost (cargo, cb) {
@@ -72,7 +80,7 @@ class Show extends Command {
     const opts = { exe: ansibleProps.exe, args: {}, runtime: this.runtime, cmdOpts: { verbose: false } }
 
     opts.args['module-name'] = 'setup'
-    opts.args['tree'] = '/tmp/frey-facts'
+    opts.args['tree'] = this.tmpDir
     opts.args[this.bootCargo._gatherHost] = undefined
 
     const ansible = new Ansible(opts)
@@ -81,10 +89,15 @@ class Show extends Command {
         return cb(err)
       }
 
-      const facts = JSON.parse(fs.readFileSync(globby.sync('/tmp/frey-facts/*')[0], 'utf-8'))
-
       let out = ''
-      out += 'ansible_facts.ansible_service_mgr = ' + _.get(facts, 'ansible_facts.ansible_service_mgr') + '\n'
+      globby.sync(`${this.tmpDir}/*`).forEach((filepath, i) => {
+        const facts = JSON.parse(fs.readFileSync(filepath, 'utf-8'))
+
+        out += _.get(facts, 'ansible_facts.ansible_fqdn')
+        out += ','
+        out += 'ansible_facts.ansible_service_mgr = ' + _.get(facts, 'ansible_facts.ansible_service_mgr')
+        out += '\n'
+      })
 
       cb(null, out)
     })

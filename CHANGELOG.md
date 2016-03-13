@@ -12,6 +12,8 @@ Unreleased and unplanned todos
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
 - [ ] website: On the githubs
+- [ ] docs: Config Generator (config defaults written to a YAML, merged with descriptions already there)
+- [ ] docs: Chain Generator
 - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
 - [ ] Command's exe functions should mostly be in a util class
@@ -29,11 +31,14 @@ Unreleased and unplanned todos
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Add safety prompts for destructive Launches, and Destroys. Research/Think about marking protected resources (like databases), and only allowing destructive changes via --force-yes, otherwise via prompt. All other changes should be automatic. Perhaps we could still apply the nondestructive changes? 
-- [ ] How to handle multiple hosts in `Remote` as well as facts in `Show`?
-- [ ] Write temporary facts to proper location vs hardcoded `/tmp/frey-facts` in `Show`
 - [ ] Write ansible instructions to a single file again, use tags to filter out at runtime
-- [ ] Remove invalid underscore prefix from a few public `Shell` methods
+- [ ] Replace promptYesNo with inquirer
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
+- [ ] Remove invalid underscore prefix from a few public `Shell` methods
+- [ ] Allow `Remote` to connect to all SSH targets
+- [x] How to handle multiple hosts in `Remote` as well as facts in `Show`?
+- [x] Write temporary facts to proper location vs hardcoded `/tmp/frey-facts` in `Show`
+- [x] Use inquirer to select which hosts to connect to
 - [x] Implement basic show
 - [x] Implement remote
 - [x] Abstract both Terraform and Ansible into App classes

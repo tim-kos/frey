@@ -278,7 +278,7 @@ PLAY RECAP *********************************************************************
 public_address = {ip}
  
 - [ facts ] {uuid} 
-ansible_facts.ansible_service_mgr = upstart
+freytest-app,ansible_facts.ansible_service_mgr = upstart
  
 Done
 Finished
