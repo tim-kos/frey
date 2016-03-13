@@ -368,7 +368,7 @@ class Prepare extends Command {
           return cb(err)
         }
 
-        this._exeScript(props.cmdInstall, {}, (err, stdout) => {
+        this.shell._exeScript(props.cmdInstall, {}, (err, stdout) => {
           if (err) {
             return cb(new Error(`Failed to install '${props.name}'. ${err}`))
           }
