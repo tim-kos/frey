@@ -21,6 +21,27 @@ describe('Frey', () => {
       })
     })
 
+    it('should always plan infra', done => {
+      const frey = new Frey()
+
+      const options = {
+        _: ['infra'],
+        bail: true
+      }
+
+      frey._composeChain(options, (err, filteredChain) => {
+        expect(err).to.equal(null)
+        expect(filteredChain).to.deep.equal([
+          'init',
+          'config',
+          'prepare',
+          'plan',
+          'infra'
+        ])
+        done()
+      })
+    })
+
     it('should return auto bail on docbuild which is not part of a chain', done => {
       const frey = new Frey()
 

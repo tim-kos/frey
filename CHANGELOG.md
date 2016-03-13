@@ -35,6 +35,7 @@ Unreleased and unplanned todos
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] Allow `Remote` to connect to all SSH targets
+- [x] Make `Plan` mandatory to `Infra` so we can safely add `confirm`s based on changes
 - [x] Replace promptYesNo with inquirer
 - [x] How to handle multiple hosts in `Remote` as well as facts in `Show`?
 - [x] Write temporary facts to proper location vs hardcoded `/tmp/frey-facts` in `Show`

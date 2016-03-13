@@ -57,6 +57,11 @@ class Frey extends Base {
       filteredChain = _.map(sliced, 'name')
     }
 
+    // Always plan infra
+    if (filteredChain.indexOf('plan') < 0 && filteredChain.indexOf('infra') > -1) {
+      filteredChain.unshift('plan')
+    }
+
     if (filteredChain.indexOf('prepare') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'prepare'}))) {
       filteredChain.unshift('prepare')
     }
