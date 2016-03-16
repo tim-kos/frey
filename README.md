@@ -45,7 +45,7 @@ As you can see, Frey additionally provides commands to:
 
 ## Freyfile.toml
 
-So how does Frey know what to do? All of the actions are orchestrated from a single source of truth, a declarative `Freyfile.toml`, written in [TOML](https://github.com/toml-lang/toml), and kept under the source control of your existing project. Preferably in its own directory, like `./infra`.
+So how does Frey know what to do? All of the actions are orchestrated from a single source of truth, a declarative `Freyfile.toml`, written in [TOML](https://github.com/toml-lang/toml#user-content-comparison-with-other-formats), and kept under the source control of your existing project. Preferably in its own directory, like `./infra`.
 
 Here's an [example](https://github.com/kvz/frey/blob/master/test/scenario/digitalocean/Freyfile.toml) launching two web servers and a database server on Digital Ocean.
 
