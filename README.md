@@ -8,11 +8,23 @@
 
 Frey aims to be an all-in-one tool for developers and sysadmins to bring their app to production. 
 
+## Table of Contents
+
+- [Features](#features)
+- [Run](#run)
+- [Freyfile.toml](#freyfile.toml)
+- [Install](#install)
+- [Design goals](#design-goals)
+- [Changelog](#changelog)
+- [FAQ](#faq)
+- [Comparison](#comparison)
+- [License](#license)
+
 ## Features
 
 Frey can:
 
-- `launch` infrastructure and operating systems (AWS, Google, Digital Ocean, etc)
+- launch `infra` and operating systems (AWS, Google, Digital Ocean, etc)
 - `install` software packages (Nginx, MySQL, etc)
 - `setup` these packages
 - `deploy` your app (via Rsync, S3, Git pull, etc)
@@ -27,30 +39,6 @@ As you can see, Frey additionally provides commands to:
 - `backup`
 - `restore`
 - connect to, or execute `remote` commands on your platform
-
-## Design goals
-
-- Frey should be ridiculously convenient, and hence offer auto-installation of requirements for instance
-- Version pinning is holy
-- An abundance of automated acceptance tests, that verify actual setting up and tearing down of infrastructure
-- Written in ES6 JavaScript, transpiling builds to ES5
-
-## Install
-
-Frey would like to be installed globally for convenience:
-
-```bash
-npm install --global frey
-```
-
-But it will then choose a locally installed version if you have it available. This is great to pin a Frey version to an infra project. This way, you will know nothing that works now, can break in the future. So in **addition** to the global install, we recommend a local install in your project with exact version pinning:
-
-```bash
-cd ~/code/myapp
-npm install --save --exact frey
-```
-
-A fixed version of Frey, installs fixed local versions of its dependencies (such as Ansible and Terraform) in local directories as well, all to keep chances of conflict slim, and chances of things working five years from now, optimal. More on this later.
 
 ## Run
 
@@ -88,6 +76,30 @@ So how does Frey know what to do? All of the actions are orchestrated from a sin
 Here's an [example](https://github.com/kvz/frey/blob/master/test/scenario/digitalocean/Freyfile.toml) launching two web servers and a database server on Digital Ocean.
 
 If you have a huge project and your Freyfile  size is becoming an issue, Frey will happilly look for any other `*.toml` files in the same directory as you can see in this [example](https://github.com/kvz/frey/tree/master/test/scenario/dynamodb) where we set up a DynamoDB server on AWS using 4 different `toml` files.
+
+## Install
+
+Frey would like to be installed globally for convenience:
+
+```bash
+npm install --global frey
+```
+
+But it will then choose a locally installed version if you have it available. This is great to pin a Frey version to an infra project. This way, you will know nothing that works now, can break in the future. So in **addition** to the global install, we recommend a local install in your project with exact version pinning:
+
+```bash
+cd ~/code/myapp
+npm install --save --exact frey
+```
+
+A fixed version of Frey, installs fixed local versions of its dependencies (such as Ansible and Terraform) in local directories as well, all to keep chances of conflict slim, and chances of things working five years from now, optimal. More on this later.
+
+## Design goals
+
+- Frey should be ridiculously convenient, and hence offer auto-installation of requirements for instance
+- Version pinning is holy
+- An abundance of automated acceptance tests, that verify actual setting up and tearing down of infrastructure
+- Written in ES6 JavaScript, transpiling builds to ES5
 
 ### Changelog
 
@@ -138,3 +150,7 @@ Seeing as Otto uses Terraform for infra orchestration and also installs software
 Where the projects differ is that Otto aims to be zero config, and Frey aims to be minimal yet complete config. Every component needs to be described, and saved under Git. This approach provides more control and flexibility at the tradeoff of it being more work to describe all your pieces. Wether this trade-off is acceptable depends on the project.
 
 Frey does not offer setting up local environments yet, but this should be easy enough to add (as [we can make local connections](https://github.com/kvz/frey/blob/master/test/scenario/install/Freyfile.toml#L2) already) and is on the [roadmap](CHANGELOG.md).
+
+## License
+
+MIT
