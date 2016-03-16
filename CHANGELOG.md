@@ -31,6 +31,7 @@ Unreleased and unplanned todos
 
 - [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
+- [ ] Add https://github.com/ansistrano/deploy/blob/master/README.md
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'.
 - [x] Allow `Remote` to connect to all SSH targets
 - [x] Add Digital Ocean support with scenario to showcase different roles: db/www
