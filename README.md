@@ -12,7 +12,7 @@ Frey aims to be an all-in-one tool for developers and sysadmins to bring their a
 
 - [Features](#features)
 - [Run](#run)
-- [Freyfile.toml](#freyfile.toml)
+- [Freyfile.toml](#freyfiletoml)
 - [Install](#install)
 - [Design goals](#design-goals)
 - [Changelog](#changelog)
@@ -40,6 +40,15 @@ As you can see, Frey additionally provides commands to:
 - `backup`
 - `restore`
 - connect to, or execute `remote` commands on your platform
+
+
+## Freyfile.toml
+
+So how does Frey know what to do? All of the actions are orchestrated from a single source of truth, a declarative `Freyfile.toml`, written in [TOML](https://github.com/toml-lang/toml), and kept under the source control of your existing project. Preferably in its own directory, like `./infra`.
+
+Here's an [example](https://github.com/kvz/frey/blob/master/test/scenario/digitalocean/Freyfile.toml) launching two web servers and a database server on Digital Ocean.
+
+If you have a huge project and your Freyfile  size is becoming an issue, Frey will happilly look for any other `*.toml` files in the same directory as you can see in this [example](https://github.com/kvz/frey/tree/master/test/scenario/dynamodb) where we set up a DynamoDB server on AWS using 4 different `toml` files.
 
 ## Run
 
@@ -69,14 +78,6 @@ frey --bail-after plan
 ```
 
 Making Frey execute all the steps, including `plan`, but then abort.
-
-## Freyfile.toml
-
-So how does Frey know what to do? All of the actions are orchestrated from a single source of truth, a declarative `Freyfile.toml`, written in [TOML](https://github.com/toml-lang/toml), and kept under the source control of your existing project. Preferably in its own directory, like `./infra`.
-
-Here's an [example](https://github.com/kvz/frey/blob/master/test/scenario/digitalocean/Freyfile.toml) launching two web servers and a database server on Digital Ocean.
-
-If you have a huge project and your Freyfile  size is becoming an issue, Frey will happilly look for any other `*.toml` files in the same directory as you can see in this [example](https://github.com/kvz/frey/tree/master/test/scenario/dynamodb) where we set up a DynamoDB server on AWS using 4 different `toml` files.
 
 ## Install
 
