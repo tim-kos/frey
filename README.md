@@ -2,166 +2,139 @@
 
 <!-- badges/ -->
 [![Build Status](https://travis-ci.org/kvz/frey.svg?branch=master)](https://travis-ci.org/kvz/frey)
-[![Coverage Status](https://coveralls.io/repos/kvz/frey/badge.svg?branch=master&service=github)](https://coveralls.io/github/kvz/frey?branch=master)
-[![npm](https://img.shields.io/npm/v/frey.svg)](https://www.npmjs.com/package/frey) 
-[![Dependency Status](https://david-dm.org/kvz/frey.png?theme=shields.io)](https://david-dm.org/kvz/frey)
-[![Development Dependency Status](https://david-dm.org/kvz/frey/dev-status.png?theme=shields.io)](https://david-dm.org/kvz/frey#info=devDependencies)
 <!-- /badges -->
 
-Frey let's you launch web infrastructure with a single command. It uses
-Ansible & Hashicorp's Terraform to do the heavy lifting.
+*Warning: Frey is Alpha. Use it for new projects and goofing around, leave it for existing ones.*
 
-![](https://upload.wikimedia.org/wikipedia/commons/3/38/Freyr_by_Johannes_Gehrts.jpg)
+Frey aims to be an all-in-one tool for developers and sysadmins to bring their app to production. 
+
+## Features
+
+Frey can:
+
+- `launch` infrastructure and operating systems (AWS, Google, Digital Ocean, etc)
+- `install` software packages (Nginx, MySQL, etc)
+- `setup` these packages
+- `deploy` your app (via Rsync, S3, Git pull, etc)
+- `restart` it (via Rsync, S3, Git pull, etc)
+
+Frey will try to complete all of these steps, following along a 'chain of commands'. You're free to exclude commands, run a few, or just one. Chainable commands are indicated by ![](https://dl.dropboxusercontent.com/s/2kfqn2yocq4kq7p/2016-03-16%20at%2020.44.png):
+
+![](https://dl.dropboxusercontent.com/s/3ajo3fzslk846d3/2016-03-16%20at%2020.38.png)
+
+As you can see, Frey additionally provides commands to:
+
+- `backup`
+- `restore`
+- connect to, or execute `remote` commands on your platform
 
 ## Design goals
 
- - Frey should be ridiculously convenient, and hence offer auto-installation of requirements for instance
-
-## Comparison
-
-### With Otto
-
-We use nearly all Hashicorp products in production and absolutely love it.
-We will be looking to utilize Otto as well. 
-
-However, we also felt the needed a tool that offered more in the way of
-provisioning tailor-made setups.
-
-Hashicorp acknowledges that Otto will be able to serve 99% of the
-common use-cases. Frey aims to serve the remaining 1%.
-
-When compared to Hashicorp's recently launched Otto, which also 
-uses Terraform under the hood, Frey fills a void for people that feel:
-
- - Feel Otto is too opinionated about configuration for their needs
- - Feel the Customizations Otto offers are too high level for their needs and would like to have more fine grained control
- - Would like to deploy to other cloud vendors besides AWS
- - Don't want to rely solely on disk images / containers to provision their
-servers
- - Want a tighter grip on dependencies via version pinning
- - Had hoped on more than bash scripts / Dockerfiles to do actual provisioning, such as the declarative style of Ansible Playbooks
- - Want to reuse existing Terraform or Ansible scripts, but would like some glue between those
- 
-It's possible that over time, enough of these differences will dissolve so that we can 
-dissolve Frey as well.
-
-Frey has some opinionated and magical parts, but less so than Otto.
-
-You can define all of this in a single `Freyfile`. A Freyfile is a project written in [TOML](https://github.com/toml-lang/toml).
-
-Alternatively you can point Frey to your existing
-Terraform `.tf` and Ansible `.yml` for creating web infrastructure.
-
-What Frey is not good at:
-
- - Scaling Microservices
- - Dependencies with other Frey projects. Even though you could launch a heterogeneous cluster with different roles and apps across different cloud vendors - All of this should be defined in one Frey project.
+- Frey should be ridiculously convenient, and hence offer auto-installation of requirements for instance
+- Version pinning is holy
+- An abundance of automated acceptance tests, that verify actual setting up and tearing down of infrastructure
+- Written in ES6 JavaScript, transpiling builds to ES5
 
 ## Install
+
+Frey would like to be installed globally for convenience:
 
 ```bash
 npm install --global frey
 ```
 
-## Run
-
-Frey must be run in the root of the project that you want to set up infra for.
-All infra description is supposed to be saved in `./frey/*`, but this can be configured.
-
-There needs to be a `./.git` dir preset relative from your current directory.
-
-Keeping infra projects together with the app is convenient and allows both to move
-at the same pace. If you revert to 2 years ago, you can also inspect the matching infra
-from that time.
+But it will then choose a locally installed version if you have it available. This is great to pin a Frey version to an infra project. This way, you will know nothing that works now, can break in the future. So in **addition** to the global install, we recommend a local install in your project with exact version pinning:
 
 ```bash
 cd ~/code/myapp
+npm install --save --exact frey
+```
+
+A fixed version of Frey, installs fixed local versions of its dependencies (such as Ansible and Terraform) in local directories as well, all to keep chances of conflict slim, and chances of things working five years from now, optimal. More on this later.
+
+## Run
+
+To run all the commands the belong to the chain (![](https://dl.dropboxusercontent.com/s/2kfqn2yocq4kq7p/2016-03-16%20at%2020.44.png)), just type `frey`
+
+```bash
+cd ~/code/myapp/infra
 frey
 ```
 
-### Chains of Commands
+This might not always be what you want.
 
-Frey works by walking down a chain of commands. You can 'enter' the chain at any step,
-and Frey by default will complete the following steps. The commands are as follows
+You can step into the 'chain of commands' at any point. For so you'd type `frey deploy`, Frey would `deploy` your app, `restart` it, and `show` you the status.
 
-
-```
-prepare   : "Install prerequisites"
-refresh   : "Refreshes current infra state and saves to terraform.tfstate"
-validate  : "Checks your docs"
-plan      : "Shows infra changes and saves in an executable plan"
-backup    : "Backs up server state"
-launch    : "Launches virtual machines at a provider"
-install   : "Runs Ansible to install software packages & configuration templates"
-deploy    : "Upload your own application(s)"
-restart   : "Restart your own application(s) and its dependencies"
-show      : "Displays active platform"
-```
-
-For so you'd type `frey deploy`, Frey would deploy your app, restart it, and show
-you the status.
-
-#### One-off commands
-
-All commands can be ran with `--bail` if you do not want to run the chain of commands.
-
-There are also a few commands that do not belong to the chain, and are hence auto-bailing 
-these are:
-
-```
-restore   : "Restore latest state backup"
-remote    : "Execute a remote command - or opens console"
-facts     : "Show Ansible facts"
-```
-
-### Dedicated infra repository
-
-If you think it's better to keep the infra projects outside of your own app code
-for security reasons or similar, we recommend that alongside your `app` repo, you create an
-`infra-app` repo, where you'll keep Frey's projects in. We recommend you then keep the projects
-in the root, and run Frey with `--project-dir .`:
+You can also step out of the chain. If you only want a deploy without a restart, you can use `--bail`:
 
 ```bash
-cd ~/code/infra-myapp
-frey
+cd ~/code/myapp/infra
+frey deploy --bail
 ```
 
-### Multiple setups in one repository
-
-Also possible, via:
+You can also define a range, via `--bail-after`:
 
 ```bash
-cd ~/code/infra-myapp
-frey --project-dir ./infra/production
+cd ~/code/myapp/infra
+frey --bail-after plan
 ```
 
-## Projects
+Making Frey execute all the steps, including `plan`, but then abort.
 
-Frey uses Terraform and Ansible to do the heavy lifting.
+## Freyfile.toml
 
-## Autocompletion of CLI arguments
+So how does Frey know what to do? All of the actions are orchestrated from a single source of truth, a declarative `Freyfile.toml`, written in [TOML](https://github.com/toml-lang/toml), and kept under the source control of your existing project. Preferably in its own directory, like `./infra`.
 
-### OSX
+Here's an [example](https://github.com/kvz/frey/blob/master/test/scenario/digitalocean/Freyfile.toml) launching two web servers and a database server on Digital Ocean.
 
-```bash
-frey completion >> ~/.bash_profile 
-source ~/.bash_profile 
-```
+If you have a huge project and your Freyfile  size is becoming an issue, Frey will happilly look for any other `*.toml` files in the same directory as you can see in this [example](https://github.com/kvz/frey/tree/master/test/scenario/dynamodb) where we set up a DynamoDB server on AWS using 4 different `toml` files.
 
-### Linux
+### Changelog
 
-```bash
-frey completion >> ~/.bashrc
-source ~/.bashrc
-```
+The changelog is also our todo list and can be found [here](CHANGELOG.md)
 
-## Limitations
+## FAQ
 
-For now, Frey only supports
+### Can I use my existing Terraform definitions and Ansible playbooks?
 
-- Only OSX as workstation
-- BASH, if you want to use autocompletion
-- Ubuntu as remote server OS
-- Git for version control - and Frey assumes your project has Git already set up
+There's an automatic converter that's not prefect but can save you 99% of the work if you want to convert your existing config files to a Freyfile.
 
-Frey is intended to service many use-cases and we'll work on removing some of these limitations as we go.
+Frey might support running playbook `.yaml` and `.tf` files natively in the future, you could wait for that, too. No promises though.
+
+Beyond the instructions it's just a matter of moving the current state files that you have to Frey recognized places, and you're good to go.
+
+<!-- @todo Link to tusd and uppy-server PRs as examples  -->
+
+### Is Frey reinventing the wheel?
+
+Frey is heavily relying on existing wheels. Frey is a convenience wrapper: a relatively small project, standing on the shoulders of two Giants: [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/). I found these two make great companions for setting up infrastructure and software, although they weren't necessarily meant to be. What I've learned from marrying the two, I did not want to put into documentation. I wanted to codify it into a project of it's own, so that you could just `npm install --save frey`, and that's that.
+
+### Where do I save my Freyfile, and what do I commit?
+
+We recommend saving the Freyfile in an `infra` directory in your app. Frey will generate some files that like to be in the same directory as this file. Any file named `Frey-residu*` can be git ignored. The rest should be checked in.
+
+Frey automatically commits changes to infra state.
+
+Keeping infra the infra definition of a  project together with the app itself is convenient and allows both to move
+at the same pace. If you revert to 2 years ago, you can also inspect the matching infra
+from that time.
+
+Of course, this is not right for every project, and you're free to create a dedicated `infra-myapp` Git repository and keep your Freyfile directly in its root.
+
+## Comparison
+
+### Comparison with Terraform
+
+Terraform is our opinion the best infrastructure automation tool, but without Ansible / Chef / Puppet, it's mostly relying on shell scripts to set up servers. Hashicorp has many other tools to compensate, most noteworthy Otto, for which there is a separate comparison.
+
+### Comparison with Ansible / Chef / Puppet
+
+While it's true that some of these tools can launch infrastructure, they're not the right tool it. The main reason is that while they're okay-ish at managing state on a server, they weren't built to manage state 'outside' of it, what Terraform really shines in.
+
+### Comparison with Otto
+
+Seeing as Otto uses Terraform for infra orchestration and also installs software on it, there's a big conceptual overlap.
+
+Where the projects differ is that Otto aims to be zero config, and Frey aims to be minimal yet complete config. Every component needs to be described, and saved under Git. This approach provides more control and flexibility at the tradeoff of it being more work to describe all your pieces. Wether this trade-off is acceptable depends on the project.
+
+Frey does not offer setting up local environments yet, but this should be easy enough to add (as [we can make local connections](https://github.com/kvz/frey/blob/master/test/scenario/install/Freyfile.toml#L2) already) and is on the [roadmap](CHANGELOG.md).
