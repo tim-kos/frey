@@ -32,7 +32,8 @@ Frey can:
 
 Frey will try to complete all of these steps, following along a 'chain of commands'. You're free to exclude commands, run a few, or just one. Chainable commands are indicated by ![](https://dl.dropboxusercontent.com/s/2kfqn2yocq4kq7p/2016-03-16%20at%2020.44.png):
 
-![](https://dl.dropboxusercontent.com/s/3ajo3fzslk846d3/2016-03-16%20at%2020.38.png)
+<img alt="screen shot 2016-03-16 at 22 01 55" src="https://cloud.githubusercontent.com/assets/26752/13828617/bb8d8c6c-ebc2-11e5-89db-16baa3e226e7.png">
+
 
 As you can see, Frey additionally provides commands to:
 
