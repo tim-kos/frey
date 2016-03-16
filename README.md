@@ -104,9 +104,13 @@ A fixed version of Frey, installs fixed local versions of its dependencies (such
 - An abundance of automated acceptance tests, that verify actual setting up and tearing down of infrastructure
 - Written in ES6 JavaScript, transpiling builds to ES5
 
-### Changelog
+## Changelog
 
-The changelog is also our todo list and can be found [here](CHANGELOG.md)
+The changelog and todo list and can be found [here](CHANGELOG.md)
+
+## Todo
+
+The changelog and todo list and can be found [here](CHANGELOG.md)
 
 ## FAQ
 
