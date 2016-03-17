@@ -27,8 +27,9 @@ Unreleased and unplanned todos
 ## v0.3.5 (Unreleased)
 
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
-- [ ] Add https://github.com/ansistrano/deploy/blob/master/README.md
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'.
+- [x] Include role for nodejs
+- [x] Include roles for deploy & rollback via anistrano https://github.com/ansistrano/deploy/blob/master/README.md
 
 ## v0.3.4 (2016-03-17)
 
