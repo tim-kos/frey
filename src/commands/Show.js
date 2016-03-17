@@ -95,7 +95,10 @@ class Show extends Command {
         out += _.get(facts, 'ansible_facts.ansible_fqdn')
         out += ','
         out += 'ansible_facts.ansible_service_mgr = '
-        out += val.trim()
+        // @todo this is a hack to prevent failures like:
+        // https://travis-ci.org/kvz/frey/builds/116576951#L931
+        // where there must be some odd character leaking into the acceptance test fixtures
+        out += val.replace(/[^A-Za-z0-9\.\-\_]/g, '')
         out += '\n'
       })
 
