@@ -24,14 +24,17 @@ Unreleased and unplanned todos
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
 
-## v0.3.5 (Unreleased)
+## v0.3.6 (Unreleased)
 
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'.
+
+## v0.3.5 (2016-03-17)
+
 - [x] Include role for nodejs
 - [x] Include roles for deploy & rollback via anistrano https://github.com/ansistrano/deploy/blob/master/README.md
 
-## v0.3.4 (2016-03-17)
+## v0.3.4 (2016-03-16)
 
 - [-] Write ansible instructions to a single file again, use tags to filter out at runtime
 - [-] No need for underscored `_gatherTerraformArgs` functions in most Commands
