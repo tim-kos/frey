@@ -1,5 +1,5 @@
 (maybe) Destroying..
---> Frey version '0.3.6'
+--> Frey version '0.3.7'
 --> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install', 'setup', 'deploy', 'restart', 'show' ]
 --> {hostname} - init
 --> {hostname} - config
