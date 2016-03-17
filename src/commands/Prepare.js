@@ -139,9 +139,9 @@ class Prepare extends Command {
 
     deps.push({
       type: 'App',
-      name: 'pyhcl-0.1.5',
-      range: `0.1.5`,
-      version: '0.1.5',
+      name: 'pyhcl-0.1.15',
+      range: `0.1.15`,
+      version: '0.1.15',
       dir: '{{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}',
       exe: `{{{self.dir}}}/pip/bin/hcltool`,
       cmdVersion: 'awk \'/^Version:/ {print $NF}\' {{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}/pip/lib/python2.7/site-packages/pyhcl-{{{self.version}}}-py2.7.egg-info/PKG-INFO || true',
@@ -161,7 +161,7 @@ class Prepare extends Command {
     })
 
     // @todo We unfortunately have to run two versions of hcltool due to
-    // different bugs hurting both 0.1.5 and 0.2.0
+    // different bugs hurting both 0.1.15 and 0.2.0
     // https://github.com/virtuald/pyhcl/issues/7
     // When that is resolved, let's just have 1 version
     deps.push({

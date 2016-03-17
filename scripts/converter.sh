@@ -29,7 +29,7 @@ __base="$(basename ${__file} .sh)"
 __root="$(dirname "${__dir}")"
 
 # @todo We unfortunately have to run two versions of hcltool due to
-# different bugs hurting both 0.1.5 and 0.2.0
+# different bugs hurting both 0.1.15 and 0.2.0
 # https://github.com/virtuald/pyhcl/issues/7
 # When that is resolved, let's just have 1 version
 function cmdHcltool020 () {
@@ -37,8 +37,8 @@ function cmdHcltool020 () {
     ~/.frey/tools/pyhcl/0.2.0/pip/bin/hcltool ${@}
 }
 function cmdHcltool015 () {
-  env PYTHONPATH=~/.frey/tools/pyhcl/0.1.5/pip/lib/python2.7/site-packages \
-    ~/.frey/tools/pyhcl/0.1.5/pip/bin/hcltool ${@}
+  env PYTHONPATH=~/.frey/tools/pyhcl/0.1.15/pip/lib/python2.7/site-packages \
+    ~/.frey/tools/pyhcl/0.1.15/pip/bin/hcltool ${@}
 }
 
 echo "Installing remarshal.."
