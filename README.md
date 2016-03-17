@@ -6,23 +6,37 @@
 <!-- /badges -->
 
 *Warning: Frey is Alpha. Use it for new projects and goofing around, leave it for existing ones.*
-
 Frey aims to be an all-in-one tool for developers and sysadmins to bring their app to production. 
+
 
 ## Table of Contents
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
 - [Features](#features)
 - [Freyfile.toml](#freyfiletoml)
-- [Secrets](#secrest)
+- [Secrets](#secrets)
+  - [Private keys](#private-keys)
 - [Run](#run)
 - [Configuration](#configuration)
 - [Install](#install)
 - [Design goals](#design-goals)
 - [Changelog](#changelog)
+- [Todo](#todo)
 - [FAQ](#faq)
+  - [Can I use my existing Terraform definitions and Ansible playbooks?](#can-i-use-my-existing-terraform-definitions-and-ansible-playbooks)
+  - [Is Frey reinventing the wheel?](#is-frey-reinventing-the-wheel)
+  - [Where do I save my Freyfile, and what do I commit?](#where-do-i-save-my-freyfile-and-what-do-i-commit)
 - [Comparison](#comparison)
+  - [Comparison with Terraform](#comparison-with-terraform)
+  - [Comparison with Ansible / Chef / Puppet](#comparison-with-ansible--chef--puppet)
+  - [Comparison with Otto](#comparison-with-otto)
 - [Contributors](#contributors)
 - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Features
 
