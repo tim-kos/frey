@@ -90,11 +90,12 @@ class Show extends Command {
       let out = ''
       globby.sync(`${this.tmpDir}/*`).forEach((filepath) => {
         const facts = JSON.parse(fs.readFileSync(filepath, 'utf-8'))
+        const val = _.get(facts, 'ansible_facts.ansible_service_mgr') + ''
 
         out += _.get(facts, 'ansible_facts.ansible_fqdn')
         out += ','
         out += 'ansible_facts.ansible_service_mgr = '
-        out += _.get(facts, 'ansible_facts.ansible_service_mgr')
+        out += val.trim()
         out += '\n'
       })
 

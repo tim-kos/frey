@@ -12,8 +12,10 @@ Frey aims to be an all-in-one tool for developers and sysadmins to bring their a
 ## Table of Contents
 
 - [Features](#features)
-- [Run](#run)
 - [Freyfile.toml](#freyfiletoml)
+- [Secrets](#secrest)
+- [Run](#run)
+- [Configuration](#configuration)
 - [Install](#install)
 - [Design goals](#design-goals)
 - [Changelog](#changelog)
@@ -51,6 +53,63 @@ Here's an [example](https://github.com/kvz/frey/blob/master/test/scenario/digita
 
 If you have a huge project and your Freyfile  size is becoming an issue, Frey will happilly look for any other `*.toml` files in the same directory as you can see in this [example](https://github.com/kvz/frey/tree/master/test/scenario/dynamodb) where we set up a DynamoDB server on AWS using 4 different `toml` files.
 
+## Secrets
+
+Frey prefers using environment variables for secrets such as the keys to your AWS account. Frey will automatically make any environment key that starts with `FREY_` available to Terraform so you can use them directly as e.g.:
+
+```toml
+[infra.provider.aws]
+  access_key = "${var.FREY_AWS_ACCESS_KEY}"
+  secret_key = "${var.FREY_AWS_SECRET_KEY}"
+  region     = "us-east-1"
+```
+
+In Ansible, you could use them like so:
+
+```toml
+[[install.playbooks.tasks]]
+  name = "Showcase we can access FREY_ environment variables"
+  command = "echo {{lookup('env', 'FREY_SHOULD_BE_AS_VAR_IN_ANSIBLE')}}"
+```
+
+It's good practice to put the keys needed for you app in an `env.sh`, and keep that out of Git.
+
+### Private keys
+
+For setting up remote connections, Frey generates private and public SSH keys if they don't exist yet, and makes sure the created servers are accessible using those. If you set the magic `FREY_ENCRYPTION_SECRET` environment variable to a long random secret, Frey will also generate an encrypted version of your private SSH key so that you'd end up with three generated files:
+
+```bash
+./ssh/frey-myapp.pem
+./ssh/frey-myapp.pem.cast5
+./ssh/frey-myapp.pub
+```
+
+To change the directory Frey looks for SSH keys for you project from `~/.ssh`, you can use the `global.ssh.key_dir` configuration value. That you can either set via `--cfg-var` or directly in your Freyfile:
+
+```toml
+[global.ssh]
+  key_dir = "."
+```
+
+If `frey-myapp.pem.cast5` exists as well as a `FREY_ENCRYPTION_SECRET` variable in the environment, Frey automatically reconstructs the `frey-myapp.pem`, and deletes it when the Frey process exits.
+
+This allows you to for instance commit the encrypted private key to your Git repository, and ignore the `.pem` file, opening up the possibility of letting a semi-untrusted CI like Travis manage deploys for you. As an example, Travis could keep the encryption secret for you via:
+
+```bash
+gem install travis
+travis encrypt --add env.global "${FREY_ENCRYPTION_SECRET}=${!FREY_ENCRYPTION_SECRET}"
+```
+
+You could then set Travis to run `frey deploy` whenever there's non-PR push to the `master` branch. In `.travis.yml` add something like:
+
+```yaml
+after_success:
+  - if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then frey deploy; else echo "Skipping deploy for non-master/prs"; fi
+```
+
+When frey starts, it will find the `.cast5` file since that was committed to Git, it won't find the `.pem` file but it will recreate that with using the `FREY_ENCRYPTION_SECRET`, which was in turn encrypted by Travis.
+
+
 ## Run
 
 To run all the commands the belong to the chain (![](https://dl.dropboxusercontent.com/s/2kfqn2yocq4kq7p/2016-03-16%20at%2020.44.png)), just type `frey`
@@ -79,6 +138,38 @@ frey --bail-after plan
 ```
 
 Making Frey execute all the steps, including `plan`, but then abort.
+
+## Configuration
+
+The Freyfile and its `*.toml` siblings, along with environment variables for secrets, are the main way to configure infrastructure. Additionally, it may make sense to override configuration at runtime. This can be achieved via the `--cfg-var` command-line argument. For instance, your Freyfile could hold:
+
+```toml
+[infra.resource.digitalocean_droplet.myapp-web]
+  image    = "ubuntu-14-04-x64"
+  name     = "web-${count.index}"
+  region   = "nyc2"
+  size     = "512mb"
+  ssh_keys = [ "${digitalocean_ssh_key.myapp-sshkey.id}" ]
+  count    = "${var.web_count}"
+```
+
+Which could be overridden via:
+
+```bash
+frey --cfg-var="infra.resource.digitalocean_droplet.myapp-web.count=10"
+```
+
+Supply multiple `--cfg-var` arguments if you want to override multiple configuration values.
+
+Alternatively you could use use a simple templating language that Frey provides to reference to values inside your Freyfile. In this example we reference to Frey-provided ssh keys. Notice that we prefix with `config.` here, as you can also use magic prefixes such as `self.` and `parent.`.
+
+```toml
+[infra.resource.digitalocean_droplet.myapp-web.connection]
+   key_file = "{{{config.global.ssh.privatekey_file}}}"
+   user     = "{{{config.global.ssh.user}}}"
+```
+
+The full list of config variables that you can reference is constituted by what's in your Freyfile, as well as a few defaults that Frey provides for convenience, which are listed [here](DEFAULTS.md).
 
 ## Install
 
