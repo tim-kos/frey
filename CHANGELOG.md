@@ -29,6 +29,10 @@ Unreleased and unplanned todos
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'.
 
+## v0.3.6 (2016-03-17)
+
+- [x] Use pyhcl 0.1.15 and 0.2.0 to avoid install crashed
+
 ## v0.3.5 (2016-03-17)
 
 - [x] Include role for nodejs
