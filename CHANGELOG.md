@@ -7,12 +7,10 @@ Unreleased and unplanned todos
 - [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Command's exe functions should mostly be in a util class
-- [ ] Consider detecting the User's config dir, and storing tools there, vs having a ~/.frey
+- [ ] Consider detecting the User's config dir, and storing tools there, vs having a `~/.frey`
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
 - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
-- [ ] docs: Chain Generator
-- [ ] docs: Config Generator (config defaults written to a YAML, merged with descriptions already there)
 - [ ] Empty out and remove `Base` class?
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
 - [ ] Implement commit: Safely commit state automatically
@@ -25,14 +23,19 @@ Unreleased and unplanned todos
 - [ ] website: On the githubs
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
-- [ ] Write ansible instructions to a single file again, use tags to filter out at runtime
 
-## v0.3.4 (Unreleased)
+## v0.3.5 (Unreleased)
 
-- [ ] No need for underscored `_gatherTerraformArgs` functions in most Commands
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] Add https://github.com/ansistrano/deploy/blob/master/README.md
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'.
+
+## v0.3.4 (2016-03-17)
+
+- [-] Write ansible instructions to a single file again, use tags to filter out at runtime
+- [-] No need for underscored `_gatherTerraformArgs` functions in most Commands
+- [x] docs: Chain Generator
+- [x] docs: Config Generator (config defaults written to a YAML, merged with descriptions already there)
 - [x] Allow `Remote` to connect to all SSH targets
 - [x] Add Digital Ocean support with scenario to showcase different roles: db/www
 - [x] Use extraction of `cast5` files as keys for testing by default

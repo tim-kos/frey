@@ -169,7 +169,7 @@ Alternatively you could use use a simple templating language that Frey provides 
    user     = "{{{config.global.ssh.user}}}"
 ```
 
-The full list of config variables that you can reference is constituted by what's in your Freyfile, as well as a few defaults that Frey provides for convenience, which are listed [here](DEFAULTS.md).
+The full list of config variables that you can reference is constituted by what's in your Freyfile, as well as a few defaults that Frey provides for convenience, which are listed [here](defaults.yml).
 
 ## Install
 

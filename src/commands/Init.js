@@ -36,7 +36,14 @@ class Init extends Command {
   }
 
   _cliargs (cargo, cb) {
-    let cliargs = this.runtime.frey.cliargs
+    let cliargs = {}
+    _.forOwn(this.runtime.frey.cliargs, (val, key) => {
+      // Don't add dashed arguments, we only used the camelcased variants
+      // to avoid confusion
+      if (key.indexOf('-') < 0) {
+        cliargs[key] = val
+      }
+    })
 
     // Defaults
     if (cliargs.tags === undefined) {
@@ -67,8 +74,10 @@ class Init extends Command {
   }
 
   _paths (cargo, cb) {
+    const freyDir = path.resolve(__dirname, '../..')
     return cb(null, {
-      roles_dir: path.resolve(__dirname, '../../roles')
+      frey_dir: freyDir,
+      roles_dir: freyDir + '/roles'
     })
   }
 
