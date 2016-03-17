@@ -112,7 +112,7 @@ This allows you to for instance commit the encrypted private key to your Git rep
 
 ```bash
 gem install travis
-travis encrypt --add env.global "${FREY_ENCRYPTION_SECRET}=${!FREY_ENCRYPTION_SECRET}"
+travis encrypt --add env.global "FREY_ENCRYPTION_SECRET=${FREY_ENCRYPTION_SECRET}"
 ```
 
 You could then set Travis to run `frey deploy` whenever there's non-PR push to the `master` branch. In `.travis.yml` add something like:
