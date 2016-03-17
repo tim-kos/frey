@@ -24,10 +24,14 @@ Unreleased and unplanned todos
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
 
-## v0.3.6 (Unreleased)
+## v0.3.8 (Unreleased)
 
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'.
+
+## v0.3.7 (2016-03-17)
+
+- [x] Ship roles with npm
 
 ## v0.3.6 (2016-03-17)
 
