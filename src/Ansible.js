@@ -31,6 +31,11 @@ class Ansible extends App {
       defaults.args['verbose'] = true
     }
 
+    // @todo: Put in a JS date here if you want the same stamp on all machines in a cluster.
+    // Also, make it so that extra-vars can be appended vs
+    // overwritten further down already
+    // defaults.args['extra-vars'] = 'ansistrano_release_version=$(date -u +%Y%m%d%H%M%SZ)'
+
     const connection = _.get(this.runtime, 'config.global.connection')
     if (connection !== undefined) {
       defaults.args['inventory-file'] = null
