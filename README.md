@@ -21,6 +21,7 @@ Frey aims to be an all-in-one tool for developers and sysadmins to bring their a
 - [Changelog](#changelog)
 - [FAQ](#faq)
 - [Comparison](#comparison)
+- [Contributors](#contributors)
 - [License](#license)
 
 ## Features
@@ -248,6 +249,10 @@ Seeing as Otto uses Terraform for infra orchestration and also installs software
 Where the projects differ is that Otto aims to be zero config, and Frey aims to be minimal yet complete config. Every component needs to be described, and saved under Git. This approach provides more control and flexibility at the tradeoff of it being more work to describe all your pieces. Wether this trade-off is acceptable depends on the project.
 
 Frey does not offer setting up local environments yet, but this should be easy enough to add (as [we can make local connections](https://github.com/kvz/frey/blob/master/test/scenario/install/Freyfile.toml#L2) already) and is on the [roadmap](CHANGELOG.md).
+
+## Contributors
+
+ - Kevin van Zonneveld ([@kvz](https://twitter.com/kvz))
 
 ## License
 

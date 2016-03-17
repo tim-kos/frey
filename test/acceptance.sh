@@ -155,7 +155,7 @@ for scenario in $(echo prepare ${scenarios}); do
         fi
       fi
 
-      if ! diff --strip-trailing-cr "${__dir}/fixture/${scenario}.${typ}" "${curFile}"; then
+      if ! diff --strip-trailing-cr "${__dir}/fixture/${scenario}.${typ}" "${curFile}" |cat -t; then
         echo -e "\n\n==> MISMATCH OF: ${scenario}.${typ} ---^"
         echo -e "\n\n==> EXPECTED STDIO: "
         cat "${__dir}/fixture/${scenario}.stdio" || true
