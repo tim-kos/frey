@@ -4,10 +4,6 @@ import _ from 'lodash'
 import App from './App'
 
 class Terraform extends App {
-  constructor (opts) {
-    super(opts)
-  }
-
   exe (cb) {
     const terraformProps = _.find(this.runtime.prepare.deps, { name: 'terraform' })
     const defaults = {

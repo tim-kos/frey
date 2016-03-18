@@ -14,7 +14,7 @@ class Validate extends Command {
   }
 
   _findClosestProjectGit (cargo, cb) {
-    return this._findClosestGit(this.runtime.init.cliargs.projectDir, filepath => {
+    return this._findClosestGit(this.runtime.init.cliargs.projectDir, (filepath) => {
       return cb(null, filepath)
     })
   }
@@ -37,7 +37,7 @@ class Validate extends Command {
     // This operation is performed in parallel, but the results array will
     // be in the same order as the original. Hence, use the last/longest/closest
     // path that has Git.
-    return async.reject(paths, fs.stat, results => {
+    return async.reject(paths, fs.stat, (results) => {
       if (typeof results === 'undefined' || !results.length) {
         return cb(undefined)
       }

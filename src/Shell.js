@@ -115,7 +115,7 @@ class Shell extends Base {
       })
     }
 
-    return child.on('close', code => {
+    return child.on('close', (code) => {
       if (code !== 0) {
         const msg = `Script '${cmd} ${cmdArgs.join(' ')}' exited with code: '${code}'`
         const err = new Error(msg)

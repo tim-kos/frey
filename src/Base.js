@@ -31,7 +31,7 @@ class Base {
     // Create an array of wrapper methods that can store results
     // in bootCargo, before executing the callback
     const methods = []
-    this.boot.forEach(method => {
+    this.boot.forEach((method) => {
       return methods.push((cargo, cb) => {
         const f = this[method].bind(this)
         return f(cargo, (err, cargo) => {
@@ -79,7 +79,7 @@ class Base {
   _out (...args) {
     let index = 0
     let str = args[0]
-    str = `${str}`.replace(/%[o%s]/g, m => {
+    str = `${str}`.replace(/%[o%s]/g, (m) => {
       if (m === '%%') {
         return m
       }

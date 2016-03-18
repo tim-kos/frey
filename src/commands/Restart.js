@@ -7,7 +7,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Restart extends Command {
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'restart.playbooks')) {
-      debug(`Skipping as there are no restart instructions`)
+      debug('Skipping as there are no restart instructions')
       return cb(null)
     }
 

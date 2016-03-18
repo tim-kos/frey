@@ -7,7 +7,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Setup extends Command {
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'setup.playbooks')) {
-      debug(`Skipping as there are no setup instructions`)
+      debug('Skipping as there are no setup instructions')
       return cb(null)
     }
 

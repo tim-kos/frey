@@ -1,12 +1,7 @@
 {
   "extends": "standard",
   "env": {
-    "browser": true,
-    "node": false
-  },
-  "globals": {
-    "it": true,
-    "describe": true,
-    "window": true
+    "mocha": true,
+    "node": true
   }
 }

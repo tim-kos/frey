@@ -2,10 +2,6 @@
 import App from './App'
 
 class Ssh extends App {
-  constructor (opts) {
-    super(opts)
-  }
-
   exe (cb) {
     const defaults = {
       args: {},

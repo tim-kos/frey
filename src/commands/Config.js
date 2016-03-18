@@ -119,11 +119,11 @@ class Config extends Command {
         restart_file: '{{{init.cliargs.projectDir}}}/Frey-residu-restart.yml',
         ssh: {
           key_dir: '{{{init.os.home}}}/.ssh',
-          email: `{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io`,
-          keypair_name: `{{{init.cliargs.app}}}`,
-          privatekey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem`,
-          privatekey_enc_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem.cast5`,
-          publickey_file: `{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pub`,
+          email: '{{{init.os.user}}}@{{{init.cliargs.app}}}.freyproject.io',
+          keypair_name: '{{{init.cliargs.app}}}',
+          privatekey_file: '{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem',
+          privatekey_enc_file: '{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pem.cast5',
+          publickey_file: '{{{self.key_dir}}}/frey-{{{init.cliargs.app}}}.pub',
           user: 'ubuntu'
         }
       }
@@ -136,7 +136,7 @@ class Config extends Command {
       if (!_.isArray(this.runtime.init.cliargs.cfgVar)) {
         this.runtime.init.cliargs.cfgVar = [ this.runtime.init.cliargs.cfgVar ]
       }
-      this.runtime.init.cliargs.cfgVar.forEach(item => {
+      this.runtime.init.cliargs.cfgVar.forEach((item) => {
         let parts = item.split('=')
         let key = parts.shift()
         let value = parts.join('=')
@@ -195,7 +195,7 @@ class Config extends Command {
 
     if (!cfgBlock) {
       debug('No infra instructions found in merged toml')
-      fs.unlink(this.bootCargo._renderConfig.global.infra_file, err => {
+      fs.unlink(this.bootCargo._renderConfig.global.infra_file, (err) => {
         if (err) {
            // That's not fatal
         }
@@ -219,7 +219,7 @@ class Config extends Command {
 
     if (!cfgBlock) {
       debug('No config instructions found in merged toml')
-      fs.unlink(this.bootCargo._renderConfig.global.ansiblecfg_file, err => {
+      fs.unlink(this.bootCargo._renderConfig.global.ansiblecfg_file, (err) => {
         if (err) {
           // That's not fatal
         }
@@ -249,7 +249,7 @@ class Config extends Command {
 
     if (!cfgBlock) {
       debug(`No ${command} instructions found`)
-      fs.unlink(this.bootCargo._renderConfig.global[`${command}_file`], err => {
+      fs.unlink(this.bootCargo._renderConfig.global[`${command}_file`], (err) => {
         if (err) {
            // That's not fatal
         }

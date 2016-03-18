@@ -7,7 +7,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Deploy extends Command {
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'deploy.playbooks')) {
-      debug(`Skipping as there are no deploy instructions`)
+      debug('Skipping as there are no deploy instructions')
       return cb(null)
     }
 

@@ -7,7 +7,7 @@ import depurar from 'depurar'; const debug = depurar('frey')
 class Install extends Command {
   main (cargo, cb) {
     if (!_.has(this.runtime.config, 'install.playbooks')) {
-      debug(`Skipping as there are no install instructions`)
+      debug('Skipping as there are no install instructions')
       return cb(null)
     }
 

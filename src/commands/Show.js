@@ -27,7 +27,7 @@ class Show extends Command {
 
   output (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      debug(`Skipping output as there are no infra instructions`)
+      debug('Skipping output as there are no infra instructions')
       return cb(null)
     }
 
@@ -46,11 +46,11 @@ class Show extends Command {
 
   public_addresses (cargo, cb) {
     if (!_.has(this.runtime.config, 'infra')) {
-      debug(`Skipping public_addresses as there are no infra instructions`)
+      debug('Skipping public_addresses as there are no infra instructions')
       return cb(null)
     }
     if (!_.has(this.runtime.config, 'infra.output.public_addresses')) {
-      debug(`Skipping public_addresses as infra.output.public_addresses was not defined. `)
+      debug('Skipping public_addresses as infra.output.public_addresses was not defined. ')
       return cb(null)
     }
 
@@ -70,7 +70,7 @@ class Show extends Command {
 
   facts (cargo, cb) {
     if (!_.has(this.runtime.config, 'install.playbooks')) {
-      debug(`Skipping facts as there are no install instructions`)
+      debug('Skipping facts as there are no install instructions')
       return cb(null)
     }
 

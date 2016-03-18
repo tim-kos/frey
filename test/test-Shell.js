@@ -3,7 +3,7 @@ import { expect } from 'chai'
 
 describe('Shell', () => {
   describe('_buildChildEnv', () => {
-    it('should convert tf vars', done => {
+    it('should convert tf vars', (done) => {
       const runtime = {
         init: {
           env: {

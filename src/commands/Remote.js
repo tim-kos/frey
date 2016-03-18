@@ -34,7 +34,7 @@ class Remote extends Command {
 
       const trimmed = `${stdout}`.trim()
       if (!trimmed) {
-        const msg = `Unable to get 'infra.output.public_addresses', this is a requirement to determine connection endpoints`
+        const msg = 'Unable to get \'infra.output.public_addresses\', this is a requirement to determine connection endpoints'
         return cb(new Error(msg))
       }
 

@@ -5,10 +5,6 @@ import App from './App'
 import fs from 'fs'
 
 class Ansible extends App {
-  constructor (opts) {
-    super(opts)
-  }
-
   exe (cb) {
     const terraformInvProps = _.find(this.runtime.prepare.deps, { name: 'terraformInventory' })
     const ansibleProps = _.find(this.runtime.prepare.deps, { name: 'ansible' })

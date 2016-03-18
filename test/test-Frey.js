@@ -3,7 +3,7 @@ import { expect } from 'chai'
 
 describe('Frey', () => {
   describe('_composeChain', () => {
-    it('should not add config if the command was config', done => {
+    it('should not add config if the command was config', (done) => {
       const frey = new Frey()
 
       const options = {
@@ -21,7 +21,7 @@ describe('Frey', () => {
       })
     })
 
-    it('should always plan infra', done => {
+    it('should always plan infra', (done) => {
       const frey = new Frey()
 
       const options = {
@@ -42,7 +42,7 @@ describe('Frey', () => {
       })
     })
 
-    it('should return auto bail on docbuild which is not part of a chain', done => {
+    it('should return auto bail on docbuild which is not part of a chain', (done) => {
       const frey = new Frey()
 
       const options = {
@@ -61,7 +61,7 @@ describe('Frey', () => {
       })
     })
 
-    it('should return all links for prepare', done => {
+    it('should return all links for prepare', (done) => {
       const frey = new Frey()
 
       const options = {
@@ -78,7 +78,7 @@ describe('Frey', () => {
       })
     })
 
-    it('should return one link for bail', done => {
+    it('should return one link for bail', (done) => {
       const frey = new Frey()
 
       const options = {
@@ -98,7 +98,7 @@ describe('Frey', () => {
       })
     })
 
-    it('should return some links for bailAfter', done => {
+    it('should return some links for bailAfter', (done) => {
       const frey = new Frey()
 
       const options = {

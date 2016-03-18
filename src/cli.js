@@ -122,7 +122,7 @@ const liftOff = new LiftOff({
 
 liftOff.launch({
   cwd: argv.projectDir
-}, env => {
+}, (env) => {
   if (env.configBase === undefined) {
     const msg = 'Could not find a Freyfile.toml in current directory or upwards, or in project directory.'
     throw new Error(msg)
@@ -133,7 +133,7 @@ liftOff.launch({
   const frey = new Frey(argv)
 
   // Bombs away
-  return frey.run(err => {
+  return frey.run((err) => {
     if (err) {
       // yargs.showHelp()
       console.error('')
