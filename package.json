@@ -27,7 +27,6 @@
   },
   "files": [
     "roles",
-    "README.md",
     "lib"
   ],
   "main": "lib/Frey",
