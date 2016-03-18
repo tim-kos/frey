@@ -24,10 +24,13 @@ Unreleased and unplanned todos
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
 
-## v0.3.8 (Unreleased)
+## v0.3.9 (Unreleased)
 
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
+
+## v0.3.8 (2016-03-18)
+
 - [x] Add role: redis
 - [x] Add role: unattended-upgrades
 - [x] Upgrade dependencies
@@ -42,8 +45,8 @@ Unreleased and unplanned todos
 
 ## v0.3.5 (2016-03-17)
 
-- [x] Include role for nodejs
-- [x] Include roles for deploy & rollback via anistrano https://github.com/ansistrano/deploy/blob/master/README.md
+- [x] Add role: nodejs
+- [x] Add roles: deploy & rollback via anistrano https://github.com/ansistrano/deploy/blob/master/README.md
 
 ## v0.3.4 (2016-03-16)
 
