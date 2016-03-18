@@ -1,3 +1,14 @@
+## PRs
+
+We're welcoming PRs! If it's anything big, please first let us know.
+
+PRs that don't pass our unit and acceptance tests, will not get merged. You're welcome to iterate and let our Travis CI setup assist you with this though.
+
+## npm files
+
+Not that Frey uses npm's [files](https://docs.npmjs.com/files/package.json#files) directive.
+Meaning anything that you'd like to add to the module, needs to be added to `files` inside `package.json` as well.
+
 ## Development
 
 ```bash
@@ -19,7 +30,7 @@ scripts/converter.sh \
 
 ## Testing scenarios
 
-We use an Amazon Free Tier account to run acceptance tests.
+We use (among others) an Amazon Free Tier account to run acceptance tests.
 
 It credentials are available to Travis via encrypted environment variables.
 
@@ -51,7 +62,7 @@ The `DEBUG` environment variable can be very helpful here"
 
 ```bash
 cd test/scenario/dynamodb
-DEBUG=*:* bash ./run.sh
+source ../../../env.sh && DEBUG=*:* bash ./run.sh
 ```
 
 ## Check new versions of dependencies:
