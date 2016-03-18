@@ -20,14 +20,12 @@ mkdir -p "${__accptstTmpDir}"
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
   cmdSed=gsed
+  cmdTimeout="gtimeout --kill-after=6m 5m"
+  cmdDiff=sdiff
 else
   cmdSed=sed
-fi
-
-if [[ "${OSTYPE}" == "darwin"* ]]; then
-  cmdTimeout="gtimeout --kill-after=6m 5m"
-else
   cmdTimeout="timeout --kill-after=6m 5m"
+  cmdDiff=sdiff
 fi
 
 __node="$(which node)"
@@ -155,7 +153,14 @@ for scenario in $(echo prepare ${scenarios}); do
         fi
       fi
 
-      if ! diff --side-by-side --text --ignore-tab-expansion --ignore-trailing-space --ignore-space-change --ignore-all-space "${__dir}/fixture/${scenario}.${typ}" "${curFile}"; then
+      if ! ${cmdDiff} \
+        --text \
+        --ignore-all-space \
+        --ignore-blank-lines \
+        --suppress-common-lines \
+        --ignore-tab-expansion \
+        "${curFile}" "${__dir}/fixture/${scenario}.${typ}"
+      then
         echo -e "\n\n==> MISMATCH OF: ${scenario}.${typ} ---^"
         echo -e "\n\n==> EXPECTED STDIO: "
         cat "${__dir}/fixture/${scenario}.stdio" || true

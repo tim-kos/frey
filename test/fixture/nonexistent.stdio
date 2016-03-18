@@ -25,7 +25,7 @@ Options:
   --cfg-var      Keys in your config to overwrite such as: --cfg-var="global.ssh.key_dir={tmpdir}" --cfg-var="global.terraformcfg.parallelism=2"  [string]
   --force-yes    Answer yes to all questions (dangerous!)  [boolean] [default: false]
   --tags         A list of tags to execute in isolation  [string]
-  --sleep        Wait x seconds between showing infra plan, and executing it  [default: 5]
+  --sleep        Wait x seconds between showing infra plan, and executing it  [number] [default: 5]
   --bail         Do not follow the chain of commands, run a one-off command  [boolean]
   --bail-after   After running this command, abort the chain  [string]
   --no-color     Color support is detected, this forces colors off  [boolean]

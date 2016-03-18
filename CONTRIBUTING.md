@@ -62,7 +62,7 @@ The `DEBUG` environment variable can be very helpful here"
 
 ```bash
 cd test/scenario/dynamodb
-source ../../../env.sh && DEBUG=*:* bash ./run.sh
+source ../../../env.sh && env DEBUG=*:* bash run.sh
 ```
 
 ## Check new versions of dependencies:
