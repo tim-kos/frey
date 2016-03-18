@@ -1,0 +1,14 @@
+- name: Execute arbitrary command
+  command: "pwd"
+
+- action: template src=templates/sources.list.j2 dest=/etc/apt/sources.list
+  name: Common | Add US APT Mirrors
+  register: apt_sources
+
+- apt: upgrade=dist cache_valid_time=3600 update_cache=yes dpkg_options='force-confold,force-confdef'
+  name: Common | Update APT
+  when: apt_sources|changed
+
+- apt: pkg={{ item }} state=present
+  name: Common | Install Packages
+  with_items: "{{apt_packages}}"
