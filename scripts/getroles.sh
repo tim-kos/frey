@@ -25,10 +25,14 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(dirname "${__dir}")"
 
+# https://galaxy.ansible.com/jdauphant/nginx/
+# https://galaxy.ansible.com/geerlingguy/mysql/
+
 roles=(
   "deploy,carlosbuenosvinos.ansistrano-deploy,1.3.0,v1.3.0"
   "rollback,carlosbuenosvinos.ansistrano-rollback,1.2.0,v1.2.0"
   "nodejs,geerlingguy.nodejs,2.1.1,v2.1.1"
+  "redis,geerlingguy.redis,1.2.0,v1.2.0"
   "unattended-upgrades,jnv.unattended-upgrades,v1.2.0,v1.2.0"
 )
 for role in "${roles[@]}"; do
