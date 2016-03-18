@@ -28,6 +28,7 @@ Unreleased and unplanned todos
 
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
+- [x] Add role: unattended-upgrades
 - [x] Upgrade dependencies
 
 ## v0.3.7 (2016-03-17)

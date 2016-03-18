@@ -25,31 +25,26 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(dirname "${__dir}")"
 
-if [ ! -f "${__root}/roles/deploy/v1.3.0/README.md" ]; then
-  ansible-galaxy install \
-   --force \
-   --roles-path "${__root}/roles/deploy/v1.3.0" \
-   carlosbuenosvinos.ansistrano-deploy,1.3.0
-  mv "${__root}/roles/deploy/v1.3.0/carlosbuenosvinos.ansistrano-deploy/"* "${__root}/roles/deploy/v1.3.0/"
-  rmdir "${__root}/roles/deploy/v1.3.0/carlosbuenosvinos.ansistrano-deploy/"
-fi
+roles=(
+  "deploy,carlosbuenosvinos.ansistrano-deploy,1.3.0,v1.3.0"
+  "rollback,carlosbuenosvinos.ansistrano-rollback,1.2.0,v1.2.0"
+  "nodejs,geerlingguy.nodejs,2.1.1,v2.1.1"
+  "unattended-upgrades,jnv.unattended-upgrades,v1.2.0,v1.2.0"
+)
+for role in "${roles[@]}"; do
+  freyRole="$(echo "${role}" |awk -F"," '{print $1}')"
+  ansiRole="$(echo "${role}" |awk -F"," '{print $2}')"
+  ansiVersion="$(echo "${role}" |awk -F"," '{print $3}')"
+  freyVersion="$(echo "${role}" |awk -F"," '{print $4}')"
 
-if [ ! -f "${__root}/roles/rollback/v1.2.0/README.md" ]; then
-  ansible-galaxy install \
-   --force \
-   --roles-path "${__root}/roles/rollback/v1.2.0" \
-   carlosbuenosvinos.ansistrano-rollback,1.2.0
-   mv "${__root}/roles/rollback/v1.2.0/carlosbuenosvinos.ansistrano-rollback/"* "${__root}/roles/rollback/v1.2.0/"
-   rmdir "${__root}/roles/rollback/v1.2.0/carlosbuenosvinos.ansistrano-rollback/"
-fi
+  if [ ! -f "${__root}/roles/${freyRole}/${freyVersion}/README.md" ]; then
+    ansible-galaxy install \
+    --force \
+    --roles-path "${__root}/roles/${freyRole}/${freyVersion}" \
+    ${ansiRole},${ansiVersion}
+    shopt -s dotglob nullglob # to also glob over hidden files
+    mv "${__root}/roles/${freyRole}/${freyVersion}/${ansiRole}/"* "${__root}/roles/${freyRole}/${freyVersion}/"
+    rmdir "${__root}/roles/${freyRole}/${freyVersion}/${ansiRole}/"
+  fi
 
-if [ ! -f "${__root}/roles/nodejs/v2.1.1/README.md" ]; then
-  ansible-galaxy install \
-   --force \
-   --roles-path "${__root}/roles/nodejs/v2.1.1" \
-   geerlingguy.nodejs,2.1.1
-   mv "${__root}/roles/nodejs/v2.1.1/geerlingguy.nodejs/"* "${__root}/roles/nodejs/v2.1.1/"
-   rmdir "${__root}/roles/nodejs/v2.1.1/geerlingguy.nodejs/"
-fi
-
-geerlingguy.nodejs
+done
