@@ -28,7 +28,7 @@ fi
 # specify:
 echo "ACCPTST:STDIO_SKIP_COMPARE"
 
-rm -f "${__sysTmpDir}/frey-prepare"* || true
+rm -f "${__sysTmpDir}/frey-customprepare"* || true
 
 "${__node}" "${__root}/${__codelib}/cli.js" prepare \
   --force-yes \

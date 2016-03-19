@@ -103,12 +103,14 @@ class Config extends Command {
 
   _applyDefaults (cargo, cb) {
     // Defaults
-    let appDefault = ''
+    let appName = ''
 
-    if (this.runtime.init.paths.git_dir) {
-      appDefault = path.basename(this.runtime.init.paths.git_dir)
+    if (_.has(this.bootCargo._mergeToOneConfig, 'global.appname')) {
+      appName = this.bootCargo._mergeToOneConfig.global.appname
+    } else if (this.runtime.init.paths.git_dir) {
+      appName = path.basename(path.dirname(this.runtime.init.paths.git_dir))
     } else {
-      appDefault = path.basename(this.runtime.init.cliargs.projectDir)
+      appName = path.basename(this.runtime.init.cliargs.projectDir)
     }
 
     const defaults = {
@@ -116,7 +118,7 @@ class Config extends Command {
         terraformcfg: {
           parallelism: '{{{init.os.cores}}}'
         },
-        appname: appDefault,
+        appname: appName,
         tools_dir: '{{{init.os.home}}}/.frey/tools',
         ansiblecfg_file: '{{{init.cliargs.projectDir}}}/Frey-residu-ansible.cfg',
         infra_plan_file: '{{{init.cliargs.projectDir}}}/Frey-residu-terraform.plan',
@@ -128,11 +130,11 @@ class Config extends Command {
         restart_file: '{{{init.cliargs.projectDir}}}/Frey-residu-restart.yml',
         ssh: {
           key_dir: '{{{init.os.home}}}/.ssh',
-          email: `{{{init.os.user}}}@${appDefault}.freyproject.io`,
-          keypair_name: `${appDefault}`,
-          privatekey_file: `{{{self.key_dir}}}/frey-${appDefault}.pem`,
-          privatekey_enc_file: `{{{self.key_dir}}}/frey-${appDefault}.pem.cast5`,
-          publickey_file: `{{{self.key_dir}}}/frey-${appDefault}.pub`,
+          email: `{{{init.os.user}}}@${appName}.freyproject.io`,
+          keypair_name: `${appName}`,
+          privatekey_file: `{{{self.key_dir}}}/frey-${appName}.pem`,
+          privatekey_enc_file: `{{{self.key_dir}}}/frey-${appName}.pem.cast5`,
+          publickey_file: `{{{self.key_dir}}}/frey-${appName}.pub`,
           user: 'ubuntu'
         }
       }

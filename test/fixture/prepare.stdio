@@ -4,9 +4,9 @@ ACCPTST:STDIO_SKIP_COMPARE
 --> {hostname} - init
 --> {hostname} - config
 --> {hostname} - prepare
-Creating private key '{tmpdir}/frey-prepare.pem'
-Creating public key '{tmpdir}/frey-prepare.pub'
-Creating private encrypted key '{tmpdir}/frey-prepare.pem.cast5'
+Creating private key '{tmpdir}/frey-customprepare.pem'
+Creating public key '{tmpdir}/frey-customprepare.pub'
+Creating private encrypted key '{tmpdir}/frey-customprepare.pem.cast5'
 Found 'terraform' with version '0.6.12'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
