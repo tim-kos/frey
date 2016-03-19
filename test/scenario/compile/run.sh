@@ -30,6 +30,8 @@ echo "ACCPTST:STDIO_SKIP_COMPARE"
 
 rm -f "${__sysTmpDir}/frey-prepare"* || true
 
+git init 2>&1 > /dev/null || true
+
 # node "${__root}/lib/cli.js" prepare \
 env -i \
 PATH=${PATH} \

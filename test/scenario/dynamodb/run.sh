@@ -34,6 +34,8 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
+git init 2>&1 > /dev/null || true
+
 "${__node}" "${__root}/${__codelib}/cli.js" \
   --cfg-var "global.ssh.key_dir=${__sysTmpDir}" \
   --no-color \

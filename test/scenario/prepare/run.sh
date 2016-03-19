@@ -30,6 +30,8 @@ echo "ACCPTST:STDIO_SKIP_COMPARE"
 
 rm -f "${__sysTmpDir}/frey-customprepare"* || true
 
+git init 2>&1 > /dev/null || true
+
 "${__node}" "${__root}/${__codelib}/cli.js" prepare \
   --force-yes \
   --cfg-var "global.ssh.key_dir=${__sysTmpDir}" \

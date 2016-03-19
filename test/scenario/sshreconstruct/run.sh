@@ -20,6 +20,8 @@ fi
 rm -f *.pem
 rm -f *.pub
 
+git init 2>&1 > /dev/null || true
+
 FREY_ENCRYPTION_SECRET=abc "${__node}" "${__root}/${__codelib}/cli.js" prepare \
   --bail prepare
 

@@ -38,6 +38,8 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
+git init 2>&1 > /dev/null || true
+
 # We seem to not be able to guarantee the create order of multiple web hosts, so override with count = 1 in tests
 "${__node}" "${__root}/${__codelib}/cli.js" \
   --cfg-var "global.ssh.key_dir=." \

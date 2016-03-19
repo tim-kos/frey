@@ -34,6 +34,8 @@ echo "ACCPTST:STDIO_REPLACE_ASTERISKHR"
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-install"* || true
 
+git init 2>&1 > /dev/null || true
+
 env -i \
 PATH=${PATH} \
 USER=${USER} \

@@ -15,4 +15,6 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
   __node="babel-node"; __codelib="src"
 fi
 
+git init 2>&1 > /dev/null || true
+
 "${__node}" "${__root}/${__codelib}/cli.js" nonexistent
