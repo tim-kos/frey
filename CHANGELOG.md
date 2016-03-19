@@ -30,8 +30,9 @@ Unreleased and unplanned todos
 
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
+- [x] Deprecate glob in favor of globby (which we already required in some places)
 
-## v0.3.9 (Unreleased)
+## v0.3.9 (2016-03-19)
 
 - [x] Appname can be configured in Freyfile, defaults to git dir. Git dir is in init.paths
 - [x] Show endpoint if such output is available

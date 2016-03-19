@@ -3,7 +3,7 @@ import Command from '../Command'
 import utils from '../Utils'
 import path from 'path'
 import depurar from 'depurar'; const debug = depurar('frey')
-import glob from 'glob'
+import globby from 'globby'
 import async from 'async'
 import fs from 'fs'
 import _ from 'lodash'
@@ -34,7 +34,7 @@ class Config extends Command {
     let tomlFiles = []
     const pattern = `${this.runtime.init.cliargs.projectDir}/*.toml`
     debug(`Reading from '${pattern}'`)
-    return glob(pattern, (err, files) => {
+    return globby(pattern, (err, files) => {
       if (err) {
         return cb(err)
       }
