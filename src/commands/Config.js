@@ -34,14 +34,12 @@ class Config extends Command {
     let tomlFiles = []
     const pattern = `${this.runtime.init.cliargs.projectDir}/*.toml`
     debug(`Reading from '${pattern}'`)
-    return globby(pattern, (err, files) => {
-      if (err) {
-        return cb(err)
-      }
-
-      tomlFiles = files
-      return cb(null, tomlFiles)
-    })
+    return globby(pattern)
+      .then((files) => {
+        tomlFiles = files
+        return cb(null, tomlFiles)
+      })
+      .catch(cb)
   }
 
   _readTomlFiles (tomlFiles, cb) {
