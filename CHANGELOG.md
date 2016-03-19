@@ -26,10 +26,13 @@ Unreleased and unplanned todos
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
 - [ ] docs: link to tusd and uppy-server
 
-## v0.3.9 (Unreleased)
+## v0.3.10 (Unreleased)
 
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
+
+## v0.3.9 (Unreleased)
+
 - [x] Appname can be configured in Freyfile, defaults to git dir. Git dir is in init.paths
 - [x] Show endpoint if such output is available
 
