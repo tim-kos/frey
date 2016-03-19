@@ -26,6 +26,7 @@ Unreleased and unplanned todos
 
 ## v0.3.9 (Unreleased)
 
+- [ ] Better app-name detecetion (just becomes infra now if freyfile is in `infra` folder)
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 

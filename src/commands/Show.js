@@ -87,7 +87,7 @@ class Show extends Command {
         return cb(err)
       }
 
-      let out = ''
+      let facts = []
       globby.sync(`${this.tmpDir}/*`).forEach((filepath) => {
         const facts = JSON.parse(fs.readFileSync(filepath, 'utf-8'))
 
@@ -101,10 +101,10 @@ class Show extends Command {
         val = val.replace(/[^A-Za-z0-9\.\-\_]/mg, '')
         fqdn = fqdn.replace(/[^A-Za-z0-9\.\-\_]/mg, '')
 
-        out += `${fqdn},${key} = ${val}\n`
+        facts.push(`${fqdn},${key} = ${val}`)
       })
 
-      cb(null, out)
+      cb(null, facts.sort())
     })
   }
 
@@ -112,7 +112,7 @@ class Show extends Command {
     const results = {
       output: this.bootCargo.output,
       public_addresses: this.bootCargo.public_addresses,
-      facts: this.bootCargo.facts
+      facts: this.bootCargo.facts.join('\n')
     }
 
     _.forOwn(results, (out, key) => {
