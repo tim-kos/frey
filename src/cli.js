@@ -21,12 +21,6 @@ yargs
       type: 'string',
       describe: 'Directory that contains the Freyfile.toml. Frey will traverse upwards if empty. '
     },
-    app: {
-      default: '{{{self.projectDir}}}|basename',
-      nargs: 1,
-      type: 'string',
-      describe: "Name of application for which we're creating infrastructure"
-    },
     'cfg-var': {
       nargs: 1,
       type: 'string',
