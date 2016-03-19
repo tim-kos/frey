@@ -90,16 +90,18 @@ class Show extends Command {
       let out = ''
       globby.sync(`${this.tmpDir}/*`).forEach((filepath) => {
         const facts = JSON.parse(fs.readFileSync(filepath, 'utf-8'))
-        const val = _.get(facts, 'ansible_facts.ansible_service_mgr') + ''
 
-        out += _.get(facts, 'ansible_facts.ansible_fqdn')
-        out += ','
-        out += 'ansible_facts.ansible_service_mgr = '
+        const key = 'ansible_facts.ansible_service_mgr'
+        let val = _.get(facts, key) + ''
+        let fqdn = _.get(facts, 'ansible_facts.ansible_fqdn') + ''
+
         // @todo this is a hack to prevent failures like:
         // https://travis-ci.org/kvz/frey/builds/116576951#L931
         // where there must be some odd character leaking into the acceptance test fixtures
-        out += val.replace(/[^A-Za-z0-9\.\-\_]/g, '')
-        out += '\n'
+        val = val.replace(/[^A-Za-z0-9\.\-\_]/mg, '')
+        fqdn = fqdn.replace(/[^A-Za-z0-9\.\-\_]/mg, '')
+
+        out += `${fqdn},${key} = ${val}\n`
       })
 
       cb(null, out)
