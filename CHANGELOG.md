@@ -17,18 +17,21 @@ Unreleased and unplanned todos
 - [ ] Indent stdout/err
 - [ ] More tests!
 - [ ] Remote state in S3 feature
+- [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Vagrant support
 - [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
 - [ ] website: On the githubs
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
+- [ ] docs: link to tusd and uppy-server
 
 ## v0.3.9 (Unreleased)
 
-- [ ] Better app-name detecetion (just becomes infra now if freyfile is in `infra` folder)
+- [ ] Appname can be configured in Freyfile, defaults to git dir. Git dir is in init.paths
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
+- [x] Show endpoint if such output is available
 
 ## v0.3.8 (2016-03-18)
 

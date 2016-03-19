@@ -5,6 +5,8 @@ import osHomedir from 'os-homedir'
 import os from 'os'
 import path from 'path'
 import _ from 'lodash'
+import async from 'async'
+import fs from 'fs'
 
 class Init extends Command {
   constructor (name, runtime) {
@@ -13,6 +15,7 @@ class Init extends Command {
       '_env',
       '_os',
       '_cliargs',
+      '_findClosestProjectGit',
       '_paths'
     ]
   }
@@ -73,11 +76,39 @@ class Init extends Command {
     return cb(null, cliargs)
   }
 
+  _findClosestProjectGit (cargo, cb) {
+    const parts = this.bootCargo._cliargs.projectDir.split('/')
+    let paths = []
+    let rem = ''
+
+    for (let i = 0, part; i < parts.length; i++) {
+      part = parts[i]
+      if (!part) {
+        continue
+      }
+
+      rem = `${rem}/${part}`
+      paths.push(`${rem}/.git`)
+    }
+
+    // This operation is performed in parallel, but the results array will
+    // be in the same order as the original. Hence, use the last/longest/closest
+    // path that has Git.
+    return async.reject(paths, fs.stat, (results) => {
+      if (typeof results === 'undefined' || !results.length) {
+        return cb(null, undefined)
+      }
+
+      return cb(null, results.pop())
+    })
+  }
+
   _paths (cargo, cb) {
     const freyDir = path.resolve(__dirname, '../..')
     return cb(null, {
       frey_dir: freyDir,
-      roles_dir: freyDir + '/roles'
+      roles_dir: freyDir + '/roles',
+      git_dir: this.bootCargo._findClosestProjectGit
     })
   }
 

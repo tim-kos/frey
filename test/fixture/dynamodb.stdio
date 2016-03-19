@@ -98,7 +98,8 @@ State path: {root}/test/scenario/dynamodb/Frey-state-terraform.tfstate
 
 Outputs:
 
-  arn = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
+  arn      = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
+  endpoint = http://dynamodb.com:8080/endpoint/arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
 --> Saved new state to '{root}/test/scenario/dynamodb/Frey-state-terraform.tfstate'
 --> {hostname} - install
 --> {hostname} - setup
@@ -107,6 +108,10 @@ Outputs:
 --> {hostname} - show
 - [ output ] ------------------------------
 arn = arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
+endpoint = http://dynamodb.com:8080/endpoint/arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
+
+- [ endpoint ] ------------------------------
+http://dynamodb.com:8080/endpoint/arn:aws:dynamodb:us-east-1:501208355536:table/GameScores
 
 Done
 Finished

@@ -170,7 +170,6 @@ public_addresses = {ip}
 - [ facts ] ------------------------------
 db-0,ansible_facts.ansible_service_mgr = upstart
 web-0,ansible_facts.ansible_service_mgr = upstart
-
 Done
 Cleaning up '{root}/test/scenario/digitalocean/frey-digitalocean.pem' after process exit with code '0' 
 Finished

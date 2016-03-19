@@ -286,7 +286,6 @@ public_addresses = {ip}
 
 - [ facts ] ------------------------------
 freytest-app,ansible_facts.ansible_service_mgr = upstart
-
 Done
 Cleaning up '{root}/test/scenario/openstack/frey-openstack.pem' after process exit with code '0' 
 Finished

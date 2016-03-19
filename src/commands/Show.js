@@ -16,6 +16,7 @@ class Show extends Command {
       '_createTmpDir',
       'output',
       'public_addresses',
+      'endpoint',
       'facts'
     ]
     this.tmpDir = this.runtime.init.os.tmp + '/' + uuid.v4()
@@ -68,6 +69,30 @@ class Show extends Command {
     terraform.exe(cb)
   }
 
+  endpoint (cargo, cb) {
+    if (!_.has(this.runtime.config, 'infra')) {
+      debug('Skipping endpoint as there are no infra instructions')
+      return cb(null)
+    }
+    if (!_.has(this.runtime.config, 'infra.output.endpoint')) {
+      debug('Skipping endpoint as infra.output.endpoint was not defined. ')
+      return cb(null)
+    }
+
+    const terraform = new Terraform({
+      cmdOpts: { verbose: false },
+      args: {
+        output: undefined,
+        state: this.runtime.config.global.infra_state_file,
+        parallelism: null,
+        endpoint: undefined
+      },
+      runtime: this.runtime
+    })
+
+    terraform.exe(cb)
+  }
+
   facts (cargo, cb) {
     if (!_.has(this.runtime.config, 'install.playbooks')) {
       debug('Skipping facts as there are no install instructions')
@@ -87,7 +112,7 @@ class Show extends Command {
         return cb(err)
       }
 
-      let facts = []
+      let factList = []
       globby.sync(`${this.tmpDir}/*`).forEach((filepath) => {
         const facts = JSON.parse(fs.readFileSync(filepath, 'utf-8'))
 
@@ -101,10 +126,10 @@ class Show extends Command {
         val = val.replace(/[^A-Za-z0-9\.\-\_]/mg, '')
         fqdn = fqdn.replace(/[^A-Za-z0-9\.\-\_]/mg, '')
 
-        facts.push(`${fqdn},${key} = ${val}`)
+        factList.push(`${fqdn},${key} = ${val}`)
       })
 
-      cb(null, facts.sort())
+      cb(null, factList.sort().join('\n'))
     })
   }
 
@@ -112,7 +137,8 @@ class Show extends Command {
     const results = {
       output: this.bootCargo.output,
       public_addresses: this.bootCargo.public_addresses,
-      facts: this.bootCargo.facts.join('\n')
+      facts: this.bootCargo.facts,
+      endpoint: this.bootCargo.endpoint
     }
 
     _.forOwn(results, (out, key) => {
