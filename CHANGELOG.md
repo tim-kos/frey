@@ -5,7 +5,6 @@
 Unreleased and unplanned todos
 
 - [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
-- [ ] Check for `git ignore Frey-residu-*`
 - [ ] Command's exe functions should mostly be in a util class
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a `~/.frey`
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
@@ -17,17 +16,19 @@ Unreleased and unplanned todos
 - [ ] Indent stdout/err
 - [ ] More tests!
 - [ ] Remote state in S3 feature
-- [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Vagrant support
 - [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
 - [ ] website: On the githubs
 - [ ] website: Take uppy as a base maybe?
 - [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
-- [ ] docs: link to tusd and uppy-server
+- [ ] Equal sign vertical alignment for `frey format`
 
 ## v0.3.10 (Unreleased)
 
+- [ ] docs: link to tusd and uppy-server
+- [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
+- [ ] Check for `git ignore Frey-residu-*`
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 - [x] Deprecate glob in favor of globby (which we already required in some places)
