@@ -14,8 +14,9 @@ Frey aims to be an all-in-one tool for developers and sysadmins to bring their a
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
+- [Intro](#intro)
 - [Features](#features)
+- [Who uses Frey](#who-uses-frey)
 - [Freyfile.toml](#freyfiletoml)
 - [Secrets](#secrets)
   - [Private keys](#private-keys)
@@ -37,6 +38,24 @@ Frey aims to be an all-in-one tool for developers and sysadmins to bring their a
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Intro
+
+Frey is a tool to set up infrastructure, and provision it with software and configuration. You can describe the server components, used software packages, and the deployment strategy for your own app, in a single `Freyfile`.
+
+Frey combines [the power of Terraform](https://www.terraform.io/) and the [vast module ecosystem of Ansible](http://docs.ansible.com/ansible/list_of_all_modules.html) to offer an end-to-end solution for setting up servers or entire clusters for your app.
+
+## Who uses Frey
+
+Frey can be seen in the wild in these projects:
+
+ - Uppy has a [Freyfile](https://github.com/transloadit/uppy-server/blob/master/infra/Freyfile.toml)
+ that sets up an EC2 instance, and let's Travis CI deploy to it on every push to `master`.
+ - Imagemagick has a [Freyfile](https://github.com/transloadit/infra-imagemagick/blob/frey/infra/Freyfile.toml) to set up their website from scratch. If anything 'bad' happens, frey is run to restore the infrastructure and software, as it was defined in the Freyfile.
+ - tus.io has a [Freyfile](https://github.com/tus/infra-tusd/blob/frey/infra/Freyfile.toml) 
+ that sets up an EC2 instance, and let's Travis CI deploy to it on every push to `master`.
+
+If you're using Frey, let us know in an [issue](https://github.com/kvz/frey/issues/new).
 
 ## Features
 
