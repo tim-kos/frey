@@ -12,9 +12,12 @@ set -o nounset
 # set -o xtrace
 
 project="${1:-tusd}"
-tfFile="$(realpath ${2:-/Users/kvz/code/infra-tusd/envs/production/infra.tf})"
+tfFile="${2:-/Users/kvz/code/infra-tusd/envs/production/infra.tf}"
 ansFile="${3:-}"
 ansCfgFile="${4:-}"
+[ -n "${tfFile:-}" ] && tfFile="$(realpath "${tfFile}")"
+[ -n "${ansFile:-}" ] && ansFile="$(realpath "${ansFile}")"
+[ -n "${ansCfgFile:-}" ] && ansCfgFile="$(realpath "${ansCfgFile}")"
 tfDir="$(dirname "${tfFile}")"
 tfBase="$(basename "${tfFile}" .tf)"
 jsonFile="${tfDir}/${tfBase}.tf.json"
