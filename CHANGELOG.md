@@ -19,9 +19,6 @@ Unreleased and unplanned todos
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Vagrant support
 - [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
-- [ ] website: On the githubs
-- [ ] website: Take uppy as a base maybe?
-- [ ] website: Vagrant because it gave us a consistent and repeatable setup. And predictability 
 - [ ] Equal sign vertical alignment for `frey format`
 
 ## v0.3.10 (Unreleased)
