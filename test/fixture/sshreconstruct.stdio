@@ -1,4 +1,4 @@
---> Frey version '0.3.9'
+--> Frey version '0.3.10'
 --> Will run: [ 'init', 'config', 'prepare' ]
 --> {hostname} - init
 --> {hostname} - config
