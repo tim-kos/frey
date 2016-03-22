@@ -30,10 +30,12 @@ __root="$(dirname "${__dir}")"
 
 roles=(
   "deploy,carlosbuenosvinos.ansistrano-deploy,1.3.0,v1.3.0"
+  "deploy,carlosbuenosvinos.ansistrano-deploy,1.4.0,v1.4.0"
   "rollback,carlosbuenosvinos.ansistrano-rollback,1.2.0,v1.2.0"
   "nodejs,geerlingguy.nodejs,2.1.1,v2.1.1"
   "redis,geerlingguy.redis,1.2.0,v1.2.0"
   "unattended-upgrades,jnv.unattended-upgrades,v1.2.0,v1.2.0"
+  "munin,geerlingguy.munin,1.1.2,v1.1.2"
 )
 for role in "${roles[@]}"; do
   freyRole="$(echo "${role}" |awk -F"," '{print $1}')"
