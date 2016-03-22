@@ -65,8 +65,16 @@ cd test/scenario/dynamodb
 source ../../../env.sh && env DEBUG=*:* bash run.sh
 ```
 
+## Recommended Editor Plugins
+
+### Atom
+
+- <https://atom.io/packages/atom-jinja2>
+- <https://atom.io/packages/atom-alignment>
+- <https://atom.io/packages/language-terraform>
+
 ## Check new versions of dependencies:
 
- - <https://github.com/ansible/ansible/blob/devel/CHANGELOG.md>
- - <https://github.com/hashicorp/terraform/blob/master/CHANGELOG.md>
- - <https://github.com/adammck/terraform-inventory/releases>
+- <https://github.com/ansible/ansible/blob/devel/CHANGELOG.md>
+- <https://github.com/hashicorp/terraform/blob/master/CHANGELOG.md>
+- <https://github.com/adammck/terraform-inventory/releases>
