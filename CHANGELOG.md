@@ -26,11 +26,16 @@ Unreleased and unplanned todos
 
 ## v0.3.10 (Unreleased)
 
-- [ ] docs: link to tusd and uppy-server
 - [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
+
+## v0.3.10 (2016-03-22)
+
+- [x] docs: link to tusd and uppy-server
+- [x] Upgrade role: deploy to 1.4.0
+- [x] Add role: munin
 - [x] Deprecate glob in favor of globby (which we already required in some places)
 
 ## v0.3.9 (2016-03-19)
