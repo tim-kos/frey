@@ -28,6 +28,7 @@ Unreleased and unplanned todos
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 - [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
+- [x] ansistrano: Add npm installer
 - [x] Add role: rsyslog
 - [x] ansistrano: Ensure `ansistrano_shared_rsync_copy_path` exists
 - [x] ansistrano: Don't assume the shared dir is named `shared` as it's configrable
