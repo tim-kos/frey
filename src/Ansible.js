@@ -24,7 +24,7 @@ class Ansible extends App {
     }
 
     if (this.runtime.init.cliargs.verbose) {
-      defaults.args['verbose'] = true
+      defaults.args['-vvvvv'] = undefined
     }
 
     // @todo: Put in a JS date here if you want the same stamp on all machines in a cluster.
