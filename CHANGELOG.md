@@ -31,6 +31,7 @@ Unreleased and unplanned todos
 
 ## v0.3.11 (2016-03-24)
 
+- [x] Add role: znc
 - [x] ansistrano: Add npm installer
 - [x] Add role: fqdn
 - [x] Add role: rsyslog

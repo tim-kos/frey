@@ -40,6 +40,7 @@ roles=(
   "logrotate;telusdigital.logrotate;v1.0.0"
   "rsyslog;tersmitten.rsyslog,v3.0.1;v3.0.1"
   "fqdn;holms.fqdn;v1.0.0"
+  "znc;triplepoint.znc,1.0.4;v1.0.4"
 )
 for role in "${roles[@]}"; do
   freyRole="$(echo "${role}" |awk -F";" '{print $1}')"
