@@ -21,15 +21,20 @@ Unreleased and unplanned todos
 - [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
 - [ ] Equal sign vertical alignment for `frey format`
 
-## v0.3.10 (Unreleased)
+## v0.3.12 (Unreleased)
 
 - [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 - [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
+
+## v0.3.11 (2016-03-24)
+
 - [x] ansistrano: Add npm installer
+- [x] Add role: fqdn
 - [x] Add role: rsyslog
+- [x] ansistrano: Do not use sudo in rsync
 - [x] ansistrano: Ensure `ansistrano_shared_rsync_copy_path` exists
 - [x] ansistrano: Don't assume the shared dir is named `shared` as it's configrable
 - [x] ansistrano: Ensure shared paths sources are present

@@ -1,0 +1,3 @@
+---
+- name: Redhat | Update sysconfig
+  lineinfile: dest=/etc/sysconfig/network line="HOSTNAME={{ fqdn }}" regexp="HOSTNAME="
