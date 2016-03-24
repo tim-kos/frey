@@ -25,7 +25,6 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(dirname "${__dir}")"
 
-# https://galaxy.ansible.com/jdauphant/nginx/
 # https://galaxy.ansible.com/geerlingguy/mysql/
 
 roles=(
@@ -42,6 +41,8 @@ roles=(
   "fqdn;holms.fqdn;v1.0.0"
   "znc;triplepoint.znc,1.0.4;v1.0.4"
   "nginx;jdauphant.nginx,v2.0.1;v2.0.1"
+  "prometheus;williamyeh.prometheus,1.3.6;v1.3.6"
+  "smokeping;akamine.smokeping;v0.0.1"
 )
 for role in "${roles[@]}"; do
   freyRole="$(echo "${role}" |awk -F";" '{print $1}')"

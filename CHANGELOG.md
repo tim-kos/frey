@@ -31,6 +31,9 @@ Unreleased and unplanned todos
 
 ## v0.3.11 (Unreleased)
 
+- [ ] Make smokeping more pleasant (configurable targets, no apache dependency)
+- [x] Add role: smokeping
+- [x] Add role: prometheus
 - [x] Add role: nginx
 - [x] Add role: fqdn
 - [x] ansistrano: Add npm installer
