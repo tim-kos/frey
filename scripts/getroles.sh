@@ -38,6 +38,7 @@ roles=(
   "munin;geerlingguy.munin,1.1.2;v1.1.2"
   "upstart;telusdigital.upstart;v1.0.0"
   "logrotate;telusdigital.logrotate;v1.0.0"
+  "rsyslog;tersmitten.rsyslog,v3.0.1;v3.0.1"
 )
 for role in "${roles[@]}"; do
   freyRole="$(echo "${role}" |awk -F";" '{print $1}')"
