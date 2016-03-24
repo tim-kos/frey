@@ -29,9 +29,10 @@ Unreleased and unplanned todos
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 - [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
 
-## v0.3.11 (2016-03-24)
+## v0.3.11 (Unreleased)
 
-- [x] Add role: znc
+- [x] Add role: nginx
+- [x] Add role: fqdn
 - [x] ansistrano: Add npm installer
 - [x] Add role: fqdn
 - [x] Add role: rsyslog
