@@ -1,7 +1,7 @@
 'use strict'
 import _ from 'lodash'
 import Shell from './Shell'
-import depurar from 'depurar'; const debug = depurar('frey')
+// import depurar from 'depurar'; const debug = depurar('frey')
 
 class App {
   constructor (opts) {
@@ -22,7 +22,6 @@ class App {
     cmdOpts.env = env
 
     const cmdArgs = [ exe ].concat(args)
-    debug({cmdArgs: cmdArgs, env: env})
     this.shell._exe(cmdArgs, cmdOpts, (err, stdout) => {
       if (err) {
         return cb(err)

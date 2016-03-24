@@ -74,11 +74,30 @@ class Shell extends Base {
       stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
     }
 
-    debug(this._secureOutput({
-      cwd: opts.cwd,
-      cmdArgs: cmdArgs,
-      cmdOpts: cmdOpts
-    }))
+    let debugCmd = ''
+    _.forOwn(opts.env, (val, key) => {
+      if (process.env[key]) {
+        return
+      }
+      if (key.indexOf('npm_config') === 0) {
+        return
+      }
+      if (key.indexOf('MFLAGS') === 0) {
+        return
+      }
+      if (key.indexOf('MAKEFLAGS') === 0) {
+        return
+      }
+      if (key.indexOf('TF_VAR_') === 0) {
+        return
+      }
+      if (key.indexOf('FREY_') === 0) {
+        return
+      }
+      debugCmd += `${key}=${val} \\\n`
+    })
+    debugCmd += cmdArgs.join(' \\\n  ') + ' \\\n|| false'
+    debug(debugCmd)
 
     const cmd = cmdArgs.shift()
     const child = spawn(cmd, cmdArgs, opts)
