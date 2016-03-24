@@ -15,3 +15,6 @@
 
 - name: ANSISTRANO | Copy release version into REVISION file
   copy: content={{ ansistrano_release_version }} dest={{ ansistrano_release_path.stdout }}/REVISION
+
+- name: ANSISTRANO | Chown release dir
+  file: state=directory path={{ ansistrano_release_path.stdout }} mode="u=rwX,g=rwX,o=" recurse=yes owner={{ ansistrano_owner }} group={{ ansistrano_group }}

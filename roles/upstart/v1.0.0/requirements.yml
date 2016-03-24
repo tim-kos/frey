@@ -1,2 +1,2 @@
 ---
-- src: telusdigital.logrotate
+- src: ../logrotate

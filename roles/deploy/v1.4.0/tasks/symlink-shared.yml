@@ -5,7 +5,7 @@
   with_items: ansistrano_shared_paths
 
 - name: ANSISTRANO | Ensure shared paths sources are present
-  file: state=directory path={{ ansistrano_shared_path.stdout }}/{{ item }} recurse=true
+  file: state=directory path={{ ansistrano_shared_path.stdout }}/{{ item }} mode="u=rwX,g=rwX,o=" recurse=yes owner={{ ansistrano_owner }} group={{ ansistrano_group }}
   with_items: ansistrano_shared_paths
 
 # Symlinks shared paths

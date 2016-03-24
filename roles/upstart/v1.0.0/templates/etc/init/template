@@ -31,10 +31,6 @@ limit nofile {{ upstart_file_descriptor_limit }} {{ upstart_file_descriptor_limi
 {% endif %}
 
 pre-start script
-  mkdir -p {{ upstart_runtime_root }}
-  chown {{ upstart_user }}:{{ upstart_group }} {{ upstart_runtime_root }}
-  mkdir -p {{ upstart_log_root }}
-  chown {{ upstart_user }}:{{ upstart_group }} {{ upstart_log_root }}
 {% if upstart_pre_start is iterable %}
 {%   for command in upstart_pre_start %}
   {{ command  }}
@@ -42,7 +38,21 @@ pre-start script
 {% endif %}
 end script
 
-{% if upstart_script is iterable %}
+{% if upstart_command %}
+script
+  set -e
+  set -x
+  mkfifo /tmp/{{upstart_name}}-log-fifo
+  ( logger -t {{upstart_name}} </tmp/{{upstart_name}}-log-fifo & )
+  exec >/tmp/{{upstart_name}}-log-fifo
+  rm /tmp/{{upstart_name}}-log-fifo
+  exec bash -c "cd {{upstart_runtime_root}} \
+    && chown root.root env.sh \
+    && chmod 600 env.sh \
+    && source env.sh \
+    && exec sudo -EHu {{upstart_user}} env PATH=${PATH} LD_LIBRARY_PATH=${LD_LIBRARY_PATH} {{upstart_command}} 2>&1"
+end script
+{% elif upstart_script is iterable %}
 script
 {%   for command in upstart_script %}
   {{ command }}
@@ -52,8 +62,15 @@ end script
 exec start-stop-daemon --start --chuid {{ upstart_user }} --group {{ upstart_group }} --make-pidfile --pidfile {{ upstart_pidfile_path }} --exec {{ upstart_exec_path }}{{ ' -- '~upstart_exec_flags|join(' ') if upstart_exec_flags else '' }} {{ '2>&1' if upstart_capture_errors else '' }} >> {{ upstart_log_path }}
 {% endif %}
 
+{% if upstart_command %}
+post-start script
+  PID=`status {{upstart_name}} | egrep -oi '([0-9]+)$' | head -n1`
+  echo ${PID} > {{ upstart_pidfile_path }}
+end script
+{% endif %}
+
 post-stop script
-  rm {{ upstart_pidfile_path }}
+  rm -f {{ upstart_pidfile_path }}
 {% if upstart_post_stop is iterable %}
 {%   for command in upstart_post_stop %}
   {{ command }}
