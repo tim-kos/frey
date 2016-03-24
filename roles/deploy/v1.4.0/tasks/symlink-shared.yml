@@ -4,6 +4,10 @@
   file: state=absent path={{ ansistrano_release_path.stdout }}/{{ item }}
   with_items: ansistrano_shared_paths
 
+- name: ANSISTRANO | Ensure shared paths sources are present
+  file: state=directory path={{ ansistrano_shared_path.stdout }}/{{ item }} recurse=true
+  with_items: ansistrano_shared_paths
+
 # Symlinks shared paths
 - name: ANSISTRANO | Create softlinks for shared paths
   file: state=link path={{ ansistrano_release_path.stdout }}/{{ item }} src=../../shared/{{ item }}
