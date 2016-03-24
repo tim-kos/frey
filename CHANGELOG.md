@@ -27,6 +27,8 @@ Unreleased and unplanned todos
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
+- [x] Add role: upstart
+- [x] Add role: logrotate
 
 ## v0.3.10 (2016-03-22)
 

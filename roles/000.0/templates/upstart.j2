@@ -1,0 +1,28 @@
+stop on runlevel [016]
+start on (started networking)
+
+# The respawn limits function as follows: If the process is respawned
+# more than count times within an interval of timeout seconds,
+# the process will be stopped automatically, and not restarted.
+# Unless set explicitly, the limit defaults to 10 times within 5 seconds.
+# http://upstart.ubuntu.com/wiki/Stanzas#respawn_limit
+respawn
+respawn limit 10 5
+
+limit nofile 32768 32768
+
+pre-stop exec status {{upstart_svcname}} | grep -q "stop/waiting" && initctl emit --no-wait stopped JOB={{upstart_svcname}} || true
+
+script
+  set -e
+  set -x
+  mkfifo /tmp/{{upstart_svcname}}-log-fifo
+  ( logger -t {{upstart_svcname}} </tmp/{{upstart_svcname}}-log-fifo & )
+  exec >/tmp/{{upstart_svcname}}-log-fifo
+  rm /tmp/{{upstart_svcname}}-log-fifo
+  exec bash -c "cd {{upstart_svcdir}} \
+    && chown root.root env.sh \
+    && chmod 600 env.sh \
+    && source env.sh \
+    && exec sudo -EHu {{upstart_svcuser}} env PATH=${PATH} {{upstart_svccmd}} 2>&1"
+end script
