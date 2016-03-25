@@ -45,7 +45,6 @@ git init 2>&1 > /dev/null || true
   --cfg-var "global.ssh.key_dir=." \
   --cfg-var "infra.variable.web_count.default=1" \
   --no-color \
-  --verbose \
   --force-yes \
 || false
 

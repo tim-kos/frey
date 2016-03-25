@@ -39,7 +39,6 @@ git init 2>&1 > /dev/null || true
 "${__node}" "${__root}/${__codelib}/cli.js" \
   --cfg-var "global.ssh.key_dir=${__sysTmpDir}" \
   --no-color \
-  --verbose \
   --force-yes \
 || false
 

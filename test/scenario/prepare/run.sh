@@ -35,7 +35,6 @@ git init 2>&1 > /dev/null || true
 "${__node}" "${__root}/${__codelib}/cli.js" prepare \
   --force-yes \
   --cfg-var "global.ssh.key_dir=${__sysTmpDir}" \
-  --verbose \
   --project-dir "." \
   --bail
 

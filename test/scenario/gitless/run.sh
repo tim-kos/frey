@@ -22,7 +22,6 @@ mkdir -p "${__sysTmpDir}/frey-gitless"
 cp Freyfile.toml "${__sysTmpDir}/frey-gitless/"
 
 "${__node}" "${__root}/${__codelib}/cli.js" validate \
-  --verbose \
   --force-yes \
   --no-color \
   --cfg-var "global.ssh.key_dir=${__sysTmpDir}/frey-gitless" \
