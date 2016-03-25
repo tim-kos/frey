@@ -6,7 +6,7 @@
 Creating private key '{tmpdir}/frey-sshkeygen.pem'
 Creating public key '{tmpdir}/frey-sshkeygen.pub'
 Creating private encrypted key '{tmpdir}/frey-sshkeygen.pem.cast5'
-Found 'terraform' with version '0.6.12'
+Found 'terraform' with version '0.6.14'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'pyhcl-0.1.15' with version '0.1.15'
@@ -22,7 +22,7 @@ Done
 --> {hostname} - config
 --> {hostname} - prepare
 Creating public key '{tmpdir}/frey-sshkeygen.pub'
-Found 'terraform' with version '0.6.12'
+Found 'terraform' with version '0.6.14'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'pyhcl-0.1.15' with version '0.1.15'

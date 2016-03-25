@@ -12,7 +12,7 @@ ACCPTST:STDIO_REPLACE_REMOTE_EXEC
 --> {hostname} - prepare
 Reconstructing private key '{root}/test/scenario/digitalocean/frey-digitalocean.pem' from '{root}/test/scenario/digitalocean/frey-digitalocean.pem.cast5'
 -----BEGIN RSA PRIVATE KEY-----
-Found 'terraform' with version '0.6.12'
+Found 'terraform' with version '0.6.14'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'pyhcl-0.1.15' with version '0.1.15'

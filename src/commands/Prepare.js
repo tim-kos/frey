@@ -70,7 +70,7 @@ class Prepare extends Command {
     deps.push({
       type: 'App',
       name: 'terraform',
-      version: '0.6.12',
+      version: '0.6.14',
       range: '{{{self.version}}}',
       dir: '{{{config.global.tools_dir}}}/terraform/{{{self.version}}}',
       exe: '{{{self.dir}}}/terraform',

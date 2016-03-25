@@ -41,7 +41,7 @@ git init 2>&1 > /dev/null || true
 echo "Running help on all required tools"
 
 (PYTHONPATH="${HOME}/.frey/tools/ansible/2.0.0.2/pip/lib/python2.7/site-packages" "${HOME}/.frey/tools/ansible/2.0.0.2/pip/bin/ansible" --help 2>&1 |grep version)
-("${HOME}/.frey/tools/terraform/0.6.12/terraform" --help 2>&1 |grep version)
+("${HOME}/.frey/tools/terraform/0.6.14/terraform" --help 2>&1 |grep version)
 ("${HOME}/.frey/tools/terraform-inventory/0.6/terraform-inventory" --help 2>&1 |grep version)
 
 echo "All tools were able to execute"

@@ -8,7 +8,7 @@ ACCPTST:STDIO_REPLACE_ASTERISKHR
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-install.pem'
 Creating public key '{tmpdir}/frey-install.pub'
-Found 'terraform' with version '0.6.12'
+Found 'terraform' with version '0.6.14'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'pyhcl-0.1.15' with version '0.1.15'
