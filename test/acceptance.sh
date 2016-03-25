@@ -44,6 +44,13 @@ fi
 # so that stdio can diverge - and we can enforce stricter
 # stdio comparison on all other tests.
 for scenario in $(echo prepare ${scenarios}); do
+  if [ "${scenario}" = "openstack" ]; then
+    # @todo Clear out the account manually and enable this test with updated fixtures,
+    # when trystack is operational again
+    # https://www.facebook.com/groups/269238013145112/permalink/973489099386663/
+    # https://dl.dropboxusercontent.com/s/hpal8gfyfye2ij5/2016-03-25%20at%2018.20.png
+    continue
+  fi
   echo "==> Scenario: ${scenario}"
   pushd "${__dir}/scenario/${scenario}" > /dev/null
 
