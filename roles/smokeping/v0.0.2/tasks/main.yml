@@ -1,13 +1,18 @@
 ---
 - name: Smokeping | Install package smokeping and dependencies
   apt: pkg={{ item  }} state=installed
+  tags: [ smokeping ]
   with_items:
     - smokeping
 
-- name: Smokeping | Config Files
-  template: src=etc/smokeping/config.d/{{item}}.j2 dest=/etc/smokeping/config.d/{{item}}
+- name: Smokeping | Main config file
+  template: src=etc/smokeping/config.j2 dest={{smk_path_config}}
+  tags: [ smokeping ]
+
+- name: Smokeping | Config.d files
+  template: src=etc/smokeping/config.d/{{item}}.j2 dest={{smk_path_config}}.d/{{item}}
+  tags: [ smokeping ]
   with_items:
-    - Alerts
     - Alerts
     - Database
     - General
@@ -16,3 +21,11 @@
     - Slaves
     - Targets
     - pathnames
+
+- name: Smokeping | Touch logfile
+  tags: [ smokeping ]
+  file: path={{smk_path_log}} owner=smokeping mode=0755 state=touch
+
+- name: Smokeping | Update crontab
+  tags: [ smokeping ]
+  cron: user=smokeping minute=5 name=smokeping cron_file=smokeping job="env LC_ALL=C smokeping --debug --static={{smk_path_imgcache}} --config={{smk_path_config}} 2>&1 >> {{smk_path_log}}"

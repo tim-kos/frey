@@ -1,7 +1,7 @@
 #{{ ansible_managed }}
 
 sendmail  = {{smk_sendmail}}
-imgcache  = /var/www/html/smokeping
+imgcache  = {{smk_path_imgcache}}
 imgurl    = ../smokeping/images
 datadir   = /var/lib/smokeping
 piddir    = /var/run/smokeping

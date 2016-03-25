@@ -14,17 +14,17 @@ remark    = Welcome to the SmokePing website of {{smk_company}}. \
 menu      = Network
 title     = Network
 
-{% for target in smk_targets | default([]) %}
+{% for target in smk_targets |default([]) %}
 
-++ {{target.key| default(target.host)}}
-  {% if target.probe %}
+++ {{target.key |default(target.host)}}
+  {% if target.probe |default() %}
     probe = {{target.probe}}
   {% endif %}
-  {% if target.probe %}
+  {% if target.urlformat |default() %}
     urlformat = {{target.urlformat}}
   {% endif %}
 
-  title  = {{target.title| default(target.key if target.key else target.host)}}
+  title  = {{target.title |default(target.key |default(target.host))}}
   host   = {{target.host}}
-  alerts = {{target.alerts| default("someloss")}}
+  alerts = {{target.alerts |default("someloss")}}
 {% endfor %}

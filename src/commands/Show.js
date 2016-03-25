@@ -105,6 +105,7 @@ class Show extends Command {
     opts.args['module-name'] = 'setup'
     opts.args['tree'] = this.tmpDir
     opts.args['all'] = undefined
+    opts.args['tags'] = null // ansible: error: no such option: --tags
 
     const ansible = new Ansible(opts)
     ansible.exe((err, stdout) => {

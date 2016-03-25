@@ -1,8 +1,11 @@
 ---
-smk_owner     : Owner Name
-smk_company   : Owner Company
-smk_mail_to   : owner@example.com
-smk_mail_from : owner@example.com
-smk_mail_host : localhost
-smk_sendmail  : /bin/false
-smk_targets   : []
+smk_owner        : Owner Name
+smk_company      : Owner Company
+smk_mail_to      : owner@example.com
+smk_mail_from    : owner@example.com
+smk_mail_host    : localhost
+smk_sendmail     : /bin/false
+smk_path_imgcache: /var/www/html/smokeping
+smk_path_config  : /etc/smokeping/config
+smk_path_log     : /var/log/smokeping.log
+smk_targets      : []
