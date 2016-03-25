@@ -58,24 +58,9 @@ class Shell extends Base {
     return this._exe(scriptArgs, cmdOpts, cb)
   }
 
-  _exe (cmdArgs, cmdOpts = {}, cb) {
-    if (cmdOpts.env === undefined) { cmdOpts.env = {} }
-    if (cmdOpts.verbose === undefined) { cmdOpts.verbose = true }
-    if (cmdOpts.stdin === undefined) { cmdOpts.stdin = 'ignore' }
-    if (cmdOpts.stdout === undefined) { cmdOpts.stdout = 'pipe' }
-    if (cmdOpts.stderr === undefined) { cmdOpts.stderr = 'pipe' }
-    if (cmdOpts.limitSamples === undefined) { cmdOpts.limitSamples = 3 }
-
-    let dir = this.dir || this.runtime.init.cliargs.projectDir
-
-    const opts = {
-      cwd: dir,
-      env: this._buildChildEnv(cmdOpts.env),
-      stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
-    }
-
+  _debugCmd (env, args) {
     let debugCmd = ''
-    _.forOwn(opts.env, (val, key) => {
+    _.forOwn(env, (val, key) => {
       if (process.env[key]) {
         return
       }
@@ -96,7 +81,28 @@ class Shell extends Base {
       }
       debugCmd += `${key}=${val} \\\n`
     })
-    debugCmd += cmdArgs.join(' \\\n  ') + ' \\\n|| false'
+    debugCmd += args.join(' \\\n  ') + ' \\\n|| false'
+
+    debugCmd = debugCmd.replace(/\-o \\\n {2}/g, '-o ')
+    return debugCmd
+  }
+  _exe (cmdArgs, cmdOpts = {}, cb) {
+    if (cmdOpts.env === undefined) { cmdOpts.env = {} }
+    if (cmdOpts.verbose === undefined) { cmdOpts.verbose = true }
+    if (cmdOpts.stdin === undefined) { cmdOpts.stdin = 'ignore' }
+    if (cmdOpts.stdout === undefined) { cmdOpts.stdout = 'pipe' }
+    if (cmdOpts.stderr === undefined) { cmdOpts.stderr = 'pipe' }
+    if (cmdOpts.limitSamples === undefined) { cmdOpts.limitSamples = 3 }
+
+    let dir = this.dir || this.runtime.init.cliargs.projectDir
+
+    const opts = {
+      cwd: dir,
+      env: this._buildChildEnv(cmdOpts.env),
+      stdio: [ cmdOpts.stdin, cmdOpts.stdout, cmdOpts.stderr ]
+    }
+
+    let debugCmd = this._debugCmd(opts.env, cmdArgs)
     debug(debugCmd)
 
     const cmd = cmdArgs.shift()

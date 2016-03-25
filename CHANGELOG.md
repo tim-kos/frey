@@ -31,6 +31,7 @@ Unreleased and unplanned todos
 
 ## v0.3.11 (Unreleased)
 
+- [x] Cleaner debug output for `Shell`
 - [x] Make smokeping more pleasant (configurable targets, no apache dependency, add TLS_DEFAULT_GATEWAY)
 - [x] Add role: smokeping
 - [x] Add role: prometheus
