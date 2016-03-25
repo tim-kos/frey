@@ -20,10 +20,10 @@ mkdir -p "${__accptstTmpDir}"
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
   cmdSed=gsed
-  cmdTimeout="gtimeout --kill-after=6m 5m"
+  cmdTimeout="gtimeout --kill-after=21m 20m"
 else
   cmdSed=sed
-  cmdTimeout="timeout --kill-after=6m 5m"
+  cmdTimeout="timeout --kill-after=21m 20m"
 fi
 
 __node="$(which node)"
