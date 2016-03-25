@@ -39,6 +39,8 @@ function destroy() {
 if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
+rm -f *.pem 2>&1 > /dev/null || true
+
 git init 2>&1 > /dev/null || true
 
 "${__node}" "${__root}/${__codelib}/cli.js" config \
@@ -49,5 +51,6 @@ git init 2>&1 > /dev/null || true
 || false
 
 rm -f Frey-residu* 2>&1 > /dev/null || true
+rm -f *.pem 2>&1 > /dev/null || true
 
 echo "Finished"
