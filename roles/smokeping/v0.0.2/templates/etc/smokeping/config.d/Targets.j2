@@ -11,8 +11,8 @@ remark = Welcome to the SmokePing website of {{smk_company}}. \
 
 + Network
 
-menu = Network
-title = Network
+menu = network
+title = Network as seen from {{ansible_hostname}}
 
 {% for target_name, target in smk_targets.iteritems() %}
 
@@ -24,7 +24,18 @@ probe = {{target.probe}}
 {% if target.urlformat |default() %}
 urlformat = {{target.urlformat}}
 {% endif %}
-title = {{target.title |default(target_name)}}
+title = {{target.title |default(target.host |default(target.lookup |default(target_name)))}}
+menu = {{target.menu |default(target.title |default(target.host |default(target.lookup |default(target_name))))}}
+{% if target.host |default() %}
 host = {{target.host}}
-alerts = {{target.alerts |default("someloss")}}
+{% endif %}
+{% if target.lookup |default() %}
+lookup = {{target.lookup}}
+{% endif %}
+{% if target.server |default() %}
+server = {{target.server}}
+{% endif %}
+{% if target.alerts |default() %}
+alerts = {{target.alerts}}
+{% endif %}
 {% endfor %}

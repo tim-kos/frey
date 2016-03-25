@@ -20,12 +20,16 @@
     - Probes
     - Slaves
     - Targets
-    - pathnames
 
 - name: Smokeping | Touch logfile
   tags: [ smokeping ]
   file: path={{smk_path_log}} owner=smokeping mode=0755 state=touch
 
-- name: Smokeping | Update crontab
+- name: Smokeping | Update crontab to write static images
   tags: [ smokeping ]
-  cron: user=smokeping minute=5 name=smokeping cron_file=smokeping job="env LC_ALL=C smokeping --debug --static={{smk_path_imgcache}} --config={{smk_path_config}} 2>&1 >> {{smk_path_log}}"
+  # smokeping user has no shell and can hence not use its own cron. do as root + sudo
+  cron: user=root minute=5 name=smokeping job="sudo -HEu smokeping env LC_ALL=C /usr/sbin/smokeping --debug --static={{smk_path_imgcache}} --config={{smk_path_config}} 2>&1 |sudo -HEu smokeping tee -a {{smk_path_log}}"
+
+- name: Smokeping | Restart
+  tags: [ smokeping ]
+  service: name=smokeping state=restarted
