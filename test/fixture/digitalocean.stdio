@@ -130,7 +130,6 @@ Outputs:
 {ip}
 --> Saved new state to '{root}/test/scenario/digitalocean/Frey-state-terraform.tfstate'
 --> {hostname} - install
-Using {root}/test/scenario/digitalocean/Frey-residu-ansible.cfg as config file
 
 PLAY [Install freytest-web] ****************************************************
 
@@ -138,8 +137,8 @@ TASK [setup] *******************************************************************
 ok: [{ip}]
 
 TASK [Execute deploy command] **************************************************
-changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/root", "stdout_lines": ["/root"], "warnings": []}
-changed: [{ip}] => (item=echo web) => {"changed": true, "cmd": ["echo", "web"], "delta": "{duration}", "end": "{longtime}", "item": "echo web", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "web", "stdout_lines": ["web"], "warnings": []}
+changed: [{ip}] => (item=pwd)
+changed: [{ip}] => (item=echo web)
 
 PLAY [Install freytest-db] *****************************************************
 
@@ -147,8 +146,8 @@ TASK [setup] *******************************************************************
 ok: [{ip}]
 
 TASK [Execute deploy command] **************************************************
-changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/root", "stdout_lines": ["/root"], "warnings": []}
-changed: [{ip}] => (item=echo db) => {"changed": true, "cmd": ["echo", "db"], "delta": "{duration}", "end": "{longtime}", "item": "echo db", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "db", "stdout_lines": ["db"], "warnings": []}
+changed: [{ip}] => (item=pwd)
+changed: [{ip}] => (item=echo db)
 
 PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
