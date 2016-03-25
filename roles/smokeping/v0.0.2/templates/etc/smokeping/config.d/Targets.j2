@@ -14,9 +14,9 @@ remark = Welcome to the SmokePing website of {{smk_company}}. \
 menu = Network
 title = Network
 
-{% for (key, target) in smk_targets |default([]) %}
+{% for target_name, target in smk_targets.iteritems() %}
 
-++ {{key}}
+++ {{target_name}}
 
 {% if target.probe |default() %}
 probe = {{target.probe}}
@@ -24,7 +24,7 @@ probe = {{target.probe}}
 {% if target.urlformat |default() %}
 urlformat = {{target.urlformat}}
 {% endif %}
-title = {{target.title |default(key)}}
+title = {{target.title |default(target_name)}}
 host = {{target.host}}
 alerts = {{target.alerts |default("someloss")}}
 {% endfor %}
