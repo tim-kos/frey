@@ -8,4 +8,4 @@ smk_sendmail     : /bin/false
 smk_path_imgcache: /var/www/html/smokeping
 smk_path_config  : /etc/smokeping/config
 smk_path_log     : /var/log/smokeping.log
-smk_targets      : []
+smk_targets      : 
