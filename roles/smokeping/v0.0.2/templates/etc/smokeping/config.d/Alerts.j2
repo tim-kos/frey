@@ -1,0 +1,11 @@
+#{{ ansible_managed }}
+
+*** Alerts ***
+to = {{ smk_mail_to }}
+from = {{ smk_mail_from }}
+
++someloss
+type = loss
+# in percent
+pattern = >0%,*12*,>0%,*12*,>0%
+comment = loss 3 times  in a row

@@ -24,7 +24,7 @@ title     = Network
     urlformat = {{target.urlformat}}
   {% endif %}
 
-  title  = {{target.title| default(target.host)}}
+  title  = {{target.title| default(target.key if target.key else target.host)}}
   host   = {{target.host}}
   alerts = {{target.alerts| default("someloss")}}
 {% endfor %}

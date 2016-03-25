@@ -1,0 +1,8 @@
+---
+smk_owner     : Owner Name
+smk_company   : Owner Company
+smk_mail_to   : owner@example.com
+smk_mail_from : owner@example.com
+smk_mail_host : localhost
+smk_sendmail  : /bin/false
+smk_targets   : []

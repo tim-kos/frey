@@ -1,8 +1,10 @@
+#{{ ansible_managed }}
+
 *** General ***
 
 owner    = {{ smk_owner }}
-contact  = {{ smk_contact }}
-mailhost = {{ smk_mailhost }}
+contact  = {{ smk_mail_to }}
+mailhost = {{ smk_mail_host }}
 # NOTE: do not put the Image Cache below cgi-bin
 # since all files under cgi-bin will be executed ... this is not
 # good for images.

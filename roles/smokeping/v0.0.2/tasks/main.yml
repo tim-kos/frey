@@ -1,0 +1,18 @@
+---
+- name: Smokeping | Install package smokeping and dependencies
+  apt: pkg={{ item  }} state=installed
+  with_items:
+    - smokeping
+
+- name: Smokeping | Config Files
+  template: src=etc/smokeping/config.d/{{item}}.j2 dest=/etc/smokeping/config.d/{{item}}
+  with_items:
+    - Alerts
+    - Alerts
+    - Database
+    - General
+    - Presentation
+    - Probes
+    - Slaves
+    - Targets
+    - pathnames
