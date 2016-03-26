@@ -217,7 +217,6 @@ Outputs:
   public_addresses = {ip}
 --> Saved new state to '{root}/test/scenario/openstack/Frey-state-terraform.tfstate'
 --> {hostname} - install
-Using {root}/test/scenario/openstack/Frey-residu-ansible.cfg as config file
 
 PLAY [install app servers] *****************************************************
 
@@ -225,14 +224,13 @@ TASK [setup] *******************************************************************
 ok: [{ip}]
 
 TASK [Execute install command] *************************************************
-changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/home/ubuntu", "stdout_lines": ["/home/ubuntu"], "warnings": []}
-changed: [{ip}] => (item=echo install) => {"changed": true, "cmd": ["echo", "install"], "delta": "{duration}", "end": "{longtime}", "item": "echo install", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "install", "stdout_lines": ["install"], "warnings": []}
+changed: [{ip}] => (item=pwd)
+changed: [{ip}] => (item=echo install)
 
 PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 --> {hostname} - setup
-Using {root}/test/scenario/openstack/Frey-residu-ansible.cfg as config file
 
 PLAY [setup app servers] *******************************************************
 
@@ -240,14 +238,13 @@ TASK [setup] *******************************************************************
 ok: [{ip}]
 
 TASK [Execute setup command] ***************************************************
-changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/home/ubuntu", "stdout_lines": ["/home/ubuntu"], "warnings": []}
-changed: [{ip}] => (item=echo setup) => {"changed": true, "cmd": ["echo", "setup"], "delta": "{duration}", "end": "{longtime}", "item": "echo setup", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "setup", "stdout_lines": ["setup"], "warnings": []}
+changed: [{ip}] => (item=pwd)
+changed: [{ip}] => (item=echo setup)
 
 PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 --> {hostname} - deploy
-Using {root}/test/scenario/openstack/Frey-residu-ansible.cfg as config file
 
 PLAY [deploy app servers] ******************************************************
 
@@ -255,14 +252,13 @@ TASK [setup] *******************************************************************
 ok: [{ip}]
 
 TASK [Execute deploy command] **************************************************
-changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/home/ubuntu", "stdout_lines": ["/home/ubuntu"], "warnings": []}
-changed: [{ip}] => (item=echo deploy) => {"changed": true, "cmd": ["echo", "deploy"], "delta": "{duration}", "end": "{longtime}", "item": "echo deploy", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "deploy", "stdout_lines": ["deploy"], "warnings": []}
+changed: [{ip}] => (item=pwd)
+changed: [{ip}] => (item=echo deploy)
 
 PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
 
 --> {hostname} - restart
-Using {root}/test/scenario/openstack/Frey-residu-ansible.cfg as config file
 
 PLAY [restart app servers] *****************************************************
 
@@ -270,8 +266,8 @@ TASK [setup] *******************************************************************
 ok: [{ip}]
 
 TASK [Execute restart command] *************************************************
-changed: [{ip}] => (item=pwd) => {"changed": true, "cmd": ["pwd"], "delta": "{duration}", "end": "{longtime}", "item": "pwd", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "/home/ubuntu", "stdout_lines": ["/home/ubuntu"], "warnings": []}
-changed: [{ip}] => (item=echo restart) => {"changed": true, "cmd": ["echo", "restart"], "delta": "{duration}", "end": "{longtime}", "item": "echo restart", "rc": 0, "start": "{longtime}", "stderr": "", "stdout": "restart", "stdout_lines": ["restart"], "warnings": []}
+changed: [{ip}] => (item=pwd)
+changed: [{ip}] => (item=echo restart)
 
 PLAY RECAP *********************************************************************
 {ip} : ok=2    changed=1    unreachable=0    failed=0   
