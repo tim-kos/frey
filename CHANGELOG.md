@@ -31,6 +31,7 @@ Unreleased and unplanned todos
 
 ## v0.3.11 (Unreleased)
 
+- [x] Add run-one to cronjobs
 - [x] Upgrade to Terraform 0.6.14
 - [x] Cleaner debug output for `Shell`
 - [x] Make smokeping more pleasant (configurable targets, no apache dependency, add TLS_DEFAULT_GATEWAY)
