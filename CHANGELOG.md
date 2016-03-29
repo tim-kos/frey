@@ -29,7 +29,7 @@ Unreleased and unplanned todos
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 - [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
 
-## v0.3.11 (Unreleased)
+## v0.3.11 (2016-03-29)
 
 - [x] Add run-one to cronjobs
 - [x] Upgrade to Terraform 0.6.14
