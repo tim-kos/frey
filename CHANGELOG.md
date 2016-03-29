@@ -28,6 +28,10 @@ Unreleased and unplanned todos
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 - [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
+
+## v0.3.12 (2016-03-29)
+
+- [x] Support for node 0.10 (so Frey is usable on non-Node Travis projects - all Travis boxes ship with node 0.10)
 - [x] Set ansistrano defaults: `ansistrano_current_dir: "current"` and `ansistrano_shared_paths: [ logs ]`
 - [x] Allow to omit `ansistrano_npm`, `ansistrano_owner`, and `ansistrano_group`
 
