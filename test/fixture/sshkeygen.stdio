@@ -1,4 +1,4 @@
---> Frey version '0.3.10'
+--> Frey version '0.3.11'
 --> Will run: [ 'init', 'config', 'prepare' ]
 --> {hostname} - init
 --> {hostname} - config
@@ -16,7 +16,7 @@ Done
 {tmpdir}/frey-sshkeygen.pem
 {tmpdir}/frey-sshkeygen.pem.cast5
 {tmpdir}/frey-sshkeygen.pub
---> Frey version '0.3.10'
+--> Frey version '0.3.11'
 --> Will run: [ 'init', 'config', 'prepare' ]
 --> {hostname} - init
 --> {hostname} - config
