@@ -16,7 +16,7 @@
 - name: ANSISTRANO | Install npms
   npm: path={{ ansistrano_release_path.stdout }} production=yes
   become: false
-  when: ansistrano_npm
+  when: ansistrano_npm|default(false)
 
 - name: ANSISTRANO | Copy release version into REVISION file
   copy: content={{ ansistrano_release_version }} dest={{ ansistrano_release_path.stdout }}/REVISION

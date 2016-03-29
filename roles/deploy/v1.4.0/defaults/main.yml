@@ -12,10 +12,15 @@ ansistrano_version_dir: "releases"
 ansistrano_current_dir: "current"
 
 # Shared paths to symlink to release dir
-ansistrano_shared_paths: []
+ansistrano_shared_paths: [ logs ]
 
 # Number of releases to keep in your hosts, if 0, unlimited releases will be kept
-ansistrano_keep_releases: 0
+ansistrano_keep_releases: 10
+
+
+ansistrano_npm: no
+ansistrano_owner: "www-data"
+ansistrano_group: "www-data"
 
 # Deployment strategies variables
 
