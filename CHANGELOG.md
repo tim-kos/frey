@@ -21,7 +21,7 @@ Unreleased and unplanned todos
 - [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
 - [ ] Equal sign vertical alignment for `frey format`
 
-## v0.3.12 (Unreleased)
+## v0.3.13 (Unreleased)
 
 - [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`

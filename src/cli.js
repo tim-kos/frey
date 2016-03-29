@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import 'babel-polyfill'
 'use strict'
 import Frey from './Frey'
 // import depurar from 'depurar'; const debug = depurar('frey')
