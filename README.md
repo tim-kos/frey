@@ -5,9 +5,9 @@
 [![Join the chat at https://gitter.im/kvz/frey](https://badges.gitter.im/kvz/frey.svg)](https://gitter.im/kvz/frey?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <!-- /badges -->
 
-*Warning: Frey is Alpha. Use it for new projects and goofing around, leave it for existing ones.*
 Frey aims to be an all-in-one tool for developers and sysadmins to bring their app to production. 
 
+*Warning: Frey is Alpha. Use it for new projects and goofing around, leave it for existing ones.*
 
 ## Table of Contents
 
