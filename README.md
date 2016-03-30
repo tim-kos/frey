@@ -51,7 +51,7 @@ Frey can be seen in the wild in these projects:
 
  - Uppy has a [Freyfile](https://github.com/transloadit/uppy-server/blob/master/infra/Freyfile.toml)
  that sets up an EC2 instance, and let's Travis CI deploy to it on every push to `master`.
- - Imagemagick has a [Freyfile](https://github.com/transloadit/infra-imagemagick/blob/frey/infra/Freyfile.toml) to set up their website from scratch. If anything 'bad' happens, frey is run to restore the infrastructure and software, as it was defined in the Freyfile.
+ - Imagemagick has a [Freyfile](https://github.com/transloadit/infra-imagemagick/blob/master/Freyfile.toml) to set up their website from scratch. If anything 'bad' happens, frey is run to restore the infrastructure and software, as it was defined in the Freyfile.
  - tus.io has a [Freyfile](https://github.com/tus/tusd/blob/frey/.infra/Freyfile.toml) 
  that sets up an EC2 instance, and let's Travis CI deploy to it on every push to `master`.
 
