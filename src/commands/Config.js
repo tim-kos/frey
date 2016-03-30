@@ -33,12 +33,10 @@ class Config extends Command {
   }
 
   _findTomlFiles (cargo, cb) {
-    let tomlFiles = []
     const pattern = `${this.runtime.init.cliargs.projectDir}/*.toml`
     debug(`Reading from '${pattern}'`)
     return globby(pattern)
-      .then((files) => {
-        tomlFiles = files
+      .then((tomlFiles) => {
         return cb(null, tomlFiles)
       })
       .catch(cb)
