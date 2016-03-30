@@ -8,7 +8,6 @@ Unreleased and unplanned todos
 - [ ] Command's exe functions should mostly be in a util class
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a `~/.frey`
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
-- [ ] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
 - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
 - [ ] Empty out and remove `Base` class?
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
@@ -38,6 +37,7 @@ Unreleased and unplanned todos
 - [-] rsyslogd-2307: warning: ~ action is deprecated, consider using the 'stop' statement instead
 - [x] Enable terraform debug output when `--verbose` is turned on
 - [x] Make `env.sh` in upstart script optional (our `touch` it)
+- [-] Consider running `frey prepare` upon `postinstall`, and then removing it from the chain (at least the installing of dependencies)
 - [x] Fix bug: `Error: only one instance of babel-polyfill is allowed`
 
 ## v0.3.12 (2016-03-29)
