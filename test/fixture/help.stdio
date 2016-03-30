@@ -16,6 +16,7 @@ Commands:
   restart     ▽ Restart your own application
   show        ▽ Displays active platform
   docbuild    Build docs
+  format      Format a Freyfile (overwriting existing, so only do this under source control)
   restore     Restore latest state backup
   destroy     Destroy all that is in state
   remote      Execute a remote command - or opens console
