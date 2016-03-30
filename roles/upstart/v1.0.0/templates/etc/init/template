@@ -31,6 +31,9 @@ limit nofile {{ upstart_file_descriptor_limit }} {{ upstart_file_descriptor_limi
 {% endif %}
 
 pre-start script
+{% if upstart_command %}
+  [ -f "{{upstart_runtime_root}}/env.sh" ] || touch "{{upstart_runtime_root}}/env.sh"
+{% endif %}
 {% if upstart_pre_start is iterable %}
 {%   for command in upstart_pre_start %}
   {{ command  }}

@@ -29,6 +29,9 @@ Unreleased and unplanned todos
 - [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
 - [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
 - [ ] rsyslogd-2307: warning: ~ action is deprecated, consider using the 'stop' statement instead
+- [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+- [ ] Make residuDir configurable, with a default to `os.tmpDir`
+- [ ] Make `env.sh` in upstart script optional (our `touch` it)
 
 ## v0.3.12 (2016-03-29)
 
