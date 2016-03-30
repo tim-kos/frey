@@ -18,6 +18,12 @@ class Prepare extends Command {
 
     deps.push({
       type: 'Dir',
+      name: 'process_tmp_dir',
+      dir: '{{{init.paths.process_tmp_dir}}}'
+    })
+
+    deps.push({
+      type: 'Dir',
       name: 'tools_dir',
       dir: '{{{config.global.tools_dir}}}'
     })

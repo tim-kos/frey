@@ -1,5 +1,6 @@
 'use strict'
 import Command from '../Command'
+import mkdirp from 'mkdirp'
 import utils from '../Utils'
 import path from 'path'
 import depurar from 'depurar'; const debug = depurar('frey')
@@ -117,15 +118,16 @@ class Config extends Command {
           parallelism: '{{{init.os.cores}}}'
         },
         appname: appName,
+        residu_dir: '{{{init.paths.process_tmp_dir}}}',
         tools_dir: '{{{init.os.home}}}/.frey/tools',
-        ansiblecfg_file: '{{{init.cliargs.projectDir}}}/Frey-residu-ansible.cfg',
-        infra_plan_file: '{{{init.cliargs.projectDir}}}/Frey-residu-terraform.plan',
         infra_state_file: '{{{init.cliargs.projectDir}}}/Frey-state-terraform.tfstate',
-        infra_file: '{{{init.cliargs.projectDir}}}/Frey-residu-infra.tf.json',
-        install_file: '{{{init.cliargs.projectDir}}}/Frey-residu-install.yml',
-        setup_file: '{{{init.cliargs.projectDir}}}/Frey-residu-setup.yml',
-        deploy_file: '{{{init.cliargs.projectDir}}}/Frey-residu-deploy.yml',
-        restart_file: '{{{init.cliargs.projectDir}}}/Frey-residu-restart.yml',
+        ansiblecfg_file: '{{{self.residu_dir}}}/Frey-residu-ansible.cfg',
+        infra_plan_file: '{{{self.residu_dir}}}/Frey-residu-terraform.plan',
+        infra_file: '{{{self.residu_dir}}}/Frey-residu-infra.tf.json',
+        install_file: '{{{self.residu_dir}}}/Frey-residu-install.yml',
+        setup_file: '{{{self.residu_dir}}}/Frey-residu-setup.yml',
+        deploy_file: '{{{self.residu_dir}}}/Frey-residu-deploy.yml',
+        restart_file: '{{{self.residu_dir}}}/Frey-residu-restart.yml',
         ssh: {
           key_dir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@${appName}.freyproject.io`,
@@ -220,7 +222,14 @@ class Config extends Command {
     }
 
     debug('Writing %s', this.bootCargo._renderConfig.global.infra_file)
-    return fs.writeFile(this.bootCargo._renderConfig.global.infra_file, encoded, cb)
+
+    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.infra_file, encoded), (err) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return fs.writeFile(this.bootCargo._renderConfig.global.infra_file, encoded, cb)
+    })
   }
 
   _writeAnsibleCfg (cargo, cb) {
@@ -250,7 +259,14 @@ class Config extends Command {
     encoded = encoded.replace(/\"/g, '')
 
     debug('Writing %s', this.bootCargo._renderConfig.global.ansiblecfg_file)
-    return fs.writeFile(this.bootCargo._renderConfig.global.ansiblecfg_file, encoded, cb)
+
+    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.ansiblecfg_file, encoded), (err) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return fs.writeFile(this.bootCargo._renderConfig.global.ansiblecfg_file, encoded, cb)
+    })
   }
 
   _writeAnsiblePlaybook (command, cargo, cb) {
@@ -274,7 +290,14 @@ class Config extends Command {
     }
 
     debug('Writing %s instructions at %s', command, this.bootCargo._renderConfig.global[`${command}_file`])
-    return fs.writeFile(this.bootCargo._renderConfig.global[`${command}_file`], encoded, cb)
+
+    return mkdirp(path.dirname(this.bootCargo._renderConfig.global[`${command}_file`]), (err) => {
+      if (err) {
+        return cb(err)
+      }
+
+      return fs.writeFile(this.bootCargo._renderConfig.global[`${command}_file`], encoded, cb)
+    })
   }
 
   _writeAnsiblePlaybookInstall (cargo, cb) {

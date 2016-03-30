@@ -5,7 +5,6 @@ import globby from 'globby'
 import Terraform from '../Terraform'
 import Ansible from '../Ansible'
 import _ from 'lodash'
-import uuid from 'node-uuid'
 import mkdirp from 'mkdirp'
 import depurar from 'depurar'; const debug = depurar('frey')
 
@@ -19,11 +18,11 @@ class Show extends Command {
       'endpoint',
       'facts'
     ]
-    this.tmpDir = this.runtime.init.os.tmp + '/' + uuid.v4()
+    this.tmpFactDir = this.runtime.init.paths.process_tmp_dir + '/facts'
   }
 
   _createTmpDir (cargo, cb) {
-    mkdirp(this.tmpDir, cb)
+    mkdirp(this.tmpFactDir, cb)
   }
 
   output (cargo, cb) {
@@ -103,7 +102,7 @@ class Show extends Command {
     const opts = { exe: ansibleProps.exe, args: {}, runtime: this.runtime, cmdOpts: { verbose: false } }
 
     opts.args['module-name'] = 'setup'
-    opts.args['tree'] = this.tmpDir
+    opts.args['tree'] = this.tmpFactDir
     opts.args['all'] = undefined
     opts.args['tags'] = null // ansible: error: no such option: --tags
 
@@ -114,7 +113,7 @@ class Show extends Command {
       }
 
       let factList = []
-      globby.sync(`${this.tmpDir}/*`).forEach((filepath) => {
+      globby.sync(`${this.tmpFactDir}/*`).forEach((filepath) => {
         const facts = JSON.parse(fs.readFileSync(filepath, 'utf-8'))
 
         const key = 'ansible_facts.ansible_service_mgr'
