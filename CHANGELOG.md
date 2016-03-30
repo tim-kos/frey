@@ -23,12 +23,14 @@ Unreleased and unplanned todos
 - [ ] docs: since node is installed on Every Travis image, you can easily deploy go projects with frey http://stackoverflow.com/questions/31235146/how-to-run-node-js-and-ruby-tests-within-one-project-on-travis-ci
 - [ ] docs: env secrets on Travis are not exposed to PRs from other repos: https://docs.travis-ci.com/user/pull-requests
 
-## v0.3.13 (Unreleased)
+## v0.3.14 (Unreleased)
 
 - [ ] allow Ansible and Terraform version override from config
-- [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+
+## v0.3.13 (2016-03-30)
+
 - [x] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [x] Implement Backup and Restore via Ansible
 - [x] Upgrade to Ansible 2.0.1.0 as that fixes an issue with sync asking for sudo password https://github.com/ansible/ansible-modules-core/issues/2156
