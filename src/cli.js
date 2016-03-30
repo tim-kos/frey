@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict'
-if (process.version.match(/^0\.10.*/)) {
+if (process.version.match(/^v?0\.10.*/)) {
   require('babel-polyfill')
 }
 import Frey from './Frey'
