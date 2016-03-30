@@ -118,6 +118,7 @@ class Config extends Command {
           parallelism: '{{{init.os.cores}}}'
         },
         appname: appName,
+        roles_dir: '{{{init.paths.frey_dir}}}/roles',
         residu_dir: '{{{init.paths.process_tmp_dir}}}',
         tools_dir: '{{{init.os.home}}}/.frey/tools',
         infra_state_file: '{{{init.cliargs.projectDir}}}/Frey-state-terraform.tfstate',
