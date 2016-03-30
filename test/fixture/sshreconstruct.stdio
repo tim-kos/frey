@@ -1,7 +1,8 @@
 --> Frey version '0.3.12'
---> Will run: [ 'init', 'config', 'prepare' ]
+--> Will run: [ 'init', 'config', 'deps', 'prepare' ]
 --> {hostname} - init
 --> {hostname} - config
+--> {hostname} - deps
 --> {hostname} - prepare
 Reconstructing private key '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem' from '{root}/test/scenario/sshreconstruct/frey-sshreconstruct.pem.cast5'
 -----BEGIN RSA PRIVATE KEY-----

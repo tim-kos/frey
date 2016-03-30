@@ -46,7 +46,7 @@ class Shell extends Base {
     return childEnv
   }
 
-  _exeScript (scriptArgs, cmdOpts, cb) {
+  exeScript (scriptArgs, cmdOpts, cb) {
     scriptArgs = [
       'bash',
       '-o', 'pipefail',
@@ -55,7 +55,7 @@ class Shell extends Base {
       '-c'
     ].concat(scriptArgs)
 
-    return this._exe(scriptArgs, cmdOpts, cb)
+    return this.exe(scriptArgs, cmdOpts, cb)
   }
 
   _debugCmd (env, args) {
@@ -86,7 +86,8 @@ class Shell extends Base {
     debugCmd = debugCmd.replace(/\-o \\\n {2}/g, '-o ')
     return debugCmd
   }
-  _exe (cmdArgs, cmdOpts = {}, cb) {
+
+  exe (cmdArgs, cmdOpts = {}, cb) {
     if (cmdOpts.env === undefined) { cmdOpts.env = {} }
     if (cmdOpts.verbose === undefined) { cmdOpts.verbose = true }
     if (cmdOpts.stdin === undefined) { cmdOpts.stdin = 'ignore' }

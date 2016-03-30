@@ -6,9 +6,10 @@ ACCPTST:STDIO_REPLACE_DURATIONS
 ACCPTST:STDIO_REPLACE_REMOTE_EXEC
 (maybe) Destroying..
 --> Frey version '0.3.12'
---> Will run: [ 'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install', 'setup', 'deploy', 'restart', 'show' ]
+--> Will run: [ 'init', 'config', 'deps', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install', 'setup', 'deploy', 'restart', 'show' ]
 --> {hostname} - init
 --> {hostname} - config
+--> {hostname} - deps
 --> {hostname} - prepare
 Reconstructing private key '{root}/test/scenario/digitalocean/frey-digitalocean.pem' from '{root}/test/scenario/digitalocean/frey-digitalocean.pem.cast5'
 -----BEGIN RSA PRIVATE KEY-----

@@ -29,8 +29,8 @@ Unreleased and unplanned todos
 - [ ] allow Ansible and Terraform version override from config
 - [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`
-- [ ] Remove invalid underscore prefix from a few public `Shell` methods
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+- [x] Remove invalid underscore prefix from a few public `Shell` methods
 - [x] Frey no longer prepares when for `remote` to speed up cli operations
 - [x] Make interactive host selection a list, vs checkbox; removing 'all'
 - [x] Remote now takes hosts from `terraformInventory`, not `public_addresses`

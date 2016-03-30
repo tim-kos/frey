@@ -22,7 +22,7 @@ class App {
     cmdOpts.env = env
 
     const cmdArgs = [ exe ].concat(args)
-    this.shell._exe(cmdArgs, cmdOpts, (err, stdout) => {
+    this.shell.exe(cmdArgs, cmdOpts, (err, stdout) => {
       if (err) {
         return cb(err)
       }

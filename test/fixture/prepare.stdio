@@ -1,8 +1,9 @@
 ACCPTST:STDIO_SKIP_COMPARE
 --> Frey version '0.3.12'
---> Will run: [ 'init', 'config', 'prepare' ]
+--> Will run: [ 'init', 'config', 'deps', 'prepare' ]
 --> {hostname} - init
 --> {hostname} - config
+--> {hostname} - deps
 --> {hostname} - prepare
 Creating private key '{tmpdir}/frey-customprepare.pem'
 Creating public key '{tmpdir}/frey-customprepare.pub'

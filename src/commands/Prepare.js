@@ -66,7 +66,7 @@ class Prepare extends Command {
                 `(grep 'BEGIN RSA PRIVATE KEY' '${props.privkey}' || (rm -f '${props.privkey}'; false))`,
                 `chmod 400 '${props.privkey}'`
               ].join(' && ')
-              this.shell._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+              this.shell.exeScript(cmd, {verbose: true, limitSamples: false}, cb)
             })
           }
         }
@@ -76,7 +76,7 @@ class Prepare extends Command {
           `ssh-keygen -b 2048 -t rsa -C '${props.email}' -f '${props.privkey}' -q -N ''`,
           `rm -f '${props.privkey}.pub'`
         ].join(' && ')
-        this.shell._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+        this.shell.exeScript(cmd, {verbose: true, limitSamples: false}, cb)
       })
     })
   }
@@ -103,7 +103,7 @@ class Prepare extends Command {
         const cmd = [
           `chmod 400 '${props.privkeyEnc}'`
         ].join(' && ')
-        this.shell._exeScript(cmd, {verbose: true, limitSamples: false}, cb)
+        this.shell.exeScript(cmd, {verbose: true, limitSamples: false}, cb)
       })
     })
   }
@@ -122,13 +122,13 @@ class Prepare extends Command {
         `echo ' ${props.email}' >> '${props.pubkey}'`
       ].join(' && ')
 
-      this.shell._exeScript(cmd, {verbose: true, limitSamples: false, stdin: 0}, cb)
+      this.shell.exeScript(cmd, {verbose: true, limitSamples: false, stdin: 0}, cb)
     })
   }
 
   _makePubkeyFingerprint (props, cb) {
     const cmd = `ssh-keygen -lf '${props.pubkey}' | awk '{print $2}'`
-    this.shell._exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
+    this.shell.exeScript(cmd, {verbose: false, limitSamples: false}, (err, stdout) => {
       this.runtime.config.global.ssh.keypub_fingerprint = `${stdout}`.trim()
       return cb(err)
     })
@@ -161,7 +161,7 @@ class Prepare extends Command {
           return cb(err)
         }
 
-        this.shell._exeScript(props.cmdInstall, {}, (err, stdout) => {
+        this.shell.exeScript(props.cmdInstall, {}, (err, stdout) => {
           if (err) {
             return cb(new Error(`Failed to install '${props.name}'. ${err}`))
           }
@@ -180,7 +180,7 @@ class Prepare extends Command {
   }
 
   _satisfy (appProps, cb) {
-    this.shell._exeScript(appProps.cmdVersion, {verbose: false, limitSamples: false}, (err, stdout) => {
+    this.shell.exeScript(appProps.cmdVersion, {verbose: false, limitSamples: false}, (err, stdout) => {
       if (err) {
         // We don't want to bail out if version command does not exist yet
         // Or maybe --version returns non-zero exit code, which is common
