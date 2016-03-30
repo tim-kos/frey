@@ -61,7 +61,7 @@ class Shell extends Base {
   _debugCmd (env, args) {
     let debugCmd = ''
     _.forOwn(env, (val, key) => {
-      if (process.env[key]) {
+      if (_.has(process.env, key)) {
         return
       }
       if (key.indexOf('npm_config') === 0) {
