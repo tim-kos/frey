@@ -30,10 +30,8 @@ Unreleased and unplanned todos
 - [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] Add `--no-prepare` cli argument to speed up e.g. `make console`
-- [x] Make `roles_dir` configurable. BREAKING: `{{{init.paths.roles_dir}}}` should now be referred to as: `{{{global.roles_dir}}}` 
 - [-] rsyslogd-2307: warning: ~ action is deprecated, consider using the 'stop' statement instead
 - [x] Enable terraform debug output when `--verbose` is turned on
-- [x] Make `residu_dir` configurable, with a default to `os.tmpDir`
 - [x] Make `env.sh` in upstart script optional (our `touch` it)
 - [x] Fix bug: `Error: only one instance of babel-polyfill is allowed`
 

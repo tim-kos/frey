@@ -1,6 +1,5 @@
 'use strict'
 import Command from '../Command'
-import mkdirp from 'mkdirp'
 import utils from '../Utils'
 import path from 'path'
 import depurar from 'depurar'; const debug = depurar('frey')
@@ -119,16 +118,15 @@ class Config extends Command {
         },
         appname: appName,
         roles_dir: '{{{init.paths.frey_dir}}}/roles',
-        residu_dir: '{{{init.paths.process_tmp_dir}}}',
         tools_dir: '{{{init.os.home}}}/.frey/tools',
         infra_state_file: '{{{init.cliargs.projectDir}}}/Frey-state-terraform.tfstate',
-        ansiblecfg_file: '{{{self.residu_dir}}}/Frey-residu-ansible.cfg',
-        infra_plan_file: '{{{self.residu_dir}}}/Frey-residu-terraform.plan',
-        infra_file: '{{{self.residu_dir}}}/Frey-residu-infra.tf.json',
-        install_file: '{{{self.residu_dir}}}/Frey-residu-install.yml',
-        setup_file: '{{{self.residu_dir}}}/Frey-residu-setup.yml',
-        deploy_file: '{{{self.residu_dir}}}/Frey-residu-deploy.yml',
-        restart_file: '{{{self.residu_dir}}}/Frey-residu-restart.yml',
+        ansiblecfg_file: '{{{init.cliargs.projectDir}}}/Frey-residu-ansible.cfg',
+        infra_plan_file: '{{{init.cliargs.projectDir}}}/Frey-residu-terraform.plan',
+        infra_file: '{{{init.cliargs.projectDir}}}/Frey-residu-infra.tf.json',
+        install_file: '{{{init.cliargs.projectDir}}}/Frey-residu-install.yml',
+        setup_file: '{{{init.cliargs.projectDir}}}/Frey-residu-setup.yml',
+        deploy_file: '{{{init.cliargs.projectDir}}}/Frey-residu-deploy.yml',
+        restart_file: '{{{init.cliargs.projectDir}}}/Frey-residu-restart.yml',
         ssh: {
           key_dir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@${appName}.freyproject.io`,
@@ -178,7 +176,6 @@ class Config extends Command {
 
     // Resolve to absolute paths
     config.global.tools_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.tools_dir)
-    config.global.residu_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.residu_dir)
     config.global.ansiblecfg_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ansiblecfg_file)
     config.global.infra_plan_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_plan_file)
     config.global.infra_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_file)
@@ -225,13 +222,7 @@ class Config extends Command {
 
     debug('Writing %s', this.bootCargo._renderConfig.global.infra_file)
 
-    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.infra_file), (err) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return fs.writeFile(this.bootCargo._renderConfig.global.infra_file, encoded, cb)
-    })
+    return fs.writeFile(this.bootCargo._renderConfig.global.infra_file, encoded, cb)
   }
 
   _writeAnsibleCfg (cargo, cb) {
@@ -262,13 +253,7 @@ class Config extends Command {
 
     debug('Writing %s', this.bootCargo._renderConfig.global.ansiblecfg_file)
 
-    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.ansiblecfg_file), (err) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return fs.writeFile(this.bootCargo._renderConfig.global.ansiblecfg_file, encoded, cb)
-    })
+    return fs.writeFile(this.bootCargo._renderConfig.global.ansiblecfg_file, encoded, cb)
   }
 
   _writeAnsiblePlaybook (command, cargo, cb) {
@@ -293,13 +278,7 @@ class Config extends Command {
 
     debug('Writing %s instructions at %s', command, this.bootCargo._renderConfig.global[`${command}_file`])
 
-    return mkdirp(path.dirname(this.bootCargo._renderConfig.global[`${command}_file`]), (err) => {
-      if (err) {
-        return cb(err)
-      }
-
-      return fs.writeFile(this.bootCargo._renderConfig.global[`${command}_file`], encoded, cb)
-    })
+    return fs.writeFile(this.bootCargo._renderConfig.global[`${command}_file`], encoded, cb)
   }
 
   _writeAnsiblePlaybookInstall (cargo, cb) {

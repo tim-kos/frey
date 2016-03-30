@@ -30,12 +30,6 @@ class Prepare extends Command {
 
     deps.push({
       type: 'Dir',
-      name: 'residu_dir',
-      dir: '{{{config.global.residu_dir}}}'
-    })
-
-    deps.push({
-      type: 'Dir',
       name: 'projectDir',
       dir: '{{{init.cliargs.projectDir}}}'
     })

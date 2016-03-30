@@ -111,6 +111,7 @@ class Init extends Command {
     const freyDir = path.resolve(__dirname, '../..')
     return cb(null, {
       frey_dir: freyDir,
+      roles_dir: freyDir + '/roles',
       git_dir: this.bootCargo._findClosestProjectGit,
       process_tmp_dir: this.bootCargo._os.tmp + '/' + uuid.v4()
     })
