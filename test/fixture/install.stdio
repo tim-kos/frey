@@ -1,7 +1,7 @@
 ACCPTST:STDIO_REPLACE_LONGTIMES
 ACCPTST:STDIO_REPLACE_DURATIONS
 ACCPTST:STDIO_REPLACE_ASTERISKHR
---> Frey version '0.3.12'
+--> Frey version '0.3.13'
 --> Will run: [ 'init', 'config', 'deps', 'prepare', 'install' ]
 --> {hostname} - init
 --> {hostname} - config
