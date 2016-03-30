@@ -63,7 +63,13 @@ class Frey extends Base {
     }
 
     if (filteredChain.indexOf('prepare') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'prepare'}))) {
-      filteredChain.unshift('prepare')
+      if (cmd !== 'remote') {
+        filteredChain.unshift('prepare')
+      }
+    }
+
+    if (filteredChain.indexOf('deps') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'deps'}))) {
+      filteredChain.unshift('deps')
     }
 
     if (filteredChain.indexOf('config') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'config'}))) {
@@ -83,7 +89,7 @@ class Frey extends Base {
   }
 
   _runOne (command, cb) {
-    const className = inflection.classify(command)
+    const className = inflection.camelize(command, false)
     const p = `./commands/${className}`
     const Class = require(p)
     const obj = new Class(command, this.runtime)

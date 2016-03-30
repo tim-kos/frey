@@ -1,5 +1,5 @@
 'use strict'
-import Terraform from '../Terraform'
+import TerraformInventory from '../TerraformInventory'
 import Ssh from '../Ssh'
 import Command from '../Command'
 import inquirer from 'inquirer'
@@ -17,69 +17,74 @@ class Remote extends Command {
   }
 
   _gatherHosts (cargo, cb) {
-    const terraform = new Terraform({
+    const terraformInventory = new TerraformInventory({
       args: {
-        output: undefined,
-        state: this.runtime.config.global.infra_state_file,
-        parallelism: null,
-        public_addresses: undefined
+        list: true
       },
       runtime: this.runtime
     })
 
-    terraform.exe((err, stdout) => {
+    terraformInventory.exe((err, stdout) => {
       if (err) {
         return cb(err)
       }
 
       const trimmed = `${stdout}`.trim()
       if (!trimmed) {
-        const msg = 'Unable to get \'infra.output.public_addresses\', this is a requirement to determine connection endpoints'
+        const msg = 'Unable to get \'terraformInventory\', this is a requirement to determine connection endpoints'
         return cb(new Error(msg))
       }
 
-      const hosts = trimmed.split('\n')
-      return cb(null, hosts)
+      const hosts = JSON.parse(trimmed)
+      const filteredHosts = {}
+
+      _.forOwn(hosts, (ips, name) => {
+        if (name.indexOf('.') === -1) {
+          return
+        }
+        if (name.indexOf('_') !== -1) {
+          return
+        }
+        ips.forEach((ip) => {
+          filteredHosts[ip] = name
+        })
+      })
+
+      return cb(null, filteredHosts)
     })
   }
 
   _selectHosts (cargo, cb) {
     // Don't offer a choice if it's just one host
-    if (this.bootCargo._gatherHosts.length === 1) {
-      return cb(null, this.bootCargo._gatherHosts)
+    if (Object.keys(this.bootCargo._gatherHosts).length === 1) {
+      let selectedHosts = []
+      let ip = Object.keys(this.bootCargo._gatherHosts)[0]
+      let hostname = this.bootCargo._gatherHosts[ip]
+      selectedHosts.push(ip)
+      debug('Automatically selected host ' + hostname + 'because there is just one')
+      return cb(null, selectedHosts)
     }
 
     // https://www.npmjs.com/package/inquirer
     const choices = []
-    this.bootCargo._gatherHosts.forEach((hostname, i) => {
+    _.forOwn(this.bootCargo._gatherHosts, (hostname, ip) => {
       choices.push({
-        checked: (i === 0),
         name: hostname,
-        value: hostname
+        value: ip
       })
-    })
-    choices.push(new inquirer.Separator())
-    choices.push({
-      checked: false,
-      name: 'All of the above',
-      value: 'all'
     })
 
     const question = {
-      type: 'checkbox',
+      type: 'list',
       name: 'server',
       message: 'Select server',
       choices: choices
     }
     inquirer.prompt(question, (answers) => {
-      debug({answers: answers})
-      if (!_.has(answers, 'server.0')) {
+      if (!_.has(answers, 'server')) {
         return cb(new Error('No server selected'))
       }
-      if (answers.server.indexOf('all') > -1) {
-        return cb(null, this.bootCargo._gatherHosts)
-      }
-      cb(null, answers.server)
+      cb(null, [ answers.server ])
     })
   }
 

@@ -6,8 +6,8 @@ import fs from 'fs'
 
 class Ansible extends App {
   exe (cb) {
-    const terraformInvProps = _.find(this.runtime.prepare.deps, { name: 'terraformInventory' })
-    const ansibleProps = _.find(this.runtime.prepare.deps, { name: 'ansible' })
+    const terraformInvProps = _.find(this.runtime.deps, { name: 'terraformInventory' })
+    const ansibleProps = _.find(this.runtime.deps, { name: 'ansible' })
     const defaults = {
       args: {},
       env: ansibleProps.env || {},

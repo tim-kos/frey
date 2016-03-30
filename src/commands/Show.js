@@ -98,7 +98,7 @@ class Show extends Command {
       return cb(null)
     }
 
-    const ansibleProps = _.find(this.runtime.prepare.deps, { name: 'ansible' })
+    const ansibleProps = _.find(this.runtime.deps, { name: 'ansible' })
     const opts = { exe: ansibleProps.exe, args: {}, runtime: this.runtime, cmdOpts: { verbose: false } }
 
     opts.args['module-name'] = 'setup'

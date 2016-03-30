@@ -34,9 +34,29 @@ describe('Frey', () => {
         expect(filteredChain).to.deep.equal([
           'init',
           'config',
+          'deps',
           'prepare',
           'plan',
           'infra'
+        ])
+        done()
+      })
+    })
+
+    it('should not prepare for remote to speed up cli operations', (done) => {
+      const frey = new Frey()
+
+      const options = {
+        _: ['remote']
+      }
+
+      frey._composeChain(options, (err, filteredChain) => {
+        expect(err).to.equal(null)
+        expect(filteredChain).to.deep.equal([
+          'init',
+          'config',
+          'deps',
+          'remote'
         ])
         done()
       })
@@ -54,6 +74,7 @@ describe('Frey', () => {
         expect(filteredChain).to.deep.equal([
           'init',
           'config',
+          'deps',
           'prepare',
           'docbuild'
         ])
@@ -71,7 +92,8 @@ describe('Frey', () => {
       frey._composeChain(options, (err, filteredChain) => {
         expect(err).to.equal(null)
         expect(filteredChain).to.deep.equal([
-          'init', 'config', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra',
+          'init', 'config', 'deps',
+          'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra',
           'install', 'setup', 'deploy', 'restart', 'show'
         ])
         done()
@@ -91,6 +113,7 @@ describe('Frey', () => {
         expect(filteredChain).to.deep.equal([
           'init',
           'config',
+          'deps',
           'prepare',
           'deploy'
         ])
@@ -111,6 +134,7 @@ describe('Frey', () => {
         expect(filteredChain).to.deep.equal([
           'init',
           'config',
+          'deps',
           'prepare',
           'refresh',
           'validate',

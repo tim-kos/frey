@@ -5,7 +5,7 @@ import App from './App'
 
 class Terraform extends App {
   exe (cb) {
-    const terraformProps = _.find(this.runtime.prepare.deps, { name: 'terraform' })
+    const terraformProps = _.find(this.runtime.deps, { name: 'terraform' })
     const defaults = {
       args: {},
       env: terraformProps.env || {},

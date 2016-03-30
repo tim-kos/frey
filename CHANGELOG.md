@@ -30,10 +30,10 @@ Unreleased and unplanned todos
 - [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
-- [ ] For connecting to all hosts, we'd need to duplicate STDIN. Alternatively: Make interactive host selection a list, vs checkbox, and remove 'all'
-- [ ] Remote needs to take hosts from `terraformInventory`, not `public_addresses`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
-- [ ] Add `--no-prepare` cli argument to speed up e.g. `make console`
+- [x] Frey no longer prepares when for `remote` to speed up cli operations
+- [x] Make interactive host selection a list, vs checkbox; removing 'all'
+- [x] Remote now takes hosts from `terraformInventory`, not `public_addresses`
 - [-] rsyslogd-2307: warning: ~ action is deprecated, consider using the 'stop' statement instead
 - [x] Enable terraform debug output when `--verbose` is turned on
 - [x] Make `env.sh` in upstart script optional (our `touch` it)
