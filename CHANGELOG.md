@@ -23,11 +23,15 @@ Unreleased and unplanned todos
 - [ ] docs: since node is installed on Every Travis image, you can easily deploy go projects with frey http://stackoverflow.com/questions/31235146/how-to-run-node-js-and-ruby-tests-within-one-project-on-travis-ci
 - [ ] docs: env secrets on Travis are not exposed to PRs from other repos: https://docs.travis-ci.com/user/pull-requests
 
-## v0.3.14 (Unreleased)
+## v0.3.15 (Unreleased)
 
 - [ ] allow Ansible and Terraform version override from config
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+
+## v0.3.14 (2016-03-30)
+
+- [x] Fix for incomplete Node 0.10 version matching
 
 ## v0.3.13 (2016-03-30)
 
