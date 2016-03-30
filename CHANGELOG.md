@@ -20,9 +20,13 @@ Unreleased and unplanned todos
 - [ ] Vagrant support
 - [ ] website: Console window like http://lebab.io/? Here's another: http://codepen.io/peiche/details/LNVYzJ/
 - [ ] Equal sign vertical alignment for `frey format`
+- [ ] website: pitch: "don't hide away infra in obscure documentation, repos, datacenters, support desks. Evolve it together with your app"
+- [ ] docs: since node is installed on Every Travis image, you can easily deploy go projects with frey http://stackoverflow.com/questions/31235146/how-to-run-node-js-and-ruby-tests-within-one-project-on-travis-ci
+- [ ] docs: env secrets on Travis are not exposed to PRs from other repos: https://docs.travis-ci.com/user/pull-requests
 
 ## v0.3.13 (Unreleased)
 
+- [ ] allow Ansible and Terraform version override from config
 - [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Remove invalid underscore prefix from a few public `Shell` methods
