@@ -178,6 +178,7 @@ class Config extends Command {
 
     // Resolve to absolute paths
     config.global.tools_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.tools_dir)
+    config.global.residu_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.residu_dir)
     config.global.ansiblecfg_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ansiblecfg_file)
     config.global.infra_plan_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_plan_file)
     config.global.infra_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.infra_file)
@@ -224,7 +225,7 @@ class Config extends Command {
 
     debug('Writing %s', this.bootCargo._renderConfig.global.infra_file)
 
-    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.infra_file, encoded), (err) => {
+    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.infra_file), (err) => {
       if (err) {
         return cb(err)
       }
@@ -261,7 +262,7 @@ class Config extends Command {
 
     debug('Writing %s', this.bootCargo._renderConfig.global.ansiblecfg_file)
 
-    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.ansiblecfg_file, encoded), (err) => {
+    return mkdirp(path.dirname(this.bootCargo._renderConfig.global.ansiblecfg_file), (err) => {
       if (err) {
         return cb(err)
       }

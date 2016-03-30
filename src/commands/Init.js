@@ -112,7 +112,7 @@ class Init extends Command {
     return cb(null, {
       frey_dir: freyDir,
       git_dir: this.bootCargo._findClosestProjectGit,
-      process_tmp_dir: this.bootCargo._os.tmp + uuid.v4()
+      process_tmp_dir: this.bootCargo._os.tmp + '/' + uuid.v4()
     })
   }
 
