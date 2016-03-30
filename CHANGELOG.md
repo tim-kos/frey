@@ -31,7 +31,8 @@ Unreleased and unplanned todos
 - [ ] rsyslogd-2307: warning: ~ action is deprecated, consider using the 'stop' statement instead
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] Make residuDir configurable, with a default to `os.tmpDir`
-- [ ] Make `env.sh` in upstart script optional (our `touch` it)
+- [x] Make `env.sh` in upstart script optional (our `touch` it)
+- [x] Fix bug: `Error: only one instance of babel-polyfill is allowed`
 
 ## v0.3.12 (2016-03-29)
 

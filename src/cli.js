@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-import 'babel-polyfill'
 'use strict'
+if (process.version.match(/^0\.10.*/)) {
+  require('babel-polyfill')
+}
 import Frey from './Frey'
 // import depurar from 'depurar'; const debug = depurar('frey')
 import yargs from 'yargs'
