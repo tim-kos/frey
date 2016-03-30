@@ -39,6 +39,7 @@ if true; then destroy; fi
 if true; then trap destroy EXIT; fi
 
 git init 2>&1 > /dev/null || true
+rm -f *.pem 2>&1 > /dev/null || true
 
 # We seem to not be able to guarantee the create order of multiple web hosts, so override with count = 1 in tests
 "${__node}" "${__root}/${__codelib}/cli.js" \
@@ -48,5 +49,7 @@ git init 2>&1 > /dev/null || true
   --force-yes \
 || false
 
+rm -f *.pem 2>&1 > /dev/null || true
 rm -f Frey-residu* 2>&1 > /dev/null || true
+
 echo "Finished"

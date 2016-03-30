@@ -46,7 +46,7 @@
 
   [infra.resource.digitalocean_droplet.freytest-web.provisioner.remote-exec]
     inline = [
-      "sudo pwd"
+      "pwd"
     ]
 
 
@@ -64,7 +64,7 @@
 
   [infra.resource.digitalocean_droplet.freytest-db.provisioner.remote-exec]
     inline = [
-      "sudo pwd"
+      "pwd"
     ]
 
 [infra.resource.digitalocean_domain.domain-web]
