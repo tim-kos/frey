@@ -30,6 +30,7 @@ Unreleased and unplanned todos
 - [ ] Convert `format.js` to ES6 and make it a first class citizen via `frey format`
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+- [x] Upgrade to Ansible 2.0.1.0 as that fixes an issue with sync asking for sudo password https://github.com/ansible/ansible-modules-core/issues/2156
 - [x] Remove invalid underscore prefix from a few public `Shell` methods
 - [x] Frey no longer prepares when for `remote` to speed up cli operations
 - [x] Make interactive host selection a list, vs checkbox; removing 'all'
