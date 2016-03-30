@@ -7,6 +7,7 @@ import path from 'path'
 import _ from 'lodash'
 import async from 'async'
 import fs from 'fs'
+// import depurar from 'depurar'; const debug = depurar('frey')
 
 class Init extends Command {
   constructor (name, runtime) {
@@ -94,7 +95,9 @@ class Init extends Command {
     // This operation is performed in parallel, but the results array will
     // be in the same order as the original. Hence, use the last/longest/closest
     // path that has Git.
+
     return async.reject(paths, fs.stat, (results) => {
+      // debug({paths: paths, results: results})
       if (typeof results === 'undefined' || !results.length) {
         return cb(null, undefined)
       }
