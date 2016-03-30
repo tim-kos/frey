@@ -61,7 +61,7 @@ class Remote extends Command {
       let ip = Object.keys(this.bootCargo._gatherHosts)[0]
       let hostname = this.bootCargo._gatherHosts[ip]
       selectedHosts.push(ip)
-      debug('Automatically selected host ' + hostname + 'because there is just one')
+      debug('Automatically selected host ' + hostname + ' because there is just one')
       return cb(null, selectedHosts)
     }
 
