@@ -12,7 +12,7 @@
   name = "Local stuff"
   become = "False"
   roles = [
-    "{{{init.paths.roles_dir}}}/pwd/v1.0.0",
+    "{{{global.roles_dir}}}/pwd/v1.0.0",
   ]
 
 [[install.playbooks.tasks]]
