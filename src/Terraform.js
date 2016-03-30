@@ -8,13 +8,17 @@ class Terraform extends App {
     const terraformProps = _.find(this.runtime.prepare.deps, { name: 'terraform' })
     const defaults = {
       args: {},
-      env: terraformProps.env,
+      env: terraformProps.env || {},
       signatureOpts: { equal: '=', quote: '', dash: '-', escape: false },
       exe: terraformProps.exe
     }
 
     if (!chalk.enabled) {
       defaults.args['no-color'] = true
+    }
+
+    if (this.runtime.init.cliargs.verbose) {
+      defaults.env['TF_LOG'] = 'DEBUG'
     }
 
     defaults.args['parallelism'] = this.runtime.config.global.terraformcfg.parallelism

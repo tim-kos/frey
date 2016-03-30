@@ -10,7 +10,7 @@ class Ansible extends App {
     const ansibleProps = _.find(this.runtime.prepare.deps, { name: 'ansible' })
     const defaults = {
       args: {},
-      env: ansibleProps.env,
+      env: ansibleProps.env || {},
       signatureOpts: { equal: '=', quote: '', dash: '--', escape: false },
       exe: ansibleProps.exePlaybook
     }
@@ -24,7 +24,7 @@ class Ansible extends App {
     }
 
     if (this.runtime.init.cliargs.verbose) {
-      defaults.args['-vvvvv'] = undefined
+      defaults.args['-vvvv'] = undefined
     }
 
     // @todo: Put in a JS date here if you want the same stamp on all machines in a cluster.
