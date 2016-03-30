@@ -26,6 +26,8 @@ class Config extends Command {
       '_writeAnsiblePlaybookInstall',
       '_writeAnsiblePlaybookSetup',
       '_writeAnsiblePlaybookDeploy',
+      '_writeAnsiblePlaybookBackup',
+      '_writeAnsiblePlaybookRestore',
       '_writeAnsiblePlaybookRestart'
     ]
   }
@@ -127,6 +129,8 @@ class Config extends Command {
         setup_file: '{{{init.cliargs.projectDir}}}/Frey-residu-setup.yml',
         deploy_file: '{{{init.cliargs.projectDir}}}/Frey-residu-deploy.yml',
         restart_file: '{{{init.cliargs.projectDir}}}/Frey-residu-restart.yml',
+        backup_file: '{{{init.cliargs.projectDir}}}/Frey-residu-backup.yml',
+        restore_file: '{{{init.cliargs.projectDir}}}/Frey-residu-restore.yml',
         ssh: {
           key_dir: '{{{init.os.home}}}/.ssh',
           email: `{{{init.os.user}}}@${appName}.freyproject.io`,
@@ -184,6 +188,8 @@ class Config extends Command {
     config.global.setup_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.setup_file)
     config.global.deploy_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.deploy_file)
     config.global.restart_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.restart_file)
+    config.global.backup_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.backup_file)
+    config.global.restore_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.restore_file)
 
     config.global.ssh.key_dir = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.key_dir)
     config.global.ssh.privatekey_file = path.resolve(this.runtime.init.cliargs.projectDir, config.global.ssh.privatekey_file)
@@ -292,6 +298,12 @@ class Config extends Command {
   }
   _writeAnsiblePlaybookRestart (cargo, cb) {
     return this._writeAnsiblePlaybook('restart', cargo, cb)
+  }
+  _writeAnsiblePlaybookBackup (cargo, cb) {
+    return this._writeAnsiblePlaybook('backup', cargo, cb)
+  }
+  _writeAnsiblePlaybookRestore (cargo, cb) {
+    return this._writeAnsiblePlaybook('restore', cargo, cb)
   }
 
   main (cargo, cb) {
