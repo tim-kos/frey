@@ -1,6 +1,9 @@
 ---
 - name: Ensure dependencies are installed.
-  apt: pkg=curl state=installed
+  apt: pkg={{item}} state=installed
+  with_items:
+    - curl
+    - openjdk-7-jdk
 
 - name: Add Jenkins apt repository key.
   apt_key:
@@ -12,9 +15,6 @@
     repo: "{{ jenkins_repo_url }}"
     state: present
     update_cache: yes
-
-- name: Ensure Java is installed.
-  apt: pkg=openjdk-7-jdk state=installed
 
 - name: Ensure Jenkins is installed.
   apt: pkg=jenkins state=installed
