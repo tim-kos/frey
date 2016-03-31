@@ -72,9 +72,9 @@ class Deps extends Command {
       dir: '{{{config.global.tools_dir}}}/terraform/{{{self.version}}}',
       exe: '{{{self.dir}}}/terraform',
       zip:
-        'terraform' + '_' +
-        '{{{self.version}}}' + '_' +
-        '{{{init.os.platform}}}' + '_' +
+        'terraform_' +
+        '{{{self.version}}}_' +
+        '{{{init.os.platform}}}_' +
         '{{{init.os.arch}}}.zip',
       cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
@@ -82,12 +82,12 @@ class Deps extends Command {
         return version
       },
       cmdInstall:
-        'mkdir -p {{{self.dir}}}' + ' && ' +
-        'cd {{{self.dir}}}' + ' && ' +
+        'mkdir -p {{{self.dir}}} && ' +
+        'cd {{{self.dir}}} && ' +
         'curl -sSL \'' +
         'https://releases.hashicorp.com/terraform/{{{self.version}}}/' +
         '{{{self.zip}}}\'' +
-        '> \'{{{self.zip}}}\'' + ' && ' +
+        '> \'{{{self.zip}}}\' && ' +
         'unzip -o \'{{{self.zip}}}\''
     })
 
@@ -99,9 +99,9 @@ class Deps extends Command {
       dir: '{{{config.global.tools_dir}}}/terraform-inventory/{{{self.version}}}',
       exe: '{{{self.dir}}}/terraform-inventory',
       zip:
-        'terraform-inventory' + '_' +
-        '{{{self.version}}}' + '_' +
-        '{{{init.os.platform}}}' + '_' +
+        'terraform-inventory_' +
+        '{{{self.version}}}_' +
+        '{{{init.os.platform}}}_' +
         '{{{init.os.arch}}}.zip',
       cmdVersion: '{{{self.exe}}} --version',
       versionTransformer (stdout) {
@@ -110,13 +110,13 @@ class Deps extends Command {
         return version
       },
       cmdInstall:
-        'mkdir -p {{{self.dir}}}' + ' && ' +
-        'cd {{{self.dir}}}' + ' && ' +
+        'mkdir -p {{{self.dir}}} && ' +
+        'cd {{{self.dir}}} && ' +
         'curl -sSL \'' +
         'https://github.com/adammck/terraform-inventory/releases/download/' +
         'v{{{self.version}}}/' +
         '{{{self.zip}}}\'' +
-        '> \'{{{self.zip}}}\'' + ' && ' +
+        '> \'{{{self.zip}}}\' && ' +
         'unzip -o \'{{{self.zip}}}\''
     })
 
@@ -141,19 +141,22 @@ class Deps extends Command {
       version: '0.1.15',
       dir: '{{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}',
       exe: '{{{self.dir}}}/pip/bin/hcltool',
+      env: {
+        PYTHONPATH: '{{{parent.dir}}}/pip/lib/python2.7/site-packages'
+      },
       cmdVersion: 'awk \'/^Version:/ {print $NF}\' {{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}/pip/lib/python2.7/site-packages/pyhcl-{{{self.version}}}-py2.7.egg-info/PKG-INFO || true',
       versionTransformer (stdout) {
         return stdout.trim()
       },
       cmdInstall:
-        'mkdir -p {{{self.dir}}}' + ' && ' +
-        'pip install' + ' ' +
-        '--install-option=\'--prefix=pip\'' + ' ' +
-        '--ignore-installed' + ' ' +
-        '--force-reinstall' + ' ' +
-        '--root \'{{{self.dir}}}\'' + ' ' +
-        '--upgrade' + ' ' +
-        '--disable-pip-version-check' + ' ' +
+        'mkdir -p {{{self.dir}}} && ' +
+        'pip install ' +
+        '--install-option=\'--prefix=pip\' ' +
+        '--ignore-installed ' +
+        '--force-reinstall ' +
+        '--root \'{{{self.dir}}}\' ' +
+        '--upgrade ' +
+        '--disable-pip-version-check ' +
         'pyhcl=={{{self.version}}}'
     })
 
@@ -168,20 +171,22 @@ class Deps extends Command {
       version: '0.2.0',
       dir: '{{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}',
       exe: '{{{self.dir}}}/pip/bin/hcltool',
-      cmdHcltool: 'env PYTHONPATH={{{self.dir}}}/pip/lib/python2.7/site-packages {{{self.exe}}} ',
+      env: {
+        PYTHONPATH: '{{{parent.dir}}}/pip/lib/python2.7/site-packages'
+      },
       cmdVersion: 'awk \'/^Version:/ {print $NF}\' {{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}/pip/lib/python2.7/site-packages/pyhcl-{{{self.version}}}-py2.7.egg-info/PKG-INFO || true',
       versionTransformer (stdout) {
         return stdout.trim()
       },
       cmdInstall:
-        'mkdir -p {{{self.dir}}}' + ' && ' +
-        'pip install' + ' ' +
-        '--install-option=\'--prefix=pip\'' + ' ' +
-        '--ignore-installed' + ' ' +
-        '--force-reinstall' + ' ' +
-        '--root \'{{{self.dir}}}\'' + ' ' +
-        '--upgrade' + ' ' +
-        '--disable-pip-version-check' + ' ' +
+        'mkdir -p {{{self.dir}}} && ' +
+        'pip install ' +
+        '--install-option=\'--prefix=pip\' ' +
+        '--ignore-installed ' +
+        '--force-reinstall ' +
+        '--root \'{{{self.dir}}}\' ' +
+        '--upgrade ' +
+        '--disable-pip-version-check ' +
         'pyhcl=={{{self.version}}}'
     })
 
@@ -205,14 +210,14 @@ class Deps extends Command {
         return version
       },
       cmdInstall:
-        'mkdir -p {{{self.dir}}}' + ' && ' +
-        'pip install' + ' ' +
-        '--install-option=\'--prefix=pip\'' + ' ' +
-        '--ignore-installed' + ' ' +
-        '--force-reinstall' + ' ' +
-        '--root \'{{{self.dir}}}\'' + ' ' +
-        '--upgrade' + ' ' +
-        '--disable-pip-version-check' + ' ' +
+        'mkdir -p {{{self.dir}}} && ' +
+        'pip install ' +
+        '--install-option=\'--prefix=pip\' ' +
+        '--ignore-installed ' +
+        '--force-reinstall ' +
+        '--root \'{{{self.dir}}}\' ' +
+        '--upgrade ' +
+        '--disable-pip-version-check ' +
         'ansible=={{{self.version}}}'
     })
 

@@ -4,8 +4,6 @@
 
 Unreleased and unplanned todos
 
-- [ ] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
-- [ ] Command's exe functions should mostly be in a util class
 - [ ] Consider detecting the User's config dir, and storing tools there, vs having a `~/.frey`
 - [ ] Consider only source `*.frey.toml` files, or using imports, so that random `*.toml` like Rust's `Cargo.toml` isn't merged in.
 - [ ] Ditch yargs for mimimist, now that we can have autocomplete via liftoff already
@@ -13,7 +11,9 @@ Unreleased and unplanned todos
 - [ ] Figure out local Pip installs so we can build on Travis `sudo: false` platform
 - [ ] Implement commit: Safely commit state automatically
 - [ ] Indent stdout/err
-- [ ] More tests!
+- [ ] Mocha tests for `App`
+- [ ] Mocha tests for `Shell`
+- [ ] Mocha tests for `Base`
 - [ ] Remote state in S3 feature
 - [ ] Use Terraform modules similar to Ansible roles: https://www.terraform.io/docs/modules/sources.html
 - [ ] Vagrant support
@@ -28,6 +28,9 @@ Unreleased and unplanned todos
 - [ ] allow Ansible and Terraform version override from config
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+- [ ] website: Collect all licenses and store them in a good/public place
+- [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
+- [x] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
 - [x] Fix bug where projectDir cli argument was not respected if you did not have a Freyfile in it (useful for `convert`)
 - [x] Add role: munin-node
 - [x] Command's exe functions should mostly be in a util class

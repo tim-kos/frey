@@ -62,6 +62,66 @@ describe('Frey', () => {
       })
     })
 
+    it('should add format to convert, and not do a prepare', (done) => {
+      const frey = new Frey()
+
+      const options = {
+        _: ['convert']
+      }
+
+      frey._composeChain(options, (err, filteredChain) => {
+        expect(err).to.equal(null)
+        expect(filteredChain).to.deep.equal([
+          'init',
+          'config',
+          'deps',
+          'convert',
+          'format'
+        ])
+        done()
+      })
+    })
+
+    it('should not add format to convert if bail is specified', (done) => {
+      const frey = new Frey()
+
+      const options = {
+        _: ['convert'],
+        bail: true
+      }
+
+      frey._composeChain(options, (err, filteredChain) => {
+        expect(err).to.equal(null)
+        expect(filteredChain).to.deep.equal([
+          'init',
+          'config',
+          'deps',
+          'convert'
+        ])
+        done()
+      })
+    })
+
+    it('should do format without convert', (done) => {
+      const frey = new Frey()
+
+      const options = {
+        _: ['format']
+      }
+
+      frey._composeChain(options, (err, filteredChain) => {
+        expect(err).to.equal(null)
+        expect(filteredChain).to.deep.equal([
+          'init',
+          'config',
+          'deps',
+          'prepare',
+          'format'
+        ])
+        done()
+      })
+    })
+
     it('should return auto bail on docbuild which is not part of a chain', (done) => {
       const frey = new Frey()
 

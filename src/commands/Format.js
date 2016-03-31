@@ -40,10 +40,12 @@ class Format extends Command {
   _getIndentLevel (info, infoParent) {
     let indentLevel = false
 
-    if (infoParent && infoParent.parts[0] === 'infra') {
+    if (infoParent) {
       indentLevel = infoParent.depth - 2
       if (infoParent.parts[1] === 'resource') {
         indentLevel = indentLevel - 1
+      } else if (infoParent.parts[1] === 'playbooks') {
+        indentLevel = indentLevel + 1
       } else if (infoParent.parts[1] === 'variable') {
         indentLevel = 1
       }
@@ -60,7 +62,7 @@ class Format extends Command {
     return indentLevel
   }
 
-  _correctFile (tomlFile, cb) {
+  _reformatFile (tomlFile, cb) {
     const buf = fs.readFileSync(tomlFile, 'utf-8')
     let data = {}
     let error
@@ -150,8 +152,10 @@ class Format extends Command {
     debug(`Reading from '${pattern}'`)
     return globby(pattern)
       .then((tomlFiles) => {
-        async.map(tomlFiles, this._correctFile.bind(this), (err, results) => {
-          debug({err: err, results: results})
+        async.map(tomlFiles, this._reformatFile.bind(this), (err, results) => {
+          if (err) {
+            return cb(err)
+          }
           return cb(null)
         })
       })

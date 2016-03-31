@@ -6,8 +6,6 @@ lib/
 node_modules/
 npm-debug.log
 test/scenario/*/Frey-state*
-test/scenario/converter/infra.tf.json
-test/scenario/converter/infra.toml
-test/scenario/converter/infra.unformatted.toml
+test/scenario/converter/Freyfile.toml
 test/scenario/sshreconstruct/frey-sshreconstruct.pub
 website/vendor/
