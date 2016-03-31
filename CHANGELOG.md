@@ -28,6 +28,7 @@ Unreleased and unplanned todos
 - [ ] allow Ansible and Terraform version override from config
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+- [x] Add role: munin-node
 
 ## v0.3.14 (2016-03-30)
 

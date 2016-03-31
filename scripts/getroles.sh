@@ -35,6 +35,7 @@ roles=(
   "redis;geerlingguy.redis,1.2.0;v1.2.0"
   "unattended-upgrades;jnv.unattended-upgrades,v1.2.0;v1.2.0"
   "munin;geerlingguy.munin,1.1.2;v1.1.2"
+  "munin-node;geerlingguy.munin-node,1.2.0;v1.2.0"
   "upstart;telusdigital.upstart;v1.0.0"
   "logrotate;telusdigital.logrotate;v1.0.0"
   "rsyslog;tersmitten.rsyslog,v3.0.1;v3.0.1"
