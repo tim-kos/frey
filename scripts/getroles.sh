@@ -45,6 +45,7 @@ roles=(
   "prometheus;williamyeh.prometheus,1.3.6;v1.3.6"
   "smokeping;akamine.smokeping;v0.0.1"
 )
+
 for role in "${roles[@]}"; do
   freyRole="$(echo "${role}" |awk -F";" '{print $1}')"
   ansiRoleAndVersion="$(echo "${role}" |awk -F";" '{print $2}')"
@@ -62,4 +63,16 @@ for role in "${roles[@]}"; do
     rmdir "${__root}/roles/${freyRole}/${freyVersion}/${ansiRole}/"
   fi
 
+  licenseFile="$(find "${__root}/roles/${freyRole}/${freyVersion}" -name 'LICENSE*')"
+  author=$(echo $(cat "${licenseFile}" |grep Copyright |tail -n1))
+
+  echo "${licenseFile}"
+
+  cp "${licenseFile}" "${__root}/licenses/${ansiRole}-LICENSE"
+
+  if ! egrep "^- ${ansiRole}" "${__root}/licenses/index.md" 2>&1 > /dev/null; then
+    echo "- ${ansiRole} -- ${author}" >> "${__root}/licenses/index.md"
+  fi
+
+  sort "${__root}/licenses/index.md" -o "${__root}/licenses/index.md"
 done

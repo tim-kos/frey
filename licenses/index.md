@@ -1,0 +1,14 @@
+- carlosbuenosvinos.ansistrano-deploy -- Copyright (c) 2014 Carlos Buenosvinos
+- carlosbuenosvinos.ansistrano-rollback -- Copyright (c) 2014 Carlos Buenosvinos
+- geerlingguy.munin -- Copyright (c) 2014 Jeff Geerling
+- geerlingguy.munin-node -- Copyright (c) 2014 Jeff Geerling
+- geerlingguy.nodejs -- Copyright (c) 2014 Jeff Geerling
+- geerlingguy.redis -- Copyright (c) 2014 Jeff Geerling
+- holms.fqdn -- Copyright (c) 2014 Roman Gorodeckij
+- jdauphant.nginx -- Copyright 1994-2004 Benno Joy. All rights reserved.
+- jnv.unattended-upgrades -- Gnomovision version 69, Copyright (C) year name of author
+- telusdigital.logrotate -- Copyright (c) 2015 Aaron Pederson
+- telusdigital.upstart -- Copyright (c) 2015 Chris Olstrom
+- tersmitten.rsyslog -- Copyright (c) Oefenweb.nl <https://github.com/Oefenweb>
+- triplepoint.znc -- Copyright (c) 2015 Jonathan Hanson
+- williamyeh.prometheus -- Copyright (c) 2015 William Yeh <william.pjyeh@gmail.com>
