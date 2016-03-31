@@ -44,6 +44,7 @@ roles=(
   "nginx;jdauphant.nginx,v2.0.1;v2.0.1"
   "prometheus;williamyeh.prometheus,1.3.6;v1.3.6"
   "smokeping;akamine.smokeping;v0.0.1"
+  "jenkins;geerlingguy.jenkins,1.3.0;v1.3.0"
 )
 
 for role in "${roles[@]}"; do
@@ -64,15 +65,19 @@ for role in "${roles[@]}"; do
   fi
 
   licenseFile="$(find "${__root}/roles/${freyRole}/${freyVersion}" -name 'LICENSE*')"
-  author=$(echo $(cat "${licenseFile}" |grep Copyright |tail -n1))
+  if [ ! -f "${licenseFile}" ]; then
+    echo "WARNING! No LICENSE found in ${__root}/roles/${freyRole}/${freyVersion}"
+  else
+    author=$(echo $(cat "${licenseFile}" |grep Copyright |tail -n1))
 
-  echo "${licenseFile}"
+    echo "${licenseFile}"
 
-  cp "${licenseFile}" "${__root}/licenses/${ansiRole}-LICENSE"
+    cp "${licenseFile}" "${__root}/licenses/${ansiRole}-LICENSE"
 
-  if ! egrep "^- ${ansiRole}" "${__root}/licenses/index.md" 2>&1 > /dev/null; then
-    echo "- ${ansiRole} -- ${author}" >> "${__root}/licenses/index.md"
+    if ! egrep "^- ${ansiRole}" "${__root}/licenses/index.md" 2>&1 > /dev/null; then
+      echo "- ${ansiRole} -- ${author}" >> "${__root}/licenses/index.md"
+    fi
+
+    sort "${__root}/licenses/index.md" -o "${__root}/licenses/index.md"
   fi
-
-  sort "${__root}/licenses/index.md" -o "${__root}/licenses/index.md"
 done

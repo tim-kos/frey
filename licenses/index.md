@@ -1,5 +1,7 @@
+- akamine.smokeping -- Copyright (c) 2015 Hector Akamine
 - carlosbuenosvinos.ansistrano-deploy -- Copyright (c) 2014 Carlos Buenosvinos
 - carlosbuenosvinos.ansistrano-rollback -- Copyright (c) 2014 Carlos Buenosvinos
+- geerlingguy.jenkins -- Copyright (c) 2014 Jeff Geerling
 - geerlingguy.munin -- Copyright (c) 2014 Jeff Geerling
 - geerlingguy.munin-node -- Copyright (c) 2014 Jeff Geerling
 - geerlingguy.nodejs -- Copyright (c) 2014 Jeff Geerling

@@ -29,6 +29,7 @@ Unreleased and unplanned todos
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
+- [x] Add role: Jenkins
 - [x] Collect all licenses and store them in a good/public place
 - [x] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
 - [x] Fix bug where projectDir cli argument was not respected if you did not have a Freyfile in it (useful for `convert`)
