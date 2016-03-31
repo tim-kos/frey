@@ -13,5 +13,8 @@
     state: present
     update_cache: yes
 
+- name: Ensure Java is installed.
+  apt: pkg=openjdk-7-jdk state=installed
+
 - name: Ensure Jenkins is installed.
   apt: pkg=jenkins state=installed
