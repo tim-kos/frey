@@ -120,13 +120,13 @@ const liftOff = new LiftOff({
 liftOff.launch({
   cwd: argv.projectDir
 }, (env) => {
-  if (env.configBase === undefined) {
+  if (env.configBase === undefined && argv._[0] !== 'convert' && argv._[0] !== 'help' && argv._[0] !== 'docbuild') {
     const msg = 'Could not find a Freyfile.toml in current directory or upwards, or in project directory.'
     throw new Error(msg)
   }
 
   // Let LiftOff override the project dir
-  argv.projectDir = env.configBase
+  argv.projectDir = argv.projectDir || env.configBase
   const frey = new Frey(argv)
 
   // Bombs away

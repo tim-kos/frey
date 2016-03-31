@@ -28,7 +28,9 @@ Unreleased and unplanned todos
 - [ ] allow Ansible and Terraform version override from config
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
+- [x] Fix bug where projectDir cli argument was not respected if you did not have a Freyfile in it (useful for `convert`)
 - [x] Add role: munin-node
+- [x] Command's exe functions should mostly be in a util class
 
 ## v0.3.14 (2016-03-30)
 
