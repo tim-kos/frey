@@ -22,13 +22,17 @@ Unreleased and unplanned todos
 - [ ] website: pitch: "don't hide away infra in obscure documentation, repos, datacenters, support desks. Evolve it together with your app"
 - [ ] docs: since node is installed on Every Travis image, you can easily deploy go projects with frey http://stackoverflow.com/questions/31235146/how-to-run-node-js-and-ruby-tests-within-one-project-on-travis-ci
 - [ ] docs: env secrets on Travis are not exposed to PRs from other repos: https://docs.travis-ci.com/user/pull-requests
+- [ ] Add generic cleanup method that `.pem` as well as `Frey-residu-*` can be registered with, so it will all be deleted if `global.purge_residu` is turned on (default = `true`)
 
-## v0.3.15 (Unreleased)
+## v0.3.16 (Unreleased)
 
 - [ ] allow Ansible and Terraform version override from config
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
+
+## v0.3.15 (2016-03-31)
+
 - [x] Add role: Jenkins
 - [x] Collect all licenses and store them in a good/public place
 - [x] Change `convert.sh` to `frey convert` making the dependencies installed by `prepare`
