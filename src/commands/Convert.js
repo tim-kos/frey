@@ -11,8 +11,6 @@ import _ from 'lodash'
 import tomlify from 'tomlify-j0.4'
 import INI from 'ini'
 import YAML from 'js-yaml'
-import indentString from 'indent-string'
-import stripIndent from 'strip-indent'
 
 class Convert extends Command {
   constructor (name, runtime) {
