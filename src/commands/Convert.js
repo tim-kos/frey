@@ -2,6 +2,7 @@
 import Command from '../Command'
 import path from 'path'
 import async from 'async'
+import hcl from 'hcl'
 import globby from 'globby'
 import depurar from 'depurar'; const debug = depurar('frey')
 import Hcltool020 from '../Hcltool020'
@@ -70,18 +71,31 @@ class Convert extends Command {
     })
   }
 
+  _parseHclJs (tfFile, cb) {
+    const buf = fs.readFileSync(tfFile, 'utf-8')
+    const parsed = hcl.parse(buf)
+    // debug({ buf: buf, parsed: parsed })
+    return cb(null, parsed)
+  }
+
   _parseTfFile (tfFile, cb) {
     // @todo We unfortunately have to run two versions of hcltool due to
     // different bugs hurting both 0.1.15 and 0.2.0
     // https://github.com/virtuald/pyhcl/issues/7
     // When that is resolved, let's just have 1 version
-    this._parseHcl020(tfFile, (err, parsed) => {
+    this._parseHclJs(tfFile, (err, parsed) => {
       if (err) {
-        this._parseHcl0115(tfFile, (err, parsed) => {
+        this._parseHcl020(tfFile, (err, parsed) => {
           if (err) {
-            return cb(err)
+            this._parseHcl0115(tfFile, (err, parsed) => {
+              if (err) {
+                return cb(err)
+              }
+              return cb(null, { infra: parsed })
+            })
+          } else {
+            return cb(null, { infra: parsed })
           }
-          return cb(null, { infra: parsed })
         })
       } else {
         return cb(null, { infra: parsed })
