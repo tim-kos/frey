@@ -1,6 +1,7 @@
 'use strict'
 import Ansible from '../Ansible'
 import Command from '../Command'
+import constants from '../constants'
 import _ from 'lodash'
 import depurar from 'depurar'; const debug = depurar('frey')
 
@@ -13,7 +14,7 @@ class Restart extends Command {
 
     const opts = { args: {}, runtime: this.runtime }
 
-    opts.args[this.runtime.config.global.restart_file] = undefined
+    opts.args[this.runtime.config.global.restart_file] = constants.SHELLARG_APPEND_AS_IS
 
     const ansible = new Ansible(opts)
     ansible.exe(cb)

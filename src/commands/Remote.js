@@ -2,6 +2,7 @@
 import TerraformInventory from '../TerraformInventory'
 import Ssh from '../Ssh'
 import Command from '../Command'
+import constants from '../constants'
 import inquirer from 'inquirer'
 import async from 'async'
 import _ from 'lodash'
@@ -19,7 +20,7 @@ class Remote extends Command {
   _gatherHosts (cargo, cb) {
     const terraformInventory = new TerraformInventory({
       args: {
-        list: true
+        list: constants.SHELLARG_BOOLEAN_FLAG
       },
       runtime: this.runtime
     })
@@ -90,11 +91,11 @@ class Remote extends Command {
 
   _ssh (host, cb) {
     const opts = { args: {}, runtime: this.runtime }
-    opts.args[host] = undefined
+    opts.args[host] = constants.SHELLARG_APPEND_AS_IS
 
     const rcmd = _.get(this.runtime, 'init.cliargs.remote')
     if (rcmd) {
-      opts.args[rcmd] = undefined
+      opts.args[rcmd] = constants.SHELLARG_APPEND_AS_IS
     }
 
     const ssh = new Ssh(opts)

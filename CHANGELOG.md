@@ -33,6 +33,7 @@ Unreleased and unplanned todos
 
 ## v0.3.16 (Unreleased)
 
+- [x] Allow more control over cli args via constants
 - [x] Add support for feeding commands to `Remote` via cli
 
 ## v0.3.15 (2016-03-31)

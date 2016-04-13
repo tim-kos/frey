@@ -2,6 +2,7 @@
 // import chalk from 'chalk'
 import _ from 'lodash'
 import App from './App'
+// import constants from './constants'
 
 class HclTool020 extends App {
   exe (cb) {

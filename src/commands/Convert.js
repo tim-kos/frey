@@ -1,5 +1,6 @@
 'use strict'
 import Command from '../Command'
+import constants from '../constants'
 import path from 'path'
 import async from 'async'
 import globby from 'globby'
@@ -40,7 +41,7 @@ class Convert extends Command {
       runtime: this.runtime
     }
 
-    opts.args[tfFile] = undefined
+    opts.args[tfFile] = constants.SHELLARG_APPEND_AS_IS
     const hclTool = new Hcltool020(opts)
 
     hclTool.exe((err, stdout) => {
@@ -58,7 +59,7 @@ class Convert extends Command {
       runtime: this.runtime
     }
 
-    opts.args[tfFile] = undefined
+    opts.args[tfFile] = constants.SHELLARG_APPEND_AS_IS
     const hclTool = new Hcltool0115(opts)
 
     hclTool.exe((err, stdout) => {

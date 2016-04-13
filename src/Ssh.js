@@ -1,5 +1,6 @@
 'use strict'
 import App from './App'
+import constants from './constants'
 
 class Ssh extends App {
   exe (cb) {
@@ -18,12 +19,12 @@ class Ssh extends App {
     defaults.args['i'] = this.runtime.config.global.ssh.privatekey_file
     defaults.args['l'] = this.runtime.config.global.ssh.user
 
-    defaults.args['-oUserKnownHostsFile=/dev/null'] = undefined
-    defaults.args['-oCheckHostIP=no'] = undefined
-    defaults.args['-oStrictHostKeyChecking=no'] = undefined
+    defaults.args['-oUserKnownHostsFile=/dev/null'] = constants.SHELLARG_BOOLEAN_FLAG
+    defaults.args['-oCheckHostIP=no'] = constants.SHELLARG_BOOLEAN_FLAG
+    defaults.args['-oStrictHostKeyChecking=no'] = constants.SHELLARG_BOOLEAN_FLAG
 
     if (this.runtime.init.cliargs.verbose) {
-      defaults.args['vvvv'] = true
+      defaults.args['vvvv'] = constants.SHELLARG_BOOLEAN_FLAG
     }
 
     this._exe(defaults, cb)

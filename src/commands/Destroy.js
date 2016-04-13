@@ -2,6 +2,7 @@
 import Terraform from '../Terraform'
 import Command from '../Command'
 import _ from 'lodash'
+import constants from '../constants'
 
 // import depurar from 'depurar'; const debug = depurar('frey')
 
@@ -29,8 +30,8 @@ class Destroy extends Command {
 
     const terraform = new Terraform({
       args: {
-        destroy: undefined,
-        force: true
+        destroy: constants.SHELLARG_PREPEND_AS_IS,
+        force: constants.SHELLARG_BOOLEAN_FLAG
       },
       runtime: this.runtime,
       cmdOpts: {

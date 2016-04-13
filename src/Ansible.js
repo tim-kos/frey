@@ -3,6 +3,7 @@ import chalk from 'chalk'
 import _ from 'lodash'
 import App from './App'
 import fs from 'fs'
+import constants from './constants'
 
 class Ansible extends App {
   exe (cb) {
@@ -24,7 +25,7 @@ class Ansible extends App {
     }
 
     if (this.runtime.init.cliargs.verbose) {
-      defaults.args['-vvvv'] = undefined
+      defaults.args['-vvvv'] = constants.SHELLARG_APPEND_AS_IS
     }
 
     // @todo: Put in a JS date here if you want the same stamp on all machines in a cluster.
@@ -34,9 +35,9 @@ class Ansible extends App {
 
     const connection = _.get(this.runtime, 'config.global.connection')
     if (connection !== undefined) {
-      defaults.args['inventory-file'] = null
-      defaults.args['user'] = null
-      defaults.args['private-key'] = null
+      defaults.args['inventory-file'] = constants.SHELLARG_REMOVE
+      defaults.args['user'] = constants.SHELLARG_REMOVE
+      defaults.args['private-key'] = constants.SHELLARG_REMOVE
       defaults.args['connection'] = connection
       defaults.args['extra-vars'] = `variable_host=${connection}`
       defaults.args['inventory-file'] = `${connection},`

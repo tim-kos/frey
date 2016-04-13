@@ -1,5 +1,6 @@
 'use strict'
 import Command from '../Command'
+import constants from '../constants'
 import fs from 'fs'
 import globby from 'globby'
 import Terraform from '../Terraform'
@@ -34,9 +35,9 @@ class Show extends Command {
     const terraform = new Terraform({
       cmdOpts: { verbose: false },
       args: {
-        output: undefined,
+        output: constants.SHELLARG_PREPEND_AS_IS,
         state: this.runtime.config.global.infra_state_file,
-        parallelism: null
+        parallelism: constants.SHELLARG_REMOVE
       },
       runtime: this.runtime
     })
@@ -57,10 +58,10 @@ class Show extends Command {
     const terraform = new Terraform({
       cmdOpts: { verbose: false },
       args: {
-        output: undefined,
+        output: constants.SHELLARG_PREPEND_AS_IS,
         state: this.runtime.config.global.infra_state_file,
-        parallelism: null,
-        public_addresses: undefined
+        parallelism: constants.SHELLARG_REMOVE,
+        public_addresses: constants.SHELLARG_APPEND_AS_IS
       },
       runtime: this.runtime
     })
@@ -81,10 +82,10 @@ class Show extends Command {
     const terraform = new Terraform({
       cmdOpts: { verbose: false },
       args: {
-        output: undefined,
+        output: constants.SHELLARG_PREPEND_AS_IS,
         state: this.runtime.config.global.infra_state_file,
-        parallelism: null,
-        endpoint: undefined
+        parallelism: constants.SHELLARG_REMOVE,
+        endpoint: constants.SHELLARG_APPEND_AS_IS
       },
       runtime: this.runtime
     })
@@ -103,8 +104,8 @@ class Show extends Command {
 
     opts.args['module-name'] = 'setup'
     opts.args['tree'] = this.tmpFactDir
-    opts.args['all'] = undefined
-    opts.args['tags'] = null // ansible: error: no such option: --tags
+    opts.args['all'] = constants.SHELLARG_APPEND_AS_IS
+    opts.args['tags'] = constants.SHELLARG_REMOVE // ansible: error: no such option: --tags
 
     const ansible = new Ansible(opts)
     ansible.exe((err, stdout) => {

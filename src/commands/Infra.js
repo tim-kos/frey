@@ -2,6 +2,7 @@
 import Terraform from '../Terraform'
 import Command from '../Command'
 import _ from 'lodash'
+import constants from '../constants'
 
 class Infra extends Command {
   constructor (name, runtime) {
@@ -36,7 +37,7 @@ class Infra extends Command {
 
     const terraform = new Terraform({
       args: {
-        apply: undefined
+        apply: constants.SHELLARG_PREPEND_AS_IS
       },
       runtime: this.runtime,
       cmdOpts: {

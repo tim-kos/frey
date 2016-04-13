@@ -2,6 +2,7 @@
 import chalk from 'chalk'
 import _ from 'lodash'
 import App from './App'
+import constants from './constants'
 
 class Terraform extends App {
   exe (cb) {
@@ -14,7 +15,7 @@ class Terraform extends App {
     }
 
     if (!chalk.enabled) {
-      defaults.args['no-color'] = true
+      defaults.args['no-color'] = constants.SHELLARG_BOOLEAN_FLAG
     }
 
     if (this.runtime.init.cliargs.verbose) {

@@ -2,6 +2,7 @@
 import Terraform from '../Terraform'
 import Command from '../Command'
 import _ from 'lodash'
+import constants from '../constants'
 
 class Plan extends Command {
   main (cargo, cb) {
@@ -12,7 +13,7 @@ class Plan extends Command {
 
     const terraform = new Terraform({
       args: {
-        plan: undefined,
+        plan: constants.SHELLARG_PREPEND_AS_IS,
         refresh: 'false',
         out: this.runtime.config.global.infra_plan_file
       },

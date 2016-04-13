@@ -2,6 +2,7 @@
 import Ansible from '../Ansible'
 import Command from '../Command'
 import _ from 'lodash'
+import constants from '../constants'
 import depurar from 'depurar'; const debug = depurar('frey')
 
 class Deploy extends Command {
@@ -13,7 +14,7 @@ class Deploy extends Command {
 
     const opts = { args: {}, runtime: this.runtime }
 
-    opts.args[this.runtime.config.global.deploy_file] = undefined
+    opts.args[this.runtime.config.global.deploy_file] = constants.SHELLARG_APPEND_AS_IS
 
     const ansible = new Ansible(opts)
     ansible.exe(cb)

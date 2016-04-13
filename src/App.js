@@ -1,6 +1,7 @@
 'use strict'
 import _ from 'lodash'
 import Shell from './Shell'
+import constants from './constants'
 // import depurar from 'depurar'; const debug = depurar('frey')
 
 class App {
@@ -17,7 +18,7 @@ class App {
     const signatureOpts = this.opts.signatureOpts || defaults.signatureOpts
     const cmdOpts = this.opts.cmdOpts || defaults.cmdOpts || {}
     const env = this._objectToEnv(_.defaults(this.opts.env, defaults.env))
-    const args = this._objectToFlags(_.assign({}, defaults.args, this.opts.args), signatureOpts)
+    const args = this._objectToFlags(_.defaults(this.opts.args, defaults.args), signatureOpts)
 
     cmdOpts.env = env
 
@@ -70,17 +71,22 @@ class App {
     }
 
     const args = []
+    const prepend = []
+    const append = []
     _.forOwn(obj, (val, key) => {
-      if (val === true) {
+      if (val === constants.SHELLARG_BOOLEAN_FLAG) {
         // turn on a boolean flag
         args.push([
           opts.dash,
           fn(key)
         ].join(''))
-      } else if (val === undefined) {
+      } else if (val === constants.SHELLARG_PREPEND_AS_IS) {
         // add the value as is
-        args.push(fn(key))
-      } else if (val === null) {
+        prepend.push(fn(key))
+      } else if (val === constants.SHELLARG_APPEND_AS_IS) {
+        // add the value as is
+        append.push(fn(key))
+      } else if (val === constants.SHELLARG_REMOVE) {
         // turned off, don't add at all
         return
       } else {
@@ -96,7 +102,7 @@ class App {
       }
     })
 
-    return args
+    return prepend.concat(args, append)
   }
 }
 

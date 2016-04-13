@@ -3,6 +3,7 @@ import Terraform from '../Terraform'
 import Command from '../Command'
 import _ from 'lodash'
 import depurar from 'depurar'; const debug = depurar('frey')
+import constants from '../constants'
 
 class Refresh extends Command {
   main (cargo, cb) {
@@ -13,7 +14,7 @@ class Refresh extends Command {
 
     const terraform = new Terraform({
       args: {
-        refresh: undefined
+        refresh: constants.SHELLARG_PREPEND_AS_IS
       },
       runtime: this.runtime,
       cmdOpts: {
