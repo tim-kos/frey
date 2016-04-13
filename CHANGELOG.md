@@ -31,8 +31,9 @@ Unreleased and unplanned todos
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
 
-## v0.3.16 (Unreleased)
+## v0.3.16 (2016-04-13)
 
+- [x] Fix Remote ssh bug using `SHELLARG_PREPEND_AS_IS`
 - [x] Allow more control over cli args via constants
 - [x] Add support for feeding commands to `Remote` via cli
 
