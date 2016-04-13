@@ -24,6 +24,11 @@ yargs
       type: 'string',
       describe: 'Directory that contains the Freyfile.toml. Frey will traverse upwards if empty. '
     },
+    remote: {
+      nargs: 1,
+      type: 'string',
+      describe: 'Command to execute on remote server. If ommited, remote opens an interactive shell. '
+    },
     'cfg-var': {
       nargs: 1,
       type: 'string',

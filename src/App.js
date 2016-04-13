@@ -17,7 +17,7 @@ class App {
     const signatureOpts = this.opts.signatureOpts || defaults.signatureOpts
     const cmdOpts = this.opts.cmdOpts || defaults.cmdOpts || {}
     const env = this._objectToEnv(_.defaults(this.opts.env, defaults.env))
-    const args = this._objectToFlags(_.defaults(this.opts.args, defaults.args), signatureOpts)
+    const args = this._objectToFlags(_.assign({}, defaults.args, this.opts.args), signatureOpts)
 
     cmdOpts.env = env
 

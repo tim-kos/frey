@@ -88,12 +88,14 @@ class Remote extends Command {
     })
   }
 
-  _connect (host, cb) {
+  _ssh (host, cb) {
     const opts = { args: {}, runtime: this.runtime }
     opts.args[host] = undefined
 
-    // @todo command here for non-interactive/shell mode:
-    // args.push "<cmd>"
+    const rcmd = _.get(this.runtime, 'init.cliargs.remote')
+    if (rcmd) {
+      opts.args[rcmd] = undefined
+    }
 
     const ssh = new Ssh(opts)
     ssh.exe((err, stdout) => {
@@ -108,7 +110,7 @@ class Remote extends Command {
   main (cargo, cb) {
     const hosts = _.cloneDeep(this.bootCargo._selectHosts)
 
-    async.map(hosts, this._connect.bind(this), (err, results) => {
+    async.map(hosts, this._ssh.bind(this), (err, results) => {
       if (err) {
         return cb(err)
       }

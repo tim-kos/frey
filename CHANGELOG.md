@@ -24,12 +24,16 @@ Unreleased and unplanned todos
 - [ ] docs: env secrets on Travis are not exposed to PRs from other repos: https://docs.travis-ci.com/user/pull-requests
 - [ ] Add generic cleanup method that `.pem` as well as `Frey-residu-*` can be registered with, so it will all be deleted if `global.purge_residu` is turned on (default = `true`)
 
-## v0.3.16 (Unreleased)
+## v0.3.17 (Unreleased)
 
 - [ ] allow Ansible and Terraform version override from config
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
+
+## v0.3.16 (Unreleased)
+
+- [x] Add support for feeding commands to `Remote` via cli
 
 ## v0.3.15 (2016-03-31)
 
