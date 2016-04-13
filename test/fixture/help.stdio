@@ -24,6 +24,7 @@ Commands:
 
 Options:
   --projectDir   Directory that contains the Freyfile.toml. Frey will traverse upwards if empty.  [string]
+  --remote       Command to execute on remote server. If ommited, remote opens an interactive shell.  [string]
   --cfg-var      Keys in your config to overwrite such as: --cfg-var="global.ssh.key_dir={tmpdir}" --cfg-var="global.terraformcfg.parallelism=2"  [string]
   --force-yes    Answer yes to all questions (dangerous!)  [boolean] [default: false]
   --tags         A list of tags to execute in isolation  [string]
