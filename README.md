@@ -3,6 +3,7 @@
 <!-- badges/ -->
 [![Build Status](https://travis-ci.org/kvz/frey.svg?branch=master)](https://travis-ci.org/kvz/frey)
 [![Join the chat at https://gitter.im/kvz/frey](https://badges.gitter.im/kvz/frey.svg)](https://gitter.im/kvz/frey?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Support](https://supporterhq.com/api/b/ac8vssyf8hcjnklgoq78zilo4/Frey)](https://supporterhq.com/support/ac8vssyf8hcjnklgoq78zilo4/Frey)
 <!-- /badges -->
 
 Frey aims to be an all-in-one tool for developers and sysadmins to bring their app to production. 
