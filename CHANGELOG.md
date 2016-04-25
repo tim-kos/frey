@@ -30,6 +30,7 @@ Unreleased and unplanned todos
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
+- [ ] Upgrade pyhcl to 0.2.1 (see https://github.com/virtuald/pyhcl/issues/7)
 
 ## v0.3.16 (2016-04-13)
 

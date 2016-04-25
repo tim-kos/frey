@@ -161,14 +161,14 @@ class Deps extends Command {
     })
 
     // @todo We unfortunately have to run two versions of hcltool due to
-    // different bugs hurting both 0.1.15 and 0.2.0
+    // different bugs hurting both 0.1.15 and 0.2.1
     // https://github.com/virtuald/pyhcl/issues/7
     // When that is resolved, let's just have 1 version
     deps.push({
       type: 'App',
-      name: 'pyhcl-0.2.0',
-      range: '0.2.0',
-      version: '0.2.0',
+      name: 'pyhcl-0.2.1',
+      range: '0.2.1',
+      version: '0.2.1',
       dir: '{{{config.global.tools_dir}}}/pyhcl/{{{self.version}}}',
       exe: '{{{self.dir}}}/pip/bin/hcltool',
       env: {

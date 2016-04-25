@@ -6,25 +6,25 @@
 --> {hostname} - convert
 --> Skipping confirmation for 'About to convert existing YAML, CFG and TF to TOML files in your project dir. Make sure your files are under source control as this is a best-effort procedure. May I proceed?' as '--force-yes' applies
 Traceback (most recent call last):
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/bin/hcltool", line 45, in <module>
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/bin/hcltool", line 45, in <module>
     main()
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/bin/hcltool", line 35, in main
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/bin/hcltool", line 35, in main
     obj = hcl.load(infile)
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/hcl/api.py", line 51, in load
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/api.py", line 51, in load
     return loads(fp.read())
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/hcl/api.py", line 62, in loads
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/api.py", line 62, in loads
     return HclParser().parse(s)
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/hcl/parser.py", line 287, in parse
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 287, in parse
     return self.yacc.parse(s, lexer=Lexer())
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/ply/yacc.py", line 265, in parse
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/ply/yacc.py", line 265, in parse
     return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/ply/yacc.py", line 971, in parseopt_notrack
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/ply/yacc.py", line 971, in parseopt_notrack
     p.callable(pslice)
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/hcl/parser.py", line 103, in p_object_0
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 103, in p_object_0
     p[0] = self.objectlist_flat(p[2])
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/hcl/parser.py", line 70, in objectlist_flat
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 70, in objectlist_flat
     for k2, v2 in iteritems(vv):
-  File "{home}/.frey/tools/pyhcl/0.2.0/pip/lib/python2.7/site-packages/hcl/parser.py", line 27, in iteritems
+  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 27, in iteritems
     return iter(d.iteritems())
 AttributeError: 'int' object has no attribute 'iteritems'
 {
