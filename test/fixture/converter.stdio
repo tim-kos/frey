@@ -5,28 +5,6 @@
 --> {hostname} - deps
 --> {hostname} - convert
 --> Skipping confirmation for 'About to convert existing YAML, CFG and TF to TOML files in your project dir. Make sure your files are under source control as this is a best-effort procedure. May I proceed?' as '--force-yes' applies
-Traceback (most recent call last):
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/bin/hcltool", line 45, in <module>
-    main()
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/bin/hcltool", line 35, in main
-    obj = hcl.load(infile)
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/api.py", line 51, in load
-    return loads(fp.read())
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/api.py", line 62, in loads
-    return HclParser().parse(s)
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 287, in parse
-    return self.yacc.parse(s, lexer=Lexer())
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/ply/yacc.py", line 265, in parse
-    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/ply/yacc.py", line 971, in parseopt_notrack
-    p.callable(pslice)
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 103, in p_object_0
-    p[0] = self.objectlist_flat(p[2])
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 70, in objectlist_flat
-    for k2, v2 in iteritems(vv):
-  File "{home}/.frey/tools/pyhcl/0.2.1/pip/lib/python2.7/site-packages/hcl/parser.py", line 27, in iteritems
-    return iter(d.iteritems())
-AttributeError: 'int' object has no attribute 'iteritems'
 {
     "output": {
         "public_address": {
@@ -75,60 +53,54 @@ AttributeError: 'int' object has no attribute 'iteritems'
         "aws_security_group": {
             "fw-infra-tusd-main": {
                 "description": "Infra tusd",
-                "ingress": {
-                    "cidr_blocks": [
-                        "${var.ip_all}"
-                    ],
-                    "from_port": 8080,
-                    "protocol": "tcp",
-                    "to_port": 8080
-                },
+                "ingress": [
+                    {
+                        "cidr_blocks": [
+                            "${var.ip_kevin}",
+                            "${var.ip_marius}",
+                            "${var.ip_tim}"
+                        ],
+                        "from_port": "22",
+                        "protocol": "tcp",
+                        "to_port": "22"
+                    },
+                    {
+                        "cidr_blocks": [
+                            "${var.ip_all}"
+                        ],
+                        "from_port": "8080",
+                        "protocol": "tcp",
+                        "to_port": "8080"
+                    }
+                ],
                 "name": "fw-infra-tusd-main"
             }
         }
     },
     "variable": {
-        "TSD_AWS_ACCESS_KEY": {
-            "description": "TSD_AWS_ACCESS_KEY"
-        },
-        "TSD_AWS_SECRET_KEY": {
-            "description": "TSD_AWS_SECRET_KEY"
-        },
-        "TSD_AWS_ZONE_ID": {
-            "description": "TSD_AWS_ZONE_ID"
-        },
-        "TSD_DOMAIN": {
-            "description": "TSD_DOMAIN"
-        },
-        "TSD_SSH_KEY_FILE": {
-            "description": "TSD_SSH_KEY_FILE"
-        },
-        "TSD_SSH_KEY_NAME": {
-            "description": "TSD_SSH_KEY_NAME"
-        },
-        "TSD_SSH_USER": {
-            "description": "TSD_SSH_USER"
-        },
+        "TSD_AWS_ACCESS_KEY": {},
+        "TSD_AWS_SECRET_KEY": {},
+        "TSD_AWS_ZONE_ID": {},
+        "TSD_DOMAIN": {},
+        "TSD_SSH_KEY_FILE": {},
+        "TSD_SSH_KEY_NAM": {},
+        "TSD_SSH_KEY_NAME": {},
         "ami": {
             "default": {
                 "us-east-1": "ami-9bce7af0"
             }
         },
         "ip_all": {
-            "default": "0.0.0.0/0",
-            "description": "ip_all"
+            "default": "0.0.0.0/0"
         },
         "ip_kevin": {
-            "default": "62.163.187.106/32",
-            "description": "ip_kevin"
+            "default": "62.163.187.106/32"
         },
         "ip_marius": {
-            "default": "84.146.5.70/32",
-            "description": "ip_marius"
+            "default": "84.146.5.70/32"
         },
         "ip_tim": {
-            "default": "24.134.75.132/32",
-            "description": "ip_tim"
+            "default": "24.134.75.132/32"
         },
         "region": {
             "default": "us-east-1",
@@ -196,34 +168,33 @@ AttributeError: 'int' object has no attribute 'iteritems'
   description = "Infra tusd"
   name = "fw-infra-tusd-main"
 
-  [infra.resource.aws_security_group.fw-infra-tusd-main.ingress]
-    cidr_blocks = ["${var.ip_all}"]
-    from_port = 8080.0
+  [[infra.resource.aws_security_group.fw-infra-tusd-main.ingress]]
+    cidr_blocks = ["${var.ip_kevin}", "${var.ip_marius}", "${var.ip_tim}"]
+    from_port = "22"
     protocol = "tcp"
-    to_port = 8080.0
+    to_port = "22"
+
+  [[infra.resource.aws_security_group.fw-infra-tusd-main.ingress]]
+    cidr_blocks = ["${var.ip_all}"]
+    from_port = "8080"
+    protocol = "tcp"
+    to_port = "8080"
 
 [infra.variable]
 
 [infra.variable.TSD_AWS_ACCESS_KEY]
-  description = "TSD_AWS_ACCESS_KEY"
 
 [infra.variable.TSD_AWS_SECRET_KEY]
-  description = "TSD_AWS_SECRET_KEY"
 
 [infra.variable.TSD_AWS_ZONE_ID]
-  description = "TSD_AWS_ZONE_ID"
 
 [infra.variable.TSD_DOMAIN]
-  description = "TSD_DOMAIN"
 
 [infra.variable.TSD_SSH_KEY_FILE]
-  description = "TSD_SSH_KEY_FILE"
+
+[infra.variable.TSD_SSH_KEY_NAM]
 
 [infra.variable.TSD_SSH_KEY_NAME]
-  description = "TSD_SSH_KEY_NAME"
-
-[infra.variable.TSD_SSH_USER]
-  description = "TSD_SSH_USER"
 
 [infra.variable.ami]
 
@@ -232,19 +203,15 @@ AttributeError: 'int' object has no attribute 'iteritems'
 
 [infra.variable.ip_all]
   default = "0.0.0.0/0"
-  description = "ip_all"
 
 [infra.variable.ip_kevin]
   default = "62.163.187.106/32"
-  description = "ip_kevin"
 
 [infra.variable.ip_marius]
   default = "84.146.5.70/32"
-  description = "ip_marius"
 
 [infra.variable.ip_tim]
   default = "24.134.75.132/32"
-  description = "ip_tim"
 
 [infra.variable.region]
   default = "us-east-1"
@@ -357,34 +324,33 @@ Done
   description = "Infra tusd"
   name = "fw-infra-tusd-main"
 
-  [infra.resource.aws_security_group.fw-infra-tusd-main.ingress]
-    cidr_blocks = ["${var.ip_all}"]
-    from_port = 8080.0
+  [[infra.resource.aws_security_group.fw-infra-tusd-main.ingress]]
+    cidr_blocks = ["${var.ip_kevin}", "${var.ip_marius}", "${var.ip_tim}"]
+    from_port = "22"
     protocol = "tcp"
-    to_port = 8080.0
+    to_port = "22"
+
+  [[infra.resource.aws_security_group.fw-infra-tusd-main.ingress]]
+    cidr_blocks = ["${var.ip_all}"]
+    from_port = "8080"
+    protocol = "tcp"
+    to_port = "8080"
 
 [infra.variable]
 
 [infra.variable.TSD_AWS_ACCESS_KEY]
-  description = "TSD_AWS_ACCESS_KEY"
 
 [infra.variable.TSD_AWS_SECRET_KEY]
-  description = "TSD_AWS_SECRET_KEY"
 
 [infra.variable.TSD_AWS_ZONE_ID]
-  description = "TSD_AWS_ZONE_ID"
 
 [infra.variable.TSD_DOMAIN]
-  description = "TSD_DOMAIN"
 
 [infra.variable.TSD_SSH_KEY_FILE]
-  description = "TSD_SSH_KEY_FILE"
+
+[infra.variable.TSD_SSH_KEY_NAM]
 
 [infra.variable.TSD_SSH_KEY_NAME]
-  description = "TSD_SSH_KEY_NAME"
-
-[infra.variable.TSD_SSH_USER]
-  description = "TSD_SSH_USER"
 
 [infra.variable.ami]
 
@@ -393,19 +359,15 @@ Done
 
 [infra.variable.ip_all]
   default = "0.0.0.0/0"
-  description = "ip_all"
 
 [infra.variable.ip_kevin]
   default = "62.163.187.106/32"
-  description = "ip_kevin"
 
 [infra.variable.ip_marius]
   default = "84.146.5.70/32"
-  description = "ip_marius"
 
 [infra.variable.ip_tim]
   default = "24.134.75.132/32"
-  description = "ip_tim"
 
 [infra.variable.region]
   default = "us-east-1"
