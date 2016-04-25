@@ -1,40 +1,22 @@
-variable "TSD_AWS_ACCESS_KEY" {
-  description = "TSD_AWS_ACCESS_KEY"
-}
-variable "TSD_AWS_SECRET_KEY" {
-  description = "TSD_AWS_SECRET_KEY"
-}
-variable "TSD_AWS_ZONE_ID" {
-  description = "TSD_AWS_ZONE_ID"
-}
-variable "TSD_DOMAIN" {
-  description = "TSD_DOMAIN"
-}
-variable "TSD_SSH_USER" {
-  description = "TSD_SSH_USER"
-}
-variable "TSD_SSH_KEY_FILE" {
-  description = "TSD_SSH_KEY_FILE"
-}
-variable "TSD_SSH_KEY_NAME" {
-  description = "TSD_SSH_KEY_NAME"
-}
+variable "TSD_AWS_ACCESS_KEY" {}
+variable "TSD_AWS_SECRET_KEY" {}
+variable "TSD_AWS_ZONE_ID" {}
+variable "TSD_DOMAIN" {}
+variable "TSD_SSH_KEY_FILE" {}
+variable "TSD_SSH_KEY_NAM" {}
+variable "TSD_SSH_KEY_NAME" {}
 
 variable "ip_kevin" {
-  description = "ip_kevin"
-  default     = "62.163.187.106/32"
+  default = "62.163.187.106/32"
 }
 variable "ip_marius" {
-  description = "ip_marius"
-  default     = "84.146.5.70/32"
+  default = "84.146.5.70/32"
 }
 variable "ip_tim" {
-  description = "ip_tim"
-  default     = "24.134.75.132/32"
+  default = "24.134.75.132/32"
 }
 variable "ip_all" {
-  description = "ip_all"
-  default     = "0.0.0.0/0"
+  default = "0.0.0.0/0"
 }
 
 provider "aws" {
@@ -87,8 +69,8 @@ resource "aws_security_group" "fw-infra-tusd-main" {
 
   // SSH
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = "22"
+    to_port     = "22"
     protocol    = "tcp"
     cidr_blocks = [
       "${var.ip_kevin}",
@@ -99,8 +81,8 @@ resource "aws_security_group" "fw-infra-tusd-main" {
 
   // Web
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = "8080"
+    to_port     = "8080"
     protocol    = "tcp"
     cidr_blocks = [
       "${var.ip_all}"
