@@ -30,7 +30,9 @@ Unreleased and unplanned todos
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
-- [ ] Upgrade pyhcl to 0.2.1 (see https://github.com/virtuald/pyhcl/issues/7)
+- [ ] Deprecate dual dyhcl usage now that we verified 0.2.1 solves all troubles
+- [x] Make it easier to use Frey without Providers (just the install and setup phase, targeting hostnames you already know)
+- [x] Upgrade pyhcl to 0.2.1 (see https://github.com/virtuald/pyhcl/issues/7)
 
 ## v0.3.16 (2016-04-13)
 

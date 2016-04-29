@@ -35,12 +35,17 @@ class Ansible extends App {
 
     const connection = _.get(this.runtime, 'config.global.connection')
     if (connection !== undefined) {
-      defaults.args['inventory-file'] = constants.SHELLARG_REMOVE
-      defaults.args['user'] = constants.SHELLARG_REMOVE
-      defaults.args['private-key'] = constants.SHELLARG_REMOVE
-      defaults.args['connection'] = connection
-      defaults.args['extra-vars'] = `variable_host=${connection}`
-      defaults.args['inventory-file'] = `${connection},`
+      if (connection === 'local') {
+        defaults.args['connection'] = 'local'
+        defaults.args['extra-vars'] = `variable_host=${connection}`
+        defaults.args['inventory-file'] = `${connection},`
+        defaults.args['user'] = constants.SHELLARG_REMOVE
+        defaults.args['private-key'] = constants.SHELLARG_REMOVE
+      } else {
+        const hostFile = '/tmp/anshosts'
+        fs.writeFileSync(hostFile, connection + '\n', 'utf-8')
+        defaults.args['inventory-file'] = hostFile
+      }
     } else {
       fs.stat(this.runtime.config.global.infra_state_file, (err) => {
         if (err) {
