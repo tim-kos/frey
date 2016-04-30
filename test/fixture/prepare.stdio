@@ -8,7 +8,7 @@ ACCPTST:STDIO_SKIP_COMPARE
 Creating private key '{tmpdir}/frey-customprepare.pem'
 Creating public key '{tmpdir}/frey-customprepare.pub'
 Creating private encrypted key '{tmpdir}/frey-customprepare.pem.cast5'
-Found 'terraform' with version '0.6.14'
+Found 'terraform' with version '0.6.15'
 Found 'terraformInventory' with version '0.6.0'
 Found 'pip' with version {{global_pip_version}}
 Found 'pyhcl-0.1.15' with version '0.1.15'

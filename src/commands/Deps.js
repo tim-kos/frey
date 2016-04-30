@@ -67,7 +67,7 @@ class Deps extends Command {
     deps.push({
       type: 'App',
       name: 'terraform',
-      version: '0.6.14',
+      version: '0.6.15',
       range: '{{{self.version}}}',
       dir: '{{{config.global.tools_dir}}}/terraform/{{{self.version}}}',
       exe: '{{{self.dir}}}/terraform',
