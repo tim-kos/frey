@@ -23,6 +23,7 @@ echo "ACCPTST:STDIO_REPLACE_BIGINTS"
 echo "ACCPTST:STDIO_REPLACE_LONGTIMES"
 echo "ACCPTST:STDIO_REPLACE_DURATIONS"
 echo "ACCPTST:STDIO_REPLACE_REMOTE_EXEC" # (remote-exec): Connecting to remote host via SSH...
+echo "ACCPTST:STDIO_REPLACE_ELAPSED" # digitalocean_droplet.freytest-db: Still creating... (10s elapsed)
 
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-openstack"* || true

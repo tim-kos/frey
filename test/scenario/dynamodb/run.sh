@@ -17,6 +17,8 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
   __node="babel-node"; __codelib="src"
 fi
 
+echo "ACCPTST:STDIO_REPLACE_ELAPSED" # digitalocean_droplet.freytest-db: Still creating... (10s elapsed)
+
 rm -f terraform.plan
 rm -f "${__sysTmpDir}/frey-dynamodb"* || true
 

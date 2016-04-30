@@ -133,6 +133,10 @@ for scenario in $(echo prepare ${scenarios}); do
         egrep -v 'remote-exec\): [ a-zA-Z]' "${curFile}" > "${__sysTmpDir}/accptst-filtered.txt"
         mv "${__sysTmpDir}/accptst-filtered.txt" "${curFile}"
       fi
+      if [ "$(cat "${curFile}" |grep 'ACCPTST:STDIO_REPLACE_ELAPSED' |wc -l)" -gt 0 ]; then
+        egrep -v ' elapsed' "${curFile}" > "${__sysTmpDir}/accptst-filtered.txt"
+        mv "${__sysTmpDir}/accptst-filtered.txt" "${curFile}"
+      fi
     done
 
     # Save these as new fixtures?

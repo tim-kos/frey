@@ -1,3 +1,4 @@
+ACCPTST:STDIO_REPLACE_ELAPSED
 (maybe) Destroying..
 --> Frey version '0.3.16'
 --> Will run: [ 'init', 'config', 'deps', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install', 'setup', 'deploy', 'restart', 'show' ]

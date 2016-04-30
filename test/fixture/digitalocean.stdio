@@ -4,6 +4,7 @@ ACCPTST:STDIO_REPLACE_BIGINTS
 ACCPTST:STDIO_REPLACE_LONGTIMES
 ACCPTST:STDIO_REPLACE_DURATIONS
 ACCPTST:STDIO_REPLACE_REMOTE_EXEC
+ACCPTST:STDIO_REPLACE_ELAPSED
 (maybe) Destroying..
 --> Frey version '0.3.16'
 --> Will run: [ 'init', 'config', 'deps', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install', 'setup', 'deploy', 'restart', 'show' ]
