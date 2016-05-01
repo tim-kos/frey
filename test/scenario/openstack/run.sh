@@ -17,6 +17,9 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
   __node="babel-node"; __codelib="src"
 fi
 
+echo "Disabled due to a very unreliable trystack.org causing ~1/5 build failures. "
+exit 1
+
 echo "ACCPTST:STDIO_REPLACE_IPS"
 echo "ACCPTST:STDIO_REPLACE_UUIDS"
 echo "ACCPTST:STDIO_REPLACE_BIGINTS"
