@@ -30,7 +30,10 @@ Unreleased and unplanned todos
 - [ ] Check for `git ignore Frey-residu-*`
 - [ ] Offer cast5 encryption and decryption for `env.sh` (then remove `rebuild-env.sh` script from dependents)
 - [ ] `Show` should use `terraformInventory` just like `Remote`, instead of `public_addresses`
+- [ ] Speed up prepare by writing hashses do disk and comparing (just like depmake does)
 - [ ] Deprecate dual pyhcl usage now that we verified 0.2.1 solves all troubles
+- [ ] Symlink ansible if needed: `mkdir -p ~/.frey/tools/ansible/2.0.1.0/pip/bin/ && ln -nfs ~/.frey/tools/ansible/2.0.1.0/usr/local/share/python/ansible ~/.frey/tools/ansible/2.0.1.0/pip/bin/ansible && ln -nfs ~/.frey/tools/ansible/2.0.1.0/usr/local/share/python/ansible-playbook ~/.frey/tools/ansible/2.0.1.0/pip/bin/ansible-playbook`
+- [ ] Deal with pip returning version `1.1` in some cases (we error out on that currently with an unrecognized version)
 - [x] Upgrade to Terraform 0.6.15
 - [x] Make it easier to use Frey without Providers (just the install and setup phase, targeting hostnames you already know)
 - [x] Upgrade pyhcl to 0.2.1 (see https://github.com/virtuald/pyhcl/issues/7)

@@ -43,25 +43,6 @@ describe('Frey', () => {
       })
     })
 
-    it('should not prepare for remote to speed up cli operations', (done) => {
-      const frey = new Frey()
-
-      const options = {
-        _: ['remote']
-      }
-
-      frey._composeChain(options, (err, filteredChain) => {
-        expect(err).to.equal(null)
-        expect(filteredChain).to.deep.equal([
-          'init',
-          'config',
-          'deps',
-          'remote'
-        ])
-        done()
-      })
-    })
-
     it('should add format to convert, and not do a prepare', (done) => {
       const frey = new Frey()
 
