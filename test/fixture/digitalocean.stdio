@@ -6,7 +6,7 @@ ACCPTST:STDIO_REPLACE_DURATIONS
 ACCPTST:STDIO_REPLACE_REMOTE_EXEC
 ACCPTST:STDIO_REPLACE_ELAPSED
 (maybe) Destroying..
---> Frey version '0.3.17'
+--> Frey version '0.3.18'
 --> Will run: [ 'init', 'config', 'deps', 'prepare', 'refresh', 'validate', 'plan', 'backup', 'infra', 'install', 'setup', 'deploy', 'restart', 'show' ]
 --> {hostname} - init
 --> {hostname} - config
