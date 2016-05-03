@@ -62,6 +62,12 @@ class Frey extends Base {
       filteredChain.unshift('plan')
     }
 
+    if (filteredChain.indexOf('prepare') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'prepare'}))) {
+      if (cmd !== 'convert') {
+        filteredChain.unshift('prepare')
+      }
+    }
+
     if (filteredChain.indexOf('format') < 0 && (startAt < 0 || startAt > _.findIndex(chain, {name: 'format'}))) {
       if (cmd === 'convert' && !cliargs.bail) {
         filteredChain.push('format')
