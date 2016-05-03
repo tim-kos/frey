@@ -34,6 +34,7 @@ Unreleased and unplanned todos
 - [ ] Deprecate dual pyhcl usage now that we verified 0.2.1 solves all troubles
 - [ ] Symlink ansible if needed: `mkdir -p ~/.frey/tools/ansible/2.0.1.0/pip/bin/ && ln -nfs ~/.frey/tools/ansible/2.0.1.0/usr/local/share/python/ansible ~/.frey/tools/ansible/2.0.1.0/pip/bin/ansible && ln -nfs ~/.frey/tools/ansible/2.0.1.0/usr/local/share/python/ansible-playbook ~/.frey/tools/ansible/2.0.1.0/pip/bin/ansible-playbook`
 - [ ] Deal with pip returning version `1.1` in some cases (we error out on that currently with an unrecognized version)
+- [x] Do a prepare before remote, so that we can have key decryption, as well as offer newcomers into a project a working `remote`
 - [x] Upgrade to Terraform 0.6.15
 - [x] Make it easier to use Frey without Providers (just the install and setup phase, targeting hostnames you already know)
 - [x] Upgrade pyhcl to 0.2.1 (see https://github.com/virtuald/pyhcl/issues/7)
