@@ -22,8 +22,8 @@ echo "ACCPTST:STDIO_REPLACE_LONGTIMES"
 echo "ACCPTST:STDIO_REPLACE_DURATIONS"
 echo "ACCPTST:STDIO_REPLACE_ASTERISKHR"
 
-# PYTHONPATH="${HOME}/.frey/tools/ansible/2.0.1.0/pip/lib/python2.7/site-packages" \
-#   "${HOME}/.frey/tools/ansible/2.0.1.0/pip/bin/ansible-playbook" \
+# PYTHONPATH="${HOME}/.frey/tools/ansible/2.0.2.0/pip/lib/python2.7/site-packages" \
+#   "${HOME}/.frey/tools/ansible/2.0.2.0/pip/bin/ansible-playbook" \
 #   --help
 #
 # exit

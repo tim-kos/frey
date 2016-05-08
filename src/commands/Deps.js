@@ -193,8 +193,8 @@ class Deps extends Command {
     deps.push({
       type: 'App',
       name: 'ansible',
-      range: '2.0.1',
-      version: '2.0.1.0',
+      range: '2.0.2',
+      version: '2.0.2.0',
       dir: '{{{config.global.tools_dir}}}/ansible/{{{self.version}}}',
       exe: '{{{self.dir}}}/pip/bin/ansible',
       exePlaybook: '{{{self.dir}}}/pip/bin/ansible-playbook',
