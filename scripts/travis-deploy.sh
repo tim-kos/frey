@@ -9,6 +9,7 @@ git config --global user.name "Freybot"
 git config --global user.email "bot@freyproject.io"
 
 # required for middleman
+export PATH="$PATH:$HOME/.rvm/bin"
 rvm install 2.2.2
 rvm --default use 2.2.2
 
