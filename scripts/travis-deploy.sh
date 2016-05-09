@@ -10,6 +10,6 @@ git config --global user.email "bot@freyproject.io"
 
 
 # because a Travis deploy script has to be a real file
-npm run web:install
-npm run web:build
-npm run web:deploy
+npm run website:install
+npm run website:build
+npm run website:deploy
