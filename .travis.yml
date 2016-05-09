@@ -38,7 +38,7 @@ script: npm run test:full
 deploy:
   skip_cleanup: true
   provider: script
-  script: scripts/web-deploy.sh
+  script: scripts/travis-deploy.sh
   on:
     branch: master
     node: '4.2.1'

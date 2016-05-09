@@ -19,7 +19,6 @@ ghpages_url=${GHPAGES_URL:-"https://${GH_TOKEN}@github.com/${ghpages_repo}.git"}
 git config user.name "Freybot"
 git config user.email "bot@freyproject.io"
 
-
 echo "--> Deploying to GitHub pages.."
 mkdir -p /tmp/deploy-${ghpages_repo}
 
