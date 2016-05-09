@@ -16,9 +16,6 @@ ghpages_repo=${GHPAGES_REPO:-"kvz/frey"}
 ghpages_branch=${GHPAGES_BRANCH:-"gh-pages"}
 ghpages_url=${GHPAGES_URL:-"https://${GH_TOKEN}@github.com/${ghpages_repo}.git"}
 
-git config user.name "Freybot"
-git config user.email "bot@freyproject.io"
-
 echo "--> Deploying to GitHub pages.."
 mkdir -p /tmp/deploy-${ghpages_repo}
 
