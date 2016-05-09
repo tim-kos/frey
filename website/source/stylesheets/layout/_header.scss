@@ -1,0 +1,29 @@
+.Header {
+  left: 0;
+  margin: 0;
+  padding: 16px 16px;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+.Navbar li {
+  display: inline;
+  margin-right: 16px;
+}
+
+.Header .Navbar {
+  float: right;
+  font-size: 14px;
+}
+
+/* Temporary logo styles */
+.Header img {
+  margin-right: 4px;
+  width: 30px;
+}
+
+.Header span {
+  color: #95D392;
+  font-weight: bold;
+}

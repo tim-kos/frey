@@ -1,0 +1,105 @@
+---
+title: Homepage | Frey
+---
+
+<main class="Home Content">
+  <div class="container-fluid">
+    <div class="row HeroBackground">
+      <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="text-align: center;">
+        <div class="Hero" style="text-align: center;">
+          <%= image_tag 'logo2.png', :class => 'logo' %>
+          <h1><strong>Frey</strong> is an <i>end-to-end</i> sysadmin toolbelt for developers.</h1>
+        </div>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-xl-3"></div>
+      <div class="col-md-6 col-lg-6 col-xl-3">
+        <section class="Description">
+          <h1>With one Freyfile,</h1>
+          <ul class="Description-features">
+            <li><span>Launch virtual instances on any cloud vendor.</span></li>
+            <li><span>Provision them with software packages and configuration.</span></li>
+            <li><span>Deploy your app onto the cluster.</span></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-2">
+        <section class="Description">
+          <h1>Features:</h1>
+          <ul class="Description-features">
+            <li><span><strong>Plan & Launch Infrastructure</strong> - Based on Terraform, Frey let's you plan infra, and asks for confirmation if it detects destructive changes</span></li>
+            <li><span><strong>Provision software packages</strong>, such as Nginx and Redis. Frey comes bundled with roles so you only have to specify versions and vhosts.</span></li>
+            <li><span><strong>Connect to your app with ease</strong> - Frey handles SSH keys for you</span></li>
+            <li><span><strong>Encrypt using a secret only you know</strong> - Frey can store ssh keys in Git. CI like travis can decrypt these, so you can have it deploy your app whenever there are changes</span></li>
+            <li><span><strong>Manage single instances, or clusters across regions and cloud providers</strong></span></li>
+            <li><span><strong>Deploy your app</strong></span></li>
+            <li><span><strong>Version Control</strong> - Rollback your app to a previous version</span></li>
+            <li><span><strong>Easily override</strong> - Any configuration stored in the Freyfile can be overridden at runtime via command-line arguments</span></li>
+          </ul>
+        </section>
+      </div>
+      <div class="col-md-4">
+        <section class="Description">
+          <%= image_tag 'frey_shell.jpg', :width => '100%' %>
+        </section>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-2">
+        <section class="Description">
+          <h1>It does so, keeping a few design goals in mind:</h1>
+          <ul class="Description-features">
+            <li><span><strong>Convenience </strong> - Frey installs all of its requirements, so you don't have to</span></li>
+            <li><span><strong>Single configuration file</strong> describing the platform for your app, software requirements, and deploy strategy</span></li>
+            <li><span><strong>Pinned down dependencies</strong> - If it works now, it should work in 5 years</span></li>
+          </ul>
+        </section>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-2">
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Used in:</h1>
+      </div>
+      <div class="col-md-3">
+        <!-- Uppy image -->
+      </div>
+      <div class="col-md-3">
+        <!-- Imagemagick image -->
+      </div>
+      <div class="col-md-3">
+        <!-- Tus image -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Examples:</h1>
+      </div>
+      <div class="col-md-12">
+        <h2>Launch one Digital Ocean droplet, called `my-app`:</h2>
+        <h2>Make redis a requirement for your app</h2>
+        <h2>Make Node.js a requirement for your app</h2>
+        <h2>Use rsync as deployment strategy</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="CallToAction">
+          <h1>Try Frey now:</h1>
+          <code>$ npm install --save --exact frey</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

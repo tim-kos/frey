@@ -23,7 +23,10 @@
     "test": "npm run lint && npm run build && npm run mocha",
     "toc": "doctoc --github --notitle --maxlevel 3 README.md",
     "version:current": "node -e 'console.log(require(\"./package.json\").version)'",
-    "version:replace": "replace \"Frey version '\\d+\\.\\d+\\.\\d+'\" \"Frey version '$(npm run --silent version:current)'\" test/fixture/*.stdio"
+    "version:replace": "replace \"Frey version '\\d+\\.\\d+\\.\\d+'\" \"Frey version '$(npm run --silent version:current)'\" test/fixture/*.stdio",
+    "website:install": "cd website && (bundle install --path vendor/bundle || bundle update)",
+    "website:deploy": "cd website && bundle exec middleman build && cd .. && scripts/web-deploy.sh",
+    "website:start": "cd website && bundle exec middleman server"
   },
   "files": [
     "roles",
