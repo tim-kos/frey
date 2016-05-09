@@ -9,11 +9,13 @@ git config --global user.name "Freybot"
 git config --global user.email "bot@freyproject.io"
 
 # required for middleman
-export PATH="$PATH:$HOME/.rvm/bin"
-rvm install 2.2.2
-rvm --default use 2.2.2
-
-# because a Travis deploy script has to be a real file
-npm run website:install
-npm run website:build
-npm run website:deploy
+# We need a loging shell
+# (http://stackoverflow.com/questions/9336596/rvm-installation-not-working-rvm-is-not-a-function)
+/bin/bash --login -c ' \
+export PATH="$PATH:$HOME/.rvm/bin" && \
+rvm install 2.2.2 && \
+rvm --default use 2.2.2 && \
+npm run website:install && \
+npm run website:build && \
+npm run website:deploy && \
+true'
