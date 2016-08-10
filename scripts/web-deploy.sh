@@ -1,22 +1,60 @@
 #!/usr/bin/env bash
-set -o pipefail
+# This file:
+#
+#  - Let's inject.sh inject markdown files into the ./website directory
+#  - Syncs that to a temporary directory along with a git init
+#  - (in case of Travis CI) assumes a Git bot identity, and uses an overriden GHPAGES_URL containing its token thanks to `travis encrypt`
+#  - Force pushes that to the gh-pages branch
+#
+# Usage:
+#
+#  ./deploy.sh
+#
+# Based on a template by BASH3 Boilerplate v2.0.0
+# Copyright (c) 2013 Kevin van Zonneveld and contributors
+# http://bash3boilerplate.sh/#authors
+
+# Exit on error. Append || true if you expect an error.
 set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
 # set -o xtrace
 
-# Set magic variables for current file & dir
+# Set magic variables for current file, directory, os, etc.
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 
-# Travis docs: Note that pull request builds skip deployment step altogether.
-# https://docs.travis-ci.com/user/deployment/#Conditional-Releases-with-on
-
 ghpages_repo=${GHPAGES_REPO:-"kvz/frey"}
 ghpages_branch=${GHPAGES_BRANCH:-"gh-pages"}
-ghpages_url=${GHPAGES_URL:-"https://${GH_TOKEN}@github.com/${ghpages_repo}.git"}
+ghpages_url=${GHPAGES_URL:-"git@github.com:${ghpages_repo}.git"}
 
 echo "--> Deploying to GitHub pages.."
+
+${__dir}/web-inject.sh
+
+if [ "${TRAVIS:-}" = "true" ]; then
+  git config --global user.name "Freybot"
+  git config --global user.email "bot@freyproject.io"
+
+  # required for jekyll
+  # We need a loging shell
+  # (http://stackoverflow.com/questions/9336596/rvm-installation-not-working-rvm-is-not-a-function)
+/bin/bash --login -c ' \
+export PATH="$PATH:$HOME/.rvm/bin" && \
+rvm install 2.2.2 && \
+rvm --default use 2.2.2 && \
+npm run website:install && \
+npm run website:build && \
+npm run website:deploy && \
+true'
+fi
+
 mkdir -p /tmp/deploy-${ghpages_repo}
 
 # Custom steps
@@ -31,7 +69,7 @@ rsync \
   --no-group \
   --no-motd \
   --no-owner \
-./website/build/ /tmp/deploy-${ghpages_repo} > /dev/null
+./website/ /tmp/deploy-${ghpages_repo} > /dev/null
 
 echo 'This branch is just a deploy target. Do not edit. You changes will be lost.' \
   |tee /tmp/deploy-${ghpages_repo}/README.md
