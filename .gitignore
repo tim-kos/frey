@@ -9,3 +9,7 @@ test/scenario/*/Frey-state*
 test/scenario/converter/Freyfile.toml
 test/scenario/sshreconstruct/frey-sshreconstruct.pub
 website/vendor/
+website/_site/
+website/_vendor/
+website/changelog.md
+website/faq.md
