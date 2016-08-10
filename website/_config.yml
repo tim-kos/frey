@@ -1,0 +1,5 @@
+title: "Frey"
+subtitle: "A Badass ops toolbelt for Developers."
+description: "Frey describes your app's infra & prerequisites in a single file, and let's you deploy all of it, in a single command. "
+gems:
+  - jekyll-redirect-from
