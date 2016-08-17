@@ -1,0 +1,125 @@
+.CallToActionSection {
+  background-color: #ed582e;
+  padding: 32px 0;
+
+  .btn {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 100;
+    text-transform: none;
+  }
+
+  .btn:hover {
+    background-color: #fff;
+    color: #ed582e;
+  }
+}
+
+.navbar {
+  .header-logo {
+    padding-top: 15px;
+    width: 50px;
+  }
+}
+
+.footer, .navbar {
+  background-color: #000324;
+}
+
+.footer {
+  color: #fff;
+  padding-bottom: 64px;
+}
+
+.BulletList--withHeader {
+  h1 {
+    color: #003151;
+    font-size: 36px;
+    font-weight: bold;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  li {
+    color: #959595;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  li:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.DesignGoalsSection {
+  background-color: #3ea3d8;
+  color: #fff;
+
+  h1 {
+    font-size: 40px;
+  }
+
+  li {
+    font-size: 23px;
+    line-height: 30px;
+    margin-bottom: 24px;
+  }
+
+  li:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.FeaturesSection {
+  h1 {
+    color: #3ea3d8;
+    font-size: 41px;
+    font-weight: bold;
+  }
+}
+
+.FeatureBox {
+  padding: 32px;
+  .FeatureText, .TerminalBox {
+    display: inline-block;
+  }
+
+  .FeatureText {
+    border: 1px solid #dae5f0;
+    color: #979797;
+    font-size: 18px;
+    line-height: 28px;
+    margin-right: 32px;
+    max-width: 300px;
+    padding: 28px;
+    text-align: left;
+
+    strong {
+      color: #6a6a6a;
+    }
+  }
+}
+
+.IconBox {
+  border: 1px solid #dae5f0;
+  color: #979797;
+  display: inline-block;
+  font-size: 17px;
+  text-align: center;
+  width: 50%;
+
+  i {
+    color: #3ea3d8;
+    display: block;
+    font-size: 50px;
+  }
+
+  strong {
+    color: #6a6a6a;
+  }
+}
+
