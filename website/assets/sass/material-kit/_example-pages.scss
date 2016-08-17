@@ -86,15 +86,15 @@ h2.title{
 
 .index-page{
     .wrapper > .header{
-        height: 90vh;
+
     }
     .brand{
-        margin-top: 30vh;
         color: #FFFFFF;
         text-align: center;
 
         h1{
-            font-size: 4.8em;
+            /* Convert to ems or rems */
+            font-size: 50px;
             font-weight: 600;
         }
         h3{

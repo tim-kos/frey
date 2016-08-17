@@ -4,23 +4,111 @@ permalink: /
 title: Frey
 ---
 
-<div class="main main-raised">
+<div class="main">
 		<div class="section">
-				<div class="container text-center">
+				<div class="container">
 						<div class="row">
-								<div class="col-md-8 col-md-offset-2 text-center">
-										<h2>Tagline</h2>
-										<h4>{{site.description}}</h4>
+								<div class="col-md-6">
+									<div class="BulletList--withHeader">
+										<h1>With one Freyfile,</h2>
+										<ul>
+											<li>Launch virtual instances on any cloud vendor.</li>
+											<li>Provision them with software packages and configuration.</li>
+											<li>Deploy your app onto the cluster.</li>
+										</ul>
+									</div>
+								</div>
+								<div class="col-md-6">
+										<div class="IconBox">
+											<i class="fa fa-cloud-upload" aria-hidden="true"></i>
+											<strong>Manage single instances,</strong> or clusters across regions and cloud providers
+										</div>
+										<div class="IconBox">
+											<i class="fa fa-desktop" aria-hidden="true"></i>
+											<strong>Deploy</strong> your app
+										</div>
+										<div class="IconBox">
+											<i class="fa fa-reply" aria-hidden="true"></i>
+											<strong>Version Control</strong> - roll back your app to a previous version
+										</div>
+										<div class="IconBox">
+											<i class="fa fa-spinner" aria-hidden="true"></i>
+											<strong>Easily override</strong> - Any configuration stored in the Freyfile can be overridden at runtime via command-line arguments
+										</div>
 								</div>
 						</div>
 				</div>
 		</div>
-		<div class="section">
+		<div class="section FeaturesSection">
 				<div class="container text-center">
 						<div class="row">
-								<div class="col-md-8 col-md-offset-2 text-center">
-										<h2>Examples of material-kit</h2>
-										<p><a href="http://demos.creative-tim.com/material-kit/index.html">click here</a></p>
+								<div class="col-md-12">
+										<h1>Features</h2>
+										<!-- First Feature -->
+										<div class="FeatureBox">
+												<div class="FeatureText">
+													<strong>Plan & Launch Infrastructure</strong> - Based on Terraform, Frey let's you plan infra, and asks for confirmation if it detects destructive changes.
+												</div>
+												<div class="TerminalBox">
+													<img src="assets/img/FirstFeature.jpg">
+												</div>
+										</div>
+
+										<!-- Second Feature -->
+										<div class="FeatureBox">
+												<div class="FeatureText">
+													<strong>Provision software packages,</strong> such as Nginx and Redis. Frey comes bundled with roles so you only have to specify versions and vhosts.
+												</div>
+												<div class="TerminalBox">
+													<img src="assets/img/SecondFeature.jpg">
+												</div>
+										</div>
+
+
+										<!-- Third Feature -->
+										<div class="FeatureBox">
+												<div class="FeatureText">
+													<strong>Connect to your app with ease</strong> - Frey handles SSH keys for you.
+												</div>
+												<div class="TerminalBox">
+													<img src="assets/img/ThirdFeature.jpg">
+												</div>
+										</div>
+
+										<!-- Fourth Feature -->
+										<div class="FeatureBox">
+												<div class="FeatureText">
+													<strong>Encrypt using a secret only you know</strong> - Frey can store ssh keys in Git. CI like travis can decrypt these, so you can have it deploy your app whenever there are changes
+												</div>
+												<div class="TerminalBox">
+													<img src="assets/img/FourthFeature.jpg">
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+		</div>
+		<div class="section DesignGoalsSection">
+				<div class="container">
+						<div class="row">
+								<div class="col-md-5">
+										<h1>It does so, keeping a few design goals in mind:</h1>
+								</div>
+								<div class="col-md-5">
+										<ul>
+											<li><strong>Convenience</strong> - Frey installs all of its requirements, so you don't have to</li>
+											<li><strong>Single configuration file</strong> describing the platform for your app, software requirements, and deploy strategy</li>
+											<li><strong>Pinned down dependencies</strong> - If it works now, it should work in 5 years</li>
+										</ul>
+								</div>
+						</div>
+				</div>
+		</div>
+		<div class="section CallToActionSection">
+				<div class="container text-center">
+						<div class="row">
+								<div class="col-md-12">
+										<button class="btn btn-cta btn-round">Try Frey Now</button>
 								</div>
 						</div>
 				</div>
